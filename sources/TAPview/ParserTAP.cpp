@@ -179,5 +179,16 @@ uint16 BlockTAP::CommonStruct::Read16()
 
 bool BlockTAP::Parse(std::vector<std::string> &lines)
 {
+    if (header.type_data == 0)
+    {
+        return ParseProgram(lines);
+    }
+
+    return false;
+}
+
+
+bool BlockTAP::ParseProgram(std::vector<std::string> &lines)
+{
     return false;
 }

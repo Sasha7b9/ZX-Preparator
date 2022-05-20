@@ -81,6 +81,8 @@ struct BlockTAP
 private:
 
     void Clear();
+
+    bool ParseProgram(std::vector<std::string> &lines);
 };
 
 
