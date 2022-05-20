@@ -105,6 +105,10 @@ void Frame::OnOpen(wxCommandEvent &)
         ParserTAP parser;
 
         parser.Run(buf_input);
+
+        std::vector<std::string> lines;
+
+        parser.blocks[0].Parse(lines);
     }
 }
 

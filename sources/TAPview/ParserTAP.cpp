@@ -180,6 +180,8 @@ uint16 BlockTAP::CommonStruct::Read16()
 
 bool BlockTAP::Parse(std::vector<std::string> &lines)
 {
+    lines.clear();
+
     if (header.type_data == 0)
     {
         return ParseProgram(lines);
@@ -223,7 +225,7 @@ std::string BlockTAP::ParseLineProgram()
 
 uint16 BlockTAP::Data::GetData16()
 {
-    uint16 result = GetData8() << 8;
+    uint16 result = (uint16)(GetData8() << 8);
     result |= GetData8();
     return result;
 }
