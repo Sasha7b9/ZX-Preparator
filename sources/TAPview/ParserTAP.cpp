@@ -494,7 +494,14 @@ std::string BlockTAP::ParseLineProgram()
     {
         uint8 code = data.GetData8();
 
-        ss << KeyCodes::Get(code);
+        const char *string = KeyCodes::Get(code);
+
+        ss << string;
+
+        if (std::strlen(string) > 1)
+        {
+            ss << " ";
+        }
     }
 
     data.GetChar();
