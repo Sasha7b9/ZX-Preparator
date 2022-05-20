@@ -192,7 +192,7 @@ lseek:
 	clc
 	ret
 
-display_string:
+display_string:                     ; Вывод строки из esi
 	push	[con_handle]
 	call	[GetStdHandle]
 	mov	ebp,eax

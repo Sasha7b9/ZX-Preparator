@@ -11,7 +11,7 @@ start:
 
 	mov	[con_handle],STD_OUTPUT_HANDLE
 	mov	esi,_logo
-	call	display_string
+	call	display_string                  ; Вывод строки "flat assembler verstion X.XX.XX"
 
 	call	get_params
 	jc	information
@@ -363,7 +363,7 @@ align 4
 
 include '..\variable.inc'
 
-con_handle dd ?
+con_handle dd ?                         ; хэндл консоли
 memory_setting dd ?
 start_time dd ?
 definitions_pointer dd ?
