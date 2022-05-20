@@ -18,6 +18,7 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
 
     add_compile_options(/wd4514)
+    add_compile_options(/wd4623)
     add_compile_options(/wd4625)
     add_compile_options(/wd4626)
     add_compile_options(/wd4820)

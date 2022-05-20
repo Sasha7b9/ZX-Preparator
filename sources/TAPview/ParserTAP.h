@@ -9,39 +9,57 @@ class wxDataInputStream;
 
 struct BlockTAP
 {
-    bool Parse(wxDataInputStream &);
+    BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
+
+    bool Parse();
 
     bool IsValid() const;
 
     struct CommonStruct
     {
-        uint16 size;
+        CommonStruct(wxDataInputStream &_stream) : stream(_stream) {}
 
-        void Clear() { valid = false; };
+        uint16 size = 0;
+        uint8 crc = 0;
+
+        void Clear() { valid = false; crc = 0; };
 
         bool IsValid() const { return valid; };
 
     protected:
 
-        bool valid;
+        bool valid = false;
+
+        wxDataInputStream &stream;
+
+        uint16 Read16();
+
+        uint8 Read8();
     };
 
     struct Header : public CommonStruct
     {
-        uint8 type_data;    // Тип данных, следующих за заголовком
-                            // 00
-                            // 01
-                            // 02
-                            // 03 - code
+        Header(wxDataInputStream &stream) : CommonStruct(stream)
+        {
+            std::memset(file_name, 0, 11);
+        }
+
+        uint8 type_data = 0xff;     // Тип данных, следующих за заголовком
+                                    // 00
+                                    // 01
+                                    // 02
+                                    // 03 - code
         char file_name[11];
 
-        bool Parse(wxDataInputStream &);
+        bool Parse();
 
     } header;
 
     struct Data : public CommonStruct
     {
-        bool Parse(wxDataInputStream &);
+        Data(wxDataInputStream &stream) : CommonStruct(stream) {}
+
+        bool Parse();
 
     } data;
 

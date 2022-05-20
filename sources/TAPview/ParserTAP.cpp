@@ -15,9 +15,9 @@ void ParserTAP::Run(wxBufferedInputStream &stream)
 
     wxDataInputStream data(stream);
 
-    BlockTAP block;
+    BlockTAP block(data);
 
-    while (data.IsOk() && block.Parse(data))
+    while (data.IsOk() && block.Parse())
     {
         blocks.push_back(block);
     }
@@ -29,13 +29,13 @@ void ParserTAP::Run(wxBufferedInputStream &stream)
 }
 
 
-bool BlockTAP::Parse(wxDataInputStream &stream)
+bool BlockTAP::Parse()
 {
     Clear();
 
-    if (header.Parse(stream))
+    if (header.Parse())
     {
-        data.Parse(stream);
+        data.Parse();
     }
 
     return header.IsValid() && data.IsValid();
@@ -56,21 +56,21 @@ void BlockTAP::Clear()
 }
 
 
-bool BlockTAP::Header::Parse(wxDataInputStream &stream)
+bool BlockTAP::Header::Parse()
 {
     valid = false;
 
-    if (stream.Read16() == 19)      // Для заголовка здесь всегда 19
+    if (Read16() == 19)      // Для заголовка здесь всегда 19
     {
-        if (stream.Read8() == 0)    // Чтение флага - для заголовка 0
+        if (Read8() == 0)    // Чтение флага - для заголовка 0
         {
-            stream >> type_data;
+            type_data = Read8();
 
             if (type_data < 4)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    file_name[i] = (char)stream.Read8();
+                    file_name[i] = (char)Read8();
                 }
 
                 file_name[10] = 0;
@@ -82,9 +82,29 @@ bool BlockTAP::Header::Parse(wxDataInputStream &stream)
 }
 
 
-bool BlockTAP::Data::Parse(wxDataInputStream &stream)
+bool BlockTAP::Data::Parse()
 {
     valid = false;
 
     return valid;
+}
+
+
+uint8 BlockTAP::CommonStruct::Read8()
+{
+    uint8 byte = stream.Read8();
+
+    crc ^= byte;
+
+    return byte;
+}
+
+
+uint16 BlockTAP::CommonStruct::Read16()
+{
+    uint16 result = Read8();
+
+    result |= Read8() << 8;
+
+    return result;
 }
