@@ -8,13 +8,18 @@
 #pragma warning (pop)
 
 
-struct StructTAP
+void ParserTAP::Run(wxBufferedInputStream &stream)
 {
+    blocks.clear();
 
-};
+    while (!stream.Eof())
+    {
+        blocks.push_back(ParseBlock(stream));
+    }
+}
 
 
-void ParserTAP::Run(wxBufferedInputStream &)
+BlockTAP ParserTAP::ParseBlock(wxBufferedInputStream &stream)
 {
 
 }
