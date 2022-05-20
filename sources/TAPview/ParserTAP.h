@@ -1,6 +1,7 @@
 // 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include <vector>
+#include <string>
 
 
 class wxBufferedInputStream;
@@ -11,7 +12,11 @@ struct BlockTAP
 {
     BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
 
-    bool Parse();
+    // Читать данные из входного потока
+    bool Read();
+
+    // Распарсить считанные данные в массив lines
+    bool Parse(std::vector<std::string> &lines);
 
     bool IsValid() const;
 
@@ -59,7 +64,7 @@ struct BlockTAP
                             // arrays 01, 02 : N/A
                             // code       03 : holds 32768
 
-        bool Parse();
+        bool Read();
 
     } header;
 
@@ -67,7 +72,7 @@ struct BlockTAP
     {
         Data(wxDataInputStream &stream) : CommonStruct(stream) {}
 
-        bool Parse(const Header &);
+        bool Read(const Header &);
 
         std::vector<uint8> data;
 
@@ -76,10 +81,6 @@ struct BlockTAP
 private:
 
     void Clear();
-
-    bool ParseHeader(wxDataInputStream &);
-
-    bool ParseData(wxDataInputStream &);
 };
 
 

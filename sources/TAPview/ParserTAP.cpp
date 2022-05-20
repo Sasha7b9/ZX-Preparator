@@ -40,7 +40,7 @@ void ParserTAP::Run(wxBufferedInputStream &stream)
 
     while (data.IsOk())
     {
-        if (block.Parse())
+        if (block.Read())
         {
             blocks.push_back(block);
         }
@@ -55,13 +55,13 @@ void ParserTAP::Run(wxBufferedInputStream &stream)
 }
 
 
-bool BlockTAP::Parse()
+bool BlockTAP::Read()
 {
     Clear();
 
-    if (header.Parse())
+    if (header.Read())
     {
-        data.Parse(header);
+        data.Read(header);
     }
 
     return header.IsValid() && data.IsValid();
@@ -82,7 +82,7 @@ void BlockTAP::Clear()
 }
 
 
-bool BlockTAP::Header::Parse()
+bool BlockTAP::Header::Read()
 {
     valid = false;
 
@@ -125,7 +125,7 @@ bool BlockTAP::Header::Parse()
 }
 
 
-bool BlockTAP::Data::Parse(const Header &header)
+bool BlockTAP::Data::Read(const Header &header)
 {
     valid = false;
 
@@ -174,4 +174,10 @@ uint16 BlockTAP::CommonStruct::Read16()
     result |= Read8() << 8;
 
     return result;
+}
+
+
+bool BlockTAP::Parse(std::vector<std::string> &lines)
+{
+    return false;
 }
