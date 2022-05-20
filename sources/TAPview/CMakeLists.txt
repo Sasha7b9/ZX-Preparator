@@ -8,9 +8,14 @@ include_directories(.
                     ../ThirdParty/wxWidgets/include
                     ../generated/ThirdParty/lib/vc_dll/mswud/)
 
+link_directories(../generated/ThirdParty/lib/vc_dll)
+
+add_definitions(-DWXUSINGDLL)
+
 if(WIN32)
 
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
 
     add_compile_options(/wd4514)
     add_compile_options(/wd4625)
@@ -24,15 +29,15 @@ else()
 
 endif()
 
-file(GLOB SRC                      *.h *.cpp)
+file(GLOB SRC       *.h *.cpp)
 
-source_group(src                   FILES ${SRC})
+source_group(src    FILES ${SRC})
 
 add_executable(${PROJECT_NAME} ${SRC}
 )
 
 
-target_link_libraries(${PROJECT_NAME} wxbase31ud wxmsw31ud_core Ws2_32)
+target_link_libraries(${PROJECT_NAME} wxbase31ud wxmsw31ud_core)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\ThirdParty\\lib\\vc_dll\\wxbase316ud_vc_custom.dll $(OutputPath) /Y)
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\ThirdParty\\lib\\vc_dll\\wxmsw316ud_core_vc_custom.dll $(OutputPath) /Y)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxbase315ud_vc_custom.dll $(OutputPath) /Y)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxmsw315ud_core_vc_custom.dll $(OutputPath) /Y)
