@@ -10,12 +10,12 @@ preprocessor:
 	stosb                           ; AL -> [ES:EDI], EDI++   | Заполняем масссив characters 
 	inc	al                      ;                         | значениями от 0 до 255
 	jnz	make_characters_table   ;                         /
-	mov	esi,characters+'a'
-	mov	edi,characters+'A'
-	mov	ecx,26
-	rep	movsb
-	mov	edi,characters
-	mov	esi,symbol_characters+1
+	mov	esi,characters+'a'      ; в esi - адрес первой маленькой буквы
+	mov	edi,characters+'A'      ; в edi - адрес первой большой буквы
+	mov	ecx,26                  ; в ecs - количество букв английского алфавита
+	rep	movsb                   ; переписываем коды маленьких букв в коды больших букв
+	mov	edi,characters          ; edi <- characters
+	mov	esi,symbol_characters+1 ; 
 	movzx	ecx,byte [esi-1]
 	xor	eax,eax
       mark_symbol_characters:
