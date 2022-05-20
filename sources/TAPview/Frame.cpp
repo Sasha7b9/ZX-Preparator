@@ -74,16 +74,7 @@ void Frame::CreateFrameToolBar()
 {
     toolBar = CreateToolBar();
 
-    AddTool(TOOL_VIEW_BRIEF, _T("Краткий вид"), "TOOL_VIEW_BRIEF");
-    AddTool(TOOL_VIEW_FULL, _T("Полный вид"), "TOOL_VIEW_FULL");
-
     toolBar->AddSeparator();
-
-    AddTool(MEAS_PRESSURE, _T("Давление"), "MEAS_PRESSURE");
-    AddTool(MEAS_ILLUMINATION, _T("Освещённость"), "MEAS_ILLUMINATION");
-    AddTool(MEAS_VELOCITY, _T("Скорость"), "MEAS_VELOCITY");
-    AddTool(MEAS_TEMPERATURE, _T("Температура"), "MEAS_TEMPERATURE");
-    AddTool(MEAS_HUMIDITY, _T("Влажность"), "MEAS_HUMIDITY");
 
     Bind(wxEVT_MENU, &Frame::OnMeasurePressure, this, MEAS_PRESSURE);
     Bind(wxEVT_MENU, &Frame::OnMeasureIllumination, this, MEAS_ILLUMINATION);
@@ -92,16 +83,6 @@ void Frame::CreateFrameToolBar()
     Bind(wxEVT_MENU, &Frame::OnMeasureTemperature, this, MEAS_TEMPERATURE);
 
     toolBar->Realize();
-}
-
-
-void Frame::AddTool(int id, const wxString &label, pchar nameResource, pchar nameResourceDisabled)
-{
-    wxBitmap bitmap(nameResource, wxBITMAP_TYPE_BMP_RESOURCE);
-
-    wxBitmap bitmapDisabled(nameResourceDisabled ? wxBitmap(nameResourceDisabled, wxBITMAP_TYPE_BMP_RESOURCE) : bitmap);
-
-    toolBar->AddTool(id, label, bitmap, bitmapDisabled, wxITEM_NORMAL, label, label);
 }
 
 
