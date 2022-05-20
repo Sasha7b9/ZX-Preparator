@@ -5,3 +5,4 @@
            https://skoolkid.github.io/rom/maps/all.html
            https://skoolkit.ca/
 tap format https://formats.kaitai.io/zx_spectrum_tap/
+tap format https://scratchpad.fandom.com/wiki/Spectrum_emulator_file_formats#TAP_format

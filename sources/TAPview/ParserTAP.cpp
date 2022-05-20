@@ -8,6 +8,12 @@
 #pragma warning (pop)
 
 
+struct StructTAP
+{
+
+};
+
+
 void ParserTAP::Run(wxBufferedInputStream &)
 {
 
