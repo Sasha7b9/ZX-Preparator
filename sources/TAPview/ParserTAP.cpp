@@ -21,7 +21,7 @@
              ^^ first byte of header, indicating a code block
     
     file name .. ^^^^^^^^^^^^
-    header info .............. ^^^^^^^^^^^^^^^^
+    header info ..............^^^^^^^^^^^^^^^^
     checksum of header .........................^^
     length of second block ........................^^^^^
     flag byte ...........................................^^
@@ -81,7 +81,9 @@ bool BlockTAP::Header::Parse()
 {
     valid = false;
 
-    if (Read16() == 19)      // Для заголовка здесь всегда 19
+    crc = 0;
+
+    if (stream.Read16() == 19)      // Для заголовка здесь всегда 19
     {
         if (Read8() == 0)    // Чтение флага - для заголовка 0
         {
@@ -103,6 +105,11 @@ bool BlockTAP::Header::Parse()
                 param2 = Read16();
 
                 valid = stream.IsOk();
+
+                if (stream.Read8() != crc)
+                {
+                    valid = false;
+                }
             }
         }
     }
