@@ -25,6 +25,7 @@ if(WIN32)
     add_compile_options(/wd5026)
     add_compile_options(/wd5027)
     add_compile_options(/wd5039)
+    add_compile_options(/wd5045)
 
 else()
 

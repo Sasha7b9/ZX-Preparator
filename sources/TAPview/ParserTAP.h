@@ -76,6 +76,10 @@ struct BlockTAP
 
         std::vector<uint8> data;
 
+        uint16 GetData16();
+        uint8 GetData8();
+        char GetChar();
+
     } data;
 
 private:
@@ -83,6 +87,7 @@ private:
     void Clear();
 
     bool ParseProgram(std::vector<std::string> &lines);
+    std::string ParseLineProgram();
 };
 
 

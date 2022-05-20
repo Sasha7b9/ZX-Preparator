@@ -7,6 +7,7 @@
 #include <wx/wfstream.h>
 #include <wx/datstrm.h>
 #pragma warning (pop)
+#include <sstream>
 
 
 /*
@@ -190,5 +191,55 @@ bool BlockTAP::Parse(std::vector<std::string> &lines)
 
 bool BlockTAP::ParseProgram(std::vector<std::string> &lines)
 {
-    return false;
+    while (data.data.size())
+    {
+        lines.push_back(ParseLineProgram());
+    }
+
+    return true;
+}
+
+
+std::string BlockTAP::ParseLineProgram()
+{
+    std::stringstream ss;
+
+    ss << data.GetData16();
+    ss << " ";
+    uint16 size = data.GetData16();
+    ss << size;
+    ss << " ";
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        ss << data.GetChar();
+    }
+
+    data.GetChar();
+
+    return ss.str();
+}
+
+
+uint16 BlockTAP::Data::GetData16()
+{
+    uint16 result = GetData8() << 8;
+    result |= GetData8();
+    return result;
+}
+
+
+uint8 BlockTAP::Data::GetData8()
+{
+    uint8 result = data[0];
+
+    data.erase(data.begin());
+
+    return result;
+}
+
+
+char BlockTAP::Data::GetChar()
+{
+    return (char)GetData8();
 }
