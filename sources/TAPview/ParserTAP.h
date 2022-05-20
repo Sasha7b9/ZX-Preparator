@@ -67,7 +67,9 @@ struct BlockTAP
     {
         Data(wxDataInputStream &stream) : CommonStruct(stream) {}
 
-        bool Parse();
+        bool Parse(const Header &);
+
+        std::vector<uint8> data;
 
     } data;
 
