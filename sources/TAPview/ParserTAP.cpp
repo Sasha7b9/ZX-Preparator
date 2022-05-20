@@ -37,21 +37,21 @@ namespace KeyCodes
     {
         static const char * const strings[256] =
         {
-            0,          // 00
-            0,          // 01
-            0,          // 02
-            0,          // 03
-            0,          // 04
-            0,          // 05
-            0,          // 06
-            0,          // 07
-            0,          // 08
-            0,          // 09
-            0,          // 0A
-            0,          // 0B
-            0,          // 0C
-            0,          // 0D
-            0,          // 0E
+            0,              // 00
+            0,              // 01
+            0,              // 02
+            0,              // 03
+            0,              // 04
+            0,              // 05
+            0,              // 06
+            0,              // 07
+            0,              // 08
+            0,              // 09
+            "CURSOR DOWN",  // 0A
+            0,              // 0B
+            0,              // 0C
+            0,              // 0D
+            "SYMBOL SHIFT", // 0E
             0,          // 0F
             0,          // 10
             0,          // 11
@@ -493,6 +493,11 @@ std::string BlockTAP::ParseLineProgram()
     for (int i = 0; i < size - 1; i++)
     {
         uint8 code = data.GetData8();
+
+        if (code == 0x0e)
+        {
+            code = code;
+        }
 
         const char *string = KeyCodes::Get(code);
 
