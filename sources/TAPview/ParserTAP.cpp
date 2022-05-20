@@ -74,6 +74,12 @@ bool BlockTAP::Header::Parse()
                 }
 
                 file_name[10] = 0;
+
+                size_data = Read16();
+
+                param1 = Read16();
+
+                param2 = Read16();
             }
         }
     }

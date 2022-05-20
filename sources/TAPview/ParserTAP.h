@@ -45,11 +45,19 @@ struct BlockTAP
         }
 
         uint8 type_data = 0xff;     // Тип данных, следующих за заголовком
-                                    // 00
-                                    // 01
-                                    // 02
+                                    // 00 - program
+                                    // 01 - number array
+                                    // 02 - character array
                                     // 03 - code
         char file_name[11];
+        uint16 size_data;           // Длина блока данных, следуюшего за заголовком, без учёта флага и контрольной суммы
+
+        uint16 param1;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
+                            // arrays 01, 02 : variable name
+                            // code       03 : holds the start of the code block when saved
+        uint16 param2;      // program 00    : holds the start of the variable area relative to the start of the program
+                            // arrays 01, 02 : N/A
+                            // code       03 : holds 32768
 
         bool Parse();
 
