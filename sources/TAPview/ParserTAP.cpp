@@ -38,14 +38,19 @@ void ParserTAP::Run(wxBufferedInputStream &stream)
 
     BlockTAP block(data);
 
-    while (data.IsOk() && block.Parse())
+    while (data.IsOk())
     {
-        blocks.push_back(block);
-    }
-
-    if (data.IsOk() || !block.IsValid())
-    {
-        blocks.clear();
+        if (block.Parse())
+        {
+            blocks.push_back(block);
+        }
+        else
+        {
+            if (data.IsOk())
+            {
+                blocks.clear();
+            }
+        }
     }
 }
 
