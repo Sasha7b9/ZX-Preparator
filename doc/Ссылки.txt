@@ -2,3 +2,5 @@ FASMX-ZX https://www.sinclairzxworld.com/viewtopic.php?f=6&t=1064
 EightyOne Sinclair Emulator https://sourceforge.net/projects/eightyone-sinclair-emulator/
 https://www.sinclairzxworld.com/viewtopic.php?f=6&t=1064
 https://board.flatassembler.net/topic.php?t=19201
+https://skoolkid.github.io/rom/maps/all.html
+https://skoolkit.ca/
