@@ -206,7 +206,7 @@ std::string BlockTAP::ParseLineProgram()
 {
     std::stringstream ss;
 
-    ss << data.GetData16();
+    ss << data.GetData16Reverse();
     ss << " ";
     uint16 size = data.GetData16();
     ss << size;
@@ -223,10 +223,18 @@ std::string BlockTAP::ParseLineProgram()
 }
 
 
-uint16 BlockTAP::Data::GetData16()
+uint16 BlockTAP::Data::GetData16Reverse()
 {
     uint16 result = (uint16)(GetData8() << 8);
     result |= GetData8();
+    return result;
+}
+
+
+uint16 BlockTAP::Data::GetData16()
+{
+    uint16 result = GetData8();
+    result |= GetData8() << 8;
     return result;
 }
 

@@ -77,6 +77,7 @@ struct BlockTAP
         std::vector<uint8> data;
 
         uint16 GetData16();
+        uint16 GetData16Reverse();
         uint8 GetData8();
         char GetChar();
 
