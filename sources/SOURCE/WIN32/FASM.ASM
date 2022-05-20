@@ -88,14 +88,14 @@ get_params:
 	mov	esi,eax
 	mov	edi,params
     find_command_start:
-	lodsb
-	cmp	al,20h
+	lodsb                           ; [DS:ESI] -> AL
+	cmp	al,20h                  ; ' '
 	je	find_command_start
-	cmp	al,22h
+	cmp	al,22h                  ; '"'
 	je	skip_quoted_name
     skip_name:
 	lodsb
-	cmp	al,20h
+	cmp	al,20h                  ; ' '
 	je	find_param
 	or	al,al
 	jz	all_params
