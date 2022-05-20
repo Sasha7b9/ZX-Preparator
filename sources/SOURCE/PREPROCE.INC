@@ -6,10 +6,10 @@
 preprocessor:
 	mov	edi,characters
 	xor	al,al                   ; 0 -> AL
-      make_characters_table:
-	stosb                           ; AL -> [ES:EDI]
-	inc	al
-	jnz	make_characters_table
+      make_characters_table:            ;                         \
+	stosb                           ; AL -> [ES:EDI], EDI++   | Заполняем масссив characters 
+	inc	al                      ;                         | значениями от 0 до 255
+	jnz	make_characters_table   ;                         /
 	mov	esi,characters+'a'
 	mov	edi,characters+'A'
 	mov	ecx,26
