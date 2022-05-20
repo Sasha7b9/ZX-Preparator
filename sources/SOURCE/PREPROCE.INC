@@ -14,14 +14,14 @@ preprocessor:
 	mov	edi,characters+'A'      ; в edi - адрес первой большой буквы
 	mov	ecx,26                  ; в ecs - количество букв английского алфавита
 	rep	movsb                   ; переписываем коды маленьких букв в коды больших букв
-	mov	edi,characters          ; edi <- characters
-	mov	esi,symbol_characters+1 ; 
-	movzx	ecx,byte [esi-1]
-	xor	eax,eax
-      mark_symbol_characters:
-	lodsb
-	mov	byte [edi+eax],0
-	loop	mark_symbol_characters
+	mov	edi,characters          ; edi <- characters       \
+	mov	esi,symbol_characters+1 ;                         |
+	movzx	ecx,byte [esi-1]        ;                         |
+	xor	eax,eax                 ;                         | переписываем символы
+      mark_symbol_characters:           ;                         | из symbol_characters
+	lodsb                           ; [DS:ESI] -> AL          |
+	mov	byte [edi+eax],0        ;                         |
+	loop	mark_symbol_characters  ;                         /
 	mov	edi,locals_counter
 	mov	ax,1 + '0' shl 8
 	stos	word [edi]
