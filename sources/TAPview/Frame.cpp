@@ -6,6 +6,7 @@
 #include <wx/statline.h>
 #include <wx/file.h>
 #include <wx/wfstream.h>
+#include <wx/textfile.h>
 #pragma warning (pop)
 
 
@@ -109,6 +110,17 @@ void Frame::OnOpen(wxCommandEvent &)
         std::vector<std::string> lines;
 
         parser.blocks[0].Parse(lines);
+
+        wxTextFile text_file;
+
+        text_file.Create(wxString("D:\\out.txt"));
+
+        for (uint i = 0; i < lines.size(); i++)
+        {
+            text_file.AddLine(lines[i]);
+        }
+
+        text_file.Write();
     }
 }
 
