@@ -20,6 +20,8 @@ public:
 
     void OnCloseWindow(wxCloseEvent &);
 
+    void OnOpen(wxCommandEvent &);
+
 private:
 
     static Frame *self;

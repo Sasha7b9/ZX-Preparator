@@ -3,6 +3,8 @@
 #include "Frame.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
+#include <wx/file.h>
+#include <wx/wfstream.h>
 #pragma warning (pop)
 
 
@@ -39,6 +41,8 @@ Frame::Frame(const wxString &title)
     wxMenuBar *menuBar = new wxMenuBar;
 
     wxMenu *menuFile = new wxMenu;
+    menuFile->Append(wxID_OPEN);
+    menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
     menuBar->Append(menuFile, _("Τΰιλ"));
 
@@ -52,6 +56,7 @@ Frame::Frame(const wxString &title)
     SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, &Frame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_MENU, &Frame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &Frame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_CLOSE_WINDOW, &Frame::OnCloseWindow, this);
 
@@ -83,6 +88,21 @@ void Frame::CreateFrameToolBar()
     Bind(wxEVT_MENU, &Frame::OnMeasureTemperature, this, MEAS_TEMPERATURE);
 
     toolBar->Realize();
+}
+
+
+void Frame::OnOpen(wxCommandEvent &)
+{
+    wxFileDialog dialog(this, "Choice tap file", wxEmptyString, wxEmptyString, "*.tap", wxFD_OPEN);
+
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxFileInputStream file_input(dialog.GetPath());
+
+        wxBufferedInputStream buf_input(file_input);
+
+
+    }
 }
 
 
