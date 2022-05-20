@@ -119,7 +119,7 @@ get_params:
 	jz	all_params
 	cmp	[input_file],0
 	jne	get_output_file
-	mov	[input_file],edi
+	mov	[input_file],edi        ; В этой точке оказываемся, если в edi - название файла
 	jmp	process_param
       get_output_file:
 	cmp	[output_file],0
@@ -152,7 +152,7 @@ get_params:
 	jae	bad_params
 	stosb
 	jmp	string_param
-    option_param:
+    option_param:                       ; Парсер параметров, которые начинаются с '-'
 	lodsb
 	cmp	al,'m'
 	je	memory_option

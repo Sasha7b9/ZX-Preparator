@@ -14,8 +14,8 @@ additional_memory_end dd ?
 stack_limit dd ?
 
 initial_definitions dd ?
-input_file dd ?
-output_file dd ?
+input_file dd ?                 ; Имя входного файла
+output_file dd ?                ; Имя выходного файла
 symbols_file dd ?
 
 passes_limit dw ?

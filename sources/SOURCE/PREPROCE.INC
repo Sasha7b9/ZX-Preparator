@@ -5,9 +5,9 @@
 
 preprocessor:
 	mov	edi,characters
-	xor	al,al
+	xor	al,al                   ; 0 -> AL
       make_characters_table:
-	stosb
+	stosb                           ; AL -> [ES:EDI]
 	inc	al
 	jnz	make_characters_table
 	mov	esi,characters+'a'
