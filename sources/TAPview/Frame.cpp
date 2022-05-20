@@ -1,6 +1,7 @@
 // 2022/04/29 13:56:48 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Frame.h"
+#include "ParserTAP.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>
@@ -101,7 +102,9 @@ void Frame::OnOpen(wxCommandEvent &)
 
         wxBufferedInputStream buf_input(file_input);
 
+        ParserTAP parser;
 
+        parser.Run(buf_input);
     }
 }
 
