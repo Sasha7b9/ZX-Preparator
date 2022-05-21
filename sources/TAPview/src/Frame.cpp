@@ -86,6 +86,7 @@ Frame::Frame(const wxString &title)
     }
 
     controlDir = new wxGenericDirCtrl(this);
+    controlDir->SetMaxSize({ 200, 2000 });
 
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(controlDir, 1, wxEXPAND);
