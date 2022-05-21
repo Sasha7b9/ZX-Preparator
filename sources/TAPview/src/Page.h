@@ -26,5 +26,5 @@ private:
 
     wxFont font;
 
-    void WriteText(wxDC &, const wxString &text, int &x, int &, const wxPen *);
+    void WriteText(wxDC &, const wxString &text, int &x, int &, bool fill);
 };

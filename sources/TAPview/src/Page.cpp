@@ -21,16 +21,21 @@ Page::Page(wxNotebook *parent, int _index) :
 }
 
 
-void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, const wxPen *pen)
+void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
 {
-    dc.SetPen(*pen);
-
     wxSize size = dc.GetTextExtent(text);
 
     if (x + size.x > GetSize().x)
     {
         x = 0;
         y += font.GetPixelSize().y;
+    }
+
+    if (fill)
+    {
+        dc.SetBrush(*wxLIGHT_GREY_BRUSH);
+        dc.SetPen(*wxLIGHT_GREY_PEN);
+        dc.DrawRectangle(x, y, size.x, size.y);
     }
 
     dc.DrawText(text, x, y);
@@ -53,7 +58,6 @@ void Page::OnDraw(wxDC &dc)
     {
     case 0:
         {
-            dc.SetPen(*wxBLACK_PEN);
             dc.SetFont(font);
 
             wxSize size = GetSize();
@@ -63,15 +67,15 @@ void Page::OnDraw(wxDC &dc)
 
             for (Line line : lines)
             {
-                const wxPen *pen = wxBLACK_PEN;
+                bool fill = false;
 
-                WriteText(dc, wxString::Format("%d %d ", line.number, line.size), x, y, pen);
+                WriteText(dc, wxString::Format("%d %d ", line.number, line.size), x, y, fill);
 
                 for (Symbol symbol : line.symbols)
                 {
-                    WriteText(dc, symbol.string, x, y, pen);
+                    fill = !fill;
 
-                    pen = (pen == wxBLACK_PEN) ? wxYELLOW_PEN : wxBLACK_PEN;
+                    WriteText(dc, symbol.string, x, y, fill);
                 }
 
                 y += font.GetPixelSize().y;
