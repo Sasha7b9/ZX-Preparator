@@ -9,8 +9,16 @@
 class Page : public wxScrolledWindow
 {
 public:
+
     Page(wxNotebook *parent, int index);
+
     virtual void OnDraw(wxDC &) override;
+
+    void SetLines(std::vector<std::string> &);
+
 private:
-    int index;
+
+    int index = -1;
+
+    std::vector<std::string> lines;
 };

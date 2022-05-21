@@ -30,6 +30,22 @@ void Page::OnDraw(wxDC &dc)
     switch (index)
     {
     case 0:
+        {
+            dc.SetPen(*wxBLACK_PEN);
+
+            int x = 0;
+            int y = 0;
+
+            for (std::string line : lines)
+            {
+                dc.DrawText(line.c_str(), x, y);
+
+                y += 20;
+            }
+        }
+        break;
+
+
     case 1:
         // draw lines to make a cross
         dc.DrawLine(0, 0, 200, 200);
@@ -67,4 +83,15 @@ void Page::OnDraw(wxDC &dc)
         dc.DrawLines(6, points, 160);
         break;
     }
+}
+
+
+void Page::SetLines(std::vector<std::string> &_lines)
+{
+    for (std::string line : _lines)
+    {
+        lines.push_back(line);
+    }
+
+    Refresh();
 }

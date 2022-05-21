@@ -129,6 +129,10 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.blocks[0].Parse(lines);
 
+        Page *page = (Page *)notebook->GetPage(0);
+
+        page->SetLines(lines);
+
         wxTextFile text_file;
 
         text_file.Create(wxString("D:\\out.txt"));
