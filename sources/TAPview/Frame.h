@@ -1,5 +1,6 @@
 // 2022/04/29 13:56:55 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
+#include "Canvas.h"
 #define WIN32_LEAN_AND_MEAN
 #pragma warning(push, 0)
 #include <wx/wx.h>
@@ -26,6 +27,8 @@ private:
 
     static Frame *self;
     wxToolBar *toolBar = nullptr;
+
+    Canvas *canvas = nullptr;
 
     void OnViewBrief(wxCommandEvent &);
     void OnViewFull(wxCommandEvent &);

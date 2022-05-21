@@ -55,6 +55,8 @@ Frame::Frame(const wxString &title)
     menuHelp->Append(wxID_ABOUT);
     menuBar->Append(menuHelp, _("Помощь"));
 
+    canvas = new Canvas(this);
+
     SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, &Frame::OnAbout, this, wxID_ABOUT);
@@ -72,7 +74,7 @@ Frame::Frame(const wxString &title)
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     SetSizer(sizer);
 
-    SetMinSize({1024, 768});
+    SetSize({1024, 768});
 }
 
 
