@@ -21,4 +21,6 @@ private:
     int index = -1;
 
     std::vector<std::string> lines;
+
+    wxFont font;
 };

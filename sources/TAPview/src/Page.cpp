@@ -13,6 +13,9 @@ Page::Page(wxNotebook *parent, int _index) :
     {
         SetScrollbars(20, 20, 10, 10);
     }
+
+    font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
+    font.SetWeight(wxFONTWEIGHT_BOLD);
 }
 
 
@@ -32,6 +35,7 @@ void Page::OnDraw(wxDC &dc)
     case 0:
         {
             dc.SetPen(*wxBLACK_PEN);
+            dc.SetFont(font);
 
             int x = 0;
             int y = 0;
@@ -40,8 +44,10 @@ void Page::OnDraw(wxDC &dc)
             {
                 dc.DrawText(line.c_str(), x, y);
 
-                y += 20;
+                y += font.GetPixelSize().y;
             }
+
+            dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);
         }
         break;
 
