@@ -7,10 +7,15 @@
 #pragma warning(pop)
 
 
-class Notebook : public wxNotebook
+struct TypePage
 {
-public:
-    Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP) {}
+    enum E
+    {
+        Info,
+        Binary,
+        Parsed,
+        Edit
+    };
 };
 
 
@@ -34,4 +39,23 @@ private:
     wxFont font;
 
     void WriteText(wxDC &, const wxString &text, int &x, int &, bool fill);
+};
+
+
+class Notebook : public wxNotebook
+{
+public:
+    Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP) {}
+
+    Page *GetPageInfo() { return (Page *)GetPage(TypePage::Info); }
+
+    Page *GetPageBinary() { return (Page *)GetPage(TypePage::Binary); }
+
+    Page *GetPageParsed() { return (Page *)GetPage(TypePage::Parsed); }
+
+    Page *GetPageEdit() { return (Page *)GetPage(TypePage::Edit); }
+
+private:
+
+    virtual wxWindow *GetPage(size_t index) const override { return wxNotebook::GetPage(index); }
 };

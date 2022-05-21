@@ -106,8 +106,8 @@ Frame::Frame(const wxString &title)
     parser.Run(buf_input);
     std::vector<Line> lines;
     parser.blocks[0].Parse(lines);
-    Page *page = (Page *)notebook->GetPage(0);
-    page->SetLines(lines);
+
+    notebook->GetPageParsed()->SetLines(lines);
 
     SetSize({ 1024, 768 });
 }
@@ -168,9 +168,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.blocks[0].Parse(lines);
 
-        Page *page = (Page *)notebook->GetPage(0);
-
-        page->SetLines(lines);
+        notebook->GetPageParsed()->SetLines(lines);
 
 //        wxTextFile text_file;
 //
