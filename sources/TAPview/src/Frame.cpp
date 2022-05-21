@@ -143,6 +143,9 @@ void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
 
 void Frame::OnEventTreeSelChanging(wxTreeEvent &event)
 {
+    wxFileDataObject data;
+    data.AddFile(controlDir->GetPath(event.GetItem()));
+
     event.Skip();
 }
 
