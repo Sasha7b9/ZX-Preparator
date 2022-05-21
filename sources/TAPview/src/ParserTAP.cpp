@@ -37,21 +37,21 @@ namespace KeyCodes
     {
         static const char * const strings[256] =
         {
-            0,              // 00
-            0,              // 01
-            0,              // 02
-            0,              // 03
-            0,              // 04
-            0,              // 05
-            0,              // 06
-            0,              // 07
-            0,              // 08
-            0,              // 09
-            "CURSOR DOWN",  // 0A
-            0,              // 0B
-            0,              // 0C
-            0,              // 0D
-            "SYMBOL SHIFT", // 0E
+            0,          // 00
+            0,          // 01
+            0,          // 02
+            0,          // 03
+            0,          // 04
+            0,          // 05
+            0,          // 06
+            0,          // 07
+            0,          // 08
+            0,          // 09
+            0,          // 0A
+            0,          // 0B
+            0,          // 0C
+            0,          // 0D
+            0,          // 0E
             0,          // 0F
             0,          // 10
             0,          // 11
@@ -255,7 +255,7 @@ namespace KeyCodes
             0,          // D7
             0,          // D8
             0,          // D9
-            "PAPER",    // DA
+            "PAPER ",   // DA
             0,          // DB
             0,          // DC
             0,          // DD
@@ -297,9 +297,9 @@ namespace KeyCodes
 
         if (strings[code] == 0)
         {
-            static char buffer[2] = { 0, 0 };
+            static char buffer[10] = { 0, 0 };
 
-            buffer[0] = (char)code;
+            std::sprintf(buffer, "h%02X", code);
 
             return buffer;
         }
@@ -502,11 +502,6 @@ std::string BlockTAP::ParseLineProgram()
         const char *string = KeyCodes::Get(code);
 
         ss << string;
-
-        if (std::strlen(string) > 1)
-        {
-            ss << " ";
-        }
     }
 
     data.GetChar();
