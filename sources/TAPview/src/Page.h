@@ -1,4 +1,5 @@
 #pragma once
+#include "ParserTAP.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
 #include <wx/wx.h>
@@ -15,13 +16,13 @@ public:
     virtual void OnDraw(wxDC &) override;
     void OnSizeEvent(wxSizeEvent &);
 
-    void SetLines(std::vector<std::string> &);
+    void SetLines(std::vector<Line> &);
 
 private:
 
     int index = -1;
 
-    std::vector<std::string> lines;
+    std::vector<Line> lines;
 
     wxFont font;
 };

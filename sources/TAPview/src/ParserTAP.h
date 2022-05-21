@@ -8,6 +8,28 @@ class wxBufferedInputStream;
 class wxDataInputStream;
 
 
+// Описывает элемент в строке
+struct Symbol
+{
+    Symbol(const char *symbol)
+    {
+        string = symbol;
+    }
+
+    std::string string;
+};
+
+
+// Описывает строку
+struct Line
+{
+    int number;
+    int size;
+
+    std::vector<Symbol> symbols;
+};
+
+
 struct BlockTAP
 {
     BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
@@ -16,7 +38,7 @@ struct BlockTAP
     bool Read();
 
     // Распарсить считанные данные в массив lines
-    bool Parse(std::vector<std::string> &lines);
+    bool Parse(std::vector<Line> &lines);
 
     bool IsValid() const;
 
@@ -87,8 +109,8 @@ private:
 
     void Clear();
 
-    bool ParseProgram(std::vector<std::string> &lines);
-    std::string ParseLineProgram();
+    bool ParseProgram(std::vector<Line> &lines);
+    Line ParseLineProgram();
 };
 
 

@@ -44,26 +44,28 @@ void Page::OnDraw(wxDC &dc)
             int x = 0;
             int y = 0;
 
-            for (std::string line : lines)
+            for (Line line : lines)
             {
-                for (uint i = 0; i < line.size(); i++)
-                {
-                    char symbol = line[i];
 
-                    wxSize symbol_size = dc.GetTextExtent(wxString(symbol));
 
-                    if (x + symbol_size.x > size.x)
-                    {
-                        x = 0;
-                        y += font.GetPixelSize().y;
-                    }
-
-                    dc.DrawText(wxString(symbol), x, y);
-                    x += symbol_size.x;
-                }
-
-                x = 0;
-                y += font.GetPixelSize().y;
+//                for (uint i = 0; i < line.size(); i++)
+//                {
+//                    char symbol = line[i];
+//
+//                    wxSize symbol_size = dc.GetTextExtent(wxString(symbol));
+//
+//                    if (x + symbol_size.x > size.x)
+//                    {
+//                        x = 0;
+//                        y += font.GetPixelSize().y;
+//                    }
+//
+//                    dc.DrawText(wxString(symbol), x, y);
+//                    x += symbol_size.x;
+//                }
+//
+//                x = 0;
+//                y += font.GetPixelSize().y;
             }
 
             dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);
@@ -111,9 +113,9 @@ void Page::OnDraw(wxDC &dc)
 }
 
 
-void Page::SetLines(std::vector<std::string> &_lines)
+void Page::SetLines(std::vector<Line> &_lines)
 {
-    for (std::string line : _lines)
+    for (Line line : _lines)
     {
         lines.push_back(line);
     }

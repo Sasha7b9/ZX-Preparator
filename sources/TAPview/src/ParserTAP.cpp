@@ -456,7 +456,7 @@ uint16 BlockTAP::CommonStruct::Read16()
 }
 
 
-bool BlockTAP::Parse(std::vector<std::string> &lines)
+bool BlockTAP::Parse(std::vector<Line> &lines)
 {
     lines.clear();
 
@@ -469,7 +469,7 @@ bool BlockTAP::Parse(std::vector<std::string> &lines)
 }
 
 
-bool BlockTAP::ParseProgram(std::vector<std::string> &lines)
+bool BlockTAP::ParseProgram(std::vector<Line> &lines)
 {
     while (data.data.size())
     {
@@ -480,33 +480,25 @@ bool BlockTAP::ParseProgram(std::vector<std::string> &lines)
 }
 
 
-std::string BlockTAP::ParseLineProgram()
+Line BlockTAP::ParseLineProgram()
 {
-    std::stringstream ss;
+    Line line;
 
-    ss << data.GetData16Reverse();
-    ss << " ";
-    uint16 size = data.GetData16();
-    ss << size;
-    ss << " ";
+    line.number = data.GetData16Reverse();
+    line.size = data.GetData16();
 
-    for (int i = 0; i < size - 1; i++)
+    for (int i = 0; i < line.size - 1; i++)
     {
         uint8 code = data.GetData8();
 
-        if (code == 0x0e)
-        {
-            code = code;
-        }
-
         const char *string = KeyCodes::Get(code);
 
-        ss << string;
+        line.symbols.push_back(string);
     }
 
     data.GetChar();
 
-    return ss.str();
+    return line;
 }
 
 
