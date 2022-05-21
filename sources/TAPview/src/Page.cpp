@@ -16,6 +16,8 @@ Page::Page(wxNotebook *parent, int _index) :
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
+
+    Bind(wxEVT_SIZE, &Page::OnSizeEvent, this);
 }
 
 
@@ -37,14 +39,24 @@ void Page::OnDraw(wxDC &dc)
             dc.SetPen(*wxBLACK_PEN);
             dc.SetFont(font);
 
+            wxSize size = GetSize();
+
             int x = 0;
             int y = 0;
 
             for (std::string line : lines)
             {
-                dc.DrawText(line.c_str(), x, y);
+                wxSize str_size = dc.GetTextExtent(line);
 
-                y += font.GetPixelSize().y;
+                if (str_size.x < size.x)
+                {
+                    dc.DrawText(line.c_str(), x, y);
+                    y += font.GetPixelSize().y;
+                }
+                else
+                {
+
+                }
             }
 
             dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);
@@ -99,5 +111,11 @@ void Page::SetLines(std::vector<std::string> &_lines)
         lines.push_back(line);
     }
 
+    Refresh();
+}
+
+
+void Page::OnSizeEvent(wxSizeEvent &)
+{
     Refresh();
 }

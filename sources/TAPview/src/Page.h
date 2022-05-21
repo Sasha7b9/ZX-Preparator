@@ -13,6 +13,7 @@ public:
     Page(wxNotebook *parent, int index);
 
     virtual void OnDraw(wxDC &) override;
+    void OnSizeEvent(wxSizeEvent &);
 
     void SetLines(std::vector<std::string> &);
 
