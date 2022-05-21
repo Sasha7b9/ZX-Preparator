@@ -4,8 +4,8 @@ project (TAPview)
 
 set(CMAKE_UNITY_BUILD OFF)
 
-include_directories(.
-                    ../ThirdParty/wxWidgets/include
+include_directories(src/
+                    ../ThirdParty/wxWidgets/include/
                     ../generated/ThirdParty/lib/vc_dll/mswud/)
 
 link_directories(../generated/ThirdParty/lib/vc_dll)

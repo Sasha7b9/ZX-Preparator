@@ -2,6 +2,7 @@
 #include "defines.h"
 #include "Frame.h"
 #include "ParserTAP.h"
+#include "Page.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>
@@ -55,8 +56,6 @@ Frame::Frame(const wxString &title)
     menuHelp->Append(wxID_ABOUT);
     menuBar->Append(menuHelp, _("Помощь"));
 
-    canvas = new Canvas(this);
-
     SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, &Frame::OnAbout, this, wxID_ABOUT);
@@ -72,6 +71,24 @@ Frame::Frame(const wxString &title)
     CreateFrameToolBar();
 
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+
+    notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP);
+
+    for (int i = 0; i < 4; i++)
+    {
+        static const char *names[4] =
+        {
+            "Info",
+            "Bin",
+            "Parsed",
+            "Edit"
+        };
+
+        notebook->AddPage(new Page(notebook, i), names[i]);
+    }
+
+    sizer->Add(notebook);
+
     SetSizer(sizer);
 
     SetSize({1024, 768});
