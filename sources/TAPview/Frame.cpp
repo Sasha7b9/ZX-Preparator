@@ -72,8 +72,7 @@ Frame::Frame(const wxString &title)
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     SetSizer(sizer);
 
-    SetMinSize(GetSize());
-    SetMaxSize(GetSize());
+    SetMinSize({1024, 768});
 }
 
 
