@@ -21,6 +21,23 @@ Page::Page(wxNotebook *parent, int _index) :
 }
 
 
+void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, const wxPen *pen)
+{
+    dc.SetPen(*pen);
+
+    wxSize size = dc.GetTextExtent(text);
+
+    if (x + size.x > GetSize().x)
+    {
+        x = 0;
+        y += font.GetPixelSize().y;
+    }
+
+    dc.DrawText(text, x, y);
+    x += size.x;
+}
+
+
 void Page::OnDraw(wxDC &dc)
 {
     // vars to use ...
@@ -46,7 +63,10 @@ void Page::OnDraw(wxDC &dc)
 
             for (Line line : lines)
             {
+                WriteText(dc, wxString::Format("%d %d ", line.number, line.size), x, y, wxBLACK_PEN);
 
+                y += font.GetPixelSize().y;
+                x = 0;
 
 //                for (uint i = 0; i < line.size(); i++)
 //                {

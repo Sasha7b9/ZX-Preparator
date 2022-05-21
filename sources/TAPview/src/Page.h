@@ -25,4 +25,6 @@ private:
     std::vector<Line> lines;
 
     wxFont font;
+
+    void WriteText(wxDC &, const wxString &text, int &x, int &, const wxPen *);
 };
