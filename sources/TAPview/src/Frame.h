@@ -42,5 +42,9 @@ private:
 
     void CreateFrameToolBar();
 
+    void OnEventTreeItemActivated(wxTreeEvent &);
+    void OnEventTreeItemKeyDown(wxTreeEvent &);
+    void OnEventTreeSelChanging(wxTreeEvent &);
+
     void OnClose();
 };

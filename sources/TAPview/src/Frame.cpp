@@ -8,6 +8,7 @@
 #include <wx/file.h>
 #include <wx/wfstream.h>
 #include <wx/textfile.h>
+#include <wx/splitter.h>
 #pragma warning (pop)
 
 
@@ -70,6 +71,8 @@ Frame::Frame(const wxString &title)
 
     CreateFrameToolBar();
 
+//    wxSplitterWindow *splitter = new wxSplitterWindow(this);
+
     notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP);
 
     for (int i = 0; i < 4; i++)
@@ -86,6 +89,9 @@ Frame::Frame(const wxString &title)
     }
 
     controlDir = new wxGenericDirCtrl(this);
+    controlDir->Bind(wxEVT_TREE_ITEM_ACTIVATED, &Frame::OnEventTreeItemActivated, this);
+    controlDir->Bind(wxEVT_TREE_KEY_DOWN, &Frame::OnEventTreeItemKeyDown, this);
+    controlDir->Bind(wxEVT_TREE_SEL_CHANGING, &Frame::OnEventTreeSelChanging, this);
     controlDir->SetMaxSize({ 200, 2000 });
 
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -120,6 +126,24 @@ void Frame::CreateFrameToolBar()
     Bind(wxEVT_MENU, &Frame::OnMeasureTemperature, this, MEAS_TEMPERATURE);
 
     toolBar->Realize();
+}
+
+
+void Frame::OnEventTreeItemActivated(wxTreeEvent &event)
+{
+    event.Skip();
+}
+
+
+void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
+{
+    event.Skip();
+}
+
+
+void Frame::OnEventTreeSelChanging(wxTreeEvent &event)
+{
+    event.Skip();
 }
 
 
