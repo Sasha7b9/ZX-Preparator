@@ -33,8 +33,12 @@ void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
 
     if (fill)
     {
-        dc.SetBrush(*wxLIGHT_GREY_BRUSH);
-        dc.SetPen(*wxLIGHT_GREY_PEN);
+        static wxColour colour(230, 230, 230);
+        static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
+        static wxPen pen(colour);
+
+        dc.SetBrush(brush);
+        dc.SetPen(pen);
         dc.DrawRectangle(x, y, size.x, size.y);
     }
 
