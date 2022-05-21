@@ -28,12 +28,12 @@ void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
     if (x + size.x > GetSize().x)
     {
         x = 0;
-        y += font.GetPixelSize().y;
+        y += font.GetPixelSize().y + 4;
     }
 
     if (fill)
     {
-        static wxColour colour(230, 230, 230);
+        static wxColour colour(240, 240, 240);
         static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
         static wxPen pen(colour);
 
@@ -82,7 +82,7 @@ void Page::OnDraw(wxDC &dc)
                     WriteText(dc, symbol.string, x, y, fill);
                 }
 
-                y += font.GetPixelSize().y;
+                y += font.GetPixelSize().y + 4;
                 x = 0;
             }
 
