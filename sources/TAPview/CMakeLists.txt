@@ -31,7 +31,7 @@ else()
 
 endif()
 
-file(GLOB SRC       *.h *.cpp)
+file(GLOB SRC       src/*.*)
 
 source_group(src    FILES ${SRC})
 

@@ -20,6 +20,7 @@ private:
     long    widthChar, heightChar;      // size (in pixels) of one character
     int     xChars, yChars;             // the size (in text coords) of the window
     int     xMargin, yMargin;           // the margin around the text (looks nicer)
+    int     xCaret, yCaret;             // position (in text coords) of the caret
     wxChar *text = nullptr;
 
     // update the geometry

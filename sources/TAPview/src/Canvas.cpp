@@ -4,14 +4,23 @@
 #include <wx/dcclient.h>
 #include <wx/caret.h>
 #include <wx/frame.h>
+#include <wx/textctrl.h>
 #pragma warning(pop)
 
 
 Canvas::Canvas(wxWindow *parent) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER)
 {
+    text = (wxChar *)NULL;
+
     SetBackgroundColour(*wxWHITE);
+
     SetFontSize(12);
+
+    xCaret = yCaret = xChars = yChars = 0;
+
+    xMargin = yMargin = 5;
+
     CreateCaret();
 }
 
