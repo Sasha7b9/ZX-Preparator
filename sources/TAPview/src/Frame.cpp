@@ -73,7 +73,7 @@ Frame::Frame(const wxString &title)
 
 //    wxSplitterWindow *splitter = new wxSplitterWindow(this);
 
-    notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP);
+    notebook = new Notebook(this);
 
     for (int i = 0; i < 4; i++)
     {

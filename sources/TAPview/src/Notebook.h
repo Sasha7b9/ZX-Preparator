@@ -7,6 +7,13 @@
 #pragma warning(pop)
 
 
+class Notebook : public wxNotebook
+{
+public:
+    Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP) {}
+};
+
+
 class Page : public wxScrolledWindow
 {
 public:
