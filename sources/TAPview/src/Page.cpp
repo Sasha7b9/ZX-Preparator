@@ -55,7 +55,24 @@ void Page::OnDraw(wxDC &dc)
                 }
                 else
                 {
+                    for (uint i = 0; i < line.size(); i++)
+                    {
+                        char symbol = line[i];
 
+                        wxSize symbol_size = dc.GetTextExtent(wxString(symbol));
+
+                        if (x + symbol_size.x > size.x)
+                        {
+                            x = 0;
+                            y += font.GetPixelSize().y;
+                        }
+
+                        dc.DrawText(wxString(symbol), x, y);
+                        x += symbol_size.x;
+                    }
+
+                    x = 0;
+                    y += font.GetPixelSize().y;
                 }
             }
 

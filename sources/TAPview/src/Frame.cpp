@@ -92,6 +92,15 @@ Frame::Frame(const wxString &title)
 //    SetSizer(sizer);
 
     SetSize({1024, 768});
+
+    wxFileInputStream file_input("C:/Temp/WTHAS.TAP");
+    wxBufferedInputStream buf_input(file_input);
+    ParserTAP parser;
+    parser.Run(buf_input);
+    std::vector<std::string> lines;
+    parser.blocks[0].Parse(lines);
+    Page *page = (Page *)notebook->GetPage(0);
+    page->SetLines(lines);
 }
 
 
