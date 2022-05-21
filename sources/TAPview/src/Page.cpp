@@ -8,6 +8,11 @@ Page::Page(wxNotebook *parent, int _index) :
 {
     SetBackgroundColour(*wxWHITE);
     SetScrollbars(20, 20, 50, 50);
+
+    if (index == 0 || index == 2)
+    {
+        SetScrollbars(20, 20, 10, 10);
+    }
 }
 
 

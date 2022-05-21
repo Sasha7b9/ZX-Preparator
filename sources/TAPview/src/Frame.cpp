@@ -70,7 +70,7 @@ Frame::Frame(const wxString &title)
 
     CreateFrameToolBar();
 
-    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+//    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
 
     notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP);
 
@@ -87,9 +87,9 @@ Frame::Frame(const wxString &title)
         notebook->AddPage(new Page(notebook, i), names[i]);
     }
 
-    sizer->Add(notebook);
+//    sizer->Add(notebook);
 
-    SetSizer(sizer);
+//    SetSizer(sizer);
 
     SetSize({1024, 768});
 }
