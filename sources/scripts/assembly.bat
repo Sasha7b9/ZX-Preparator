@@ -12,16 +12,16 @@ goto HINT
 if %isMake%==0 goto BUILDING
 echo Making Visual Studio version...
 cd ..
-rmdir generated\FASM-Z80 /s /q
+rmdir generated\ZX-Preparator /s /q
 cd scripts
 @echo on
-cmake ../CMakeLists.txt -B../generated/FASM-Z80 -G "Visual Studio 17 2022" -A Win32 -DCMAKE_BUILD_TYPE=Debug
+cmake ../CMakeLists.txt -B../generated/ZX-Preparator -G "Visual Studio 17 2022" -A Win32 -DCMAKE_BUILD_TYPE=Debug
 @echo off
 
 :BUILDING
 if %isBuild%==0 goto EXIT
 @echo on
-MSBuild.exe ../generated/FASM-Z80/FASM-Z80.sln -clp:ErrorsOnly;WarningsOnly -nologo /m
+MSBuild.exe ../generated/ZX-Preparator/ZX-Preparator.sln -clp:ErrorsOnly;WarningsOnly -nologo /m
 @echo off
 goto EXIT
 

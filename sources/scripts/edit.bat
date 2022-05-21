@@ -1,2 +1,2 @@
 @echo on
-start ..\generated\FASM-Z80\FASM-Z80.sln
+start ..\generated\ZX-Preparator\ZX-Preparator.sln

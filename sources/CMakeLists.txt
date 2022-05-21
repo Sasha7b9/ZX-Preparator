@@ -1,11 +1,11 @@
 # (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 cmake_minimum_required(VERSION 2.9)
 
-project (FASM-Z80)
+project (ZX-Preparator)
 
 set(CMAKE_UNITY_BUILD ON)
 
-set (TARGET_NAME FASM-Z80)
+set (TARGET_NAME ZX-Preparator)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
     add_definitions(-DDEBUG)
