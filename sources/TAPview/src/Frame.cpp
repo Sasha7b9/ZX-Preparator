@@ -70,8 +70,6 @@ Frame::Frame(const wxString &title)
 
     CreateFrameToolBar();
 
-//    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-
     notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP);
 
     for (int i = 0; i < 4; i++)
@@ -87,11 +85,13 @@ Frame::Frame(const wxString &title)
         notebook->AddPage(new Page(notebook, i), names[i]);
     }
 
-//    sizer->Add(notebook);
+    controlDir = new wxGenericDirCtrl(this);
 
-//    SetSizer(sizer);
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(controlDir, 1, wxEXPAND);
+    sizer->Add(notebook, 1, wxEXPAND);
 
-    SetSize({1024, 768});
+    SetSizerAndFit(sizer);
 
     wxFileInputStream file_input("C:/Temp/WTHAS.TAP");
     wxBufferedInputStream buf_input(file_input);
@@ -101,6 +101,8 @@ Frame::Frame(const wxString &title)
     parser.blocks[0].Parse(lines);
     Page *page = (Page *)notebook->GetPage(0);
     page->SetLines(lines);
+
+    SetSize({ 1024, 768 });
 }
 
 
