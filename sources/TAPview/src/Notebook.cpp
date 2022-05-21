@@ -1,5 +1,5 @@
 #include "defines.h"
-#include "Page.h"
+#include "Notebook.h"
 
 
 Page::Page(wxNotebook *parent, int _index) :
