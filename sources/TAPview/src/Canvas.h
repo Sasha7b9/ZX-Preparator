@@ -17,10 +17,10 @@ public:
 private:
 
     wxFont  font;
-    long    widthChar, heightChar;      // size (in pixels) of one character
-    int     xChars, yChars;             // the size (in text coords) of the window
-    int     xMargin, yMargin;           // the margin around the text (looks nicer)
-    int     xCaret, yCaret;             // position (in text coords) of the caret
+    long    widthChar = 0, heightChar = 0;      // size (in pixels) of one character
+    int     xChars = 0, yChars = 0;             // the size (in text coords) of the window
+    int     xMargin = 0, yMargin = 0;           // the margin around the text (looks nicer)
+    int     xCaret = 0, yCaret = 0;             // position (in text coords) of the caret
     wxChar *text = nullptr;
 
     // update the geometry

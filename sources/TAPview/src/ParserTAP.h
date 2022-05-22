@@ -11,10 +11,7 @@ class wxDataInputStream;
 // Описывает элемент в строке
 struct Symbol
 {
-    Symbol(const char *symbol)
-    {
-        string = symbol;
-    }
+    Symbol(const char *symbol) : string(symbol) { }
 
     std::string string;
 };
@@ -77,14 +74,14 @@ struct BlockTAP
                                     // 02 - character array
                                     // 03 - code
         char file_name[11];
-        uint16 size_data;           // Длина блока данных, следуюшего за заголовком, без учёта флага и контрольной суммы
+        uint16 size_data = 0;   // Длина блока данных, следуюшего за заголовком, без учёта флага и контрольной суммы
 
-        uint16 param1;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
-                            // arrays 01, 02 : variable name
-                            // code       03 : holds the start of the code block when saved
-        uint16 param2;      // program 00    : holds the start of the variable area relative to the start of the program
-                            // arrays 01, 02 : N/A
-                            // code       03 : holds 32768
+        uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
+                                // arrays 01, 02 : variable name
+                                // code       03 : holds the start of the code block when saved
+        uint16 param2 = 0;      // program 00    : holds the start of the variable area relative to the start of the program
+                                // arrays 01, 02 : N/A
+                                // code       03 : holds 32768
 
         bool Read();
 
