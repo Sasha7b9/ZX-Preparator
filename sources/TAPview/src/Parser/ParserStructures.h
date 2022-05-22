@@ -6,7 +6,11 @@
 
 struct DescriptionTAP
 {
+    void Clear();
+
     bool valid = false;
+
+    int numberBlocks = 0;
 };
 
 

@@ -87,9 +87,7 @@ Frame::Frame(const wxString &title)
 
     ParserTAP parser;
 
-    DescriptionTAP description = parser.Execute("C:/Temp/WTHAS.TAP");
-
-    if (description.valid)
+    if (parser.Execute("C:/Temp/WTHAS.TAP"))
     {
         ProgramBASIC program;
         parser.blocks[0].Decode(program);
@@ -124,9 +122,11 @@ void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
 
 void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 {
-    DescriptionTAP description = ParserTAP().Execute(controlDir->GetPath(event.GetItem()));
+    ParserTAP parser;
 
-    notebook->GetPageInfo()->SetDescriptionTAP(description);
+    parser.Execute(controlDir->GetPath(event.GetItem()));
+
+    notebook->GetPageInfo()->SetDescriptionTAP(parser.desc);
 
     event.Skip();
 }

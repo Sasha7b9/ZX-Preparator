@@ -36,7 +36,7 @@ protected:
 
     wxFont font;
 
-    void WriteText(wxDC &, const wxString &text, int &x, int &, bool fill);
+    void WriteText(wxDC &, const wxString &, int &x, int &, bool fill);
 };
 
 

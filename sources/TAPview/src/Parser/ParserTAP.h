@@ -98,7 +98,9 @@ class ParserTAP
 {
 public:
 
-    DescriptionTAP Execute(pchar fileName);
+    bool Execute(pchar fileName);
 
     std::vector<BlockTAP> blocks;
+
+    DescriptionTAP desc;
 };
