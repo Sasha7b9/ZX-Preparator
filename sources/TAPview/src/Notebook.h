@@ -85,8 +85,4 @@ public:
     Page *GetPageParsed() { return (Page *)GetPage(TypePage::Parsed); }
 
     Page *GetPageEdit() { return (Page *)GetPage(TypePage::Edit); }
-
-private:
-
-    virtual wxWindow *GetPage(size_t index) const override { return wxNotebook::GetPage(index); }
 };

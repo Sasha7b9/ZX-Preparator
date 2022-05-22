@@ -5,18 +5,10 @@
 
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
 {
-    for (int i = 0; i < 4; i++)
-    {
-        static const char *names[4] =
-        {
-            "Info",
-            "Bin",
-            "Parsed",
-            "Edit"
-        };
-
-        AddPage(new Page(this, (TypePage::E)i, names[i]), names[i]);
-    }
+    AddPage(new PageInfo(this), "");
+    AddPage(new PageBinary(this), "");
+    AddPage(new PageParsed(this), "");
+    AddPage(new PageEdit(this), "");
 }
 
 
