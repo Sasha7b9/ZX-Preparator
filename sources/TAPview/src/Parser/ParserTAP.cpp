@@ -309,8 +309,12 @@ namespace KeyCodes
 }
 
 
-bool ParserTAP::Execute(wxBufferedInputStream &stream)
+//bool ParserTAP::Execute(wxBufferedInputStream &stream)
+bool ParserTAP::Execute(pchar fileName)
 {
+    wxFileInputStream file_input(fileName);
+    wxBufferedInputStream stream(file_input);
+
     blocks.clear();
 
     if (!stream.CanRead())

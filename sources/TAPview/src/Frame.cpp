@@ -84,10 +84,13 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-    wxFileInputStream file_input("C:/Temp/WTHAS.TAP");
-    wxBufferedInputStream buf_input(file_input);
+//    wxFileInputStream file_input("C:/Temp/WTHAS.TAP");
+//    wxBufferedInputStream buf_input(file_input);
+//    parser.Execute(buf_input);
+
     ParserTAP parser;
-    parser.Execute(buf_input);
+    parser.Execute("C:/Temp/WTHAS.TAP");
+
     std::vector<LineBASIC> lines;
     parser.blocks[0].Parse(lines);
 
@@ -134,13 +137,9 @@ void Frame::OnOpen(wxCommandEvent &)
 
     if (dialog.ShowModal() == wxID_OK)
     {
-        wxFileInputStream file_input(dialog.GetPath());
-
-        wxBufferedInputStream buf_input(file_input);
-
         ParserTAP parser;
 
-        parser.Execute(buf_input);
+        parser.Execute(dialog.GetPath());
 
         std::vector<LineBASIC> lines;
 
