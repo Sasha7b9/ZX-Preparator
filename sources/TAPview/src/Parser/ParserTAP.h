@@ -1,30 +1,12 @@
 // 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
+#include "Parser/ParserStructures.h"
 #include <vector>
 #include <string>
 
 
 class wxBufferedInputStream;
 class wxDataInputStream;
-
-
-// Описывает элемент в строке
-struct SymbolBASIC
-{
-    SymbolBASIC(const char *symbol) : string(symbol) { }
-
-    std::string string;
-};
-
-
-// Описывает строку
-struct LineBASIC
-{
-    int number;
-    int size;
-
-    std::vector<SymbolBASIC> symbols;
-};
 
 
 struct BlockTAP

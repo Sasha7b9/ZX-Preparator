@@ -313,6 +313,11 @@ bool ParserTAP::Execute(wxBufferedInputStream &stream)
 {
     blocks.clear();
 
+    if (!stream.CanRead())
+    {
+        return false;
+    }
+
     wxDataInputStream data(stream);
 
     BlockTAP block(data);
