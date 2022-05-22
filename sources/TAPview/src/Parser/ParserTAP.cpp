@@ -313,12 +313,12 @@ bool ParserTAP::Execute(pchar fileName)
 {
     blocks.clear();
 
-    wxFileInputStream file_input(fileName);
-
-    if (!file_input.Ok())
+    if (!wxFile::Exists(fileName))
     {
         return false;
     }
+
+    wxFileInputStream file_input(fileName);
 
     wxBufferedInputStream stream(file_input);
 
