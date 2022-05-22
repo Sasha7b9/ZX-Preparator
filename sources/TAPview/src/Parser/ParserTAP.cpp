@@ -333,7 +333,9 @@ bool ParserTAP::Execute(pchar fileName)
         if (block.Read())
         {
             blocks.push_back(block);
+            DescriptionTAP::DescriptionBlock descBlock(block.header.type_data, block.header.size_data);
             desc.numberBlocks++;
+            desc.blocks.push_back(descBlock);
         }
         else
         {

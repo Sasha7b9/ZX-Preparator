@@ -11,6 +11,15 @@ struct DescriptionTAP
     bool valid = false;
 
     int numberBlocks = 0;
+
+    struct DescriptionBlock
+    {
+        DescriptionBlock(uint8 t, uint16 s) : type(t), size(s) {}
+        uint8 type = 0;
+        uint16 size = 0;
+    };
+
+    std::vector<DescriptionBlock> blocks;
 };
 
 
