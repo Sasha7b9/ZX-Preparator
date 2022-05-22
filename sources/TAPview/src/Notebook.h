@@ -1,5 +1,5 @@
 #pragma once
-#include "ParserTAP.h"
+#include "Parser/ParserTAP.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
 #include <wx/wx.h>

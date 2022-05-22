@@ -1,7 +1,7 @@
 // 2022/04/29 13:56:48 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Frame.h"
-#include "ParserTAP.h"
+#include "Parser/ParserTAP.h"
 #include "Notebook.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
