@@ -62,7 +62,7 @@ public:
 
     virtual void OnDraw(wxDC &) override;
 
-    void SetLines(std::vector<LineBASIC> &);
+    void SetProgram(ProgramBASIC &);
 
 private:
 

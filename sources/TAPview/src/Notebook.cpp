@@ -64,9 +64,9 @@ void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
 }
 
 
-void PageParsed::SetLines(std::vector<LineBASIC> &_lines)
+void PageParsed::SetProgram(ProgramBASIC &program)
 {
-    for (LineBASIC line : _lines)
+    for (LineBASIC line : program.lines)
     {
         lines.push_back(line);
     }
