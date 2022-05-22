@@ -1,3 +1,4 @@
+// 2022/5/22 10:30:05 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Canvas.h"
 #pragma warning(push, 0)

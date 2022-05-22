@@ -1,3 +1,4 @@
+// 2022/5/22 10:31:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Parser/ParserTAP.h"
 #pragma warning(push, 0)
