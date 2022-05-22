@@ -26,20 +26,14 @@ public:
 
     Page(wxNotebook *parent, TypePage::E type, pchar _name);
 
-    virtual void OnDraw(wxDC &) override;
+    virtual void OnDraw(wxDC &) override {};
     void OnSizeEvent(wxSizeEvent &);
 
-    void SetLines(std::vector<Line> &);
-
-private:
+protected:
 
     TypePage::E type = TypePage::Count;
 
-    std::vector<Line> lines;
-
     wxFont font;
-
-    pchar name;
 
     void WriteText(wxDC &, const wxString &text, int &x, int &, bool fill);
 };
@@ -62,7 +56,16 @@ public:
 class PageParsed : public Page
 {
 public:
+
     PageParsed(wxNotebook *parent) : Page(parent, TypePage::Parsed, "Parsed") { }
+
+    virtual void OnDraw(wxDC &) override;
+
+    void SetLines(std::vector<Line> &);
+
+private:
+
+    std::vector<Line> lines;
 };
 
 
@@ -76,13 +79,21 @@ public:
 class Notebook : public wxNotebook
 {
 public:
+
     Notebook(wxWindow *parent);
 
-    Page *GetPageInfo() { return (Page *)GetPage(TypePage::Info); }
+    PageInfo *GetPageInfo() { return pageInfo; }
 
-    Page *GetPageBinary() { return (Page *)GetPage(TypePage::Binary); }
+    PageBinary *GetPageBinary() { return pageBinary; }
 
-    Page *GetPageParsed() { return (Page *)GetPage(TypePage::Parsed); }
+    PageParsed *GetPageParsed() { return pageParsed; }
 
-    Page *GetPageEdit() { return (Page *)GetPage(TypePage::Edit); }
+    PageEdit *GetPageEdit() { return pageEdit; }
+
+private:
+
+    PageInfo *pageInfo = nullptr;
+    PageBinary *pageBinary = nullptr;
+    PageParsed *pageParsed = nullptr;
+    PageEdit *pageEdit = nullptr;
 };
