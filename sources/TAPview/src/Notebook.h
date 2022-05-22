@@ -76,7 +76,7 @@ public:
 class Notebook : public wxNotebook
 {
 public:
-    Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP) {}
+    Notebook(wxWindow *parent);
 
     Page *GetPageInfo() { return (Page *)GetPage(TypePage::Info); }
 

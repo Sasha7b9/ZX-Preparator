@@ -1,5 +1,23 @@
+// 2022/5/22 9:25:12 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Notebook.h"
+
+
+Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        static const char *names[4] =
+        {
+            "Info",
+            "Bin",
+            "Parsed",
+            "Edit"
+        };
+
+        AddPage(new Page(this, (TypePage::E)i, names[i]), names[i]);
+    }
+}
 
 
 Page::Page(wxNotebook *parent, TypePage::E _type, pchar _name) :

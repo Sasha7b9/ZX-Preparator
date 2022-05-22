@@ -72,19 +72,6 @@ Frame::Frame(const wxString &title)
 
     notebook = new Notebook(this);
 
-    for (int i = 0; i < 4; i++)
-    {
-        static const char *names[4] =
-        {
-            "Info",
-            "Bin",
-            "Parsed",
-            "Edit"
-        };
-
-        notebook->AddPage(new Page(notebook, (TypePage::E)i, names[i]), names[i]);
-    }
-
     controlDir = new wxGenericDirCtrl(this);
     controlDir->Bind(wxEVT_TREE_ITEM_ACTIVATED, &Frame::OnEventTreeItemActivated, this);
     controlDir->Bind(wxEVT_TREE_KEY_DOWN, &Frame::OnEventTreeItemKeyDown, this);
