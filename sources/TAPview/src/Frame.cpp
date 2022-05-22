@@ -88,7 +88,7 @@ Frame::Frame(const wxString &title)
     wxBufferedInputStream buf_input(file_input);
     ParserTAP parser;
     parser.Execute(buf_input);
-    std::vector<Line> lines;
+    std::vector<LineBASIC> lines;
     parser.blocks[0].Parse(lines);
 
     notebook->GetPageParsed()->SetLines(lines);
@@ -142,7 +142,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.Execute(buf_input);
 
-        std::vector<Line> lines;
+        std::vector<LineBASIC> lines;
 
         parser.blocks[0].Parse(lines);
 

@@ -459,7 +459,7 @@ uint16 BlockTAP::CommonStruct::Read16()
 }
 
 
-bool BlockTAP::Parse(std::vector<Line> &lines)
+bool BlockTAP::Parse(std::vector<LineBASIC> &lines)
 {
     lines.clear();
 
@@ -472,7 +472,7 @@ bool BlockTAP::Parse(std::vector<Line> &lines)
 }
 
 
-bool BlockTAP::ParseProgram(std::vector<Line> &lines)
+bool BlockTAP::ParseProgram(std::vector<LineBASIC> &lines)
 {
     while (data.data.size())
     {
@@ -483,9 +483,9 @@ bool BlockTAP::ParseProgram(std::vector<Line> &lines)
 }
 
 
-Line BlockTAP::ParseLineProgram()
+LineBASIC BlockTAP::ParseLineProgram()
 {
-    Line line;
+    LineBASIC line;
 
     line.number = data.GetData16Reverse();
     line.size = data.GetData16();

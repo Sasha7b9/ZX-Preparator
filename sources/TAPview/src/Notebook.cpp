@@ -64,9 +64,9 @@ void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
 }
 
 
-void PageParsed::SetLines(std::vector<Line> &_lines)
+void PageParsed::SetLines(std::vector<LineBASIC> &_lines)
 {
-    for (Line line : _lines)
+    for (LineBASIC line : _lines)
     {
         lines.push_back(line);
     }
@@ -99,13 +99,13 @@ void PageParsed::OnDraw(wxDC &dc)
     int x = 0;
     int y = 0;
 
-    for (Line line : lines)
+    for (LineBASIC line : lines)
     {
         bool fill = false;
 
         WriteText(dc, wxString::Format("%d %d ", line.number, line.size), x, y, fill);
 
-        for (Symbol symbol : line.symbols)
+        for (SymbolBASIC symbol : line.symbols)
         {
             fill = !fill;
 

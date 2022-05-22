@@ -24,7 +24,7 @@ class Page : public wxScrolledWindow
 {
 public:
 
-    Page(wxNotebook *parent, TypePage::E type, pchar _name);
+    Page(wxNotebook *parent, TypePage::E, pchar name);
 
     virtual void OnDraw(wxDC &) override {};
     void OnSizeEvent(wxSizeEvent &);
@@ -61,11 +61,11 @@ public:
 
     virtual void OnDraw(wxDC &) override;
 
-    void SetLines(std::vector<Line> &);
+    void SetLines(std::vector<LineBASIC> &);
 
 private:
 
-    std::vector<Line> lines;
+    std::vector<LineBASIC> lines;
 };
 
 

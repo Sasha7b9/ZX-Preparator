@@ -9,21 +9,21 @@ class wxDataInputStream;
 
 
 // Описывает элемент в строке
-struct Symbol
+struct SymbolBASIC
 {
-    Symbol(const char *symbol) : string(symbol) { }
+    SymbolBASIC(const char *symbol) : string(symbol) { }
 
     std::string string;
 };
 
 
 // Описывает строку
-struct Line
+struct LineBASIC
 {
     int number;
     int size;
 
-    std::vector<Symbol> symbols;
+    std::vector<SymbolBASIC> symbols;
 };
 
 
@@ -35,7 +35,7 @@ struct BlockTAP
     bool Read();
 
     // Распарсить считанные данные в массив lines
-    bool Parse(std::vector<Line> &lines);
+    bool Parse(std::vector<LineBASIC> &lines);
 
     bool IsValid() const;
 
@@ -106,8 +106,8 @@ private:
 
     void Clear();
 
-    bool ParseProgram(std::vector<Line> &lines);
-    Line ParseLineProgram();
+    bool ParseProgram(std::vector<LineBASIC> &lines);
+    LineBASIC ParseLineProgram();
 };
 
 
