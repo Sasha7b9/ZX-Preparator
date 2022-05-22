@@ -2,9 +2,10 @@
 #include "Notebook.h"
 
 
-Page::Page(wxNotebook *parent, TypePage::E _type) :
+Page::Page(wxNotebook *parent, TypePage::E _type, pchar _name) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL | wxHSCROLL),
-    type(_type)
+    type(_type),
+    name(_name)
 {
     SetBackgroundColour(*wxWHITE);
     SetScrollbars(20, 20, 50, 50);

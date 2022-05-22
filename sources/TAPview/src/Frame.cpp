@@ -82,7 +82,7 @@ Frame::Frame(const wxString &title)
             "Edit"
         };
 
-        notebook->AddPage(new Page(notebook, (TypePage::E)i), names[i]);
+        notebook->AddPage(new Page(notebook, (TypePage::E)i, names[i]), names[i]);
     }
 
     controlDir = new wxGenericDirCtrl(this);
