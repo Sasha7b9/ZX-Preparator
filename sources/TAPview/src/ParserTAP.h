@@ -115,7 +115,7 @@ class ParserTAP
 {
 public:
 
-    void Run(wxBufferedInputStream &);
+    void Execute(wxBufferedInputStream &);
 
     std::vector<BlockTAP> blocks;
 };

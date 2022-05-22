@@ -64,9 +64,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU, &Frame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_CLOSE_WINDOW, &Frame::OnCloseWindow, this);
 
-    Bind(wxEVT_MENU, &Frame::OnViewBrief, this, TOOL_VIEW_BRIEF);
-    Bind(wxEVT_MENU, &Frame::OnViewFull, this, TOOL_VIEW_FULL);
-
     Bind(wxEVT_PAINT, &Frame::OnPaint, this);
 
     CreateFrameToolBar();
@@ -103,7 +100,7 @@ Frame::Frame(const wxString &title)
     wxFileInputStream file_input("C:/Temp/WTHAS.TAP");
     wxBufferedInputStream buf_input(file_input);
     ParserTAP parser;
-    parser.Run(buf_input);
+    parser.Execute(buf_input);
     std::vector<Line> lines;
     parser.blocks[0].Parse(lines);
 
@@ -118,12 +115,6 @@ void Frame::CreateFrameToolBar()
     toolBar = CreateToolBar();
 
     toolBar->AddSeparator();
-
-    Bind(wxEVT_MENU, &Frame::OnMeasurePressure, this, MEAS_PRESSURE);
-    Bind(wxEVT_MENU, &Frame::OnMeasureIllumination, this, MEAS_ILLUMINATION);
-    Bind(wxEVT_MENU, &Frame::OnMeasureHumidity, this, MEAS_HUMIDITY);
-    Bind(wxEVT_MENU, &Frame::OnMeasureVelocity, this, MEAS_VELOCITY);
-    Bind(wxEVT_MENU, &Frame::OnMeasureTemperature, this, MEAS_TEMPERATURE);
 
     toolBar->Realize();
 }
@@ -162,7 +153,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         ParserTAP parser;
 
-        parser.Run(buf_input);
+        parser.Execute(buf_input);
 
         std::vector<Line> lines;
 
@@ -181,48 +172,6 @@ void Frame::OnOpen(wxCommandEvent &)
 //
 //        text_file.Write();
     }
-}
-
-
-void Frame::OnViewBrief(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnViewFull(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnMeasurePressure(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnMeasureIllumination(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnMeasureHumidity(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnMeasureVelocity(wxCommandEvent &)
-{
-
-}
-
-
-void Frame::OnMeasureTemperature(wxCommandEvent &)
-{
-
 }
 
 

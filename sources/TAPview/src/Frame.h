@@ -31,15 +31,6 @@ private:
     Notebook *notebook = nullptr;                 // There will be pages for working with files
     wxGenericDirCtrl *controlDir = nullptr;         // Directory tree for select files
 
-    void OnViewBrief(wxCommandEvent &);
-    void OnViewFull(wxCommandEvent &);
-
-    void OnMeasurePressure(wxCommandEvent &);
-    void OnMeasureIllumination(wxCommandEvent &);
-    void OnMeasureHumidity(wxCommandEvent &);
-    void OnMeasureVelocity(wxCommandEvent &);
-    void OnMeasureTemperature(wxCommandEvent &);
-
     void CreateFrameToolBar();
 
     void OnEventTreeItemActivated(wxTreeEvent &);
