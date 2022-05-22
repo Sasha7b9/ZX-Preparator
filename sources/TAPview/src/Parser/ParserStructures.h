@@ -29,3 +29,25 @@ struct ProgramBASIC
 
     std::vector<LineBASIC> lines;
 };
+
+
+struct SymbolASM
+{
+    SymbolASM(pchar symbol) : string(symbol) { }
+
+    std::string string;
+};
+
+
+struct LineASM
+{
+    std::vector<SymbolASM> symbols;
+};
+
+
+struct ProgramASM
+{
+    void Clear() { lines.clear(); }
+
+    std::vector<LineASM> lines;
+};
