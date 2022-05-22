@@ -85,7 +85,10 @@ Frame::Frame(const wxString &title)
     SetSizerAndFit(sizer);
 
     ParserTAP parser;
-    if (parser.Execute("C:/Temp/WTHAS.TAP"))
+
+    DescriptionTAP description = parser.Execute("C:/Temp/WTHAS.TAP");
+
+    if (description.valid)
     {
         ProgramBASIC program;
         parser.blocks[0].Decode(program);

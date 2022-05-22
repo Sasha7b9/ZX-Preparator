@@ -309,13 +309,15 @@ namespace KeyCodes
 }
 
 
-bool ParserTAP::Execute(pchar fileName)
+DescriptionTAP ParserTAP::Execute(pchar fileName)
 {
+    DescriptionTAP result;
+
     blocks.clear();
 
     if (!wxFile::Exists(fileName))
     {
-        return false;
+        return result;
     }
 
     wxFileInputStream file_input(fileName);
@@ -337,12 +339,14 @@ bool ParserTAP::Execute(pchar fileName)
             if (data.IsOk())
             {
                 blocks.clear();
-                return false;
+                return result;
             }
         }
     }
 
-    return true;
+    result.valid = true;
+
+    return result;
 }
 
 

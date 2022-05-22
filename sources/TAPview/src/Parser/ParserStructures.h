@@ -4,6 +4,12 @@
 #include <vector>
 
 
+struct DescriptionTAP
+{
+    bool valid = false;
+};
+
+
 // Описывает элемент в строке
 struct SymbolBASIC
 {
