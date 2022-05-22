@@ -21,3 +21,11 @@ struct LineBASIC
 
     std::vector<SymbolBASIC> symbols;
 };
+
+
+struct ProgramBASIC
+{
+    void Clear() { lines.clear(); }
+
+    std::vector<LineBASIC> lines;
+};

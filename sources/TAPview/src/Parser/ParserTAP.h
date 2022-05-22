@@ -17,7 +17,7 @@ struct BlockTAP
     bool Read();
 
     // –аспарсить считанные данные в массив lines
-    bool Parse(std::vector<LineBASIC> &lines);
+    bool Decode(ProgramBASIC &program);
 
     bool IsValid() const;
 
@@ -88,7 +88,8 @@ private:
 
     void Clear();
 
-    bool ParseProgram(std::vector<LineBASIC> &lines);
+    bool ParseProgram(ProgramBASIC &program);
+
     LineBASIC ParseLineProgram();
 };
 
@@ -96,8 +97,6 @@ private:
 class ParserTAP
 {
 public:
-
-//    bool Execute(wxBufferedInputStream &);
 
     bool Execute(pchar fileName);
 

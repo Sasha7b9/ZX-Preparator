@@ -87,9 +87,9 @@ Frame::Frame(const wxString &title)
     ParserTAP parser;
     if (parser.Execute("C:/Temp/WTHAS.TAP"))
     {
-        std::vector<LineBASIC> lines;
-        parser.blocks[0].Parse(lines);
-        notebook->GetPageParsed()->SetLines(lines);
+        ProgramBASIC program;
+        parser.blocks[0].Decode(program);
+        notebook->GetPageParsed()->SetLines(program.lines);
     }
 
     SetSize({ 1024, 768 });
@@ -137,11 +137,11 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.Execute(dialog.GetPath());
 
-        std::vector<LineBASIC> lines;
+        ProgramBASIC program;
 
-        parser.blocks[0].Parse(lines);
+        parser.blocks[0].Decode(program);
 
-        notebook->GetPageParsed()->SetLines(lines);
+        notebook->GetPageParsed()->SetLines(program.lines);
 
 //        wxTextFile text_file;
 //

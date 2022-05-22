@@ -468,24 +468,24 @@ uint16 BlockTAP::CommonStruct::Read16()
 }
 
 
-bool BlockTAP::Parse(std::vector<LineBASIC> &lines)
+bool BlockTAP::Decode(ProgramBASIC &program)
 {
-    lines.clear();
+    program.Clear();
 
     if (header.type_data == 0)
     {
-        return ParseProgram(lines);
+        return ParseProgram(program);
     }
 
     return false;
 }
 
 
-bool BlockTAP::ParseProgram(std::vector<LineBASIC> &lines)
+bool BlockTAP::ParseProgram(ProgramBASIC &program)
 {
     while (data.data.size())
     {
-        lines.push_back(ParseLineProgram());
+        program.lines.push_back(ParseLineProgram());
     }
 
     return true;
