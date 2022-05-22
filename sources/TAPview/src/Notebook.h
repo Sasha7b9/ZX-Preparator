@@ -14,7 +14,8 @@ struct TypePage
         Info,
         Binary,
         Parsed,
-        Edit
+        Edit,
+        Count
     };
 };
 
@@ -23,7 +24,7 @@ class Page : public wxScrolledWindow
 {
 public:
 
-    Page(wxNotebook *parent, int index);
+    Page(wxNotebook *parent, TypePage::E type);
 
     virtual void OnDraw(wxDC &) override;
     void OnSizeEvent(wxSizeEvent &);
@@ -32,7 +33,7 @@ public:
 
 private:
 
-    int index = -1;
+    TypePage::E type = TypePage::Count;
 
     std::vector<Line> lines;
 

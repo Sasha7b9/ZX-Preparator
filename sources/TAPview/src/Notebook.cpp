@@ -2,14 +2,14 @@
 #include "Notebook.h"
 
 
-Page::Page(wxNotebook *parent, int _index) :
+Page::Page(wxNotebook *parent, TypePage::E _type) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL | wxHSCROLL),
-    index(_index)
+    type(_type)
 {
     SetBackgroundColour(*wxWHITE);
     SetScrollbars(20, 20, 50, 50);
 
-    if (index == 0 || index == 2)
+    if (type == TypePage::Info || type == TypePage::Parsed)
     {
         SetScrollbars(20, 20, 10, 10);
     }
@@ -58,9 +58,9 @@ void Page::OnDraw(wxDC &dc)
     dc.SetFont(*wxSWISS_FONT);
     dc.SetPen(*wxGREEN_PEN);
 
-    switch (index)
+    switch (type)
     {
-    case 0:
+    case TypePage::Info:
         {
             dc.SetFont(font);
 
@@ -91,7 +91,7 @@ void Page::OnDraw(wxDC &dc)
         break;
 
 
-    case 1:
+    case TypePage::Binary:
         // draw lines to make a cross
         dc.DrawLine(0, 0, 200, 200);
         dc.DrawLine(200, 0, 0, 200);
@@ -105,8 +105,8 @@ void Page::OnDraw(wxDC &dc)
         dc.DrawSpline(50, 200, 50, 100, 200, 10);
         break;
 
-    case 2:
-    case 3:
+    case TypePage::Parsed:
+    case TypePage::Edit:
         // draw standard shapes
         dc.SetBrush(*wxCYAN_BRUSH);
         dc.SetPen(*wxRED_PEN);
@@ -126,6 +126,9 @@ void Page::OnDraw(wxDC &dc)
 
         dc.DrawPolygon(5, points);
         dc.DrawLines(6, points, 160);
+        break;
+
+    case TypePage::Count:
         break;
     }
 }

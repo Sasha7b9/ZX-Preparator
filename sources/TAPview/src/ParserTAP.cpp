@@ -309,7 +309,7 @@ namespace KeyCodes
 }
 
 
-void ParserTAP::Execute(wxBufferedInputStream &stream)
+bool ParserTAP::Execute(wxBufferedInputStream &stream)
 {
     blocks.clear();
 
@@ -328,9 +328,12 @@ void ParserTAP::Execute(wxBufferedInputStream &stream)
             if (data.IsOk())
             {
                 blocks.clear();
+                return false;
             }
         }
     }
+
+    return true;
 }
 
 
