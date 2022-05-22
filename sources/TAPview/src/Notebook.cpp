@@ -81,14 +81,34 @@ void Page::OnSizeEvent(wxSizeEvent &)
 }
 
 
+void PageInfo::SetDescriptionTAP(DescriptionTAP& desc)
+{
+    descTAP = desc;
+
+    Refresh();
+}
+
+
+void PageInfo::OnDraw(wxDC &dc)
+{
+    dc.SetFont(font);
+
+    int x = 10;
+    int y = 10;
+
+    if (descTAP.valid)
+    {
+        WriteText(dc, "Is TAP file", x, y, false);
+    }
+    else
+    {
+        WriteText(dc, "Is not TAP file", x, y, false);
+    }
+}
+
+
 void PageParsed::OnDraw(wxDC &dc)
 {
-    // vars to use ...
-    wxPen wP;
-    wxBrush wB;
-    wxPoint points[6];
-    wxColour wC;
-
     dc.SetFont(*wxSWISS_FONT);
     dc.SetPen(*wxGREEN_PEN);
 

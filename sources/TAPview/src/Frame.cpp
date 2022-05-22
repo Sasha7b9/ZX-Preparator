@@ -75,6 +75,7 @@ Frame::Frame(const wxString &title)
     controlDir = new wxGenericDirCtrl(this);
     controlDir->Bind(wxEVT_TREE_ITEM_ACTIVATED, &Frame::OnEventTreeItemActivated, this);
     controlDir->Bind(wxEVT_TREE_KEY_DOWN, &Frame::OnEventTreeItemKeyDown, this);
+    controlDir->Bind(wxEVT_TREE_SEL_CHANGED, &Frame::OnEventTreeSelChanged, this);
     controlDir->Bind(wxEVT_TREE_SEL_CHANGING, &Frame::OnEventTreeSelChanging, this);
     controlDir->SetMaxSize({ 200, 2000 });
 
@@ -121,11 +122,18 @@ void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
 }
 
 
+void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
+{
+    DescriptionTAP description = ParserTAP().Execute(controlDir->GetPath(event.GetItem()));
+
+    notebook->GetPageInfo()->SetDescriptionTAP(description);
+
+    event.Skip();
+}
+
+
 void Frame::OnEventTreeSelChanging(wxTreeEvent &event)
 {
-    wxFileDataObject data;
-    data.AddFile(controlDir->GetPath(event.GetItem()));
-
     event.Skip();
 }
 

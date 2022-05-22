@@ -44,6 +44,14 @@ class PageInfo : public Page
 {
 public:
     PageInfo(wxNotebook *parent) : Page(parent, TypePage::Info, "Info") { }
+
+    virtual void OnDraw(wxDC &) override;
+
+    void SetDescriptionTAP(DescriptionTAP &);
+
+private:
+
+    DescriptionTAP descTAP;
 };
 
 

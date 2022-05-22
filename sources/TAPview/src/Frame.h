@@ -35,6 +35,9 @@ private:
 
     void OnEventTreeItemActivated(wxTreeEvent &);
     void OnEventTreeItemKeyDown(wxTreeEvent &);
+    // Вызывается при выделении итема
+    void OnEventTreeSelChanged(wxTreeEvent &);
+    // Вызывается после снятия выделения итема
     void OnEventTreeSelChanging(wxTreeEvent &);
 
     void OnClose();
