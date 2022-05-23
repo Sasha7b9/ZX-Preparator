@@ -63,7 +63,7 @@ extern uint8 imfB;
 #define D       regs.r8[3]
 #define E       regs.r8[2]
 #define L       regs.r8[4]
-#define RH      regs.r8[5]
+#define rH      regs.r8[5]
 #define pHL     RAM[regs.r16[2]]
 #define F       (regs.r8[6])
 #define I       regI
