@@ -46,13 +46,26 @@ void PageInfo::OnDraw(wxDC &dc)
                 "MACHINE CODE"
             };
 
-            dc.DrawText(wxString::Format("Type : %s", types[descTAP.blocks[i].type]), x + 40, y);
+            DescriptionTAP::Block &block = descTAP.blocks[i];
+
+            dc.DrawText(wxString::Format("Type : %s", types[block.type]), x + 40, y);
 
             y += dY;
 
-            dc.DrawText(wxString::Format("Size : %d bytes", descTAP.blocks[i].size), x + 40, y);
+            dc.DrawText(wxString::Format("Size : %d", block.size), x + 40, y);
 
             y += dY;
+
+            if (block.type == 0)
+            {
+                dc.DrawText(wxString::Format("Line start : %d", block.param1), x + 40, y);
+
+                y += dY;
+
+                dc.DrawText(wxString::Format("Offset data : %d", block.param2), x + 40, y);
+
+                y += dY;
+            }
         }
     }
     else
