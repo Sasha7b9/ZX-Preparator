@@ -26,7 +26,4 @@ void DumpHEX::FillFrom(pchar name_file)
     bytes.resize(size);
 
     file.read((char *)bytes.data(), bytes.size());
-
-    uint8 *pointer = bytes.data();
-    pointer = pointer;
 }
