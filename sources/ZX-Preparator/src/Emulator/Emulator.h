@@ -33,17 +33,17 @@ union REGS
 struct OutStruct
 {
     unsigned char *RAM;
-    char mnemonic[100];
-    char comment[100];
-    char flags[100];
-    char transcript[100];
-    unsigned int addresses[10];
-    int numAddresses;
-    unsigned char opCodes[10];
-    int numOpCodes;
-    int tackts;
-    REGS *regs;
-    REGS *regsAlt;
+    char           mnemonic[100];
+    char           comment[100];
+    char           flags[100];
+    char           transcript[100];
+    unsigned int   addresses[10];
+    int            numAddresses;
+    unsigned char  opCodes[10];
+    int            numOpCodes;
+    int            tackts;
+    REGS          *regs;
+    REGS          *regsAlt;
 };
 
 
