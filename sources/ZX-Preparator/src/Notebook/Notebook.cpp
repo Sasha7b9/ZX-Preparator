@@ -11,7 +11,7 @@ Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPos
     pageInfo = new PageInfo(this);
     pageBinary = new PageHEX(this);
     pageParsed = new PageBASIC(this);
-    pageEdit = new PageEdit(this);
+    pageEdit = new PageASM(this);
 
     AddPage(pageInfo, pageInfo->GetName());
     AddPage(pageBinary, pageBinary->GetName());

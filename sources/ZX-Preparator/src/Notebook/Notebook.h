@@ -5,7 +5,7 @@
 #include "Notebook/PageInfo.h"
 #include "Notebook/PageHEX.h"
 #include "Notebook/PageBASIC.h"
-#include "Notebook/PageEdit.h"
+#include "Notebook/PageASM.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
 #include <wx/wx.h>
@@ -25,12 +25,12 @@ public:
 
     PageBASIC *GetPageParsed() { return pageParsed; }
 
-    PageEdit *GetPageEdit() { return pageEdit; }
+    PageASM *GetPageEdit() { return pageEdit; }
 
 private:
 
     PageInfo *pageInfo = nullptr;
     PageHEX *pageBinary = nullptr;
     PageBASIC *pageParsed = nullptr;
-    PageEdit *pageEdit = nullptr;
+    PageASM *pageEdit = nullptr;
 };

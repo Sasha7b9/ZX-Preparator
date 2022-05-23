@@ -13,7 +13,7 @@ struct TypePage
         Info,
         HEX,
         BASIC,
-        Edit,
+        ASM,
         Count
     };
 };
