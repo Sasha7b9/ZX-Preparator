@@ -14,7 +14,7 @@ struct Command
     std::string transcript;
     std::string flags;
     std::string comment;
-    int tackts = 0;
+    int tackts = 0;                     // Cycles for execute command
 
     bool operator<(const Command &first);
 };
