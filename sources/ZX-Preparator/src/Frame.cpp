@@ -3,6 +3,7 @@
 #include "Frame.h"
 #include "Parser/ParserTAP.h"
 #include "Notebook/Notebook.h"
+#include "Notebook/PageInfo.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>
