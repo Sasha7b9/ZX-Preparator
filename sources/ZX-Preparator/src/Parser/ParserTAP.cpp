@@ -345,6 +345,14 @@ bool ParserTAP::Execute(pchar fileName)
 
     desc.valid = blocks.size() != 0;
 
+    desc.unused_memory = 0;
+
+    while (data.IsOk())
+    {
+        data.Read8();
+        desc.unused_memory++;
+    }
+
     return desc.valid;
 }
 

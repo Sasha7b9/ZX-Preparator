@@ -28,6 +28,13 @@ void PageInfo::OnDraw(wxDC &dc)
 
         y += dY;
 
+        if (descTAP.unused_memory)
+        {
+            dc.DrawText(wxString::Format("!!! WARNING !!! In file discovered %d bytes unused memory", descTAP.unused_memory), x, y);
+
+            y += dY;
+        }
+
         dc.DrawText(wxString::Format("Number blocks : %d", descTAP.numberBlocks), x, y);
 
         y += dY;
