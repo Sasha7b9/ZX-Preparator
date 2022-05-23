@@ -1,7 +1,7 @@
 // 2022/05/23 17:32:58 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "CPU/registers.h"
 #include "defines.h"
 #include "CPU/instrFDCB_DDCB.h"
-#include "CPU/registers.h"
 #include "Computer/RAM.h"
 #include "CPU/instrShift.h"
 #include <cstring>

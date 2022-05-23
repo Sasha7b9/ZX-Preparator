@@ -1,7 +1,7 @@
 // 2022/05/23 17:33:08 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "CPU/registers.h"
 #include "defines.h"
 #include "CPU/instrShift.h"
-#include "CPU/registers.h"
 #include <cstring>
 #include <cstdio>
 

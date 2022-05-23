@@ -1,7 +1,7 @@
 // 2022/05/23 17:29:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "CPU/registers.h"
 #include "defines.h"
 #include "CPU/instr.h"
-#include "CPU/registers.h"
 #include "Computer/RAM.h"
 #include "CPU/DAA.h"
 #include "Computer/ports.h"

@@ -1,8 +1,8 @@
 // 2022/05/23 17:29:45 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "CPU/registers.h"
 #include "defines.h"
 #include "CPU/instrCB.h"
 #include "defines.h"
-#include "CPU/registers.h"
 #include "Computer/ports.h"
 #include "Computer/RAM.h"
 #include "CPU/instrShift.h"

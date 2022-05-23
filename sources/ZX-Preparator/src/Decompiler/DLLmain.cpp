@@ -1,12 +1,12 @@
 // 2022/05/23 17:19:52 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "defines.h"
-#include "Decompiler/DLLmain.h"
-#include "CPU/instr.h"
-#include "CPU/registers.h"
 #define WIN32_LEAN_AND_MEAN
 #pragma warning(push, 0)
 #include <Windows.h>
 #pragma warning(pop)
+#include "CPU/registers.h"
+#include "defines.h"
+#include "Decompiler/DLLmain.h"
+#include "CPU/instr.h"
 
 
 OutStruct *out = 0;
@@ -15,25 +15,7 @@ uint8 *RAM = 0;
 
 
 
-__declspec(dllexport) BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
-{
-    hModule = 0;
-    lpReserved = 0;
-
-    switch(ul_reason_for_call)
-    {
-        case DLL_PROCESS_ATTACH:
-        case DLL_THREAD_ATTACH:
-        case DLL_THREAD_DETACH:
-        case DLL_PROCESS_DETACH:
-            break;
-    }
-    return TRUE;
-}
-
-
-
-__declspec(dllexport) void __cdecl InitEMU(OutStruct *out_)
+void InitEMU(OutStruct *out_)
 {
     out = out_;
     out->regs = &regs;
@@ -43,7 +25,7 @@ __declspec(dllexport) void __cdecl InitEMU(OutStruct *out_)
 
 
 
-__declspec(dllexport) int __cdecl Decode(int address)
+int Decode(int address)
 {
     out->numAddresses = 0;
     out->numOpCodes = 0;
@@ -60,7 +42,7 @@ __declspec(dllexport) int __cdecl Decode(int address)
 
 
 
-__declspec(dllexport) int Run(int address)
+int Run(int address)
 {
     PC = (uint16)address;
 
@@ -69,7 +51,7 @@ __declspec(dllexport) int Run(int address)
 
 
 
-__declspec(dllexport) int RunNext(void)
+int RunNext(void)
 {
     return RunCommand();
 }

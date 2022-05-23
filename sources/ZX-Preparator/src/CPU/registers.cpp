@@ -1,6 +1,6 @@
 // 2022/05/23 17:33:18 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "defines.h"
 #include "CPU/registers.h"
+#include "defines.h"
 #include "Computer/RAM.h"
 
 
