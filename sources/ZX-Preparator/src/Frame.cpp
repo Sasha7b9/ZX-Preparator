@@ -4,6 +4,7 @@
 #include "Parser/ParserTAP.h"
 #include "Notebook/Notebook.h"
 #include "Notebook/PageInfo.h"
+#include "Notebook/PageBASIC.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>

@@ -10,6 +10,7 @@
 
 class PageInfo;
 class PageHEX;
+class PageBASIC;
 
 
 struct TypePage
@@ -41,22 +42,6 @@ protected:
     wxFont font;
 
     void WriteText(wxDC &, const wxString &, int &x, int &, bool fill);
-};
-
-
-class PageBASIC : public Page
-{
-public:
-
-    PageBASIC(wxNotebook *parent) : Page(parent, TypePage::BASIC, "Parsed") { }
-
-    virtual void OnDraw(wxDC &) override;
-
-    void SetProgram(ProgramBASIC &);
-
-private:
-
-    std::vector<LineBASIC> lines;
 };
 
 
