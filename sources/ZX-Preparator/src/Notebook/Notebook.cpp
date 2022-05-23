@@ -4,6 +4,8 @@
 #include "Notebook/PageInfo.h"
 #include "Notebook/PageHEX.h"
 #include "Notebook/PageBASIC.h"
+#include "Notebook/PageArrayNumber.h"
+#include "Notebook/PageArrayCharacter.h"
 
 
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
@@ -51,7 +53,22 @@ void Notebook::AssignFIle(wxString &file_name)
     {
         for (BlockTAP block : parser.blocks)
         {
-
+            if (block.IsBASIC())
+            {
+                AppendPage(new PageBASIC(this));
+            }
+            else if (block.IsArrayNumber())
+            {
+                AppendPage(new PageArrayNumber(this));
+            }
+            else if (block.IsArrayCharacter())
+            {
+                AppendPage(new PageArrayCharacter(this));
+            }
+            else if (block.IsASM())
+            {
+                AppendPage(new PageASM(this));
+            }
         }
     }
 }
