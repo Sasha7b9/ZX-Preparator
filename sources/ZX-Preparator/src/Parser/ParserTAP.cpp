@@ -361,7 +361,13 @@ bool BlockTAP::Read()
 {
     Clear();
 
-    if (header.Read())
+    header.Read();
+
+    if (header.size == 19)
+    {
+        data.Read(header);
+    }
+    else if (header.size != 0)
     {
         data.Read(header);
     }
@@ -422,6 +428,11 @@ bool BlockTAP::Header::Read()
             }
         }
     }
+    else if (size != 0)
+    {
+        type_data = 4;
+        valid = true;
+    }
 
     return valid;
 }
@@ -435,22 +446,29 @@ bool BlockTAP::Data::Read(const Header &header)
 
     data.clear();
 
-    size = stream.Read16();
-
-    if (size == header.size_data + 2)
+    if (header.type_data == 4)
     {
-        if (Read8() == 0xff)        // Для данных должно быть 255
+
+    }
+    else
+    {
+        size = stream.Read16();
+
+        if (size == header.size_data + 2)
         {
-            for (int i = 0; i < header.size_data; i++)
+            if (Read8() == 0xff)        // Для данных должно быть 255
             {
-                data.push_back(Read8());
-            }
+                for (int i = 0; i < header.size_data; i++)
+                {
+                    data.push_back(Read8());
+                }
 
-            valid = stream.IsOk();
+                valid = stream.IsOk();
 
-            if (stream.Read8() != crc)
-            {
-                valid = false;
+                if (stream.Read8() != crc)
+                {
+                    valid = false;
+                }
             }
         }
     }
