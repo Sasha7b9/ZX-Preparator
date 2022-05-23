@@ -486,7 +486,7 @@ int LD_pNN_HL_run(void)
 {
     uint16 address = PC16andInc();
 
-    RAM[address] = L;
+    RAM[address] = rL;
     RAM[address + 1] = rH;
 
     return 16;
@@ -1526,7 +1526,7 @@ static int EXX_run(void)
     EXCH(rD, RDalt);
     EXCH(rE, REalt);
     EXCH(rH, RHalt);
-    EXCH(L, RLalt);
+    EXCH(rL, RLalt);
 
     return 4;
 }
@@ -1579,7 +1579,7 @@ static int EX_pSP_HL_run(void)
     uint8 temp;
 
     EXCH(rH, RAM[SP + 1]);
-    EXCH(L, RAM[SP]);
+    EXCH(rL, RAM[SP]);
 
     return 9;
 }
