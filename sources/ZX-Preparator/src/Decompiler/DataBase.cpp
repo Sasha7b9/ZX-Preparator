@@ -1,7 +1,10 @@
 // 2022/05/23 16:56:40 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "stdafx.h"
-#include "DataBase.h"
-
+#include "defines.h"
+#include "Decompiler/DataBase.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <filesystem>
 
 using std::ofstream;
 using std::string;
@@ -9,7 +12,7 @@ using std::vector;
 using std::endl;
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 DataBase::DataBase()
 {
     addressesForScan.push_back(0);
@@ -23,7 +26,7 @@ DataBase::DataBase()
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 int DataBase::NextAddress()
 {
     if(addressesForScan.size() > 0)
@@ -34,7 +37,7 @@ int DataBase::NextAddress()
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
 {
     RemoveScanAddress(address);
@@ -76,7 +79,7 @@ void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::RemoveScanAddress(int address)
 {
     for(int i = 0; i < (int)addressesForScan.size(); i++)
@@ -90,7 +93,7 @@ void DataBase::RemoveScanAddress(int address)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::AddScanAddress(int address)
 {
     if(address < 16384 && !AddressAlreadyScanOrFuture(address))
@@ -100,7 +103,7 @@ void DataBase::AddScanAddress(int address)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 bool DataBase::AddressAlreadyScanOrFuture(int address)
 {
     for each (auto &command in commands)
@@ -123,7 +126,7 @@ bool DataBase::AddressAlreadyScanOrFuture(int address)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::WriteBinaryByte(std::ofstream &file, int value)
 {
     vector<int> bits;
@@ -149,7 +152,7 @@ void DataBase::WriteBinaryByte(std::ofstream &file, int value)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::WriteCommand(ofstream &file, Command &command)
 {
     file << std::right << std::hex << std::setw(4) << std::setfill('0') << command.address << " | ";
@@ -202,7 +205,7 @@ void DataBase::WriteCommand(ofstream &file, Command &command)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void DataBase::CreateReport()
 {
     std::sort(commands.begin(), commands.end());

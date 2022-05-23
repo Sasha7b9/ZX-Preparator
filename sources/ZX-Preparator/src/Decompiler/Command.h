@@ -1,5 +1,7 @@
 // 2022/05/23 16:56:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
+#include <vector>
+#include <string>
 
 
 class Command

@@ -1,13 +1,7 @@
 // 2022/05/23 16:56:21 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-
-
-#include "Command.h"
-
-extern "C"
-{
-    #include "DLLmain.h"
-}
+#include "Decompiler/Command.h"
+#include "Decompiler/DLLmain.h"
 
 
 class DataBase
