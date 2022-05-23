@@ -1522,7 +1522,7 @@ static int EXX_run(void)
     uint8 temp;
 
     EXCH(rB, Balt);
-    EXCH(C, RCalt);
+    EXCH(rC, RCalt);
     EXCH(D, RDalt);
     EXCH(E, REalt);
     EXCH(rH, RHalt);

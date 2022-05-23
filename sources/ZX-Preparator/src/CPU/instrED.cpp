@@ -420,7 +420,7 @@ int IN_R_pC(void)
     }
     else
     {
-        R8_HI(prevPC) = ReadPort(C);
+        R8_HI(prevPC) = ReadPort(rC);
     }
 
     // + + x + x P 0 .
