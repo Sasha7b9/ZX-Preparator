@@ -1,6 +1,6 @@
 // 2022/5/23 19:37:45 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Emulator/DLLmain.h"
+#include "Emulator/Emulator.h"
 
 
 void AddAddress(uint addr)

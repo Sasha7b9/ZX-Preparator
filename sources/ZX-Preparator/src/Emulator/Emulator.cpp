@@ -5,7 +5,7 @@
 #pragma warning(pop)
 #include "CPU/registers.h"
 #include "defines.h"
-#include "Emulator/DLLmain.h"
+#include "Emulator/Emulator.h"
 #include "CPU/instr.h"
 
 

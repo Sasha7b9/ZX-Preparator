@@ -1,8 +1,8 @@
 // 2022/05/23 16:56:58 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "DataBase.h"
-#include "DLLmain.h"
-#include "RAM48.h"
+#include "Emulator/DataBase.h"
+#include "Emulator/Emulator.h"
+#include "Emulator/RAM48.h"
 
 
 
