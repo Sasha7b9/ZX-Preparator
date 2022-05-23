@@ -60,6 +60,7 @@ struct BlockTAP
                                     // 01 - number array
                                     // 02 - character array
                                     // 03 - code
+                                    // 04 - pure bytes (bytes without a header)
         char file_name[11];
         uint16 size_data = 0;   // Длина блока данных, следуюшего за заголовком, без учёта флага и контрольной суммы
 

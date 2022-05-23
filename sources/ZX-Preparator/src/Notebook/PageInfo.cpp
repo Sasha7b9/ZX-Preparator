@@ -66,7 +66,7 @@ void PageInfo::OnDraw(wxDC &dc)
 
             y += dY;
 
-            dc.DrawText(wxString::Format("Size : %d", block.size), x + 40, y);
+            dc.DrawText(wxString::Format("Size : #%05x/%d", block.size, block.size), x + 40, y);
 
             y += dY;
 
@@ -76,7 +76,7 @@ void PageInfo::OnDraw(wxDC &dc)
 
                 y += dY;
 
-                dc.DrawText(wxString::Format("Offset data : %d", block.param2), x + 40, y);
+                dc.DrawText(wxString::Format("Offset data : #%05x/%d", block.param2, block.param2), x + 40, y);
 
                 y += dY;
             }
@@ -88,7 +88,7 @@ void PageInfo::OnDraw(wxDC &dc)
             }
             else if (block.type == 3)
             {
-                dc.DrawText(wxString::Format("Begin data : %d", block.param1), x + 40, y);
+                dc.DrawText(wxString::Format("Begin data : #%05x/%d", block.param1, block.param1), x + 40, y);
 
                 y += dY;
             }
