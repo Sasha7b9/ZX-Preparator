@@ -31,3 +31,24 @@ void Notebook::AppendPage(Page *page)
 
     pages.push_back(page);
 }
+
+
+void Notebook::AssignFIle(wxString &file_name)
+{
+    RemoveAllPages();
+
+    ParserTAP parser;
+
+    parser.Execute(file_name);
+
+    GetPageInfo()->SetDescriptionTAP(parser.desc);
+
+    PageHEX *pageHEX = new PageHEX(this);
+
+    AppendPage(pageHEX);
+
+    if (parser.desc.valid)
+    {
+
+    }
+}

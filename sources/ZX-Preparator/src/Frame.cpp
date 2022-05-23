@@ -126,24 +126,10 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 {
     wxString file = controlDir->GetPath(event.GetItem());
 
-    if (!wxFile::Exists(file))
+    if (wxFile::Exists(file))               // Проверка на то, что это файл, а не каталог
     {
-        event.Skip();
-
-        return;                                         // Если это не файл, то ничего не делаем
+        notebook->AssignFIle(file);
     }
-
-    notebook->RemoveAllPages();
-
-    ParserTAP parser;
-
-    parser.Execute(file);
-
-    notebook->GetPageInfo()->SetDescriptionTAP(parser.desc);
-
-    PageHEX *pageHEX = new PageHEX(notebook);
-
-    notebook->AppendPage(pageHEX);
 
     event.Skip();
 }

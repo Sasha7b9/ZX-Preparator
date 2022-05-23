@@ -19,6 +19,14 @@ public:
 
     Notebook(wxWindow *parent);
 
+    void AssignFIle(wxString &file_name);
+
+private:
+
+    PageInfo *pageInfo = nullptr;
+
+    std::vector<Page *> pages;
+
     void RemoveAllPages();
 
     void AppendPage(Page *);
@@ -26,10 +34,4 @@ public:
     PageInfo *GetPageInfo() { return pageInfo; }
 
     Page *GetPageN(int) const;
-
-private:
-
-    PageInfo *pageInfo = nullptr;
-
-    std::vector<Page *> pages;
 };
