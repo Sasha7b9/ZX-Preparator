@@ -42,7 +42,7 @@ void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
 {
     RemoveScanAddress(address);
 
-    Command command;
+    Instruction command;
     
     command.address = address;
 
@@ -153,7 +153,7 @@ void DataBase::WriteBinaryByte(std::ofstream &file, int value)
 
 
 
-void DataBase::WriteCommand(ofstream &file, Command &command)
+void DataBase::WriteCommand(ofstream &file, Instruction &command)
 {
     file << std::right << std::hex << std::setw(4) << std::setfill('0') << command.address << " | ";
 

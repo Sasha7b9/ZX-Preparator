@@ -4,7 +4,7 @@
 #include <string>
 
 
-struct Command
+struct Instruction
 {
     bool bad = false;
     int address = 0;                    // Command location address
@@ -16,5 +16,5 @@ struct Command
     std::string comment;
     int tackts = 0;                     // Cycles for execute command
 
-    bool operator<(const Command &first);
+    bool operator<(const Instruction &first);
 };

@@ -17,7 +17,7 @@ public:
     void CreateReport(pchar file_name);
 
 private:
-    std::vector<Command> commands;
+    std::vector<Instruction> commands;
     std::vector<int> addressesForScan;
 
     int addr_min = 0;
@@ -26,6 +26,6 @@ private:
     void RemoveScanAddress(int address);
     void AddScanAddress(int address);
     bool AddressAlreadyScanOrFuture(int address);
-    void WriteCommand(std::ofstream &file, Command &command);
+    void WriteCommand(std::ofstream &file, Instruction &command);
     void WriteBinaryByte(std::ofstream &file, int value);
 };

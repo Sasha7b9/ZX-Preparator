@@ -3,7 +3,7 @@
 #include "Emulator/Instruction.h"
 
 
-bool Command::operator<(const Command &first)
+bool Instruction::operator<(const Instruction &first)
 {
-    return address < first.address;
+    return (address < first.address);
 };
