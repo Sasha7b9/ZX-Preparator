@@ -25,6 +25,7 @@ struct BlockTAP
     bool IsArrayNumber()    const { return header.type_data == 1; }
     bool IsArrayCharacter() const { return header.type_data == 2; }
     bool IsASM()            const { return header.type_data == 3; }
+    bool IsPureBytes()      const { return header.type_data == 4; }
 
     struct CommonStruct
     {
@@ -100,13 +101,27 @@ private:
 };
 
 
+struct FileTAP
+{
+    void Clear() { blocks.clear(); };
+
+    void AppendBlock(BlockTAP &block) { blocks.push_back(block); }
+
+    int NumberBlocks() const { return (int)blocks.size(); }
+
+    BlockTAP &GetBlock(int index) { return blocks[(uint)index]; }
+
+    std::vector<BlockTAP> blocks;
+};
+
+
 class ParserTAP
 {
 public:
 
     bool Execute(pchar fileName);
 
-    std::vector<BlockTAP> blocks;
+    FileTAP file;
 
     DescriptionTAP desc;
 };

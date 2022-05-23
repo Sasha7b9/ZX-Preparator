@@ -18,10 +18,11 @@ void PageInfo::OnDraw(wxDC &dc)
 {
     dc.SetFont(font);
 
+    int x = 10;
+    int y = 10;
+
     if (descTAP.valid)
     {
-        int x = 0;
-        int y = 0;
         int dY = font.GetPointSize() + 10;
 
         dc.DrawText("Is TAP file", x, y);
@@ -97,6 +98,6 @@ void PageInfo::OnDraw(wxDC &dc)
     }
     else
     {
-        dc.DrawText("Is not TAP file", 10, 10);
+        dc.DrawText("Is not TAP file", x, y);
     }
 }

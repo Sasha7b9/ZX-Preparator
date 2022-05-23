@@ -313,7 +313,7 @@ bool ParserTAP::Execute(pchar fileName)
 {
     desc.Clear();
 
-    blocks.clear();
+    file.Clear();
 
     if (!wxFile::Exists(fileName))
     {
@@ -332,7 +332,7 @@ bool ParserTAP::Execute(pchar fileName)
     {
         if (block.Read())
         {
-            blocks.push_back(block);
+            file.AppendBlock(block);
             DescriptionTAP::Block descBlock(block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
             desc.numberBlocks++;
             desc.blocks.push_back(descBlock);
@@ -343,7 +343,7 @@ bool ParserTAP::Execute(pchar fileName)
         }
     }
 
-    desc.valid = blocks.size() != 0;
+    desc.valid = (file.NumberBlocks() != 0);
 
     desc.unused_memory = 0;
 
@@ -431,7 +431,7 @@ bool BlockTAP::Header::Read()
     else if (size != 0)
     {
         type_data = 4;
-        size_data = (uint16)(size - 1);
+        size_data = (uint16)(size - 2);
         valid = true;
     }
 
@@ -449,7 +449,9 @@ bool BlockTAP::Data::Read(const Header &header)
 
     if (header.type_data == 4)
     {
-        for (int i = 0; i < header.size_data; i++)
+        size = header.size_data;
+
+        for (int i = 0; i < header.size_data + 1; i++)
         {
             data.push_back(Read8());
         }

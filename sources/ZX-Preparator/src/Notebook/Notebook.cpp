@@ -6,6 +6,7 @@
 #include "Notebook/PageBASIC.h"
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageArrayCharacter.h"
+#include "Notebook/PagePureBytes.h"
 
 
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
@@ -59,8 +60,9 @@ void Notebook::AssignFIle(wxString &file_name)
         int num_ArrayNumber = 1;
         int num_ArrayCharacter = 1;
         int num_ASM = 1;
+        int num_pure = 1;
 
-        for (BlockTAP block : parser.blocks)
+        for (BlockTAP block : parser.file.blocks)
         {
             if (block.IsBASIC())
             {
@@ -77,6 +79,15 @@ void Notebook::AssignFIle(wxString &file_name)
             else if (block.IsASM())
             {
                 AppendPage(new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++)));
+            }
+            else if (block.IsPureBytes())
+            {
+                AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter++, num_pure++)));
+            }
+
+            if (counter > 32)
+            {
+                break;
             }
         }
     }

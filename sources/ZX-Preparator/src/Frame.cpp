@@ -153,20 +153,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         ProgramBASIC program;
 
-        parser.blocks[0].Decode(program);
-
-//        notebook->GetPageBASIC()->SetProgram(program);
-
-//        wxTextFile text_file;
-//
-//        text_file.Create(wxString("D:\\out.txt"));
-//
-//        for (uint i = 0; i < lines.size(); i++)
-//        {
-//            text_file.AddLine(lines[i]);
-//        }
-//
-//        text_file.Write();
+        parser.file.GetBlock(0).Decode(program);
     }
 }
 
