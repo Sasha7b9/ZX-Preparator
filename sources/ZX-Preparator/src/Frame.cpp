@@ -133,11 +133,17 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
         return;                                         // Если это не файл, то ничего не делаем
     }
 
+    notebook->RemoveAllPages();
+
     ParserTAP parser;
 
     parser.Execute(file);
 
     notebook->GetPageInfo()->SetDescriptionTAP(parser.desc);
+
+    PageHEX *pageHEX = new PageHEX(notebook);
+
+    notebook->AppendPage(pageHEX);
 
     event.Skip();
 }

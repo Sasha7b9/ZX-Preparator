@@ -19,7 +19,7 @@ public:
 
     Notebook(wxWindow *parent);
 
-    void RemovePages();
+    void RemoveAllPages();
 
     void AppendPage(Page *);
 

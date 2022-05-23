@@ -12,3 +12,24 @@ Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPos
 
     AddPage(pageInfo, pageInfo->GetName());
 }
+
+
+void Notebook::RemoveAllPages()
+{
+    for (uint i = 0; i < pages.size(); i++)
+    {
+        RemovePage(0);
+
+        delete pages[i];
+    }
+
+    pages.clear();
+}
+
+
+void Notebook::AppendPage(Page *page)
+{
+    AddPage(page, page->GetName());
+
+    pages.push_back(page);
+}
