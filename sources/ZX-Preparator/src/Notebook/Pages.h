@@ -16,6 +16,7 @@ struct TypePage
         ArrayNumber,
         ArrayCharacter,
         ASM,
+        PureBytes,
         Count
     };
 };

@@ -431,7 +431,7 @@ bool BlockTAP::Header::Read()
     else if (size != 0)
     {
         type_data = 4;
-        size_data = size - 1;
+        size_data = (uint16)(size - 1);
         valid = true;
     }
 
