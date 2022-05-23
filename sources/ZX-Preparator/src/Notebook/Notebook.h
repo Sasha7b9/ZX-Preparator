@@ -23,7 +23,7 @@ public:
 
     PageHEX *GetPageHEX() { return pageHEX; }
 
-    PageBASIC *GetPageParsed() { return pageParsed; }
+    PageBASIC *GetPageBASIC() { return pageBASIC; }
 
     PageASM *GetPageEdit() { return pageEdit; }
 
@@ -31,6 +31,6 @@ private:
 
     PageInfo *pageInfo = nullptr;
     PageHEX *pageHEX = nullptr;
-    PageBASIC *pageParsed = nullptr;
+    PageBASIC *pageBASIC = nullptr;
     PageASM *pageEdit = nullptr;
 };

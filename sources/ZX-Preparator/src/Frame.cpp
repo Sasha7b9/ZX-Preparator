@@ -93,7 +93,7 @@ Frame::Frame(const wxString &title)
     {
         ProgramBASIC program;
         parser.blocks[0].Decode(program);
-        notebook->GetPageParsed()->SetProgram(program);
+        notebook->GetPageBASIC()->SetProgram(program);
     }
 
     SetSize({ 1024, 768 });
@@ -154,7 +154,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.blocks[0].Decode(program);
 
-        notebook->GetPageParsed()->SetProgram(program);
+        notebook->GetPageBASIC()->SetProgram(program);
 
 //        wxTextFile text_file;
 //
