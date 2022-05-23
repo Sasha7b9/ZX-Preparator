@@ -7,7 +7,9 @@
 class DataBase
 {
 public:
-    DataBase(int addr_min, int addr_max);
+    DataBase(int _addr_min, int _addr_max) : addr_min(_addr_min), addr_max(_addr_max) { }
+
+    void AddScanAddress(int address);
 
     // Return address for decompilation. If == -1, addresses not exists
     int NextAddress();
@@ -24,7 +26,6 @@ private:
     int addr_max = 0;
 
     void RemoveScanAddress(int address);
-    void AddScanAddress(int address);
     bool AddressAlreadyScanOrFuture(int address);
     void WriteCommand(std::ofstream &file, Instruction &command);
     void WriteBinaryByte(std::ofstream &file, int value);

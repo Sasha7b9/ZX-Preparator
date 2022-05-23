@@ -5,11 +5,9 @@
 #include "Emulator/RAM48.h"
 
 
+static DataBase base(0, 16384);
 
-DataBase base(0, 16384);
-
-OutStruct params;
-
+static OutStruct params;
 
 
 void DecompileROM()
@@ -17,6 +15,15 @@ void DecompileROM()
     std::memcpy(params.MEMORY, MEMORY48, 64 * 1024);
 
     Emulator::Init(&params);
+
+    base.AddScanAddress(0);
+    base.AddScanAddress(8);
+    base.AddScanAddress(0x10);
+    base.AddScanAddress(0x18);
+    base.AddScanAddress(0x20);
+    base.AddScanAddress(0x28);
+    base.AddScanAddress(0x30);
+    base.AddScanAddress(0x38);
 
     int address = base.NextAddress();
 

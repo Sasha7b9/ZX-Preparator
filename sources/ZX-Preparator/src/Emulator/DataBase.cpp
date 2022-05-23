@@ -6,25 +6,11 @@
 #include <iomanip>
 #include <filesystem>
 
+
 using std::ofstream;
 using std::string;
 using std::vector;
 using std::endl;
-
-
-
-DataBase::DataBase(int min, int max) : addr_min(min), addr_max(max)
-{
-    addressesForScan.push_back(0);
-    addressesForScan.push_back(8);
-    addressesForScan.push_back(0x10);
-    addressesForScan.push_back(0x18);
-    addressesForScan.push_back(0x20);
-    addressesForScan.push_back(0x28);
-    addressesForScan.push_back(0x30);
-    addressesForScan.push_back(0x38);
-}
-
 
 
 int DataBase::NextAddress()
@@ -35,7 +21,6 @@ int DataBase::NextAddress()
     }
     return -1;
 }
-
 
 
 void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
@@ -79,7 +64,6 @@ void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
 }
 
 
-
 void DataBase::RemoveScanAddress(int address)
 {
     for(int i = 0; i < (int)addressesForScan.size(); i++)
@@ -93,7 +77,6 @@ void DataBase::RemoveScanAddress(int address)
 }
 
 
-
 void DataBase::AddScanAddress(int address)
 {
     if(address >= addr_min && address < addr_max && !AddressAlreadyScanOrFuture(address))
@@ -101,7 +84,6 @@ void DataBase::AddScanAddress(int address)
         addressesForScan.push_back(address);
     }
 }
-
 
 
 bool DataBase::AddressAlreadyScanOrFuture(int address)
@@ -124,7 +106,6 @@ bool DataBase::AddressAlreadyScanOrFuture(int address)
 
     return false;
 }
-
 
 
 void DataBase::WriteBinaryByte(std::ofstream &file, int value)
@@ -150,7 +131,6 @@ void DataBase::WriteBinaryByte(std::ofstream &file, int value)
     file << bits[1];
     file << bits[0];
 }
-
 
 
 void DataBase::WriteCommand(ofstream &file, Instruction &command)
@@ -203,7 +183,6 @@ void DataBase::WriteCommand(ofstream &file, Instruction &command)
 
     file << endl;
 }
-
 
 
 void DataBase::CreateReport(pchar file_name)
