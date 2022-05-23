@@ -18,12 +18,15 @@ Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPos
 
 void Notebook::RemoveAllPages()
 {
-    for (uint i = 0; i < pages.size(); i++)
+    if (pages.size())
     {
-        DeletePage(i + 1);
-    }
+        for (uint i = pages.size(); i > 0; i--)
+        {
+            DeletePage(i);
+        }
 
-    pages.clear();
+        pages.clear();
+    }
 }
 
 
