@@ -15,7 +15,7 @@ int BIT_B_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "BIT %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
     return -1;
 
@@ -31,7 +31,7 @@ int CRL_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "SRL %s", R8_LO_Name(prevPC));
     return -1;
 
@@ -47,7 +47,7 @@ int CRL_pHL(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(MNEMONIC, "SRL [HL]");
     return -1;
 
@@ -70,7 +70,7 @@ int RRC_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "RRC %s", R8_LO_Name(prevPC));
     return -1;
 
@@ -86,7 +86,7 @@ int RES_B_M(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
     sprintf(MNEMONIC, "RES %d,%s", numBit, R8_LO_Name(prevPC));
     return -1;
@@ -103,7 +103,7 @@ int RES_B_pHL(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
     sprintf(MNEMONIC, "RES %d,[HL]", numBit);
     return -1;
@@ -120,7 +120,7 @@ int SET_B_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
     return -1;
 
@@ -136,7 +136,7 @@ int SET_B_pHL(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,[HL]", (prevPC >> 3) & 7);
     return -1;
 
@@ -152,7 +152,7 @@ int RL_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "RL %s", R8_LO_Name(prevPC));
     return -1;
 
@@ -168,7 +168,7 @@ int RR_R(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "RR %s", R8_LO_Name(prevPC));
     return -1;
 
@@ -184,7 +184,7 @@ int SLA(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "SLA %s", R8_LO_Name(prevPC));
 
     return -1;
@@ -201,7 +201,7 @@ int SRA(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "SRA %s", R8_LO_Name(prevPC));
     return -1;
 
@@ -217,7 +217,7 @@ int RLC_pHL(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "RLC [HL]");
     return -1;
 
@@ -234,7 +234,7 @@ int RLC_pHL(void)
 
 int RunCommandCB(void)
 {
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 
@@ -249,7 +249,7 @@ int RunCommandCB(void)
 
 int DecodeCommandCB(void)
 {
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 

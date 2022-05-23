@@ -13,7 +13,7 @@ int LD_R_pIX_D_run(void)
 {
     uint8 valueReg = prevPC;
 
-    R8_HI(valueReg) = RAM[IX + PCandInc()];
+    R8_HI(valueReg) = RAM[rIX + PCandInc()];
     
     return 19;
 }
@@ -22,10 +22,10 @@ int LD_R_pIX_D_run(void)
 
 int LD_R_pIX_D_dec(void)
 {
-    AddOpcode(RAM8(PC));
-    AddAddress(PC + 1);
+    AddOpcode(RAM8(rPC));
+    AddAddress(rPC + 1);
 
-    sprintf(MNEMONIC, "LD %s,[IX+%02d]", R8_HI_Name(RAM8(PC - 1)), RAM8(PC));
+    sprintf(MNEMONIC, "LD %s,[IX+%02d]", R8_HI_Name(RAM8(rPC - 1)), RAM8(rPC));
 
     return -1;
 }
@@ -35,7 +35,7 @@ int LD_pIX_D_R_run(void)
 {
     uint8 valueReg = prevPC;
 
-    RAM[IX + PCandInc()] = R8_LO(valueReg);
+    RAM[rIX + PCandInc()] = R8_LO(valueReg);
 
     return 19;
 }
@@ -44,17 +44,17 @@ int LD_pIX_D_R_run(void)
 
 int LD_pIX_D_R_dec(void)
 {
-    AddOpcode(RAM8(PC));
-    AddAddress(PC + 1);
-    sprintf(MNEMONIC, "LD [IX+%02d],%s", RAM8(PC), R8_LO_Name(RAM8(PC - 1)));
+    AddOpcode(RAM8(rPC));
+    AddAddress(rPC + 1);
+    sprintf(MNEMONIC, "LD [IX+%02d],%s", RAM8(rPC), R8_LO_Name(RAM8(rPC - 1)));
     return -1;
 }
 
 
 int POP_IX_run(void)
 {
-    IX = RAM16(SP);
-    SP += 2;
+    rIX = RAM16(rSP);
+    rSP += 2;
     return 14;
 }
 
@@ -62,7 +62,7 @@ int POP_IX_run(void)
 
 int POP_IX_dec(void)
 {
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "POP IX");
     return -1;
 }
@@ -72,7 +72,7 @@ int LD_pIX_D_N_run(void)
 {
     uint8 valD = PCandInc();
     uint8 valN = PCandInc();
-    RAM[IX + valD] = valN;
+    RAM[rIX + valD] = valN;
     return 19;
 }
 
@@ -88,7 +88,7 @@ int LD_IX_NN(void)
 {
 #ifdef LISTING
 
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(PC + 1));
     AddAddress(PC + 2);
     sprintf(MNEMONIC, "LD IX,%04X", PC16andInc());
@@ -96,7 +96,7 @@ int LD_IX_NN(void)
 
 #else
 
-    IX = PC16andInc();
+    rIX = PC16andInc();
     return 14;
 
 #endif
@@ -108,13 +108,13 @@ int DEC_IX_dec(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "DEC IX");
     return -1;
 
 #else
 
-    IX -= 1;
+    rIX -= 1;
     return 10;
 
 #endif
@@ -123,29 +123,29 @@ int DEC_IX_dec(void)
 
 int LD_IX_pNN(void)
 {
-    IX = RAM16(PC16andInc());
+    rIX = RAM16(PC16andInc());
     return 20;
 }
 
 
 int LD_pNN_IX(void)
 {
-    RAM16(PC16andInc()) = IX;
+    RAM16(PC16andInc()) = rIX;
     return 20;
 }
 
 
 int LD_SP_IX(void)
 {
-    SP = IX;
+    rSP = rIX;
     return 10;
 }
 
 
 int PUSH_IX(void)
 {
-    RAM16(SP - 2) = IX;
-    SP -= 2;
+    RAM16(rSP - 2) = rIX;
+    rSP -= 2;
     return 15;
 }
 
@@ -153,21 +153,21 @@ int PUSH_IX(void)
 int EX_pSP_IX(void)
 {
     uint16 temp;
-    EXCH(IX, RAM16(SP));
+    EXCH(rIX, RAM16(rSP));
     return 23;
 }
 
 
 int ADD_A_pIX_D(void)
 {
-    rA += RAM8(IX + PCandInc());
+    rA += RAM8(rIX + PCandInc());
     return 19;
 }
 
 
 int INC_pIX_D(void)
 {
-    RAM16(IX + PCandInc()) += 1;
+    RAM16(rIX + PCandInc()) += 1;
     return 23;
 }
 
@@ -176,13 +176,13 @@ int ADD_IX_PP(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "ADD IX,%s", PP_45_Name(prevPC));
     return -1;
 
 #else
 
-    IX += PP_45(prevPC);
+    rIX += PP_45(prevPC);
     return 15;
 
 #endif
@@ -191,7 +191,7 @@ int ADD_IX_PP(void)
 
 int INC_IX_run(void)
 {
-    IX += 1;
+    rIX += 1;
     return 10;
 }
 
@@ -199,7 +199,7 @@ int INC_IX_run(void)
 
 int INC_IX_dec(void)
 {
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "INC IX");
     return -1;
 }
@@ -214,7 +214,7 @@ int JP_pIX(void)
 
 #else
 
-    PC = IX;
+    rPC = rIX;
     return 8;
 
 #endif
@@ -228,7 +228,7 @@ int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
     /*
 #ifdef LISTING
 
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(PC + 1));
     AddAddress(PC + 2);
 
@@ -285,7 +285,7 @@ int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
 
 int DecodeCommandDD(void)
 {
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 

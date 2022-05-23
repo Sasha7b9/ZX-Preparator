@@ -20,7 +20,7 @@ int LD_I_A(void)
 #ifdef LISTING
 
     TACKTS = 9;
-    AddAddress(PC);
+    AddAddress(rPC);
 
     strcpy(MNEMONIC, "LD I,A");
     strcpy(TRANSCRIPT, "I<-A");
@@ -52,14 +52,14 @@ int LD_DD_pNN(void)
 {
 #ifdef LISTING
 
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(PC + 1));
 
     uint8 retValue = prevPC;
 
     sprintf(MNEMONIC, "LD %s,[%04X]", DD_45_Name(retValue), PC16andInc());
 
-    AddAddress(PC);
+    AddAddress(rPC);
 
     return -1;
 
@@ -80,10 +80,10 @@ int LD_pNN_DD(void)
     TACKTS = 20;
 
     uint8 valDD = prevPC;
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(PC + 1));
     uint16 address = PC16andInc();
-    AddAddress(PC);
+    AddAddress(rPC);
 
     sprintf(MNEMONIC, "LD [%4X],%s", address, DD_45_Name(valDD));
     sprintf(TRANSCRIPT, "[%4X]<-%s", address, DD_45_Name(prevPC));
@@ -102,9 +102,9 @@ int LD_pNN_DD(void)
 
 int LDI(void)
 {
-    RAM16(DE) = RAM16(HL);
-    DE += 1;
-    HL += 1;
+    RAM16(rDE) = RAM16(rHL);
+    rDE += 1;
+    rHL += 1;
     rBC -= 1;
     return 16;
 }
@@ -114,7 +114,7 @@ int LDIR(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(MNEMONIC, "LDIR");
     return -1;
 
@@ -135,9 +135,9 @@ int LDIR(void)
 
 int LDD(void)
 {
-    RAM16(DE) = RAM16(HL);
-    DE--;
-    HL--;
+    RAM16(rDE) = RAM16(rHL);
+    rDE--;
+    rHL--;
     rBC--;
     return 16;
 }
@@ -147,7 +147,7 @@ int LDDR(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     sprintf(MNEMONIC, "LDDR");
     return -1;
 
@@ -169,7 +169,7 @@ int LDDR(void)
 
 int CPI(void)
 {
-    HL++;
+    rHL++;
     rBC--;
 
     // + + x + x + 1 .
@@ -192,7 +192,7 @@ int CPIR(void)
     {
         time += 21;
         CPI();
-    } while(rBC != 0 && rA != RAM8(HL));
+    } while(rBC != 0 && rA != RAM8(rHL));
 
     return time + 16;
 }
@@ -200,7 +200,7 @@ int CPIR(void)
 
 int CPD(void)
 {
-    HL--;
+    rHL--;
     rBC--;
 
     // + + x + x + 1 .
@@ -222,7 +222,7 @@ int CPDR(void)
     {
         time += 21;
         CPD();
-    } while(rBC != 0 && rA != RAM8(HL));
+    } while(rBC != 0 && rA != RAM8(rHL));
 
     return time + 16;
 }
@@ -232,7 +232,7 @@ int NEG(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(MNEMONIC, "NEG");
     return -1;
 
@@ -264,7 +264,7 @@ int IM1(void)
 {
 #ifdef LISTING
 
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(MNEMONIC, "IM1");
     return -1;
 
@@ -284,7 +284,7 @@ int IM2(void)
 
 int ADC_HL_SS(void)
 {
-    HL += SS_45(prevPC) + CF;
+    rHL += SS_45(prevPC) + CF;
 
     // + + x x x V 0 +
     // S
@@ -302,7 +302,7 @@ int SBC_HL_SS(void)
 #ifdef LISTING
 
     TACKTS = 15;
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(FLAGS, "++XXXV1+");
     sprintf(MNEMONIC, "SBC HL,%s", SS_45_Name(prevPC));
     sprintf(TRANSCRIPT, "HL<-HL-%s-CY", SS_45_Name(prevPC));
@@ -310,7 +310,7 @@ int SBC_HL_SS(void)
 
 #else
 
-    HL -= SS_45(prevPC) - CF;
+    rHL -= SS_45(prevPC) - CF;
 
     // + + x x x V 1 +
     // S
@@ -327,7 +327,7 @@ int SBC_HL_SS(void)
 
 int RLD(void)
 {
-    uint8 val_pHL = RAM8(HL);
+    uint8 val_pHL = RAM8(rHL);
     uint8 pHLlow = val_pHL & 0x0f;
     uint8 pHLhi = (val_pHL >> 4) & 0x0f;
     uint8 Alow = rA & 0x0f;
@@ -339,7 +339,7 @@ int RLD(void)
     val_pHL |= pHLlow << 4; // hi pHL
     rA |= pHLhi;
 
-    RAM8(HL) = val_pHL;
+    RAM8(rHL) = val_pHL;
 
     // + + x 0 x P 0 .
     // S    WARN
@@ -354,7 +354,7 @@ int RLD(void)
 
 int RRD(void)
 {
-    uint8 val_pHL = RAM8(HL);
+    uint8 val_pHL = RAM8(rHL);
     uint8 pHLlow = val_pHL & 0x0f;
     uint8 pHLhi = (val_pHL >> 4) & 0x0f;
     uint8 Alow = rA & 0x0f;
@@ -366,7 +366,7 @@ int RRD(void)
     val_pHL |= Alow << 4;
     rA |= pHLlow;
 
-    RAM8(HL);
+    RAM8(rHL);
 
     // + + x 0 x P 0 .
     // S    WARN
@@ -406,10 +406,10 @@ int IN_R_pC(void)
     }
     else
     {
-        strcpy(MNEMONIC, "IN (HL), (C); R == 110, set flags only");
+        strcpy(MNEMONIC, "IN (rHL), (C); R == 110, set flags only");
     }
     strcpy(FLAGS, "+ + X + X P 0 .");
-    AddAddress(PC);
+    AddAddress(rPC);
 
     return -1;
 #else
@@ -442,8 +442,8 @@ int INI(void)
     strcpy(MNEMONIC, "INI");
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; if B-1==0, Z set, else reset");
     strcpy(FLAGS, "X + X X X X 1 X");
-    strcpy(TRANSCRIPT, "(HL)<-(C); B--; HL++");
-    AddAddress(PC);
+    strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++");
+    AddAddress(rPC);
     return 0;
 
 #else
@@ -461,8 +461,8 @@ int INIR(void)
     strcpy(MNEMONIC, "INIR");
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; z set only after finishing instruction");
     strcpy(FLAGS, "X 1 X X X X X 1 ");
-    strcpy(TRANSCRIPT, "(HL)<-(C); B--; HL++; while B!=0");
-    AddAddress(PC);
+    strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++; while B!=0");
+    AddAddress(rPC);
     return 0;
 
 #else
@@ -478,8 +478,8 @@ int IND(void)
 #ifdef LISTING
 
     strcpy(MNEMONIC, "IND");
-    strcpy(TRANSCRIPT, "(HL)<-(C); B--; HL--");
-    AddAddress(PC);
+    strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--");
+    AddAddress(rPC);
     return 0;
 
 #else
@@ -495,8 +495,8 @@ int INDR(void)
 #ifdef LISTING
 
     strcpy(MNEMONIC, "INDR");
-    strcpy(TRANSCRIPT, "(HL)<-(C); B--; HL--; while B!=0");
-    AddAddress(PC);
+    strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--; while B!=0");
+    AddAddress(rPC);
     return 0;
 
 #else
@@ -528,7 +528,7 @@ int OUT_pC_R(void)
 
 int RunCommandED(void)
 {
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 
@@ -543,7 +543,7 @@ int RunCommandED(void)
 
 int DecodeCommandED(void)
 {
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 

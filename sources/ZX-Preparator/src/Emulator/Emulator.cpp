@@ -34,7 +34,7 @@ int Emulator::Decode(int address)
     out->tackts = 0;
     out->comment[0] = 0;
 
-    PC = (uint16)address;
+    rPC = (uint16)address;
 
     // If RunCommand() return >= 0, decoding fail
     return DecodeCommand();
@@ -44,7 +44,7 @@ int Emulator::Decode(int address)
 
 int Emulator::Run(int address)
 {
-    PC = (uint16)address;
+    rPC = (uint16)address;
 
     return RunCommand();
 }

@@ -9,7 +9,7 @@
 
 int DAA_dec(void)
 {
-    AddAddress(PC);
+    AddAddress(rPC);
     strcpy(MNEMONIC, "DAA");
     return -1;
 }

@@ -155,9 +155,9 @@ int RunThridLevel(TypeIR type)
 {
     typeIR = type;
 
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
     PCandInc();
-    AddOpcode(RAM8(PC));
+    AddOpcode(RAM8(rPC));
 
     int index = PCandInc();
 

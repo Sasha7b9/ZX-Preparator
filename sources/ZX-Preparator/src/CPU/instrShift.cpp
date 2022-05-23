@@ -53,15 +53,15 @@ static int RLC_RRC(TypeOperand type, uint8 byte)
     }
     else if (type == Operand_IX || type == Operand_IY)
     {
-        int index = ((type == Operand_IX) ? IX : IY) + RAM[PC - 2];
+        int index = ((type == Operand_IX) ? rIX : rIY) + RAM[rPC - 2];
 
         uint8 *pOperand = &(RAM[index]);
 
         RUN_RLC_RRC();
 
-        if (RAM[PC - 1] != byte)
+        if (RAM[rPC - 1] != byte)
         {
-            R8_LO(RAM[PC - 1]) = *pOperand;
+            R8_LO(RAM[rPC - 1]) = *pOperand;
         }
 
         return 23;

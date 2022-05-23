@@ -49,13 +49,13 @@ extern uint8 imfB;
 
 
 #define rBC     regs.r16[0]
-#define DE      regs.r16[1]
-#define HL      regs.r16[2]
-#define AF      regs.r16[3]
-#define SP      regs.r16[4]
-#define IX      regs.r16[5]
-#define IY      regs.r16[6]
-#define PC      regs.r16[7]
+#define rDE     regs.r16[1]
+#define rHL     regs.r16[2]
+#define rAF     regs.r16[3]
+#define rSP     regs.r16[4]
+#define rIX     regs.r16[5]
+#define rIY     regs.r16[6]
+#define rPC     regs.r16[7]
 
 #define rA      regs.r8[7]
 #define rB      regs.r8[1]

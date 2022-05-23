@@ -145,23 +145,23 @@ char *PP_45_Name(uint8 value)
 
 void AddPC(uint8 delta)
 {
-    int16 address = (int16)PC + (int8)delta;
-    PC = (uint16)address;
+    int16 address = (int16)rPC + (int8)delta;
+    rPC = (uint16)address;
 }
 
 
 uint8 PCandInc(void)
 {
-    prevPC = RAM[PC];
-    PC++;
+    prevPC = RAM[rPC];
+    rPC++;
     return prevPC;
 }
 
 
 uint16 PC16andInc(void)
 {
-    uint8 low = RAM[PC++];
-    uint8 hi = RAM[PC++];
+    uint8 low = RAM[rPC++];
+    uint8 hi = RAM[rPC++];
 
     return low + hi * 256;
 }
@@ -169,7 +169,7 @@ uint16 PC16andInc(void)
 
 uint16 ValuePC(void)
 {
-    return PC;
+    return rPC;
 }
 
 
