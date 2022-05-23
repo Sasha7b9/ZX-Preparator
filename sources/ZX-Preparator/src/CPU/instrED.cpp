@@ -1,18 +1,11 @@
 // 2022/05/23 17:32:37 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "instrED.h"
-
 #include "defines.h"
-
 #include "CPU/registers.h"
-
 #include "Hardware/ports.h"
-
 #include <string.h>
-
 #include <stdio.h>
-
 #include "common.h"
-
 #include "RAM.h"
 
 

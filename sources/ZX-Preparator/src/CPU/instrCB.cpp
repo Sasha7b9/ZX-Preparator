@@ -1,21 +1,13 @@
 // 2022/05/23 17:29:45 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "instrCB.h"
-
 #include "defines.h"
-
-#include "registers.h"
-
-#include "Hardware/ports.h"
-
+#include "CPU/instrCB.h"
+#include "defines.h"
+#include "CPU/registers.h"
+#include "Computer/ports.h"
+#include "Computer/RAM.h"
+#include "CPU/instrShift.h"
 #include <string.h>
-
 #include <stdio.h>
-
-#include "common.h"
-
-#include "RAM.h"
-
-#include "instrShift.h"
 
 
 

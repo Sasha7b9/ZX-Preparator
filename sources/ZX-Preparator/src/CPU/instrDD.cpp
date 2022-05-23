@@ -1,15 +1,12 @@
 // 2022/05/23 17:30:19 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "defines.h"
 #include "instrDD.h"
 #include "defines.h"
 #include "registers.h"
-#include "RAM.h"
-#include "common.h"
+#include "Computer/RAM.h"
 #include "instrFDCB_DDCB.h"
-
-
-#include <string.h>
-
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 
 
 int LD_R_pIX_D_run(void)
@@ -34,7 +31,6 @@ int LD_R_pIX_D_dec(void)
 }
 
 
----
 int LD_pIX_D_R_run(void)
 {
     uint8 valueReg = prevPC;
@@ -55,7 +51,6 @@ int LD_pIX_D_R_dec(void)
 }
 
 
----
 int POP_IX_run(void)
 {
     IX = RAM16(SP);
@@ -72,7 +67,7 @@ int POP_IX_dec(void)
     return -1;
 }
 
----
+
 int LD_pIX_D_N_run(void)
 {
     uint8 valD = PCandInc();
@@ -89,7 +84,6 @@ int LD_pIX_D_N_dec(void)
 }
 
 
----
 int LD_IX_NN(void)
 {
 #ifdef LISTING
@@ -109,7 +103,7 @@ int LD_IX_NN(void)
 }
 
 
----
+
 int DEC_IX_dec(void)
 {
 #ifdef LISTING
@@ -127,7 +121,6 @@ int DEC_IX_dec(void)
 }
 
 
----
 int LD_IX_pNN(void)
 {
     IX = RAM16(PC16andInc());
@@ -135,7 +128,6 @@ int LD_IX_pNN(void)
 }
 
 
----
 int LD_pNN_IX(void)
 {
     RAM16(PC16andInc()) = IX;
@@ -143,7 +135,6 @@ int LD_pNN_IX(void)
 }
 
 
----
 int LD_SP_IX(void)
 {
     SP = IX;
@@ -151,7 +142,6 @@ int LD_SP_IX(void)
 }
 
 
----
 int PUSH_IX(void)
 {
     RAM16(SP - 2) = IX;
@@ -160,7 +150,6 @@ int PUSH_IX(void)
 }
 
 
----
 int EX_pSP_IX(void)
 {
     uint16 temp;
@@ -169,7 +158,6 @@ int EX_pSP_IX(void)
 }
 
 
----
 int ADD_A_pIX_D(void)
 {
     A += RAM8(IX + PCandInc());
@@ -177,7 +165,6 @@ int ADD_A_pIX_D(void)
 }
 
 
----
 int INC_pIX_D(void)
 {
     RAM16(IX + PCandInc()) += 1;
@@ -185,7 +172,6 @@ int INC_pIX_D(void)
 }
 
 
----
 int ADD_IX_PP(void)
 {
 #ifdef LISTING
@@ -203,7 +189,6 @@ int ADD_IX_PP(void)
 }
 
 
----
 int INC_IX_run(void)
 {
     IX += 1;
@@ -220,7 +205,6 @@ int INC_IX_dec(void)
 }
 
 
----
 int JP_pIX(void)
 {
 #ifdef LISTING
@@ -237,7 +221,6 @@ int JP_pIX(void)
 }
 
 
----
 int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
 {
     return RunThridLevel(IR_IX);
@@ -297,11 +280,9 @@ int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
 }
 
 
----
 #include "FuncSecondDD.h"
 
 
----
 int DecodeCommandDD(void)
 {
     AddOpcode(RAM8(PC));
@@ -317,7 +298,6 @@ int DecodeCommandDD(void)
 }
 
 
----
 int RunCommandDD(void)
 {
     int index = PCandInc();
