@@ -1524,7 +1524,7 @@ static int EXX_run(void)
     EXCH(rB, Balt);
     EXCH(rC, RCalt);
     EXCH(rD, RDalt);
-    EXCH(E, REalt);
+    EXCH(rE, REalt);
     EXCH(rH, RHalt);
     EXCH(L, RLalt);
 
