@@ -9,12 +9,12 @@
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
 {
     pageInfo = new PageInfo(this);
-    pageBinary = new PageHEX(this);
+    pageHEX = new PageHEX(this);
     pageParsed = new PageBASIC(this);
     pageEdit = new PageASM(this);
 
     AddPage(pageInfo, pageInfo->GetName());
-    AddPage(pageBinary, pageBinary->GetName());
+    AddPage(pageHEX, pageHEX->GetName());
     AddPage(pageParsed, pageParsed->GetName());
     AddPage(pageEdit, pageEdit->GetName());
 }
