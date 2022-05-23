@@ -1,4 +1,4 @@
-///
+// 2022/5/23 19:37:45 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Decompiler/DLLmain.h"
 
