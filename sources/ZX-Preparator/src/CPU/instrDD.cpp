@@ -160,7 +160,7 @@ int EX_pSP_IX(void)
 
 int ADD_A_pIX_D(void)
 {
-    A += RAM8(IX + PCandInc());
+    rA += RAM8(IX + PCandInc());
     return 19;
 }
 

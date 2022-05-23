@@ -279,14 +279,14 @@ int DAA_run(void)
 
 
 //    uint8 oldA = A;
-    uint16 value = A + DAAadjust[(NF << 10) + (CF << 9) + (HF << 8) + A];
+    uint16 value = rA + DAAadjust[(NF << 10) + (CF << 9) + (HF << 8) + rA];
 
-    A = value & 0xff;
+    rA = value & 0xff;
 
     // + + x + x p . +
 
-    CALC_S(A);
-    CALC_Z(A);
+    CALC_S(rA);
+    CALC_Z(rA);
 
     // HF WARN
 

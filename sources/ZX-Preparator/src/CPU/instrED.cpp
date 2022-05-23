@@ -192,7 +192,7 @@ int CPIR(void)
     {
         time += 21;
         CPI();
-    } while(BC != 0 && A != RAM8(HL));
+    } while(BC != 0 && rA != RAM8(HL));
 
     return time + 16;
 }
@@ -222,7 +222,7 @@ int CPDR(void)
     {
         time += 21;
         CPD();
-    } while(BC != 0 && A != RAM8(HL));
+    } while(BC != 0 && rA != RAM8(HL));
 
     return time + 16;
 }
@@ -238,7 +238,7 @@ int NEG(void)
 
 #else
 
-    A = (~A) + 1;
+    rA = (~rA) + 1;
 
     // + + x + x V 1 +
     // S WARN
@@ -330,14 +330,14 @@ int RLD(void)
     uint8 val_pHL = RAM8(HL);
     uint8 pHLlow = val_pHL & 0x0f;
     uint8 pHLhi = (val_pHL >> 4) & 0x0f;
-    uint8 Alow = A & 0x0f;
+    uint8 Alow = rA & 0x0f;
 
     val_pHL = 0;
-    A &= 0x0f;
+    rA &= 0x0f;
 
     val_pHL |= Alow;        // low pHL
     val_pHL |= pHLlow << 4; // hi pHL
-    A |= pHLhi;
+    rA |= pHLhi;
 
     RAM8(HL) = val_pHL;
 
@@ -357,14 +357,14 @@ int RRD(void)
     uint8 val_pHL = RAM8(HL);
     uint8 pHLlow = val_pHL & 0x0f;
     uint8 pHLhi = (val_pHL >> 4) & 0x0f;
-    uint8 Alow = A & 0x0f;
+    uint8 Alow = rA & 0x0f;
 
     val_pHL = 0;
-    A &= 0x0f;
+    rA &= 0x0f;
 
     val_pHL |= pHLhi;
     val_pHL |= Alow << 4;
-    A |= pHLlow;
+    rA |= pHLlow;
 
     RAM8(HL);
 

@@ -66,7 +66,7 @@ static int LD_pBC_A_dec(void)
 // 2 ------------------------------------------------------------------------------------------------------------------------------------------------------
 int LD_pBC_A_run(void)
 {
-    RAM[BC] = A;
+    RAM[BC] = rA;
 
     return 7;
 }
@@ -206,7 +206,7 @@ int EX_AF_AFlat_run(void)
 {
     uint8 temp;
 
-    EXCH(A, Aalt);
+    EXCH(rA, Aalt);
     EXCH(rF, RFalt);
 
     return 4;
@@ -249,7 +249,7 @@ int LD_A_pBC_dec(void)
 
 int LD_A_pBC_run(void)
 {
-    A = RAM[BC];
+    rA = RAM[BC];
 
     return 7;
 }
@@ -285,10 +285,10 @@ int RRCA_dec(void)
 
 int RRCA_run(void)
 {
-    uint8 loBit = GET_nBIT(A, 0);
+    uint8 loBit = GET_nBIT(rA, 0);
 
-    A >>= 1;
-    LOAD_nBIT(A, 7, loBit);
+    rA >>= 1;
+    LOAD_nBIT(rA, 7, loBit);
     LOAD_C(loBit);
 
     // . . x 0 x . 0 +
@@ -338,7 +338,7 @@ int LD_pDE_A_dec(void)
 
 int LD_pDE_A_run(void)
 {
-    RAM[DE] = A;
+    RAM[DE] = rA;
 
     return 7;
 }
@@ -354,12 +354,12 @@ int RLA_dec(void)
 
 int RLA_run(void)
 {
-    uint8 hiBit = GET_nBIT(A, 7);
+    uint8 hiBit = GET_nBIT(rA, 7);
     uint8 oldCY = CF;
 
-    A <<= 1;
+    rA <<= 1;
     LOAD_C(hiBit);
-    LOAD_nBIT(A, 0, oldCY);
+    LOAD_nBIT(rA, 0, oldCY);
 
     // . . x 0 x . 0 +
     RES_H;
@@ -414,7 +414,7 @@ int LD_A_pDE_dec(void)
 
 int LD_A_pDE_run(void)
 {
-    A = RAM[DE];
+    rA = RAM[DE];
 
     return 7;
 }
@@ -430,11 +430,11 @@ int RRA_dec(void)
 
 int RRA_run(void)
 {
-    uint8 loBit = GET_nBIT(A, 0);
+    uint8 loBit = GET_nBIT(rA, 0);
     uint8 oldCY = CF;
 
-    A >>= 1;
-    LOAD_nBIT(A, 7, oldCY);
+    rA >>= 1;
+    LOAD_nBIT(rA, 7, oldCY);
     LOAD_C(loBit);
 
     // . . x 0 x . 0 +
@@ -547,7 +547,7 @@ int CPL_dec(void)
 
 int CPL_run(void)
 {
-    A = ~A;
+    rA = ~rA;
 
     // . . x + x . 1 .
 
@@ -592,7 +592,7 @@ static int LD_pNN_A_dec(void)
 
 static int LD_pNN_A_run(void)
 {
-    RAM[PC16andInc()] = A;
+    RAM[PC16andInc()] = rA;
 
     return 13;
 }
@@ -726,7 +726,7 @@ static int LD_A_pNN_dec(void)
 
 static int LD_A_pNN_run(void)
 {
-    A = RAM[PC16andInc()];
+    rA = RAM[PC16andInc()];
 
     return 13;
 }
@@ -839,7 +839,7 @@ static int ADD_A_R_dec(void)
 
 static int ADD_A_R_run(void)
 {
-    A += R8_LO(prevPC);
+    rA += R8_LO(prevPC);
 
     return 4;
 }
@@ -855,7 +855,7 @@ static int ADD_A_pHL_dec(void)
 
 static int ADD_A_pHL_run(void)
 {
-    A += pHL;
+    rA += pHL;
 
     return 7;
 }
@@ -872,7 +872,7 @@ static int ADC_A_S_dec(void)
 
 static int ADC_A_S_run(void)
 {
-    A += R8_LO(prevPC) + CF;
+    rA += R8_LO(prevPC) + CF;
 
     return 4;
 }
@@ -880,7 +880,7 @@ static int ADC_A_S_run(void)
 
 static int ADC_A_pHL_run(void)
 {
-    A += pHL + CF;
+    rA += pHL + CF;
 
     return 7;
 }
@@ -896,7 +896,7 @@ static int SUB_S_dec(void)
 
 static int SUB_S_run(void)
 {
-    A -= R8_LO(prevPC);
+    rA -= R8_LO(prevPC);
 
     return 4;
 }
@@ -904,7 +904,7 @@ static int SUB_S_run(void)
 
 static int SUB_pHL_run(void)
 {
-    A -= pHL;
+    rA -= pHL;
 
     return 7;
 }
@@ -920,7 +920,7 @@ static int SBC_A_S_dec(void)
 
 static int SBC_A_S_run(void)
 {
-    A -= R8_LO(prevPC) - CF;
+    rA -= R8_LO(prevPC) - CF;
 
     return 4;
 }
@@ -936,7 +936,7 @@ static int SBC_A_pHL_dec(void)
 
 static int SBC_A_pHL_run(void)
 {
-    A -= pHL - CF;
+    rA -= pHL - CF;
 
     return 7;
 }
@@ -957,7 +957,7 @@ static int AND_S_dec(void)
 
 static int AND_S_run(void)
 {
-    A &= R8_LO(prevPC);
+    rA &= R8_LO(prevPC);
 
     return 4;
 }
@@ -973,7 +973,7 @@ static int AND_pHL_dec(void)
 
 static int AND_pHL_run(void)
 {
-    A &= pHL;
+    rA &= pHL;
 
     return 7;
 }
@@ -992,7 +992,7 @@ static int XOR_S_dec(void)
 
 static int XOR_S_run(void)
 {
-    A ^= R8_LO(prevPC);
+    rA ^= R8_LO(prevPC);
 
     return 4;
 }
@@ -1008,7 +1008,7 @@ static int XOR_pHL_dec(void)
 
 static int XOR_pHL_run(void)
 {
-    A ^= pHL;
+    rA ^= pHL;
 
     return 7;
 }
@@ -1026,7 +1026,7 @@ static int OR_S_dec(void)
 
 static int OR_S_run(void)
 {
-    A |= R8_LO(prevPC);
+    rA |= R8_LO(prevPC);
 
     return 4;
 }
@@ -1042,7 +1042,7 @@ static int OR_pHL_dec(void)
 
 static int OR_pHL_run(void)
 {
-    A |= pHL;
+    rA |= pHL;
 
     return 7;
 }
@@ -1068,7 +1068,7 @@ static int CP_S_run(void)
 
     SET_N;
 
-    if(A == value)
+    if(rA == value)
     {
         SET_Z;
     }
@@ -1077,7 +1077,7 @@ static int CP_S_run(void)
         RES_Z;
     }
 
-    if(A < value)
+    if(rA < value)
     {
         SET_C;
         SET_S;
@@ -1088,7 +1088,7 @@ static int CP_S_run(void)
         RES_S;
     }
 
-    if((value & 0x0f) > (A & 0x0f))
+    if((value & 0x0f) > (rA & 0x0f))
     {
         SET_H;
     }
@@ -1401,7 +1401,7 @@ static int ADD_A_N_dec(void)
 
 static int ADD_A_N_run(void)
 {
-    A += PCandInc();
+    rA += PCandInc();
 
     return 7;
 }
@@ -1460,7 +1460,7 @@ static int ADC_A_N_dec(void)
 
 static int ADC_A_N_run(void)
 {
-    A += PCandInc() + CF;
+    rA += PCandInc() + CF;
 
     return 7;
 }
@@ -1483,7 +1483,7 @@ static int OUT_pN_A_dec(void)
 
 static int OUT_pN_A_run(void)
 {
-    WritePort(PCandInc(), A);
+    WritePort(PCandInc(), rA);
 
     return 11;
 }
@@ -1500,7 +1500,7 @@ static int SUB_N_dec(void)
 
 static int SUB_N_run(void)
 {
-    A -= PCandInc();
+    rA -= PCandInc();
 
     return 7;
 }
@@ -1543,7 +1543,7 @@ static int IN_A_pN_dec(void)
 
 static int IN_A_pN_run(void)
 {
-    A = ReadPort(PCandInc());
+    rA = ReadPort(PCandInc());
 
     return 11;
 }
@@ -1560,7 +1560,7 @@ static int SBC_A_N_dec(void)
 
 static int SBC_A_N_run(void)
 {
-    A -= PCandInc() - CF;
+    rA -= PCandInc() - CF;
 
     return 7;
 }
@@ -1596,7 +1596,7 @@ static int AND_N_dec(void)
 
 static int AND_N_run(void)
 {
-    A &= PCandInc();
+    rA &= PCandInc();
 
     return 7;
 }
@@ -1646,7 +1646,7 @@ static int XOR_N_dec(void)
 
 static int XOR_N_run(void)
 {
-    A ^= PCandInc();
+    rA ^= PCandInc();
 
     return 7;
 }
@@ -1685,7 +1685,7 @@ static int OR_N_dec(void)
 
 static int OR_N_run(void)
 {
-    A |= PCandInc();
+    rA |= PCandInc();
 
     return 7;
 }

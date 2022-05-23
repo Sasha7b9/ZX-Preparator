@@ -29,7 +29,7 @@ static int RLC_RRC(TypeOperand type, uint8 byte)
 
     if (type == Operand_A)
     {
-        uint8 *pOperand = &A;
+        uint8 *pOperand = &rA;
 
         RUN_RLC_RRC();
 
