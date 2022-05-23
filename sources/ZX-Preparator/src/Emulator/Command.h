@@ -4,9 +4,8 @@
 #include <string>
 
 
-class Command
+struct Command
 {
-public:
     bool bad = false;
     int address = 0;
     std::vector<uint8> opCodes;
