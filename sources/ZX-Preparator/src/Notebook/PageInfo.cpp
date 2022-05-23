@@ -48,7 +48,14 @@ void PageInfo::OnDraw(wxDC &dc)
 
             DescriptionTAP::Block &block = descTAP.blocks[i];
 
-            dc.DrawText(wxString::Format("Type : %s", types[block.type]), x + 40, y);
+            if (block.type == 3 && block.size == 6912 && block.param1 == 16384)
+            {
+                dc.DrawText(wxString::Format("Type : %s", "DATA SCREEN"), x + 40, y);
+            }
+            else
+            {
+                dc.DrawText(wxString::Format("Type : %s", types[block.type]), x + 40, y);
+            }
 
             y += dY;
 
@@ -63,6 +70,18 @@ void PageInfo::OnDraw(wxDC &dc)
                 y += dY;
 
                 dc.DrawText(wxString::Format("Offset data : %d", block.param2), x + 40, y);
+
+                y += dY;
+            }
+            else if (block.type == 1 || block.type == 2)
+            {
+                dc.DrawText(wxString::Format("Name : %c", (char)(block.param1 >> 8)), x + 40, y);
+
+                y += dY;
+            }
+            else if (block.type == 3)
+            {
+                dc.DrawText(wxString::Format("Begin data : %d", block.param1), x + 40, y);
 
                 y += dY;
             }
