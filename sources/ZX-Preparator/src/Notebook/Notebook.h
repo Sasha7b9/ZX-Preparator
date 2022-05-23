@@ -16,7 +16,7 @@ struct TypePage
     enum E
     {
         Info,
-        Binary,
+        HEX,
         Parsed,
         Edit,
         Count
@@ -46,10 +46,10 @@ protected:
 
 
 
-class PageBinary : public Page
+class PageHEX : public Page
 {
 public:
-    PageBinary(wxNotebook *parent) : Page(parent, TypePage::Binary, "Binary") { }
+    PageHEX(wxNotebook *parent) : Page(parent, TypePage::HEX, "Binary") { }
 };
 
 
@@ -84,7 +84,7 @@ public:
 
     PageInfo *GetPageInfo() { return pageInfo; }
 
-    PageBinary *GetPageBinary() { return pageBinary; }
+    PageHEX *GetPageBinary() { return pageBinary; }
 
     PageParsed *GetPageParsed() { return pageParsed; }
 
@@ -93,7 +93,7 @@ public:
 private:
 
     PageInfo *pageInfo = nullptr;
-    PageBinary *pageBinary = nullptr;
+    PageHEX *pageBinary = nullptr;
     PageParsed *pageParsed = nullptr;
     PageEdit *pageEdit = nullptr;
 };

@@ -7,7 +7,7 @@
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
 {
     pageInfo = new PageInfo(this);
-    pageBinary = new PageBinary(this);
+    pageBinary = new PageHEX(this);
     pageParsed = new PageParsed(this);
     pageEdit = new PageEdit(this);
 
