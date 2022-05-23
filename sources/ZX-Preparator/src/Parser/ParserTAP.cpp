@@ -431,6 +431,7 @@ bool BlockTAP::Header::Read()
     else if (size != 0)
     {
         type_data = 4;
+        size_data = size - 1;
         valid = true;
     }
 
@@ -448,7 +449,17 @@ bool BlockTAP::Data::Read(const Header &header)
 
     if (header.type_data == 4)
     {
+        for (int i = 0; i < header.size_data; i++)
+        {
+            data.push_back(Read8());
+        }
 
+        valid = stream.IsOk();
+
+        if (stream.Read8() != crc)
+        {
+            valid = false;
+        }
     }
     else
     {

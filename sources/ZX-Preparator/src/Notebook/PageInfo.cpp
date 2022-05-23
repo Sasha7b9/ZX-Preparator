@@ -45,12 +45,13 @@ void PageInfo::OnDraw(wxDC &dc)
 
             y += dY;
 
-            static const pchar types[4] =
+            static const pchar types[5] =
             {
                 "BASIC PROGRAM",
                 "NUMBER ARRAY",
                 "CHARACTER ARRAY",
-                "MACHINE CODE"
+                "MACHINE CODE",
+                "PURE BYTES (bytes without header)"
             };
 
             DescriptionTAP::Block &block = descTAP.blocks[i];
