@@ -1,16 +1,9 @@
 // 2022/05/23 17:33:08 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "instrShift.h"
-
-
-#include "registers.h"
-
-
-#include "common.h"
-
-
-#include <string.h>
-
-#include <stdio.h>
+#include "defines.h"
+#include "CPU/instrShift.h"
+#include "CPU/registers.h"
+#include <cstring>
+#include <cstdio>
 
 
 
@@ -78,14 +71,12 @@ static int RLC_RRC(TypeOperand type, uint8 byte)
 }
 
 
----
 int RLC(TypeOperand type)
 {
     return RLC_RRC(type, 0x06);
 }
 
 
----
 int RRC(TypeOperand type)
 {
     return RLC_RRC(type, 0x0e);

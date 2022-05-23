@@ -325,7 +325,6 @@ int SBC_HL_SS(void)
 }
 
 
----
 int RLD(void)
 {
     uint8 val_pHL = RAM8(HL);
@@ -353,7 +352,6 @@ int RLD(void)
 }
 
 
----
 int RRD(void)
 {
     uint8 val_pHL = RAM8(HL);
@@ -381,7 +379,6 @@ int RRD(void)
 }
 
 
----
 int RETN(void)
 {
 #ifdef LISTING
@@ -397,7 +394,6 @@ int RETN(void)
 }
 
 
----
 int IN_R_pC(void)
 {
 #ifdef LISTING
@@ -439,7 +435,6 @@ int IN_R_pC(void)
 }
 
 
----
 int INI(void)
 {
 #ifdef LISTING
@@ -459,7 +454,6 @@ int INI(void)
 }
 
 
----
 int INIR(void)
 {
 #ifdef LISTING
@@ -479,7 +473,6 @@ int INIR(void)
 }
 
 
----
 int IND(void)
 {
 #ifdef LISTING
@@ -497,7 +490,6 @@ int IND(void)
 }
 
 
----
 int INDR(void)
 {
 #ifdef LISTING
@@ -515,7 +507,6 @@ int INDR(void)
 }
 
 
----
 int OUT_pC_R(void)
 {
 #ifdef LISTING
@@ -532,11 +523,9 @@ int OUT_pC_R(void)
 }
 
 
----
 #include "FuncSecondED.h"
 
 
----
 int RunCommandED(void)
 {
     AddOpcode(RAM8(PC));
@@ -552,7 +541,6 @@ int RunCommandED(void)
 }
 
 
----
 int DecodeCommandED(void)
 {
     AddOpcode(RAM8(PC));

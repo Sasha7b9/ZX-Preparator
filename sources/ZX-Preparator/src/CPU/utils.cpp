@@ -1,6 +1,6 @@
 // 2022/05/23 17:34:14 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "common.h"
-#include "utils.h"
+#include "defines.h"
+#include "CPU/utils.h"
 
 
 

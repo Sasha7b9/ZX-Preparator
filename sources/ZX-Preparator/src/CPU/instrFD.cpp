@@ -1,13 +1,12 @@
 // 2022/05/23 17:32:47 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "instrFD.h"
 #include "defines.h"
+#include "CPU/instrFD.h"
 #include "CPU/registers.h"
-#include "Hardware/ports.h"
-#include <string.h>
-#include <stdio.h>
-#include "common.h"
-#include "RAM.h"
-#include "instrFDCB_DDCB.h"
+#include "Computer/ports.h"
+#include "Computer/RAM.h"
+#include "CPU/instrFDCB_DDCB.h"
+#include <cstring>
+#include <cstdio>
 
 
 
@@ -28,7 +27,6 @@ int INC_pIY_D(void)
 }
 
 
----
 int DEC_pIY_D(void)
 {
 #ifdef LISTING
@@ -46,7 +44,6 @@ int DEC_pIY_D(void)
 }
 
 
----
 int LD_pIY_D_R(void)
 {
 #ifdef LISTING
@@ -68,7 +65,6 @@ int LD_pIY_D_R(void)
 }
 
 
----
 int LD_IY_NN(void)
 {
 #ifdef LISTING
@@ -92,7 +88,6 @@ int LD_IY_NN(void)
 }
 
 
----
 int DecodeCommandFDCB(void)
 {
     //return RunThridLevel(IR_IY);
@@ -133,7 +128,6 @@ int DecodeCommandFDCB(void)
 }
 
 
----
 int LD_pIY_D_N(void)
 {
 #ifdef LISTING
@@ -157,7 +151,6 @@ int LD_pIY_D_N(void)
 }
 
 
----
 int SUB_pIY_D(void)
 {
 #ifdef LISTING
@@ -175,7 +168,6 @@ int SUB_pIY_D(void)
 }
 
 
----
 int LD_R_pIY_D(void)
 {
 #ifdef LISTING
@@ -194,7 +186,6 @@ int LD_R_pIY_D(void)
 }
 
 
----
 int ADD_A_pIY_D(void)
 {
 #ifdef LISTING
@@ -212,7 +203,6 @@ int ADD_A_pIY_D(void)
 }
 
 
----
 int CP_pIY_D(void)
 {
 #ifdef LISTING
@@ -230,7 +220,6 @@ int CP_pIY_D(void)
 }
 
 
----
 int XOR_pIY_D(void)
 {
 #ifdef LISTING
@@ -248,11 +237,9 @@ int XOR_pIY_D(void)
 }
 
 
----
 #include "FuncSecondFD.h"
 
 
----
 int RunCommandFD(void)
 {
     AddOpcode(RAM8(PC));
@@ -268,7 +255,6 @@ int RunCommandFD(void)
 }
 
 
----
 int DecodeCommandFD(void)
 {
     AddOpcode(RAM8(PC));
