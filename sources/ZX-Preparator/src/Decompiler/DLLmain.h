@@ -47,10 +47,10 @@ struct OutStruct
 };
 
 
-__declspec(dllexport) void __cdecl InitEMU(OutStruct *out);
-__declspec(dllexport) int __cdecl Decode(int address);  // ret value : 0 - unknown command, else - successful
-__declspec(dllexport) int __cdecl Run(int address);     // ret value : 0 - unknown command, else - successful
-__declspec(dllexport) int __cdecl RunNext(void);        // ret value : 0 - unknown command, else - successful
+void InitEMU(OutStruct *out);
+int  Decode(int address);  // ret value : 0 - unknown command, else - successful
+int  Run(int address);     // ret value : 0 - unknown command, else - successful
+int  RunNext(void);        // ret value : 0 - unknown command, else - successful
 
 
 #pragma warning(pop)
