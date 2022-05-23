@@ -9,13 +9,13 @@
 #include "CPU/instr.h"
 
 
-OutStruct *out = 0;
+InfoStruct *out = 0;
 
 uint8 *RAM = 0;
 
 
 
-void Emulator::Init(OutStruct *out_)
+void Emulator::Init(InfoStruct *out_)
 {
     out = out_;
     RAM = out->MEMORY;

@@ -23,7 +23,7 @@ int StorageInstructions::NextAddress()
 }
 
 
-void StorageInstructions::AddNewData(bool succsefull, int address, OutStruct *params)
+void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *params)
 {
     RemoveScanAddress(address);
 

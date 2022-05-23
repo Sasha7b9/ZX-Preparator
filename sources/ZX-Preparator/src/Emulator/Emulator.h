@@ -30,7 +30,7 @@ union REGS
 };
 
 
-struct OutStruct
+struct InfoStruct
 {
     unsigned char  MEMORY[65536];       // Full computer memory
     char           mnemonic[100];       // Mnemonic current command
@@ -47,7 +47,7 @@ struct OutStruct
 
 namespace Emulator
 {
-    void Init(OutStruct *out);
+    void Init(InfoStruct *out);
     int  Decode(int address);  // ret value : 0 - unknown command, else - successful
     int  Run(int address);     // ret value : 0 - unknown command, else - successful
     int  RunNext(void);        // ret value : 0 - unknown command, else - successful

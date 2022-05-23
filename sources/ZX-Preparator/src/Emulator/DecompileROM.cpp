@@ -7,7 +7,7 @@
 
 static StorageInstructions storage(0, 16384);
 
-static OutStruct params;
+static InfoStruct params;
 
 
 void DecompileROM()

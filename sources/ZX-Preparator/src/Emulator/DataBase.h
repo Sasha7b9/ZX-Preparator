@@ -16,7 +16,7 @@ public:
     int NextAddress();
 
     // Append data for instructions on address
-    void AddNewData(bool succsefull, int address, OutStruct *params);
+    void AddNewData(bool succsefull, int address, InfoStruct *params);
 
     // Write report to file
     void CreateReport(pchar file_name);

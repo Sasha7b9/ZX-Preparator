@@ -17,8 +17,8 @@ typedef int(*pFuncIV)();
 typedef bool(*pFuncBV)();
 
 
-struct OutStruct;
-extern OutStruct *out;
+struct InfoStruct;
+extern InfoStruct *out;
 
 
 #define TACKTS      out->tackts
