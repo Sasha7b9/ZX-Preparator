@@ -1,16 +1,8 @@
+// 2022/05/23 17:34:03 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-
-
-#include "defines.h"
-
-
-#include "../RAM.h"
-
-
-#include "utils.h"
-
-
-#include "DLLmain.h"
+#include "Computer/RAM.h"
+#include "CPU/utils.h"
+#include "Decompiler/DLLmain.h"
 
 
 typedef enum

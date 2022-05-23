@@ -1,8 +1,8 @@
 // 2022/05/23 17:19:52 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Decompiler/DLLmain.h"
-#include "Decompiler/CPU/instr.h"
-#include "Decompiler/CPU/registers.h"
+#include "CPU/instr.h"
+#include "CPU/registers.h"
 #define WIN32_LEAN_AND_MEAN
 #pragma warning(push, 0)
 #include <Windows.h>

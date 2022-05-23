@@ -2,7 +2,7 @@
 
 project (ZX-Preparator)
 
-set(CMAKE_UNITY_BUILD OFF)
+set(CMAKE_UNITY_BUILD ON)
 
 include_directories(src/
                     ../ThirdParty/wxWidgets/include/
@@ -32,18 +32,21 @@ else()
 endif()
 
 file(GLOB SRC        src/*.*)
+file(GLOB COMPUTER   src/Computer/*.*)
 file(GLOB CPU        src/CPU/*.*)
 file(GLOB DECOMPILER src/Decompiler/*.*)
 file(GLOB NOTEBOOK   src/Notebook/*.*)
 file(GLOB PARSER     src/Parser/*.*)
 
 source_group(src        FILES ${SRC})
+source_group(Computer   FILES ${COMPUTER})
 source_group(CPU        FILES ${CPU})
 source_group(Decompiler FILES ${DECOMPILER})
 source_group(Notebook   FILES ${NOTEBOOK})
 source_group(Parser     FILES ${PARSER})
 
 add_executable(${PROJECT_NAME} ${SRC}
+                               ${COMPUTER}
                                ${CPU}
                                ${DECOMPILER}
                                ${NOTEBOOK}

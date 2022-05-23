@@ -1,3 +1,4 @@
+// 2022/05/23 17:28:53 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "DAA.h"
 #include "defines.h"
 #include "registers.h"
