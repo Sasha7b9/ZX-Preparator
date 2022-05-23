@@ -2,23 +2,15 @@
 #pragma once
 #include "Parser/ParserTAP.h"
 #include "Notebook/Pages.h"
+#include "Notebook/PageInfo.h"
+#include "Notebook/PageHEX.h"
+#include "Notebook/PageBASIC.h"
+#include "Notebook/PageEdit.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
 #include <wx/wx.h>
 #include <wx/notebook.h>
 #pragma warning(pop)
-
-
-class PageInfo;
-class PageHEX;
-class PageBASIC;
-
-
-class PageEdit : public Page
-{
-public:
-    PageEdit(wxNotebook *parent) : Page(parent, TypePage::Edit, "Edit") { }
-};
 
 
 class Notebook : public wxNotebook
