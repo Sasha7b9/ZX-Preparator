@@ -1,7 +1,5 @@
-///
+// 2022/05/23 17:19:44 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-
-
 #pragma warning(push)
 #pragma warning(disable:4820)
 
@@ -25,11 +23,11 @@
 #define ADDR_PC 7
 
 
-typedef union
+union REGS
 {
     unsigned char r8[8];    // C B  E D  L H  F A
     unsigned short r16[8];  // BC   DE   HL   AF    SP  IX  IY  PC
-} REGS;
+};
 
 
 struct OutStruct

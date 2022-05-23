@@ -1,10 +1,8 @@
-#include "DLLmain.h"
-
-
-#pragma warning(push)
-#pragma warning(disable:4255)
-#pragma warning(disable:4820)
-#pragma warning(disable:4668)
+// 2022/05/23 17:19:52 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+#include "defines.h"
+#include "Decompiler/DLLmain.h"
+#define WIN32_LEAN_AND_MEAN
+#pragma warning(push, 0)
 #include <Windows.h>
 #pragma warning(pop)
 
@@ -14,13 +12,13 @@
 #include "common.h"
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 OutStruct *out = 0;
 
 uint8 *RAM = 0;
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 __declspec(dllexport) BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
     hModule = 0;
@@ -38,7 +36,7 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 __declspec(dllexport) void __cdecl InitEMU(OutStruct *out_)
 {
     out = out_;
@@ -48,7 +46,7 @@ __declspec(dllexport) void __cdecl InitEMU(OutStruct *out_)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 __declspec(dllexport) int __cdecl Decode(int address)
 {
     out->numAddresses = 0;
@@ -65,7 +63,7 @@ __declspec(dllexport) int __cdecl Decode(int address)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 __declspec(dllexport) int Run(int address)
 {
     PC = (uint16)address;
@@ -74,7 +72,7 @@ __declspec(dllexport) int Run(int address)
 }
 
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 __declspec(dllexport) int RunNext(void)
 {
     return RunCommand();
