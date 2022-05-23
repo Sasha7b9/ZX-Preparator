@@ -14,7 +14,7 @@ OutStruct params;
 
 void DecompileROM()
 {
-    params.RAM = RAM48;
+    std::memcpy(params.RAM, RAM48, 64 * 1024);
 
     Emulator::Init(&params);
 

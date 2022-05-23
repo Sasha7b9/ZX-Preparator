@@ -32,7 +32,7 @@ union REGS
 
 struct OutStruct
 {
-    unsigned char *RAM;
+    unsigned char  RAM[65536];
     char           mnemonic[100];
     char           comment[100];
     char           flags[100];
