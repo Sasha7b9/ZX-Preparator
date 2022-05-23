@@ -32,11 +32,11 @@ union REGS
 
 struct OutStruct
 {
-    unsigned char  MEMORY[65536];
-    char           mnemonic[100];
+    unsigned char  MEMORY[65536];       // Full computer memory
+    char           mnemonic[100];       // Mnemonic current command
     char           comment[100];
-    char           flags[100];
-    char           transcript[100];
+    char           flags[100];          // Incstruction effect onf flags
+    char           transcript[100];     // Command summary
     unsigned int   addresses[10];
     int            numAddresses;
     unsigned char  opCodes[10];
