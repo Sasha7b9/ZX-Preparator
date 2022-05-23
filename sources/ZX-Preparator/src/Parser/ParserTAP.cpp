@@ -339,17 +339,13 @@ bool ParserTAP::Execute(pchar fileName)
         }
         else
         {
-            if (data.IsOk())
-            {
-                blocks.clear();
-                return false;
-            }
+            break;
         }
     }
 
-    desc.valid = true;
+    desc.valid = blocks.size() != 0;
 
-    return true;
+    return desc.valid;
 }
 
 
