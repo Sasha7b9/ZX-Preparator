@@ -1,6 +1,6 @@
 // 2022/05/23 16:56:40 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Decompiler/DataBase.h"
+#include "Emulator/DataBase.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>

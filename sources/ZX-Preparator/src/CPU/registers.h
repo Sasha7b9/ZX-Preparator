@@ -2,7 +2,7 @@
 #pragma once
 #include "Computer/RAM.h"
 #include "CPU/utils.h"
-#include "Decompiler/DLLmain.h"
+#include "Emulator/DLLmain.h"
 
 
 enum REG_8

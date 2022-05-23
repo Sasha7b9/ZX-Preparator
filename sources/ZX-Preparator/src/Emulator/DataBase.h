@@ -1,7 +1,7 @@
 // 2022/05/23 16:56:21 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-#include "Decompiler/Command.h"
-#include "Decompiler/DLLmain.h"
+#include "Emulator/Command.h"
+#include "Emulator/DLLmain.h"
 
 
 class DataBase
