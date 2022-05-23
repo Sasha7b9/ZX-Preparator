@@ -14,6 +14,7 @@ typedef signed char int8;
 typedef uint8 *(*pFuncpU8V)();
 typedef uint16 *(*pFuncpU16V)();
 typedef int(*pFuncIV)();
+typedef bool(*pFuncBV)();
 
 
 struct OutStruct;
