@@ -2,7 +2,7 @@
 #include "defines.h"
 #include "Emulator/DataBase.h"
 #include "Emulator/Emulator.h"
-#include "Emulator/Memory48.h"
+#include "Emulator/Memory.h"
 
 
 static DataBase base(0, 16384);
@@ -12,7 +12,7 @@ static OutStruct params;
 
 void DecompileROM()
 {
-    std::memcpy(params.MEMORY, MEMORY48, 64 * 1024);
+    std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
 
     Emulator::Init(&params);
 

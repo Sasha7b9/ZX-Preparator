@@ -2,6 +2,8 @@
 #pragma once
 
 
-// Memory ZX-Spectrum (48k)
-extern const uint8 MEMORY48[65536];
-
+namespace Memory
+{
+    // Memory ZX-Spectrum (48k)
+    extern const uint8 _48[65536];
+}
