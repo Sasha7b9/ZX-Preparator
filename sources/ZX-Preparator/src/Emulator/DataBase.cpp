@@ -206,14 +206,14 @@ void DataBase::WriteCommand(ofstream &file, Command &command)
 
 
 
-void DataBase::CreateReport()
+void DataBase::CreateReport(pchar file_name)
 {
     std::sort(commands.begin(), commands.end());
 
 
     ofstream file;
 
-    file.open("report.txt");
+    file.open(file_name);
 
     for(size_t i = 0; i < commands.size(); i++)
     {

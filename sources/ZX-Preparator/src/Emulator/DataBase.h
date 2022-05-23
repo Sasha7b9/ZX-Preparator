@@ -14,7 +14,7 @@ public:
 
     void AddNewData(bool succsefull, int address, OutStruct *params);
 
-    void CreateReport();
+    void CreateReport(pchar file_name);
 
 private:
     std::vector<Command> commands;

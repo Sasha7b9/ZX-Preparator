@@ -29,7 +29,7 @@ int decompiler()
         address = base.NextAddress();
     }
 
-    base.CreateReport();
+    base.CreateReport("report.txt");
 
     return 0;
 }
