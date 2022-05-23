@@ -16,14 +16,14 @@ void DecompileROM()
 
     Emulator::Init(&params);
 
-    storage.AddScanAddress(0);
-    storage.AddScanAddress(8);
-    storage.AddScanAddress(0x10);
-    storage.AddScanAddress(0x18);
-    storage.AddScanAddress(0x20);
-    storage.AddScanAddress(0x28);
-    storage.AddScanAddress(0x30);
-    storage.AddScanAddress(0x38);
+    storage.AppendEntryPoint(0);
+    storage.AppendEntryPoint(8);
+    storage.AppendEntryPoint(0x10);
+    storage.AppendEntryPoint(0x18);
+    storage.AppendEntryPoint(0x20);
+    storage.AppendEntryPoint(0x28);
+    storage.AppendEntryPoint(0x30);
+    storage.AppendEntryPoint(0x38);
 
     int address = storage.NextAddress();
 

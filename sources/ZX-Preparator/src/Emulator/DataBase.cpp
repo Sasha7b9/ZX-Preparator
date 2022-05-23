@@ -44,7 +44,7 @@ void StorageInstructions::AddNewData(bool succsefull, int address, OutStruct *pa
 
         for(int i = 0; i < params->numAddresses; i++)
         {
-            AddScanAddress((int)params->addresses[i]);
+            AppendEntryPoint((int)params->addresses[i]);
         }
 
         command.transcript = string(params->transcript);
@@ -77,7 +77,7 @@ void StorageInstructions::RemoveScanAddress(int address)
 }
 
 
-void StorageInstructions::AddScanAddress(int address)
+void StorageInstructions::AppendEntryPoint(int address)
 {
     if(address >= addr_min && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {

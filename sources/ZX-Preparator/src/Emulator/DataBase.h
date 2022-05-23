@@ -9,13 +9,16 @@ class StorageInstructions
 public:
     StorageInstructions(int _addr_min, int _addr_max) : addr_min(_addr_min), addr_max(_addr_max) { }
 
-    void AddScanAddress(int address);
+    // Append new entry point
+    void AppendEntryPoint(int address);
 
     // Return address for decompilation. If == -1, addresses not exists
     int NextAddress();
 
+    // Append data for instructions on address
     void AddNewData(bool succsefull, int address, OutStruct *params);
 
+    // Write report to file
     void CreateReport(pchar file_name);
 
 private:
