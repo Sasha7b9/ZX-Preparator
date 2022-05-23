@@ -2,7 +2,7 @@
 
 project (ZX-Preparator)
 
-set(CMAKE_UNITY_BUILD OF)
+set(CMAKE_UNITY_BUILD ON)
 
 include_directories(src/
                     ../ThirdParty/wxWidgets/include/
