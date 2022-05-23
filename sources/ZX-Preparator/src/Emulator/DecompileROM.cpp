@@ -12,7 +12,7 @@ OutStruct params;
 
 
 
-int decompiler()
+void DecompileROM()
 {
     params.RAM = RAM48;
 
@@ -30,6 +30,4 @@ int decompiler()
     }
 
     base.CreateReport("report.txt");
-
-    return 0;
 }
