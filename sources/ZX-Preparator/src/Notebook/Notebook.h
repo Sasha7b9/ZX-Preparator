@@ -25,12 +25,12 @@ public:
 
     PageBASIC *GetPageBASIC() { return pageBASIC; }
 
-    PageASM *GetPageEdit() { return pageEdit; }
+    PageASM *GetPageASM() { return pageASM; }
 
 private:
 
     PageInfo *pageInfo = nullptr;
     PageHEX *pageHEX = nullptr;
     PageBASIC *pageBASIC = nullptr;
-    PageASM *pageEdit = nullptr;
+    PageASM *pageASM = nullptr;
 };
