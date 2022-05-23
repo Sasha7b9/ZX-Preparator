@@ -512,7 +512,7 @@ uint16 BlockTAP::CommonStruct::Read16()
 }
 
 
-bool BlockTAP::Decode(ProgramBASIC &program)
+bool BlockTAP::ParseBASIC(ProgramBASIC &program)
 {
     program.Clear();
 
@@ -543,7 +543,7 @@ LineBASIC BlockTAP::ParseLineProgram()
     line.number = data.GetData16Reverse();
     line.size = data.GetData16();
 
-    for (int i = 0; i < line.size - 1; i++)
+    for (int i = 0; i < line.size - 1 && !data.data.empty(); i++)
     {
         uint8 code = data.GetData8();
 
@@ -552,7 +552,10 @@ LineBASIC BlockTAP::ParseLineProgram()
         line.symbols.push_back(string);
     }
 
-    data.GetChar();
+    if (!data.data.empty())
+    {
+        data.GetChar();
+    }
 
     return line;
 }

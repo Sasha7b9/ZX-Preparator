@@ -68,7 +68,15 @@ void Notebook::AssignFIle(wxString &file_name)
         {
             if (block.IsBASIC())
             {
-                AppendPage(new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++)));
+                PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
+
+                ProgramBASIC program;
+
+                block.ParseBASIC(program);
+
+                page->SetProgram(program);
+
+                AppendPage(page);
             }
             else if (block.IsArrayNumber())
             {

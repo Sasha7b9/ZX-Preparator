@@ -153,7 +153,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         ProgramBASIC program;
 
-        parser.file.GetBlock(0).Decode(program);
+        parser.file.GetBlock(0).ParseBASIC(program);
     }
 }
 

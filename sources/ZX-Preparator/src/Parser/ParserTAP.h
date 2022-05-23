@@ -17,7 +17,7 @@ struct BlockTAP
     bool Read();
 
     // –аспарсить считанные данные в массив lines
-    bool Decode(ProgramBASIC &program);
+    bool ParseBASIC(ProgramBASIC &program);
 
     bool IsValid() const;
 
