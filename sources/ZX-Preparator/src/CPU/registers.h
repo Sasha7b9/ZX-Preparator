@@ -58,7 +58,7 @@ extern uint8 imfB;
 #define PC      regs.r16[7]
 
 #define rA      regs.r8[7]
-#define B       regs.r8[1]
+#define rB      regs.r8[1]
 #define C       regs.r8[0]
 #define D       regs.r8[3]
 #define E       regs.r8[2]

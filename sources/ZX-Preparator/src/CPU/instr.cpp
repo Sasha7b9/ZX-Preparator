@@ -314,11 +314,11 @@ int DJNZ_E_dec(void)
 
 int DJNZ_E_run(void)
 {
-    B -= 1;
+    rB -= 1;
 
     uint8 delta = PCandInc();
 
-    if(B)
+    if(rB)
     {
         AddPC(delta);
         return 13;
@@ -1521,7 +1521,7 @@ static int EXX_run(void)
 {
     uint8 temp;
 
-    EXCH(B, Balt);
+    EXCH(rB, Balt);
     EXCH(C, RCalt);
     EXCH(D, RDalt);
     EXCH(E, REalt);
