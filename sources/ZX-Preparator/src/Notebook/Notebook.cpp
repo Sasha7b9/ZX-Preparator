@@ -9,7 +9,7 @@ Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPos
 {
     pageInfo = new PageInfo(this);
     pageBinary = new PageHEX(this);
-    pageParsed = new PageParsed(this);
+    pageParsed = new PageBASIC(this);
     pageEdit = new PageEdit(this);
 
     AddPage(pageInfo, pageInfo->GetName());
@@ -26,7 +26,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     SetBackgroundColour(*wxWHITE);
     SetScrollbars(20, 20, 50, 50);
 
-    if (type == TypePage::Info || type == TypePage::Parsed)
+    if (type == TypePage::Info || type == TypePage::BASIC)
     {
         SetScrollbars(20, 20, 10, 10);
     }
@@ -66,7 +66,7 @@ void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
 }
 
 
-void PageParsed::SetProgram(ProgramBASIC &program)
+void PageBASIC::SetProgram(ProgramBASIC &program)
 {
     for (LineBASIC line : program.lines)
     {
@@ -139,7 +139,7 @@ void PageInfo::OnDraw(wxDC &dc)
 }
 
 
-void PageParsed::OnDraw(wxDC &dc)
+void PageBASIC::OnDraw(wxDC &dc)
 {
     dc.SetFont(*wxSWISS_FONT);
     dc.SetPen(*wxGREEN_PEN);

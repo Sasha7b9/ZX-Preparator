@@ -18,7 +18,7 @@ struct TypePage
     {
         Info,
         HEX,
-        Parsed,
+        BASIC,
         Edit,
         Count
     };
@@ -44,11 +44,11 @@ protected:
 };
 
 
-class PageParsed : public Page
+class PageBASIC : public Page
 {
 public:
 
-    PageParsed(wxNotebook *parent) : Page(parent, TypePage::Parsed, "Parsed") { }
+    PageBASIC(wxNotebook *parent) : Page(parent, TypePage::BASIC, "Parsed") { }
 
     virtual void OnDraw(wxDC &) override;
 
@@ -77,7 +77,7 @@ public:
 
     PageHEX *GetPageBinary() { return pageBinary; }
 
-    PageParsed *GetPageParsed() { return pageParsed; }
+    PageBASIC *GetPageParsed() { return pageParsed; }
 
     PageEdit *GetPageEdit() { return pageEdit; }
 
@@ -85,6 +85,6 @@ private:
 
     PageInfo *pageInfo = nullptr;
     PageHEX *pageBinary = nullptr;
-    PageParsed *pageParsed = nullptr;
+    PageBASIC *pageParsed = nullptr;
     PageEdit *pageEdit = nullptr;
 };
