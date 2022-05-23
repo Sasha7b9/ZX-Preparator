@@ -2,7 +2,7 @@
 #include "defines.h"
 #include "Frame.h"
 #include "Parser/ParserTAP.h"
-#include "Notebook.h"
+#include "Notebook/Notebook.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>

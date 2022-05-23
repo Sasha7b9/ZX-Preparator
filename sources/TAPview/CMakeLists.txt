@@ -32,12 +32,15 @@ else()
 endif()
 
 file(GLOB SRC       src/*.*)
+file(GLOB NOTEBOOK  src/Notebook/*.*)
 file(GLOB PARSER    src/Parser/*.*)
 
-source_group(src    FILES ${SRC})
-source_group(Parser FILES ${PARSER})
+source_group(src      FILES ${SRC})
+source_group(Notebook FILES ${NOTEBOOK})
+source_group(Parser   FILES ${PARSER})
 
 add_executable(${PROJECT_NAME} ${SRC}
+                               ${NOTEBOOK}
                                ${PARSER}
 )
 
