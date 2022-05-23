@@ -163,7 +163,7 @@ uint16 PC16andInc(void)
     uint8 low = RAM[rPC++];
     uint8 hi = RAM[rPC++];
 
-    return low + hi * 256;
+    return (uint16)(low + hi * 256);
 }
 
 

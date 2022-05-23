@@ -238,7 +238,7 @@ int NEG(void)
 
 #else
 
-    rA = (~rA) + 1;
+    rA = (uint8)((~rA) + 1);
 
     // + + x + x V 1 +
     // S WARN
@@ -328,9 +328,9 @@ int SBC_HL_SS(void)
 int RLD(void)
 {
     uint8 val_pHL = RAM8(rHL);
-    uint8 pHLlow = val_pHL & 0x0f;
-    uint8 pHLhi = (val_pHL >> 4) & 0x0f;
-    uint8 Alow = rA & 0x0f;
+    uint8 pHLlow = (uint8)(val_pHL & 0x0f);
+    uint8 pHLhi = (uint8)((val_pHL >> 4) & 0x0f);
+    uint8 Alow = (uint8)(rA & 0x0f);
 
     val_pHL = 0;
     rA &= 0x0f;
@@ -355,9 +355,9 @@ int RLD(void)
 int RRD(void)
 {
     uint8 val_pHL = RAM8(rHL);
-    uint8 pHLlow = val_pHL & 0x0f;
-    uint8 pHLhi = (val_pHL >> 4) & 0x0f;
-    uint8 Alow = rA & 0x0f;
+    uint8 pHLlow = (uint8)(val_pHL & 0x0f);
+    uint8 pHLhi = (uint8)((val_pHL >> 4) & 0x0f);
+    uint8 Alow = (uint8)(rA & 0x0f);
 
     val_pHL = 0;
     rA &= 0x0f;
