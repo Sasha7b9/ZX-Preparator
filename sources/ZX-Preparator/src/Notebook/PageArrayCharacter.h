@@ -6,6 +6,6 @@
 class PageArrayCharacter : public Page
 {
 public:
-    PageArrayCharacter(wxNotebook *parent) : Page(parent, TypePage::ArrayCharacter, "Array Character") { }
+    PageArrayCharacter(wxNotebook *parent, pchar name) : Page(parent, TypePage::ArrayCharacter, name) { }
 };
 

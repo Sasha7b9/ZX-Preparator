@@ -6,5 +6,5 @@
 class PageArrayNumber : public Page
 {
 public:
-    PageArrayNumber(wxNotebook *parent) : Page(parent, TypePage::ArrayNumber, "ArrayNumber") { }
+    PageArrayNumber(wxNotebook *parent, pchar name) : Page(parent, TypePage::ArrayNumber, name) { }
 };

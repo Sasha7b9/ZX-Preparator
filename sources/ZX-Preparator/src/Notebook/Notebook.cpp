@@ -54,23 +54,29 @@ void Notebook::AssignFIle(wxString &file_name)
 
     if (parser.desc.valid)
     {
+        int counter = 1;
+        int num_BASIC = 1;
+        int num_ArrayNumber = 1;
+        int num_ArrayCharacter = 1;
+        int num_ASM = 1;
+
         for (BlockTAP block : parser.blocks)
         {
             if (block.IsBASIC())
             {
-                AppendPage(new PageBASIC(this));
+                AppendPage(new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++)));
             }
             else if (block.IsArrayNumber())
             {
-                AppendPage(new PageArrayNumber(this));
+                AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
             }
             else if (block.IsArrayCharacter())
             {
-                AppendPage(new PageArrayCharacter(this));
+                AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
             }
             else if (block.IsASM())
             {
-                AppendPage(new PageASM(this));
+                AppendPage(new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++)));
             }
         }
     }

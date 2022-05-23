@@ -8,7 +8,7 @@ class PageBASIC : public Page
 {
 public:
 
-    PageBASIC(wxNotebook* parent) : Page(parent, TypePage::BASIC, "BASIC") { }
+    PageBASIC(wxNotebook* parent, pchar name) : Page(parent, TypePage::BASIC, name) { }
 
     virtual void OnDraw(wxDC&) override;
 

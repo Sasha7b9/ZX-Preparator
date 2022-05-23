@@ -6,5 +6,5 @@
 class PageASM : public Page
 {
 public:
-    PageASM(wxNotebook *parent) : Page(parent, TypePage::ASM, "ASM") { }
+    PageASM(wxNotebook *parent, pchar name) : Page(parent, TypePage::ASM, name) { }
 };
