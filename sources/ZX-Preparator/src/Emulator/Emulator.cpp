@@ -20,7 +20,7 @@ void Emulator::Init(OutStruct *out_)
     out = out_;
     out->regs = &regs;
     out->regsAlt = &regsAlt;
-    RAM = out->RAM;
+    RAM = out->MEMORY;
 }
 
 
