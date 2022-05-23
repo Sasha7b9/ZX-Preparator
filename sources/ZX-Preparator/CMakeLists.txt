@@ -14,7 +14,7 @@ add_definitions(-DWXUSINGDLL)
 
 if(WIN32)
 
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall -std:c++17")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
 
     add_compile_options(/wd4514)
@@ -31,15 +31,18 @@ else()
 
 endif()
 
-file(GLOB SRC       src/*.*)
-file(GLOB NOTEBOOK  src/Notebook/*.*)
-file(GLOB PARSER    src/Parser/*.*)
+file(GLOB SRC        src/*.*)
+file(GLOB DECOMPILER src/Decompiler/*.*)
+file(GLOB NOTEBOOK   src/Notebook/*.*)
+file(GLOB PARSER     src/Parser/*.*)
 
-source_group(src      FILES ${SRC})
-source_group(Notebook FILES ${NOTEBOOK})
-source_group(Parser   FILES ${PARSER})
+source_group(src        FILES ${SRC})
+source_group(Decompiler FILES ${DECOMPILER})
+source_group(Notebook   FILES ${NOTEBOOK})
+source_group(Parser     FILES ${PARSER})
 
 add_executable(${PROJECT_NAME} ${SRC}
+                               ${DECOMPILER}
                                ${NOTEBOOK}
                                ${PARSER}
 )
