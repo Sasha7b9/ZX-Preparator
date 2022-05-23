@@ -51,6 +51,8 @@ void Notebook::AssignFIle(wxString &file_name)
 
     PageHEX *pageHEX = new PageHEX(this);
 
+    pageHEX->SetDump(parser.file.dump);
+
     AppendPage(pageHEX);
 
     if (parser.desc.valid)

@@ -7,4 +7,10 @@ class PageHEX : public Page
 {
 public:
     PageHEX(wxNotebook* parent) : Page(parent, TypePage::HEX, "HEX") { }
+
+    void SetDump(DumpHEX &);
+
+private:
+
+    DumpHEX dump;
 };
