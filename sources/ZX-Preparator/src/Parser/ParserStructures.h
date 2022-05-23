@@ -16,11 +16,12 @@ struct DescriptionTAP
 
     struct Block
     {
-        Block(uint8 t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2) {}
+        Block(pchar n, uint8 t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2), name(n) {}
         uint8 type = 0;
         uint16 size = 0;
         uint16 param1 = 0;
         uint16 param2 = 0;
+        std::string name;
     };
 
     std::vector<Block> blocks;
@@ -75,3 +76,12 @@ struct ProgramASM
     std::vector<LineASM> lines;
 };
 
+
+struct DumpHEX
+{
+    void Clear() { bytes.clear(); }
+
+    void FillFrom(pchar name_file);
+
+    std::vector<uint8> bytes;
+};

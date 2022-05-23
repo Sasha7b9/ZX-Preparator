@@ -320,6 +320,8 @@ bool ParserTAP::Execute(pchar fileName)
         return false;
     }
 
+    file.dump.FillFrom(fileName);
+
     wxFileInputStream file_input(fileName);
 
     wxBufferedInputStream stream(file_input);
@@ -333,7 +335,7 @@ bool ParserTAP::Execute(pchar fileName)
         if (block.Read())
         {
             file.AppendBlock(block);
-            DescriptionTAP::Block descBlock(block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
+            DescriptionTAP::Block descBlock(block.header.file_name, block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
             desc.numberBlocks++;
             desc.blocks.push_back(descBlock);
         }
@@ -586,3 +588,10 @@ char BlockTAP::Data::GetChar()
 {
     return (char)GetData8();
 }
+
+
+void FileTAP::Clear()
+{
+    blocks.clear();
+    dump.Clear();
+};

@@ -57,6 +57,13 @@ void PageInfo::OnDraw(wxDC &dc)
 
             DescriptionTAP::Block &block = descTAP.blocks[i];
 
+            if (block.type < 4)
+            {
+                dc.DrawText(wxString::Format("Name : %s", block.name.c_str()), x + 40, y);
+
+                y += dY;
+            }
+
             if (block.type == 3 && block.size == 6912 && block.param1 == 16384)
             {
                 dc.DrawText(wxString::Format("Type : %s", "DATA SCREEN"), x + 40, y);

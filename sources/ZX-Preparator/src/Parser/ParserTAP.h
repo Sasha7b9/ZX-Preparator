@@ -103,7 +103,7 @@ private:
 
 struct FileTAP
 {
-    void Clear() { blocks.clear(); };
+    void Clear();
 
     void AppendBlock(BlockTAP &block) { blocks.push_back(block); }
 
@@ -112,6 +112,8 @@ struct FileTAP
     BlockTAP &GetBlock(int index) { return blocks[(uint)index]; }
 
     std::vector<BlockTAP> blocks;
+
+    DumpHEX dump;
 };
 
 
