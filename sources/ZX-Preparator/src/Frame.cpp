@@ -124,9 +124,18 @@ void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
 
 void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 {
+    wxString file = controlDir->GetPath(event.GetItem());
+
+    if (!wxFile::Exists(file))
+    {
+        event.Skip();
+
+        return;                                         // Если это не файл, то ничего не делаем
+    }
+
     ParserTAP parser;
 
-    parser.Execute(controlDir->GetPath(event.GetItem()));
+    parser.Execute(file);
 
     notebook->GetPageInfo()->SetDescriptionTAP(parser.desc);
 
