@@ -13,7 +13,7 @@ using std::endl;
 
 
 
-DataBase::DataBase()
+DataBase::DataBase(int min, int max) : addr_min(min), addr_max(max)
 {
     addressesForScan.push_back(0);
     addressesForScan.push_back(8);
@@ -96,7 +96,7 @@ void DataBase::RemoveScanAddress(int address)
 
 void DataBase::AddScanAddress(int address)
 {
-    if(address < 16384 && !AddressAlreadyScanOrFuture(address))
+    if(address >= addr_min && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
         addressesForScan.push_back(address);
     }

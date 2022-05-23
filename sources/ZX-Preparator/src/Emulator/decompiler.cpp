@@ -6,7 +6,7 @@
 
 
 
-DataBase base;
+DataBase base(0, 16384);
 
 OutStruct params;
 

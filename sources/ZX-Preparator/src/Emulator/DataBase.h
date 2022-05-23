@@ -7,7 +7,7 @@
 class DataBase
 {
 public:
-    DataBase();
+    DataBase(int addr_min, int addr_max);
 
     // Return address for decompilation. If == -1, addresses not exists
     int NextAddress();
@@ -19,6 +19,9 @@ public:
 private:
     std::vector<Command> commands;
     std::vector<int> addressesForScan;
+
+    int addr_min = 0;
+    int addr_max = 0;
 
     void RemoveScanAddress(int address);
     void AddScanAddress(int address);
