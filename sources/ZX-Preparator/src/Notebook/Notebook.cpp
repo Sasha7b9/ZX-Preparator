@@ -2,6 +2,7 @@
 #include "defines.h"
 #include "Notebook/Notebook.h"
 #include "Notebook/PageInfo.h"
+#include "Notebook/PageHEX.h"
 
 
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)

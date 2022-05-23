@@ -9,6 +9,7 @@
 
 
 class PageInfo;
+class PageHEX;
 
 
 struct TypePage
@@ -40,16 +41,6 @@ protected:
     wxFont font;
 
     void WriteText(wxDC &, const wxString &, int &x, int &, bool fill);
-};
-
-
-
-
-
-class PageHEX : public Page
-{
-public:
-    PageHEX(wxNotebook *parent) : Page(parent, TypePage::HEX, "Binary") { }
 };
 
 
