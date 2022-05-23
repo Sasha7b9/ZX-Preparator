@@ -16,13 +16,13 @@ int decompiler()
 {
     params.RAM = RAM48;
 
-    InitEMU(&params);
+    Emulator::Init(&params);
 
     int address = base.NextAddress();
 
     while(address >= 0)
     {
-        bool res = Decode((uint16)address) != 0;
+        bool res = Emulator::Decode((uint16)address) != 0;
 
         base.AddNewData(res, address, &params);
 

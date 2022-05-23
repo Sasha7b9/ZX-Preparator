@@ -15,7 +15,7 @@ uint8 *RAM = 0;
 
 
 
-void InitEMU(OutStruct *out_)
+void Emulator::Init(OutStruct *out_)
 {
     out = out_;
     out->regs = &regs;
@@ -25,7 +25,7 @@ void InitEMU(OutStruct *out_)
 
 
 
-int Decode(int address)
+int Emulator::Decode(int address)
 {
     out->numAddresses = 0;
     out->numOpCodes = 0;
@@ -42,7 +42,7 @@ int Decode(int address)
 
 
 
-int Run(int address)
+int Emulator::Run(int address)
 {
     PC = (uint16)address;
 
@@ -51,7 +51,7 @@ int Run(int address)
 
 
 
-int RunNext(void)
+int Emulator::RunNext(void)
 {
     return RunCommand();
 }

@@ -47,10 +47,13 @@ struct OutStruct
 };
 
 
-void InitEMU(OutStruct *out);
-int  Decode(int address);  // ret value : 0 - unknown command, else - successful
-int  Run(int address);     // ret value : 0 - unknown command, else - successful
-int  RunNext(void);        // ret value : 0 - unknown command, else - successful
+namespace Emulator
+{
+    void Init(OutStruct *out);
+    int  Decode(int address);  // ret value : 0 - unknown command, else - successful
+    int  Run(int address);     // ret value : 0 - unknown command, else - successful
+    int  RunNext(void);        // ret value : 0 - unknown command, else - successful
+}
 
 
 #pragma warning(pop)
