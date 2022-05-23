@@ -18,8 +18,6 @@ uint8 *RAM = 0;
 void Emulator::Init(OutStruct *out_)
 {
     out = out_;
-    out->regs = &regs;
-    out->regsAlt = &regsAlt;
     RAM = out->MEMORY;
 }
 

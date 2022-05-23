@@ -42,8 +42,6 @@ struct OutStruct
     unsigned char  opCodes[10];
     int            numOpCodes;
     int            tackts;
-    REGS          *regs;
-    REGS          *regsAlt;
 };
 
 
