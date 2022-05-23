@@ -66,8 +66,8 @@ extern uint8 imfB;
 #define rH      regs.r8[5]
 #define pHL     RAM[regs.r16[2]]
 #define rF      (regs.r8[6])
-#define I       regI
-#define R       regR
+#define rI      regI
+#define rR      regR
 
 #define SF      (GET_nBIT(rF, 7))
 #define SET_S   (rF |= 0x80)
