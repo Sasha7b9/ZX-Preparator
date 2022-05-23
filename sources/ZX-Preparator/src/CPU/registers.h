@@ -5,7 +5,7 @@
 #include "Decompiler/DLLmain.h"
 
 
-typedef enum
+enum REG_8
 {
     RB_ = 0,
     RC_ = 1,
@@ -15,16 +15,16 @@ typedef enum
     RL_ = 5,
     pHL_ = 6,
     RA_ = 7
-} REG_8;
+};
 
 
-typedef enum
+enum REG_QQ
 {
     RQQ_BC_ = 0,
     RQQ_DE_ = 1,
     RQQ_HL_ = 2,
     RQQ_AF_ = 3
-} REG_QQ;
+};
 
 
 // Return value from RAM, pointed to PC, and increment PC

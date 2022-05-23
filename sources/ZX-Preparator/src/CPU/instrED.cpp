@@ -1,12 +1,11 @@
 // 2022/05/23 17:32:37 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "instrED.h"
 #include "defines.h"
+#include "CPU/instrED.h"
 #include "CPU/registers.h"
-#include "Hardware/ports.h"
-#include <string.h>
-#include <stdio.h>
-#include "common.h"
-#include "RAM.h"
+#include "Computer/ports.h"
+#include "Computer/RAM.h"
+#include <cstring>
+#include <cstdio>
 
 
 
@@ -16,7 +15,6 @@ int LD_A_I(void)
 }
 
 
----
 int LD_I_A(void)
 {
 #ifdef LISTING
@@ -38,21 +36,18 @@ int LD_I_A(void)
 }
 
 
----
 int LD_A_R(void)
 {
     return 9;   // WARN
 }
 
 
----
 int LD_R_A(void)
 {
     return 9;   // WARN
 }
 
 
----
 int LD_DD_pNN(void)
 {
 #ifdef LISTING
@@ -78,7 +73,6 @@ int LD_DD_pNN(void)
 }
 
 
----
 int LD_pNN_DD(void)
 {
 #ifdef LISTING
@@ -106,7 +100,6 @@ int LD_pNN_DD(void)
 }
 
 
----
 int LDI(void)
 {
     RAM16(DE) = RAM16(HL);
@@ -117,7 +110,6 @@ int LDI(void)
 }
 
 
----
 int LDIR(void)
 {
 #ifdef LISTING
@@ -141,7 +133,6 @@ int LDIR(void)
 }
 
 
----
 int LDD(void)
 {
     RAM16(DE) = RAM16(HL);
@@ -152,7 +143,6 @@ int LDD(void)
 }
 
 
----
 int LDDR(void)
 {
 #ifdef LISTING
@@ -177,7 +167,6 @@ int LDDR(void)
 }
 
 
----
 int CPI(void)
 {
     HL++;
@@ -195,7 +184,6 @@ int CPI(void)
 }
 
 
----
 int CPIR(void)
 {
     int time = 0;
@@ -210,7 +198,6 @@ int CPIR(void)
 }
 
 
----
 int CPD(void)
 {
     HL--;
@@ -227,7 +214,6 @@ int CPD(void)
 }
 
 
----
 int CPDR(void)
 {
     int time = 0;
@@ -242,7 +228,6 @@ int CPDR(void)
 }
 
 
----
 int NEG(void)
 {
 #ifdef LISTING
@@ -269,14 +254,12 @@ int NEG(void)
 }
 
 
----
 int IM0(void)
 {
     return 8;   // WARN
 }
 
 
----
 int IM1(void)
 {
 #ifdef LISTING
@@ -293,14 +276,12 @@ int IM1(void)
 }
 
 
----
 int IM2(void)
 {
     return 8;   // WARN
 }
 
 
----
 int ADC_HL_SS(void)
 {
     HL += SS_45(prevPC) + CF;
@@ -316,7 +297,6 @@ int ADC_HL_SS(void)
 }
 
 
----
 int SBC_HL_SS(void)
 {
 #ifdef LISTING

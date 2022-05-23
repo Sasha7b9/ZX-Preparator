@@ -27,7 +27,6 @@ int BIT_B_R(void)
 }
 
 
----
 int CRL_R(void)
 {
 #ifdef LISTING
@@ -44,7 +43,6 @@ int CRL_R(void)
 }
 
 
----
 int CRL_pHL(void)
 {
 #ifdef LISTING
@@ -61,7 +59,6 @@ int CRL_pHL(void)
 }
 
 
----
 int RLC_R(void)
 {
     return RLC(Operand_Reg8);
@@ -85,8 +82,6 @@ int RRC_R(void)
 }
 
 
-
----
 int RES_B_M(void)
 {
 #ifdef LISTING
@@ -104,7 +99,6 @@ int RES_B_M(void)
 }
 
 
----
 int RES_B_pHL(void)
 {
 #ifdef LISTING
@@ -122,7 +116,6 @@ int RES_B_pHL(void)
 }
 
 
----
 int SET_B_R(void)
 {
 #ifdef LISTING
@@ -139,7 +132,6 @@ int SET_B_R(void)
 }
 
 
----
 int SET_B_pHL(void)
 {
 #ifdef LISTING
@@ -156,7 +148,6 @@ int SET_B_pHL(void)
 }
 
 
----
 int RL_R(void)
 {
 #ifdef LISTING
@@ -173,7 +164,6 @@ int RL_R(void)
 }
 
 
----
 int RR_R(void)
 {
 #ifdef LISTING
@@ -188,7 +178,6 @@ int RR_R(void)
 
 #endif
 }
-
 
 
 int SLA(void)
@@ -208,7 +197,6 @@ int SLA(void)
 }
 
 
-
 int SRA(void)
 {
 #ifdef LISTING
@@ -225,7 +213,6 @@ int SRA(void)
 }
 
 
----
 int RLC_pHL(void)
 {
 #ifdef LISTING
@@ -242,11 +229,9 @@ int RLC_pHL(void)
 }
 
 
----
 #include "FuncSecondCB.h"
 
 
----
 int RunCommandCB(void)
 {
     AddOpcode(RAM8(PC));
@@ -262,7 +247,6 @@ int RunCommandCB(void)
 }
 
 
----
 int DecodeCommandCB(void)
 {
     AddOpcode(RAM8(PC));
