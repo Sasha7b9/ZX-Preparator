@@ -1,20 +1,11 @@
 // 2022/05/23 17:28:53 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#include "DAA.h"
 #include "defines.h"
-#include "registers.h"
-#include "defines.h"
-
+#include "CPU/DAA.h"
 #include "CPU/registers.h"
-
-#include "Hardware/ports.h"
-
-#include <string.h>
-
-#include <stdio.h>
-
-#include "common.h"
-
-#include "RAM.h"
+#include "CPU/registers.h"
+#include "Computer/ports.h"
+#include <cstring>
+#include <cstdio>
 
 
 int DAA_dec(void)
