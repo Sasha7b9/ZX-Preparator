@@ -18,9 +18,7 @@ void Notebook::RemoveAllPages()
 {
     for (uint i = 0; i < pages.size(); i++)
     {
-        RemovePage(0);
-
-        delete pages[i];
+        DeletePage(i + 1);
     }
 
     pages.clear();
