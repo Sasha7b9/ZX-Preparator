@@ -2,5 +2,6 @@
 #pragma once
 
 
-extern uint8 RAM48[65536];
+// Memory ZX-Spectrum (48k)
+extern const uint8 MEMORY48[65536];
 
