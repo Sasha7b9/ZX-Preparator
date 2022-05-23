@@ -13,7 +13,7 @@ using std::vector;
 using std::endl;
 
 
-int DataBase::NextAddress()
+int StorageInstructions::NextAddress()
 {
     if(addressesForScan.size() > 0)
     {
@@ -23,7 +23,7 @@ int DataBase::NextAddress()
 }
 
 
-void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
+void StorageInstructions::AddNewData(bool succsefull, int address, OutStruct *params)
 {
     RemoveScanAddress(address);
 
@@ -64,7 +64,7 @@ void DataBase::AddNewData(bool succsefull, int address, OutStruct *params)
 }
 
 
-void DataBase::RemoveScanAddress(int address)
+void StorageInstructions::RemoveScanAddress(int address)
 {
     for(int i = 0; i < (int)addressesForScan.size(); i++)
     {
@@ -77,7 +77,7 @@ void DataBase::RemoveScanAddress(int address)
 }
 
 
-void DataBase::AddScanAddress(int address)
+void StorageInstructions::AddScanAddress(int address)
 {
     if(address >= addr_min && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
@@ -86,7 +86,7 @@ void DataBase::AddScanAddress(int address)
 }
 
 
-bool DataBase::AddressAlreadyScanOrFuture(int address)
+bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 {
     for each (auto &command in commands)
     {
@@ -108,7 +108,7 @@ bool DataBase::AddressAlreadyScanOrFuture(int address)
 }
 
 
-void DataBase::WriteBinaryByte(std::ofstream &file, int value)
+void StorageInstructions::WriteBinaryByte(std::ofstream &file, int value)
 {
     vector<int> bits;
 
@@ -133,7 +133,7 @@ void DataBase::WriteBinaryByte(std::ofstream &file, int value)
 }
 
 
-void DataBase::WriteCommand(ofstream &file, Instruction &command)
+void StorageInstructions::WriteCommand(ofstream &file, Instruction &command)
 {
     file << std::right << std::hex << std::setw(4) << std::setfill('0') << command.address << " | ";
 
@@ -185,7 +185,7 @@ void DataBase::WriteCommand(ofstream &file, Instruction &command)
 }
 
 
-void DataBase::CreateReport(pchar file_name)
+void StorageInstructions::CreateReport(pchar file_name)
 {
     std::sort(commands.begin(), commands.end());
 

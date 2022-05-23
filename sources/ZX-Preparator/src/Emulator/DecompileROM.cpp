@@ -5,7 +5,7 @@
 #include "Emulator/Memory.h"
 
 
-static DataBase base(0, 16384);
+static StorageInstructions storage(0, 16384);
 
 static OutStruct params;
 
@@ -16,25 +16,25 @@ void DecompileROM()
 
     Emulator::Init(&params);
 
-    base.AddScanAddress(0);
-    base.AddScanAddress(8);
-    base.AddScanAddress(0x10);
-    base.AddScanAddress(0x18);
-    base.AddScanAddress(0x20);
-    base.AddScanAddress(0x28);
-    base.AddScanAddress(0x30);
-    base.AddScanAddress(0x38);
+    storage.AddScanAddress(0);
+    storage.AddScanAddress(8);
+    storage.AddScanAddress(0x10);
+    storage.AddScanAddress(0x18);
+    storage.AddScanAddress(0x20);
+    storage.AddScanAddress(0x28);
+    storage.AddScanAddress(0x30);
+    storage.AddScanAddress(0x38);
 
-    int address = base.NextAddress();
+    int address = storage.NextAddress();
 
     while(address >= 0)
     {
         bool res = Emulator::Decode((uint16)address) != 0;
 
-        base.AddNewData(res, address, &params);
+        storage.AddNewData(res, address, &params);
 
-        address = base.NextAddress();
+        address = storage.NextAddress();
     }
 
-    base.CreateReport("report.txt");
+    storage.CreateReport("report.txt");
 }

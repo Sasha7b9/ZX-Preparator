@@ -4,10 +4,10 @@
 #include "Emulator/Emulator.h"
 
 
-class DataBase
+class StorageInstructions
 {
 public:
-    DataBase(int _addr_min, int _addr_max) : addr_min(_addr_min), addr_max(_addr_max) { }
+    StorageInstructions(int _addr_min, int _addr_max) : addr_min(_addr_min), addr_max(_addr_max) { }
 
     void AddScanAddress(int address);
 
