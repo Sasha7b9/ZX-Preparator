@@ -1,6 +1,7 @@
 // 2022/5/22 10:31:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Parser/ParserTAP.h"
+#include "Notebook/Pages.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
 #include <wx/wx.h>
@@ -11,38 +12,6 @@
 class PageInfo;
 class PageHEX;
 class PageBASIC;
-
-
-struct TypePage
-{
-    enum E
-    {
-        Info,
-        HEX,
-        BASIC,
-        Edit,
-        Count
-    };
-};
-
-
-class Page : public wxScrolledWindow
-{
-public:
-
-    Page(wxNotebook *parent, TypePage::E, pchar name);
-
-    virtual void OnDraw(wxDC &) override {};
-    void OnSizeEvent(wxSizeEvent &);
-
-protected:
-
-    TypePage::E type = TypePage::Count;
-
-    wxFont font;
-
-    void WriteText(wxDC &, const wxString &, int &x, int &, bool fill);
-};
 
 
 class PageEdit : public Page
