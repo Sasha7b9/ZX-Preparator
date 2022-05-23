@@ -14,9 +14,11 @@ struct DescriptionTAP
 
     struct DescriptionBlock
     {
-        DescriptionBlock(uint8 t, uint16 s) : type(t), size(s) {}
+        DescriptionBlock(uint8 t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2) {}
         uint8 type = 0;
         uint16 size = 0;
+        uint16 param1 = 0;
+        uint16 param2 = 0;
     };
 
     std::vector<DescriptionBlock> blocks;
