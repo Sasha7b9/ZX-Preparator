@@ -19,18 +19,17 @@ public:
 
     Notebook(wxWindow *parent);
 
+    void RemovePages();
+
+    void AppendPage(Page *);
+
     PageInfo *GetPageInfo() { return pageInfo; }
 
-    PageHEX *GetPageHEX() { return pageHEX; }
-
-    PageBASIC *GetPageBASIC() { return pageBASIC; }
-
-    PageASM *GetPageASM() { return pageASM; }
+    Page *GetPageN(int) const;
 
 private:
 
     PageInfo *pageInfo = nullptr;
-    PageHEX *pageHEX = nullptr;
-    PageBASIC *pageBASIC = nullptr;
-    PageASM *pageASM = nullptr;
+
+    std::vector<Page *> pages;
 };

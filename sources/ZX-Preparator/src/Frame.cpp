@@ -87,14 +87,14 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-    ParserTAP parser;
-
-    if (parser.Execute("C:/Temp/WTHAS.TAP"))
-    {
-        ProgramBASIC program;
-        parser.blocks[0].Decode(program);
-        notebook->GetPageBASIC()->SetProgram(program);
-    }
+//    ParserTAP parser;
+//
+//    if (parser.Execute("C:/Temp/WTHAS.TAP"))
+//    {
+//        ProgramBASIC program;
+//        parser.blocks[0].Decode(program);
+//        notebook->GetPageBASIC()->SetProgram(program);
+//    }
 
     SetSize({ 1024, 768 });
 }
@@ -154,7 +154,7 @@ void Frame::OnOpen(wxCommandEvent &)
 
         parser.blocks[0].Decode(program);
 
-        notebook->GetPageBASIC()->SetProgram(program);
+//        notebook->GetPageBASIC()->SetProgram(program);
 
 //        wxTextFile text_file;
 //
