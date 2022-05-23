@@ -49,6 +49,9 @@ void Notebook::AssignFIle(wxString &file_name)
 
     if (parser.desc.valid)
     {
+        for (BlockTAP block : parser.blocks)
+        {
 
+        }
     }
 }

@@ -13,6 +13,8 @@ struct TypePage
         Info,
         HEX,
         BASIC,
+        ArrayNumber,
+        ArrayCharacter,
         ASM,
         Count
     };

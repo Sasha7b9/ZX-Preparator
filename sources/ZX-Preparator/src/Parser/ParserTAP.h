@@ -21,6 +21,11 @@ struct BlockTAP
 
     bool IsValid() const;
 
+    bool IsBASIC()          const { return header.type_data == 0; }
+    bool IsArrayNumber()    const { return header.type_data == 1; }
+    bool IsArrayCharacter() const { return header.type_data == 2; }
+    bool IsASM()            const { return header.type_data == 3; }
+
     struct CommonStruct
     {
         CommonStruct(wxDataInputStream &_stream) : stream(_stream) {}
