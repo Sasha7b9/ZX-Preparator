@@ -189,7 +189,6 @@ void DataBase::CreateReport(pchar file_name)
 {
     std::sort(commands.begin(), commands.end());
 
-
     ofstream file;
 
     file.open(file_name);

@@ -88,7 +88,15 @@ void Notebook::AssignFIle(wxString &file_name)
             }
             else if (block.IsASM())
             {
-                AppendPage(new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++)));
+                PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
+
+                ProgramASM program;
+
+                block.ParseASM(program);
+
+                page->SetProgram(program);
+
+                AppendPage(page);
             }
             else if (block.IsPureBytes())
             {

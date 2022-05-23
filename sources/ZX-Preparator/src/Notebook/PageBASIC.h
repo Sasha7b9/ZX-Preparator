@@ -8,11 +8,11 @@ class PageBASIC : public Page
 {
 public:
 
-    PageBASIC(wxNotebook* parent, pchar name) : Page(parent, TypePage::BASIC, name) { }
+    PageBASIC(wxNotebook *parent, pchar name) : Page(parent, TypePage::BASIC, name) { }
 
-    virtual void OnDraw(wxDC&) override;
+    virtual void OnDraw(wxDC &) override;
 
-    void SetProgram(ProgramBASIC&);
+    void SetProgram(ProgramBASIC &);
 
 private:
 

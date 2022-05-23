@@ -17,7 +17,10 @@ struct BlockTAP
     bool Read();
 
     // –аспарсить считанные данные в массив lines
-    bool ParseBASIC(ProgramBASIC &program);
+    bool ParseBASIC(ProgramBASIC &);
+
+    // Parse machine ocde block to asm program
+    bool ParseASM(ProgramASM &);
 
     bool IsValid() const;
 
@@ -94,8 +97,6 @@ struct BlockTAP
 private:
 
     void Clear();
-
-    bool ParseProgram(ProgramBASIC &program);
 
     LineBASIC ParseLineProgram();
 };

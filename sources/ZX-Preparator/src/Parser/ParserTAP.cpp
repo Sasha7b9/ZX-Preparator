@@ -518,21 +518,28 @@ bool BlockTAP::ParseBASIC(ProgramBASIC &program)
 
     if (header.type_data == 0)
     {
-        return ParseProgram(program);
+        while (data.data.size())
+        {
+            program.lines.push_back(ParseLineProgram());
+        }
+
+        return true;
     }
 
     return false;
 }
 
 
-bool BlockTAP::ParseProgram(ProgramBASIC &program)
+bool BlockTAP::ParseASM(ProgramASM &program)
 {
-    while (data.data.size())
+    program.Clear();
+
+    if (header.type_data == 3)
     {
-        program.lines.push_back(ParseLineProgram());
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 

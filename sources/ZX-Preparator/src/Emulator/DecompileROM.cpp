@@ -2,7 +2,7 @@
 #include "defines.h"
 #include "Emulator/DataBase.h"
 #include "Emulator/Emulator.h"
-#include "Emulator/RAM48.h"
+#include "Emulator/Memory48.h"
 
 
 static DataBase base(0, 16384);

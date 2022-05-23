@@ -66,6 +66,8 @@ struct SymbolASM
 struct LineASM
 {
     std::vector<SymbolASM> symbols;
+
+    int address;
 };
 
 
