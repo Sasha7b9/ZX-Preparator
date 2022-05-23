@@ -1,6 +1,6 @@
 # (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 
-project (TAPview)
+project (ZX-Preparator)
 
 set(CMAKE_UNITY_BUILD OFF)
 

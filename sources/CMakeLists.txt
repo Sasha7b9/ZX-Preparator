@@ -17,4 +17,4 @@ else()
     add_definitions(-m64 -fmax-errors=1 -Wall)
 endif()
 
-add_subdirectory(TAPview)
+add_subdirectory(ZX-Preparator)
