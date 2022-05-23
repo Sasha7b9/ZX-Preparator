@@ -105,7 +105,7 @@ int LDI(void)
     RAM16(DE) = RAM16(HL);
     DE += 1;
     HL += 1;
-    BC -= 1;
+    rBC -= 1;
     return 16;
 }
 
@@ -125,7 +125,7 @@ int LDIR(void)
     {
         LDI();
         time += 21;
-    } while(BC != 0);
+    } while(rBC != 0);
 
     return time + 16;
 
@@ -138,7 +138,7 @@ int LDD(void)
     RAM16(DE) = RAM16(HL);
     DE--;
     HL--;
-    BC--;
+    rBC--;
     return 16;
 }
 
@@ -159,7 +159,7 @@ int LDDR(void)
     {
         time += 21;
         LDD();
-    } while(BC != 0);
+    } while(rBC != 0);
 
     return time += 16;
 
@@ -170,7 +170,7 @@ int LDDR(void)
 int CPI(void)
 {
     HL++;
-    BC--;
+    rBC--;
 
     // + + x + x + 1 .
 
@@ -192,7 +192,7 @@ int CPIR(void)
     {
         time += 21;
         CPI();
-    } while(BC != 0 && rA != RAM8(HL));
+    } while(rBC != 0 && rA != RAM8(HL));
 
     return time + 16;
 }
@@ -201,7 +201,7 @@ int CPIR(void)
 int CPD(void)
 {
     HL--;
-    BC--;
+    rBC--;
 
     // + + x + x + 1 .
     // S WARN
@@ -222,7 +222,7 @@ int CPDR(void)
     {
         time += 21;
         CPD();
-    } while(BC != 0 && rA != RAM8(HL));
+    } while(rBC != 0 && rA != RAM8(HL));
 
     return time + 16;
 }

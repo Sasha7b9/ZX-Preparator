@@ -66,7 +66,7 @@ static int LD_pBC_A_dec(void)
 // 2 ------------------------------------------------------------------------------------------------------------------------------------------------------
 int LD_pBC_A_run(void)
 {
-    RAM[BC] = rA;
+    RAM[rBC] = rA;
 
     return 7;
 }
@@ -249,7 +249,7 @@ int LD_A_pBC_dec(void)
 
 int LD_A_pBC_run(void)
 {
-    rA = RAM[BC];
+    rA = RAM[rBC];
 
     return 7;
 }

@@ -48,7 +48,7 @@ extern uint8 imfA;
 extern uint8 imfB;
 
 
-#define BC      regs.r16[0]
+#define rBC     regs.r16[0]
 #define DE      regs.r16[1]
 #define HL      regs.r16[2]
 #define AF      regs.r16[3]
