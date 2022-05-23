@@ -65,43 +65,43 @@ extern uint8 imfB;
 #define L       regs.r8[4]
 #define rH      regs.r8[5]
 #define pHL     RAM[regs.r16[2]]
-#define F       (regs.r8[6])
+#define rF      (regs.r8[6])
 #define I       regI
 #define R       regR
 
-#define SF      (GET_nBIT(F, 7))
-#define SET_S   (F |= 0x80)
-#define RES_S   (F &= ~0x80)
-#define CALC_S(value)   if(value & 0x80) (F |= 0x80); else (F &= ~(0x80));
+#define SF      (GET_nBIT(rF, 7))
+#define SET_S   (rF |= 0x80)
+#define RES_S   (rF &= ~0x80)
+#define CALC_S(value)   if(value & 0x80) (rF |= 0x80); else (rF &= ~(0x80));
 
-#define ZF      (GET_nBIT(F, 6))
-#define SET_Z   (F |= 0x40)
-#define RES_Z   (F &= ~0x40)
-#define CALC_Z(value)   if(value) (F &= ~(0x40)); else (F |= 0x40);
+#define ZF      (GET_nBIT(rF, 6))
+#define SET_Z   (rF |= 0x40)
+#define RES_Z   (rF &= ~0x40)
+#define CALC_Z(value)   if(value) (rF &= ~(0x40)); else (rF |= 0x40);
 //#define LOAD_Z(value)   if(value) SET_Z; else RES_Z;
 
-#define HF      (GET_nBIT(F, 4))
-#define SET_H   (F |= 0x10)
-#define RES_H   (F &= ~0x10)
-#define CALC_H(before, after) if(CalculateH(before, after)) (F |= 0x10); else (F &= ~(0x10));
+#define HF      (GET_nBIT(rF, 4))
+#define SET_H   (rF |= 0x10)
+#define RES_H   (rF &= ~0x10)
+#define CALC_H(before, after) if(CalculateH(before, after)) (rF |= 0x10); else (rF &= ~(0x10));
 
-#define PF      (GET_nBIT(F, 2))
-#define SET_P   (F |= 4)
-#define RES_P   (RES_nBIT(F, 2))
+#define PF      (GET_nBIT(rF, 2))
+#define SET_P   (rF |= 4)
+#define RES_P   (RES_nBIT(rF, 2))
 #define CALC_P(value)  (IsEven(value))
 
-#define VF      (GET_nBIT(F, 2))
-#define SET_V   (SET_nBIT(F, 2))
-#define RES_V   (RES_nBIT(F, 2))
+#define VF      (GET_nBIT(rF, 2))
+#define SET_V   (SET_nBIT(rF, 2))
+#define RES_V   (RES_nBIT(rF, 2))
 #define LOAD_V(load) if(load) SET_V; else RES_V;
 
-#define NF      (GET_nBIT(F, 1))
-#define SET_N   (F |= 0x02)
-#define RES_N   (F &= ~(0x02))
+#define NF      (GET_nBIT(rF, 1))
+#define SET_N   (rF |= 0x02)
+#define RES_N   (rF &= ~(0x02))
 
-#define CF      (GET_nBIT(F, 0))
-#define SET_C   (F |= 0x01)
-#define RES_C   (F &= ~0x01)
+#define CF      (GET_nBIT(rF, 0))
+#define SET_C   (rF |= 0x01)
+#define RES_C   (rF &= ~0x01)
 #define LOAD_C(value)  if(value) SET_C; else RES_C
 
 

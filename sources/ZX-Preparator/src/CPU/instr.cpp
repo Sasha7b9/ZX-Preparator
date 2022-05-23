@@ -207,7 +207,7 @@ int EX_AF_AFlat_run(void)
     uint8 temp;
 
     EXCH(A, Aalt);
-    EXCH(F, RFalt);
+    EXCH(rF, RFalt);
 
     return 4;
 
