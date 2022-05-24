@@ -14,7 +14,7 @@ struct Instruction
     std::string transcript;
     std::string flags;
     std::string comment;
-    int tackts = 0;                     // Cycles for execute command
+    int tackts = 0;                     // Tacts for execute instruction
 
     bool operator<(const Instruction &first);
 };

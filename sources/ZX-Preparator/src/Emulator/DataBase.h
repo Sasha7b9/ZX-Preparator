@@ -33,6 +33,6 @@ private:
 
     void RemoveScanAddress(int address);
     bool AddressAlreadyScanOrFuture(int address);
-    void WriteCommand(std::ofstream &file, Instruction &command);
+    void WriteCommand(std::ofstream &file, Instruction &);
     void WriteBinaryByte(std::ofstream &file, int value);
 };

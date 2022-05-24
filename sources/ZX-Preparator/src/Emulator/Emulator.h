@@ -33,10 +33,10 @@ union REGS
 struct InfoStruct
 {
     unsigned char  MEMORY[65536];       // Full computer memory
-    char           mnemonic[100];       // Mnemonic current command
+    char           mnemonic[100];       // Mnemonic current instruction
     char           comment[100];
     char           flags[100];          // Incstruction effect onf flags
-    char           transcript[100];     // Command summary
+    char           transcript[100];     // Instruction summary
     unsigned int   addresses[10];
     int            numAddresses;
     unsigned char  opCodes[10];
@@ -48,9 +48,9 @@ struct InfoStruct
 namespace Emulator
 {
     void Init(InfoStruct *out);
-    int  Decode(int address);  // ret value : 0 - unknown command, else - successful
-    int  Run(int address);     // ret value : 0 - unknown command, else - successful
-    int  RunNext(void);        // ret value : 0 - unknown command, else - successful
+    int  Decode(int address);  // ret value : 0 - unknown instruction, else - successful
+    int  Run(int address);     // ret value : 0 - unknown instruction, else - successful
+    int  RunNext(void);        // ret value : 0 - unknown instruction, else - successful
 }
 
 
