@@ -70,8 +70,8 @@ int POP_IX_dec(void)
 
 int LD_pIX_D_N_run(void)
 {
-    uint8 valD = PCandInc();
-    uint8 valN = PCandInc();
+    volatile uint8 valD = PCandInc();
+    volatile uint8 valN = PCandInc(); //-V656
     RAM[rIX + valD] = valN;
     return 19;
 }

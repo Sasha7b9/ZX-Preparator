@@ -28,10 +28,10 @@ extern InfoStruct *out;
 #define TRANSCRIPT  out->transcript
 
 
-#define GET_nBIT(value, bit) (((value) & (1 << bit)) >> bit)
-#define SET_nBIT(value, bit) ((value) | (1 << bit))
-#define RES_nBIT(value, bit) ((value) & (~(1 << bit)))
-#define LOAD_nBIT(value, bit, vBit) if(vBit) ((value) |= (1 << bit)); else ((value) &= (~(1 << bit)))
+#define GET_nBIT(value, bit) (((value) & (1 << (bit))) >> (bit))
+#define SET_nBIT(value, bit) ((value) | (1 << (bit)))
+#define RES_nBIT(value, bit) ((value) & (~(1 << (bit))))
+#define LOAD_nBIT(value, bit, vBit) if(vBit) ((value) |= (1 << (bit))); else ((value) &= (~(1 << (bit))))
 
 
 void AddAddress(uint address);

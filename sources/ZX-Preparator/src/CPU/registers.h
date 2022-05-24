@@ -114,17 +114,17 @@ extern uint8 imfB;
 #define RHalt   regsAlt.r8[5]
 #define RFalt   regsAlt.r8[6]
 
-#define R8_HI(value)    (*funcsReg8[(value >> 3) & 7]())
-#define R8_LO(value)    (*funcsReg8[value & 7]())
-#define pR8_LO(value)   (&(*funcsReg8[value & 7]()))
+#define R8_HI(value)    (*funcsReg8[((value) >> 3) & 7]())
+#define R8_LO(value)    (*funcsReg8[(value) & 7]())
+#define pR8_LO(value)   (&(*funcsReg8[(value) & 7]()))
 
-#define DD_45(value)    (*funcsRegDD[(value >> 4) & 3]())
-#define SS_45(value)    (*funcsRegDD[(value >> 4) & 3]())
-#define QQ_45(value)    (regs.r16[(value >> 4) & 3])
-#define PP_45(value)    (*funcsRegPP[(value >> 4) & 3]())
+#define DD_45(value)    (*funcsRegDD[((value) >> 4) & 3]())
+#define SS_45(value)    (*funcsRegDD[((value) >> 4) & 3]())
+#define QQ_45(value)    (regs.r16[((value) >> 4) & 3])
+#define PP_45(value)    (*funcsRegPP[((value) >> 4) & 3]())
 
 
-#define CC(value) ((value >> 3) & 7)
+#define CC(value) (((value) >> 3) & 7)
 #define CC_NZ   0
 #define CC_Z    1
 #define CC_NC   2

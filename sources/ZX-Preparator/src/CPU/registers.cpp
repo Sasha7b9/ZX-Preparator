@@ -209,7 +209,7 @@ char *R8_LO_Name(uint8 value)
 }
 
 
-char *DD_45_Name(uint8 value)
+    char *DD_45_Name(uint8 value)
 {
     const char *names[4] =
     {
