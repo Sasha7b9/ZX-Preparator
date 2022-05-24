@@ -133,21 +133,21 @@ void StorageInstructions::WriteBinaryByte(std::ofstream &file, int value)
 }
 
 
-void StorageInstructions::WriteCommand(ofstream &file, Instruction &command)
+void StorageInstructions::WriteCommand(ofstream &file, Instruction &instruction)
 {
-    file << std::right << std::hex << std::setw(4) << std::setfill('0') << command.address << " | ";
+    file << std::right << std::hex << std::setw(4) << std::setfill('0') << instruction.address << " | ";
 
-   file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)command.opCodes[0] << " | ";
-   WriteBinaryByte(file, (int)command.opCodes[0]);
+   file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)instruction.opCodes[0] << " | ";
+   WriteBinaryByte(file, (int)instruction.opCodes[0]);
    file << " | ";
 
-    if(command.bad)
+    if(instruction.bad)
     {
         file << "ERROR!!! BAD COMMAND!!! ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     }
     else
     {
-        file << std::setw(14) << std::left << std::setfill(' ') << command.mnemonic;
+        file << std::setw(14) << std::left << std::setfill(' ') << instruction.mnemonic;
         /*
         if(!command.transcript.empty())
         {
@@ -167,17 +167,17 @@ void StorageInstructions::WriteCommand(ofstream &file, Instruction &command)
         }
         file << std::dec << std::setw(2) << command.tackts << " | ";
         */
-        if(!command.comment.empty())
+        if(!instruction.comment.empty())
         {
-            file << " | " <<  command.comment;
+            file << " | " << instruction.comment;
         }
     }
 
-    for(uint i = 1; i < command.opCodes.size(); i++)
+    for(uint i = 1; i < instruction.opCodes.size(); i++)
     {
         file << endl << "     | ";
-        file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)command.opCodes[i] << " | ";
-        WriteBinaryByte(file, (int)command.opCodes[i]);
+        file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)instruction.opCodes[i] << " | ";
+        WriteBinaryByte(file, (int)instruction.opCodes[i]);
         file << " |";
     }
 
