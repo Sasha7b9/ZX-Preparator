@@ -56,23 +56,16 @@ void PageHEX::OnDraw(wxDC &dc)
 
 void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y)
 {
-    hdc->DrawText(wxString::Format("%05X", *address), x, y);
-
-    x += 70;
-
-    for (int i = 0; i < num; i++)
+    if (num == 16)
     {
-        hdc->DrawText(wxString::Format("%02X", data[i]), x, y);
+        wxString text = wxString::Format("%04X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            *address, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
+            data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
-        x += 25;
+        hdc->DrawText(text, x, y);
 
-        if (i == 7)
-        {
-            x += 10;
-        }
+        y += dY;
+
+        *address = *address + 16;
     }
-
-    *address += 16;
-
-    y += dY;
 }
