@@ -40,12 +40,9 @@ void PageHEX::OnDraw(wxDC &dc)
         }
 
         WriteBytes(&address, &dump.bytes.data()[index], num, x, y);
-
-        if (index > 1024)
-        {
-            break;
-        }
     }
+
+
 }
 
 

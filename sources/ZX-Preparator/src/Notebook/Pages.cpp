@@ -11,12 +11,6 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     type(_type)
 {
     SetBackgroundColour(*wxWHITE);
-    SetScrollbars(20, 20, 50, 50);
-
-    if (type == TypePage::Info || type == TypePage::BASIC)
-    {
-        SetScrollbars(20, 20, 10, 10);
-    }
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
@@ -26,6 +20,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     SetName(name);
 
     dY = font.GetPointSize() + 5;
+    sbPPU = dY;
 }
 
 

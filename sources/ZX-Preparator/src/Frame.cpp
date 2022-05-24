@@ -50,14 +50,14 @@ Frame::Frame(const wxString &title)
     menuFile->Append(wxID_OPEN);
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
-    menuBar->Append(menuFile, _("Файл"));
+    menuBar->Append(menuFile, "File");
 
     wxMenu *menuSettings = new wxMenu;
-    menuBar->Append(menuSettings, _("Настройки"));
+    menuBar->Append(menuSettings, "Settings");
 
     wxMenu *menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
-    menuBar->Append(menuHelp, _("Помощь"));
+    menuBar->Append(menuHelp, "Help");
 
     SetMenuBar(menuBar);
 

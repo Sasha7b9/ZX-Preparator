@@ -21,7 +21,7 @@ bool Application::OnInit()
     wxImage::AddHandler(new wxPNGHandler);
 
     // create and show the main application window
-    Frame *frame = new Frame(_("Метеостанция"));
+    Frame *frame = new Frame("ZX-Preparator");
 
     frame->Show();
 
