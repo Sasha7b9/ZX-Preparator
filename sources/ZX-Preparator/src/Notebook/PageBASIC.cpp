@@ -73,7 +73,7 @@ void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill)
 {
     wxSize size = hdc->GetTextExtent(text);
 
-    if (x + size.x > GetSize().x)
+    if (x + size.x > GetSize().x - 20)
     {
         x = 0;
         y += font.GetPixelSize().y + 4;
