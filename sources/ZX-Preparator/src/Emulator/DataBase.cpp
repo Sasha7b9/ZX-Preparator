@@ -60,7 +60,7 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
         command.bad = true;
     }
 
-    commands.push_back(command);
+    instructions.push_back(command);
 }
 
 
@@ -88,7 +88,7 @@ void StorageInstructions::AppendEntryPoint(int address)
 
 bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 {
-    for each (auto &command in commands)
+    for each (auto &command in instructions)
     {
         if(command.address == address)
         {
@@ -187,20 +187,20 @@ void StorageInstructions::WriteCommand(ofstream &file, Instruction &command)
 
 void StorageInstructions::CreateReport(pchar file_name)
 {
-    std::sort(commands.begin(), commands.end());
+    std::sort(instructions.begin(), instructions.end());
 
     ofstream file;
 
     file.open(file_name);
 
-    for(size_t i = 0; i < commands.size(); i++)
+    for(size_t i = 0; i < instructions.size(); i++)
     {
-        WriteCommand(file, commands[i]);
+        WriteCommand(file, instructions[i]);
 
-        if(i < commands.size() - 1)
+        if(i < instructions.size() - 1)
         {
-            int addressNext = commands[i + 1].address;
-            if((addressNext - commands[i].address) > (int)commands[i].opCodes.size())
+            int addressNext = instructions[i + 1].address;
+            if ((addressNext - instructions[i].address) > (int)instructions[i].opCodes.size())
             {
                 file << "--------------------------------------------------------------------------------------------------------------" << endl;
             }
@@ -209,13 +209,19 @@ void StorageInstructions::CreateReport(pchar file_name)
 
     file << endl << endl << " ***** BAD ADDRESSES *****" << endl;
 
-    for(size_t i = 0; i < commands.size(); i++)
+    for(size_t i = 0; i < instructions.size(); i++)
     {
-        if(commands[i].bad)
+        if(instructions[i].bad)
         {
-            WriteCommand(file, commands[i]);
+            WriteCommand(file, instructions[i]);
         }
     }
 
     file.close();
+}
+
+
+void StorageInstructions::CreateProgram(ProgramASM &program)
+{
+    std::sort(instructions.begin(), instructions.end());
 }

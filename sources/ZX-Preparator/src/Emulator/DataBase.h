@@ -2,6 +2,7 @@
 #pragma once
 #include "Emulator/Instruction.h"
 #include "Emulator/Emulator.h"
+#include "Parser/ParserStructures.h"
 
 
 class StorageInstructions
@@ -21,8 +22,10 @@ public:
     // Write report to file
     void CreateReport(pchar file_name);
 
+    void CreateProgram(ProgramASM &);
+
 private:
-    std::vector<Instruction> commands;
+    std::vector<Instruction> instructions;
     std::vector<int> addressesForScan;
 
     int addr_min = 0;
