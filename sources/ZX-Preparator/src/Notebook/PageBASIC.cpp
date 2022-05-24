@@ -47,8 +47,6 @@ void PageBASIC::OnDraw(wxDC &dc)
         y += font.GetPixelSize().y + 10;
         x = margin_x;
     }
-
-    dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);
 }
 
 

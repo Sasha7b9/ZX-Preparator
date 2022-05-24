@@ -1,6 +1,8 @@
 // 2022/05/23 09:51:14 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Notebook/PageASM.h"
+#include "Frame.h"
+#include "Utils/Timer.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #pragma warning(pop)
@@ -8,6 +10,15 @@
 
 void PageASM::OnDraw(wxDC &dc)
 {
+    TimerMS timer;
+
+    if (program.lines.empty())
+    {
+        return;
+    }
+
+    static wxSize prev_size { 0, 0 };
+
     hdc = &dc;
 
     int x = margin_x;
@@ -15,10 +26,18 @@ void PageASM::OnDraw(wxDC &dc)
 
     dc.SetFont(font);
 
+    int pos = GetScrollPos(wxVERTICAL);
+
     for (LineASM line : program.lines)
     {
         DrawLine(x, y, line);
     }
+
+    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+
+    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
+
+    prev_size = GetSize();
 }
 
 
@@ -49,5 +68,5 @@ void PageASM::DrawLine(int x, int &y, const LineASM &line)
 
     hdc->DrawText(line.symbols[0].string.c_str(), x, y);
 
-    y += font.GetPointSize() + 5;
+    y += dY;
 }
