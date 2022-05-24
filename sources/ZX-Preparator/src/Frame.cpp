@@ -97,6 +97,13 @@ Frame::Frame(const wxString &title)
 //    }
 
     SetSize({ 1024, 768 });
+
+    wxString file = "c:/Temp/3D Space Wars.tap";
+
+    if (wxFile::Exists(file))
+    {
+        notebook->AssignFIle(file);
+    }
 }
 
 

@@ -626,8 +626,8 @@ static int DEC_pHL_dec(void)
     TACKTS = 11;
     AddAddress(rPC);
 
-    strcpy(MNEMONIC, "DEC (rHL)");
-    strcpy(TRANSCRIPT, "(rHL)<-(rHL)+1");
+    strcpy(MNEMONIC, "DEC (HL)");
+    strcpy(TRANSCRIPT, "(HL)<-(HL)+1");
     strcpy(FLAGS, "++X+XV0.");
 
     return -1;
@@ -655,8 +655,8 @@ static int LD_pHL_N_dec(void)
     AddAddress(rPC + 1);
     uint8 value = PCandInc();
 
-    sprintf(MNEMONIC, "LD (rHL),%2x", value);
-    sprintf(TRANSCRIPT, "(rHL)<-%2x", value);
+    sprintf(MNEMONIC, "LD (HL),%2x", value);
+    sprintf(TRANSCRIPT, "(HL)<-%2x", value);
 
     return -1;
 }
