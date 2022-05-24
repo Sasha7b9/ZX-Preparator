@@ -17,5 +17,5 @@ private:
 
     DumpHEX dump;
 
-    void WriteBytes(wxDC &dc, uint16 *address, uint8 *data, int num, int x, int &y);
+    void WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y);
 };

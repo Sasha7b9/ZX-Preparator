@@ -16,6 +16,8 @@ void PageHEX::SetDump(DumpHEX &_dump)
 
 void PageHEX::OnDraw(wxDC &dc)
 {
+    hdc = &dc;
+
     if (dump.bytes.empty())
     {
         return;
@@ -37,7 +39,7 @@ void PageHEX::OnDraw(wxDC &dc)
             num = (int)(dump.bytes.size() - index);
         }
 
-        WriteBytes(dc, &address, &dump.bytes.data()[index], num, x, y);
+        WriteBytes(&address, &dump.bytes.data()[index], num, x, y);
 
         if (index > 1024)
         {
@@ -47,15 +49,15 @@ void PageHEX::OnDraw(wxDC &dc)
 }
 
 
-void PageHEX::WriteBytes(wxDC &dc, uint16 *address, uint8 *data, int num, int x, int &y)
+void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y)
 {
-    dc.DrawText(wxString::Format("%05X", *address), x, y);
+    hdc->DrawText(wxString::Format("%05X", *address), x, y);
 
     x += 70;
 
     for (int i = 0; i < num; i++)
     {
-        dc.DrawText(wxString::Format("%02X", data[i]), x, y);
+        hdc->DrawText(wxString::Format("%02X", data[i]), x, y);
 
         x += 25;
 

@@ -3,6 +3,7 @@
 #pragma warning(push, 0)
 #include <wx/scrolwin.h>
 #include <wx/notebook.h>
+#include <wx/dc.h>
 #pragma warning(pop)
 
 
@@ -36,4 +37,6 @@ protected:
     TypePage::E type = TypePage::Count;
 
     wxFont font;
+
+    wxDC *hdc;
 };

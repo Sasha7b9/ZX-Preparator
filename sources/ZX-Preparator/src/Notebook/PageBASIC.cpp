@@ -19,6 +19,8 @@ void PageBASIC::SetProgram(ProgramBASIC &program)
 
 void PageBASIC::OnDraw(wxDC &dc)
 {
+    hdc = &dc;
+
     dc.SetFont(*wxSWISS_FONT);
     dc.SetPen(*wxGREEN_PEN);
 
@@ -33,13 +35,13 @@ void PageBASIC::OnDraw(wxDC &dc)
     {
         bool fill = false;
 
-        WriteText(dc, wxString::Format("%d %d ", line.number, line.size), x, y, fill);
+        WriteText(wxString::Format("%d %d ", line.number, line.size), x, y, fill);
 
         for (SymbolBASIC symbol : line.symbols)
         {
             fill = !fill;
 
-            WriteText(dc, symbol.string, x, y, fill);
+            WriteText(symbol.string, x, y, fill);
         }
 
         y += font.GetPixelSize().y + 4;
@@ -50,9 +52,9 @@ void PageBASIC::OnDraw(wxDC &dc)
 }
 
 
-void PageBASIC::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
+void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill)
 {
-    wxSize size = dc.GetTextExtent(text);
+    wxSize size = hdc->GetTextExtent(text);
 
     if (x + size.x > GetSize().x)
     {
@@ -66,11 +68,12 @@ void PageBASIC::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool f
         static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
         static wxPen pen(colour);
 
-        dc.SetBrush(brush);
-        dc.SetPen(pen);
-        dc.DrawRectangle(x, y, size.x, size.y);
+        hdc->SetBrush(brush);
+        hdc->SetPen(pen);
+        hdc->DrawRectangle(x, y, size.x, size.y);
     }
 
-    dc.DrawText(text, x, y);
+    hdc->DrawText(text, x, y);
+
     x += size.x;
 }
