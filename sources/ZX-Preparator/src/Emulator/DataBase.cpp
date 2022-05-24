@@ -27,40 +27,40 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
 {
     RemoveScanAddress(address);
 
-    Instruction command;
+    Instruction instruction;
     
-    command.address = address;
+    instruction.address = address;
 
     for(int i = 0; i < params->numOpCodes; i++)
     {
-        command.opCodes.push_back(params->opCodes[i]);
+        instruction.opCodes.push_back(params->opCodes[i]);
     }
 
     if(succsefull)
     {
-        command.numTackts = params->tackts;
+        instruction.numTackts = params->tackts;
 
-        command.mnemonic = std::string(params->mnemonic);
+        instruction.mnemonic = std::string(params->mnemonic);
 
         for(int i = 0; i < params->numAddresses; i++)
         {
             AppendEntryPoint((int)params->addresses[i]);
         }
 
-        command.transcript = string(params->transcript);
+        instruction.transcript = string(params->transcript);
 
-        command.flags = string(params->flags);
+        instruction.flags = string(params->flags);
 
-        command.comment = string(params->comment);
+        instruction.comment = string(params->comment);
 
-        command.tackts = params->tackts;
+        instruction.tackts = params->tackts;
     }
     else
     {
-        command.bad = true;
+        instruction.bad = true;
     }
 
-    instructions.push_back(command);
+    instructions.push_back(instruction);
 }
 
 
