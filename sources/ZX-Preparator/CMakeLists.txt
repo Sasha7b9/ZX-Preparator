@@ -37,6 +37,7 @@ file(GLOB SRC        src/*.*)
 file(GLOB COMPUTER   src/Computer/*.*)
 file(GLOB CPU        src/CPU/*.*)
 file(GLOB EMULATOR   src/Emulator/*.*)
+file(GLOB DISPLAY    src/Display/*.*)
 file(GLOB NOTEBOOK   src/Notebook/*.*)
 file(GLOB PARSER     src/Parser/*.*)
 
@@ -44,6 +45,7 @@ source_group(src        FILES ${SRC})
 source_group(Computer   FILES ${COMPUTER})
 source_group(CPU        FILES ${CPU})
 source_group(Emulator   FILES ${EMULATOR})
+source_group(Display    FILES ${DISPLAY})
 source_group(Notebook   FILES ${NOTEBOOK})
 source_group(Parser     FILES ${PARSER})
 
@@ -51,6 +53,7 @@ add_executable(${PROJECT_NAME} ${SRC}
                                ${COMPUTER}
                                ${CPU}
                                ${EMULATOR}
+                               ${DISPLAY}
                                ${NOTEBOOK}
                                ${PARSER}
 )

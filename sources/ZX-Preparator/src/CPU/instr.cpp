@@ -306,7 +306,7 @@ int DJNZ_E_dec(void)
     uint8 value = PCandInc();
     int shift = ((int)((int8)value)) + 2;
     uint newAddress = rPC + shift - 2;
-    sprintf(MNEMONIC, "DJNZ %d (#%04X)", shift, newAddress);
+    sprintf(MNEMONIC, "DJNZ %d {#%04X}", shift, newAddress);
     AddAddress(newAddress);
     return -1;
 }
@@ -382,7 +382,7 @@ static void WriteE(char *name)
     int shift = ((int)((int8)value)) + 2;
     uint newAddress = rPC + shift - 2;
 
-    sprintf(MNEMONIC, "JR %s%dd (%04X)", name, shift, newAddress);
+    sprintf(MNEMONIC, "JR %s%d {#%04X}", name, shift, newAddress);
 
     AddAddress(newAddress);
 }
