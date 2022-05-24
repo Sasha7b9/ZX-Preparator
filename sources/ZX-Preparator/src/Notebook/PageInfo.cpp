@@ -23,8 +23,6 @@ void PageInfo::OnDraw(wxDC &dc)
 
     if (descTAP.valid)
     {
-        int dY = font.GetPointSize() + 10;
-
         dc.DrawText("Is TAP file", x, y);
 
         y += dY;

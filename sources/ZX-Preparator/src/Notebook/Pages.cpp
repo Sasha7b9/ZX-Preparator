@@ -24,6 +24,8 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     Bind(wxEVT_SIZE, &Page::OnSizeEvent, this);
 
     SetName(name);
+
+    dY = font.GetPointSize() + 5;
 }
 
 

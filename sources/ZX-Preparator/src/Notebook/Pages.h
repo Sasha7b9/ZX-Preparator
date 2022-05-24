@@ -42,4 +42,5 @@ protected:
 
     const int margin_x = 10;
     const int margin_y = 10;
+    int dY = 0;
 };

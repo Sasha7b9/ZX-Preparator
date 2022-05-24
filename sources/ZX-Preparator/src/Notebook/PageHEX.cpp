@@ -69,5 +69,5 @@ void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y)
 
     *address += 16;
 
-    y += font.GetPointSize() + 5;
+    y += dY;
 }
