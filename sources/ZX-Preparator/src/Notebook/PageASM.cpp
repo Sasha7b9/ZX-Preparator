@@ -11,6 +11,8 @@ void PageASM::OnDraw(wxDC &dc)
     int x = 10;
     int y = 10;
 
+    dc.SetFont(font);
+
     for (LineASM line : program.lines)
     {
         dc.DrawText(line.symbols[0].string.c_str(), x, y);

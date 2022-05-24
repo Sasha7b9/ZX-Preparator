@@ -59,7 +59,7 @@ struct SymbolASM
 {
     SymbolASM(pchar symbol) : string(symbol) { }
 
-    SymbolASM(std::string symbol) : string(string) { }
+    SymbolASM(std::string symbol) : string(symbol) { }
 
     std::string string;
 };
