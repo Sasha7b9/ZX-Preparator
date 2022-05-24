@@ -88,9 +88,9 @@ void StorageInstructions::AppendEntryPoint(int address)
 
 bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 {
-    for each (auto &command in instructions)
+    for each (auto &instruction in instructions)
     {
-        if(command.address == address)
+        if(instruction.address == address)
         {
             return true;
         }
