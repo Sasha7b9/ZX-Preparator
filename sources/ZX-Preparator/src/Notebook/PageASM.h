@@ -17,4 +17,6 @@ public:
 private:
 
     ProgramASM program;
+
+    void DrawLine(int &x, int &y, LineASM &);
 };

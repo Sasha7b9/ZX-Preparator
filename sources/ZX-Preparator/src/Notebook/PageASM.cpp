@@ -8,6 +8,8 @@
 
 void PageASM::OnDraw(wxDC &dc)
 {
+    hdc = &dc;
+
     int x = 10;
     int y = 10;
 
@@ -15,9 +17,7 @@ void PageASM::OnDraw(wxDC &dc)
 
     for (LineASM line : program.lines)
     {
-        dc.DrawText(line.symbols[0].string.c_str(), x, y);
-
-        y += font.GetPointSize() + 5;
+        DrawLine(x, y, line);
     }
 }
 
@@ -27,4 +27,12 @@ void PageASM::SetProgram(ProgramASM &_program)
     program = _program;
 
     Refresh();
+}
+
+
+void PageASM::DrawLine(int &x, int &y, LineASM &line)
+{
+    hdc->DrawText(wxString::Format("%04X  %s", line.address, line.symbols[0].string.c_str()), x, y);
+
+    y += font.GetPointSize() + 5;
 }
