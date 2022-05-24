@@ -42,7 +42,9 @@ void PageHEX::OnDraw(wxDC &dc)
         WriteBytes(&address, &dump.bytes.data()[index], num, x, y);
     }
 
+    int pos = GetScrollPos(wxVERTICAL);
 
+    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 }
 
 
