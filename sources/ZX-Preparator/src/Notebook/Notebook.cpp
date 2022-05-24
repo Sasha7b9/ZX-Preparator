@@ -7,6 +7,9 @@
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
+#pragma warning(push, 0)
+#include <wx/file.h>
+#pragma warning(pop)
 
 
 Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
@@ -39,8 +42,13 @@ void Notebook::AppendPage(Page *page)
 }
 
 
-void Notebook::AssignFIle(wxString &file_name)
+void Notebook::AssignFIle(const wxString &file_name)
 {
+    if (!wxFile::Exists(file_name))
+    {
+        return;
+    }
+
     RemoveAllPages();
 
     ParserTAP parser;

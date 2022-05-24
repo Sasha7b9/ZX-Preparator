@@ -233,6 +233,11 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
 
         line.address = instruction.address;
 
+        for (uint i = 0; i < instruction.opCodes.size(); i++)
+        {
+            line.codes.push_back(instruction.opCodes[i]);
+        }
+
         program.lines.push_back(line);
     }
 }

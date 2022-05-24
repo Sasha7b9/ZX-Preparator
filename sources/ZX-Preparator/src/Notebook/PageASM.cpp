@@ -10,8 +10,8 @@ void PageASM::OnDraw(wxDC &dc)
 {
     hdc = &dc;
 
-    int x = 10;
-    int y = 10;
+    int x = margin_x;
+    int y = margin_y;
 
     dc.SetFont(font);
 
@@ -32,7 +32,22 @@ void PageASM::SetProgram(ProgramASM &_program)
 
 void PageASM::DrawLine(int x, int &y, const LineASM &line)
 {
-    hdc->DrawText(wxString::Format("%04X  %s", line.address, line.symbols[0].string.c_str()), x, y);
+    int x_start = x;
+
+    hdc->DrawText(wxString::Format("%04X", line.address), x, y);
+
+    x += 55;
+
+    for (uint i = 0; i < line.codes.size(); i++)
+    {
+        hdc->DrawText(wxString::Format("%02X", line.codes[i]), x, y);
+
+        x += 28;
+    }
+
+    x = x_start + 150;
+
+    hdc->DrawText(line.symbols[0].string.c_str(), x, y);
 
     y += font.GetPointSize() + 5;
 }

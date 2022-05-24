@@ -28,8 +28,8 @@ void PageBASIC::OnDraw(wxDC &dc)
 
     wxSize size = GetSize();
 
-    int x = 0;
-    int y = 0;
+    int x = margin_x;
+    int y = margin_y;
 
     for (LineBASIC line : lines)
     {
@@ -44,8 +44,8 @@ void PageBASIC::OnDraw(wxDC &dc)
             WriteText(symbol.string, x, y, fill);
         }
 
-        y += font.GetPixelSize().y + 4;
-        x = 0;
+        y += font.GetPixelSize().y + 10;
+        x = margin_x;
     }
 
     dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);

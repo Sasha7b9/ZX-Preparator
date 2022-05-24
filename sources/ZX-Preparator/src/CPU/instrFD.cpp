@@ -76,7 +76,7 @@ int LD_IY_NN(void)
 
     AddAddress(rPC);
 
-    sprintf(MNEMONIC, "LD IY,%04x", NN);
+    sprintf(MNEMONIC, "LD IY, %04x", NN);
 
     return -1;
 
@@ -139,7 +139,7 @@ int LD_pIY_D_N(void)
     uint8 valD = PCandInc();
     uint8 valN = PCandInc();
 
-    sprintf(MNEMONIC, "LD [IY+%02X],%02X", valD, valN);
+    sprintf(MNEMONIC, "LD [IY + %02X], #%02X", valD, valN);
 
     return -1;
 
@@ -175,7 +175,7 @@ int LD_R_pIY_D(void)
     uint8 valReg = prevPC;
     AddOpcode(RAM8(rPC));
     AddAddress(PC + 1);
-    sprintf(MNEMONIC, "LD %s,[IY+%02X]", R8_HI_Name(valReg), PCandInc());
+    sprintf(MNEMONIC, "LD %s, [IY + %02X]", R8_HI_Name(valReg), PCandInc());
     return -1;
 
 #else

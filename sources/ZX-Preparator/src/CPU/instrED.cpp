@@ -57,7 +57,7 @@ int LD_DD_pNN(void)
 
     uint8 retValue = prevPC;
 
-    sprintf(MNEMONIC, "LD %s,[%04X]", DD_45_Name(retValue), PC16andInc());
+    sprintf(MNEMONIC, "LD %s, [#%04X]", DD_45_Name(retValue), PC16andInc());
 
     AddAddress(rPC);
 

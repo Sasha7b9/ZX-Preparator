@@ -74,6 +74,8 @@ struct LineASM
 
     std::vector<SymbolASM> symbols;
 
+    std::vector<uint8> codes;
+
     int address = -1;
 };
 

@@ -25,8 +25,8 @@ void PageHEX::OnDraw(wxDC &dc)
 
     dc.SetFont(font);
 
-    int x = 10;
-    int y = 10;
+    int x = margin_x;
+    int y = margin_y;
 
     uint16 address = 0;
 

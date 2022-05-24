@@ -40,7 +40,7 @@ static int LD_DD_NN_dec(void)
     AddAddress(rPC + 2);
     uint16 NN = PC16andInc();
 
-    sprintf(MNEMONIC, "LD %s,%04X", DD_45_Name(valDD), NN);
+    sprintf(MNEMONIC, "LD %s,#%04X", DD_45_Name(valDD), NN);
 
     return -1;
 }
@@ -163,7 +163,7 @@ int LD_R_N_dec(void)
     uint8 valR = prevPC;
     uint8 N = PCandInc();
 
-    sprintf(MNEMONIC, "LD %s,%02X", R8_HI_Name(valR), N);
+    sprintf(MNEMONIC, "LD %s,#%02X", R8_HI_Name(valR), N);
 
     return -1;
 }
@@ -306,7 +306,7 @@ int DJNZ_E_dec(void)
     uint8 value = PCandInc();
     int shift = ((int)((int8)value)) + 2;
     uint newAddress = rPC + shift - 2;
-    sprintf(MNEMONIC, "DJNZ %dd (%04X)", shift, newAddress);
+    sprintf(MNEMONIC, "DJNZ %d (#%04X)", shift, newAddress);
     AddAddress(newAddress);
     return -1;
 }
@@ -475,8 +475,8 @@ int LD_pNN_HL_dec(void)
     uint16 NN = PC16andInc();
     AddAddress(rPC);
 
-    sprintf(MNEMONIC, "LD [%04X],HL", NN);
-    sprintf(TRANSCRIPT, "[%04X]<-HL", NN);
+    sprintf(MNEMONIC, "LD [#%04X],HL", NN);
+    sprintf(TRANSCRIPT, "[#%04X]<-HL", NN);
 
     return -1;
 }
@@ -522,8 +522,8 @@ int LD_HL_pNN_dec(void)
     AddAddress(rPC);
     TACKTS = 16;
 
-    sprintf(MNEMONIC, "LD HL,[%04X]", address);
-    sprintf(TRANSCRIPT, "HL<-[%04X]", address);
+    sprintf(MNEMONIC, "LD HL,[#%04X]", address);
+    sprintf(TRANSCRIPT, "HL<-[#%04X]", address);
 
     return -1;
 }
@@ -584,7 +584,7 @@ static int LD_pNN_A_dec(void)
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
-    sprintf(MNEMONIC, "LD (%04x),A", PC16andInc());
+    sprintf(MNEMONIC, "LD (#%04x),A", PC16andInc());
     AddAddress(rPC);
     return -1;
 }
@@ -655,8 +655,8 @@ static int LD_pHL_N_dec(void)
     AddAddress(rPC + 1);
     uint8 value = PCandInc();
 
-    sprintf(MNEMONIC, "LD (HL),%2x", value);
-    sprintf(TRANSCRIPT, "(HL)<-%2x", value);
+    sprintf(MNEMONIC, "LD (HL),#%02X", value);
+    sprintf(TRANSCRIPT, "(HL) <- #%02X", value);
 
     return -1;
 }
@@ -718,7 +718,7 @@ static int LD_A_pNN_dec(void)
     AddOpcode(RAM8(rPC + 1));
     AddAddress(rPC + 2);
 
-    sprintf(MNEMONIC, "LD A,[%04X]", PC16andInc());
+    sprintf(MNEMONIC, "LD A,[#%04X]", PC16andInc());
 
     return -1;
 }

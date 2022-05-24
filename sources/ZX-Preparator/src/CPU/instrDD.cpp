@@ -91,7 +91,7 @@ int LD_IX_NN(void)
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(PC + 1));
     AddAddress(PC + 2);
-    sprintf(MNEMONIC, "LD IX,%04X", PC16andInc());
+    sprintf(MNEMONIC, "LD IX, #%04X", PC16andInc());
     return -1;
 
 #else

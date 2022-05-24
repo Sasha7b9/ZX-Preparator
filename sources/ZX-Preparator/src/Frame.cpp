@@ -87,23 +87,9 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-//    ParserTAP parser;
-//
-//    if (parser.Execute("C:/Temp/WTHAS.TAP"))
-//    {
-//        ProgramBASIC program;
-//        parser.blocks[0].Decode(program);
-//        notebook->GetPageBASIC()->SetProgram(program);
-//    }
+    notebook->AssignFIle("c:/Temp/3D Space Wars.tap");
 
-    SetSize({ 1024, 768 });
-
-    wxString file = "c:/Temp/3D Space Wars.tap";
-
-    if (wxFile::Exists(file))
-    {
-        notebook->AssignFIle(file);
-    }
+    Maximize(true);
 }
 
 

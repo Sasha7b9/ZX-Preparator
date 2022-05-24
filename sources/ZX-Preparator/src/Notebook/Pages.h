@@ -39,4 +39,7 @@ protected:
     wxFont font;
 
     wxDC *hdc;
+
+    const int margin_x = 10;
+    const int margin_y = 10;
 };

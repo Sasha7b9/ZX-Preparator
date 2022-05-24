@@ -19,7 +19,7 @@ public:
 
     Notebook(wxWindow *parent);
 
-    void AssignFIle(wxString &file_name);
+    void AssignFIle(const wxString &file_name);
 
 private:
 
