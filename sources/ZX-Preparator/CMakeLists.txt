@@ -15,7 +15,7 @@ add_definitions(-DWXUSINGDLL)
 if(WIN32)
 
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall -std:c++17")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /STACK:10000000")
 
     add_compile_options(/wd4365)    # 'argument': conversion from 'int' to 'uint', signed/unsigned mismatch
     add_compile_options(/wd4514)

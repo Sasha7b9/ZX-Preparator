@@ -1,6 +1,9 @@
 // 2022/05/20 15:48:04 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "ParserTAP.h"
+#include "Parser/ParserTAP.h"
+#include "Emulator/Emulator.h"
+#include "Emulator/Memory.h"
+#include "Emulator/DataBase.h"
 #pragma warning (push, 0)
 #include <wx/statline.h>
 #include <wx/file.h>
@@ -536,6 +539,31 @@ bool BlockTAP::ParseASM(ProgramASM &program)
 
     if (header.type_data == 3)
     {
+        InfoStruct params;
+
+        std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
+
+        std::memcpy(params.MEMORY + header.param1, data.data.data(), header.size_data);
+
+        StorageInstructions storage(header.param1, header.param1 + header.size_data);
+
+        storage.AppendEntryPoint(header.param1);
+
+        Emulator::Init(&params);
+
+        int address = storage.NextAddress();
+
+        while (address > 0)
+        {
+            bool res = Emulator::Decode((uint16)address) != 0;
+
+            storage.AddNewData(res, address, &params);
+
+            address = storage.NextAddress();
+        }
+
+        storage.CreateProgram(program);
+
         return true;
     }
 
