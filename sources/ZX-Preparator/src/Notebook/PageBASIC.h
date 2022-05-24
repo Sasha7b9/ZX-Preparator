@@ -18,5 +18,7 @@ private:
 
     std::vector<LineBASIC> lines;
 
-    void WriteText(const wxString &, int &x, int &, bool fill, bool draw);
+    void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
+
+    const int width_line_field = 65;
 };

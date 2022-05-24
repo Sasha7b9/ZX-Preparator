@@ -87,7 +87,7 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-    notebook->AssignFIle("c:/Temp/3D Space Wars.tap");
+    notebook->AssignFIle("c:/Temp/_Another Brick on the Wall.tap");
 
     Maximize(true);
 }

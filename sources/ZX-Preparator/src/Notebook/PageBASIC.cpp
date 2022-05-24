@@ -53,21 +53,28 @@ void PageBASIC::OnDraw(wxDC &dc)
         y_max = y_min + prev_size.y + 8 * sbPPU;
     }
 
+    const int x0 = margin_x + width_line_field;
+    x = x0;
+
     for (LineBASIC line : lines)
     {
+        x = x0;
         bool fill = false;
+        bool draw = y > y_min && y < y_max;
 
-        WriteText(wxString::Format("%d %d ", line.number, line.size), x, y, fill, y > y_min && y < y_max);
+        if (draw)
+        {
+            dc.DrawText(wxString::Format("% 5d", line.number), margin_x, y);
+        }
 
         for (SymbolBASIC symbol : line.symbols)
         {
             fill = !fill;
 
-            WriteText(symbol.string, x, y, fill, y > y_min && y < y_max);
+            WriteText(symbol.string, x, y, fill, draw);
         }
 
         y += font.GetPixelSize().y + 10;
-        x = margin_x;
     }
 
     SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
@@ -84,8 +91,8 @@ void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, bool 
 
     if (x + size.x > GetSize().x - 20)
     {
-        x = 0;
-        y += font.GetPixelSize().y + 4;
+        x = margin_x + width_line_field;
+        y += dY;
     }
 
     if (fill && draw)
