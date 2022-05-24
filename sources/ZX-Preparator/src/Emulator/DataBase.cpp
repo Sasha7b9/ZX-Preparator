@@ -224,4 +224,15 @@ void StorageInstructions::CreateReport(pchar file_name)
 void StorageInstructions::CreateProgram(ProgramASM &program)
 {
     std::sort(instructions.begin(), instructions.end());
+
+    program.Clear();
+
+    for (Instruction instruction : instructions)
+    {
+        LineASM line(instruction.mnemonic);
+
+        line.address = instruction.address;
+
+        program.lines.push_back(line);
+    }
 }
