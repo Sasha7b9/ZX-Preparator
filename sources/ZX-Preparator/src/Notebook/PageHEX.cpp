@@ -18,14 +18,16 @@ void PageHEX::SetDump(DumpHEX &_dump)
 
 void PageHEX::OnDraw(wxDC &dc)
 {
-    TimerMS timer;
-
-    hdc = &dc;
-
     if (dump.bytes.empty())
     {
         return;
     }
+
+    static wxSize prev_size { 0, 0 };
+
+    TimerMS timer;
+
+    hdc = &dc;
 
     dc.SetFont(font);
 
@@ -33,6 +35,14 @@ void PageHEX::OnDraw(wxDC &dc)
     int y = margin_y;
 
     uint16 address = 0;
+
+    int y_min = 0;          // Redraw symbols on y from y_min
+    int y_max = 10000;      // to y_max
+
+    if (prev_size == GetSize())
+    {
+
+    }
 
     for (uint index = 0; index < dump.bytes.size(); index += 16)
     {
@@ -43,7 +53,7 @@ void PageHEX::OnDraw(wxDC &dc)
             num = (int)(dump.bytes.size() - index);
         }
 
-        WriteBytes(&address, &dump.bytes.data()[index], num, x, y);
+        WriteBytes(&address, &dump.bytes.data()[index], num, x, y, y > y_min && y < y_max);
     }
 
     int pos = GetScrollPos(wxVERTICAL);
@@ -51,18 +61,23 @@ void PageHEX::OnDraw(wxDC &dc)
     SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
+
+    prev_size = GetSize();
 }
 
 
-void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y)
+void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
 {
     if (num == 16)
     {
-        wxString text = wxString::Format("%04X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
-            *address, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-            data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
+        if (draw)
+        {
+            wxString text = wxString::Format("%04X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+                *address, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
+                data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
-        hdc->DrawText(text, x, y);
+            hdc->DrawText(text, x, y);
+        }
 
         y += dY;
 
