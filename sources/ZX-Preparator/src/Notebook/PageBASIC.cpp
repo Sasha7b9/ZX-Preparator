@@ -42,19 +42,28 @@ void PageBASIC::OnDraw(wxDC &dc)
     int x = margin_x;
     int y = margin_y;
 
+    int y_min = 0;          // Redraw symbols on y from y_min
+    int y_max = 10000;      // to y_max
+
     int pos = GetScrollPos(wxVERTICAL);
+
+    if (prev_size == GetSize())
+    {
+        y_min = pos * sbPPU - sbPPU;
+        y_max = y_min + prev_size.y + 8 * sbPPU;
+    }
 
     for (LineBASIC line : lines)
     {
         bool fill = false;
 
-        WriteText(wxString::Format("%d %d ", line.number, line.size), x, y, fill);
+        WriteText(wxString::Format("%d %d ", line.number, line.size), x, y, fill, y > y_min && y < y_max);
 
         for (SymbolBASIC symbol : line.symbols)
         {
             fill = !fill;
 
-            WriteText(symbol.string, x, y, fill);
+            WriteText(symbol.string, x, y, fill, y > y_min && y < y_max);
         }
 
         y += font.GetPixelSize().y + 10;
@@ -69,7 +78,7 @@ void PageBASIC::OnDraw(wxDC &dc)
 }
 
 
-void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill)
+void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, bool draw)
 {
     wxSize size = hdc->GetTextExtent(text);
 
@@ -79,7 +88,7 @@ void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill)
         y += font.GetPixelSize().y + 4;
     }
 
-    if (fill)
+    if (fill && draw)
     {
         static wxColour colour(240, 240, 240);
         static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
@@ -90,7 +99,10 @@ void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill)
         hdc->DrawRectangle(x, y, size.x, size.y);
     }
 
-    hdc->DrawText(text, x, y);
+    if (draw)
+    {
+        hdc->DrawText(text, x, y);
+    }
 
     x += size.x;
 }

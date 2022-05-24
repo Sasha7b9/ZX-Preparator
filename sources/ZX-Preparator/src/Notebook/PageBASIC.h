@@ -18,5 +18,5 @@ private:
 
     std::vector<LineBASIC> lines;
 
-    void WriteText(const wxString &, int &x, int &, bool fill);
+    void WriteText(const wxString &, int &x, int &, bool fill, bool draw);
 };
