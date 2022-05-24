@@ -1,6 +1,8 @@
 // 2022/05/23 09:52:23 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Notebook/PageHEX.h"
+#include "Utils/Timer.h"
+#include "Frame.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #pragma warning(pop)
@@ -16,6 +18,8 @@ void PageHEX::SetDump(DumpHEX &_dump)
 
 void PageHEX::OnDraw(wxDC &dc)
 {
+    TimerMS timer;
+
     hdc = &dc;
 
     if (dump.bytes.empty())
@@ -45,6 +49,8 @@ void PageHEX::OnDraw(wxDC &dc)
     int pos = GetScrollPos(wxVERTICAL);
 
     SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+
+    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %f ms", (float)timer.ElapsedTime()));
 }
 
 
