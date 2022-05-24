@@ -27,32 +27,6 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 }
 
 
-void Page::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
-{
-    wxSize size = dc.GetTextExtent(text);
-
-    if (x + size.x > GetSize().x)
-    {
-        x = 0;
-        y += font.GetPixelSize().y + 4;
-    }
-
-    if (fill)
-    {
-        static wxColour colour(240, 240, 240);
-        static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
-        static wxPen pen(colour);
-
-        dc.SetBrush(brush);
-        dc.SetPen(pen);
-        dc.DrawRectangle(x, y, size.x, size.y);
-    }
-
-    dc.DrawText(text, x, y);
-    x += size.x;
-}
-
-
 void Page::OnSizeEvent(wxSizeEvent &)
 {
     Refresh();

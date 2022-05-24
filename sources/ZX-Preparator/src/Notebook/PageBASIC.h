@@ -17,4 +17,6 @@ public:
 private:
 
     std::vector<LineBASIC> lines;
+
+    void WriteText(wxDC &, const wxString &, int &x, int &, bool fill);
 };

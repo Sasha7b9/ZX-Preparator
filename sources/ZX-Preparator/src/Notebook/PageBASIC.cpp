@@ -48,3 +48,29 @@ void PageBASIC::OnDraw(wxDC &dc)
 
     dc.DrawText(wxString::Format("%d : %d", GetSize().x, GetSize().y), x, y);
 }
+
+
+void PageBASIC::WriteText(wxDC &dc, const wxString &text, int &x, int &y, bool fill)
+{
+    wxSize size = dc.GetTextExtent(text);
+
+    if (x + size.x > GetSize().x)
+    {
+        x = 0;
+        y += font.GetPixelSize().y + 4;
+    }
+
+    if (fill)
+    {
+        static wxColour colour(240, 240, 240);
+        static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
+        static wxPen pen(colour);
+
+        dc.SetBrush(brush);
+        dc.SetPen(pen);
+        dc.DrawRectangle(x, y, size.x, size.y);
+    }
+
+    dc.DrawText(text, x, y);
+    x += size.x;
+}

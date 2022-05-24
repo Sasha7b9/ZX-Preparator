@@ -36,6 +36,4 @@ protected:
     TypePage::E type = TypePage::Count;
 
     wxFont font;
-
-    void WriteText(wxDC&, const wxString&, int& x, int&, bool fill);
 };
