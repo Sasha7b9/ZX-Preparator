@@ -161,7 +161,9 @@ int LDDR(void)
         LDD();
     } while(rBC != 0);
 
-    return time += 16;
+    time += 16;
+
+    return time;
 
 #endif
 }
