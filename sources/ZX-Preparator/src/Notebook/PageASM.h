@@ -18,5 +18,5 @@ private:
 
     ProgramASM program;
 
-    void DrawLine(int &x, int &y, LineASM &);
+    void DrawLine(int &x, int &y, const LineASM &);
 };

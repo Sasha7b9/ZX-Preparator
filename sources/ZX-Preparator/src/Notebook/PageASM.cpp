@@ -30,7 +30,7 @@ void PageASM::SetProgram(ProgramASM &_program)
 }
 
 
-void PageASM::DrawLine(int &x, int &y, LineASM &line)
+void PageASM::DrawLine(int &x, int &y, const LineASM &line)
 {
     hdc->DrawText(wxString::Format("%04X  %s", line.address, line.symbols[0].string.c_str()), x, y);
 
