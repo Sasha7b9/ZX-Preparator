@@ -1,0 +1,15 @@
+ZX-Preparator
+Работа
+wxWidgets
+    assembly full
+        1 - 06:49
+        2 - 06:26
+        3 - 06:35
+    assembly make
+        1 - 02:01
+        2 - 02:01
+        3 - 01:48
+    assembly build
+        1 - 04:04
+        2 - 04:27
+        3 - 04:32
