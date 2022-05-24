@@ -50,7 +50,7 @@ void PageHEX::OnDraw(wxDC &dc)
 
     SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
-    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %f ms", (float)timer.ElapsedTime()));
+    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 }
 
 

@@ -10,9 +10,9 @@ public:
 
     void Reset();
 
-    double ElapsedTime();
+    uint ElapsedTime();
 
 private:
 
-    double time_reset = 0.0;
+    uint time_reset = 0;
 };

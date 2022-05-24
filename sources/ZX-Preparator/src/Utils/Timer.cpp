@@ -6,11 +6,11 @@
 
 void TimerMS::Reset()
 {
-    time_reset = (double)std::time(0) * 1000.0;
+    time_reset = std::clock();
 }
 
 
-double TimerMS::ElapsedTime()
+uint TimerMS::ElapsedTime()
 {
-    return (double)std::time(0) * 1000 - time_reset;
+    return std::clock() - time_reset;
 }
