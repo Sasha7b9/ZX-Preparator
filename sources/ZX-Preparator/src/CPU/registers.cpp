@@ -237,7 +237,7 @@ char *QQ_45_Name(uint8 value)
 }
 
 
-char *SS_45_Name(uint8 value)
+char *SS_45_Name(uint8 value) //-V524
 {
     const char *names[4] =
     {

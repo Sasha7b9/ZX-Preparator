@@ -18,9 +18,13 @@ Canvas::Canvas(wxWindow *parent) :
 
     SetFontSize(12);
 
-    xCaret = yCaret = xChars = yChars = 0;
+    xCaret = 0;
+    yCaret = 0;
+    xChars = 0;
+    yChars = 0;
 
-    xMargin = yMargin = 5;
+    xMargin = 5;
+    yMargin = 5;
 
     CreateCaret();
 }

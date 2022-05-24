@@ -22,7 +22,7 @@ int RLC_pIR_D_R(void)
 }
 
 
-int RLC_pIR_D(void)
+int RLC_pIR_D(void) //-V524
 {
     return RLC(OPERAND);
 }

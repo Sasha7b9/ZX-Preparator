@@ -69,12 +69,12 @@ struct LineASM
 {
     LineASM(std::string &mnemonic)
     {
-        symbols.push_back(SymbolASM(mnemonic));
+        symbols.emplace_back(SymbolASM(mnemonic));
     }
 
     std::vector<SymbolASM> symbols;
 
-    int address;
+    int address = -1;
 };
 
 
