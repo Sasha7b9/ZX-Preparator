@@ -1,6 +1,8 @@
 // 2022/05/23 09:52:02 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Notebook/PageBASIC.h"
+#include "Utils/Timer.h"
+#include "Frame.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #pragma warning(pop)
@@ -19,6 +21,15 @@ void PageBASIC::SetProgram(ProgramBASIC &program)
 
 void PageBASIC::OnDraw(wxDC &dc)
 {
+    TimerMS timer;
+
+    static wxSize prev_size{ 0, 0 };
+
+    if (lines.empty())
+    {
+        return;
+    }
+
     hdc = &dc;
 
     dc.SetFont(*wxSWISS_FONT);
@@ -30,6 +41,8 @@ void PageBASIC::OnDraw(wxDC &dc)
 
     int x = margin_x;
     int y = margin_y;
+
+    int pos = GetScrollPos(wxVERTICAL);
 
     for (LineBASIC line : lines)
     {
@@ -47,6 +60,12 @@ void PageBASIC::OnDraw(wxDC &dc)
         y += font.GetPixelSize().y + 10;
         x = margin_x;
     }
+
+    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+
+    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
+
+    prev_size = GetSize();
 }
 
 
