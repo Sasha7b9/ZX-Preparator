@@ -49,8 +49,9 @@ void PageBASIC::OnDraw(wxDC &dc)
 
     if (prev_size == GetSize())
     {
-        y_min = pos * sbPPU - sbPPU;
-        y_max = y_min + prev_size.y + 8 * sbPPU;
+        y_min = pos * sbPPU;
+        y_max = y_min + prev_size.y;
+        y_min -= 500;
     }
 
     const int x0 = margin_x + width_line_field;
