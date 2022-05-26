@@ -12,11 +12,9 @@
 Canvas::Canvas(wxWindow *parent) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER)
 {
-    SetScrollbars(10, 10, 200, 200);
-
-//    SetMinSize({ 300, 1 });
+//    SetScrollbars(10, 10, 200, 200);
 //
-//    SetClientSize({ 100, 100 });
+//    SetMinSize({ 300, 1 });
 
     SetBackgroundColour(*wxWHITE);
 }

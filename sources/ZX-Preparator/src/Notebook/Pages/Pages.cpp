@@ -14,17 +14,17 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 {
     SetName(name);
 
-    sizer = new wxBoxSizer(wxHORIZONTAL);
+//    sizer = new wxBoxSizer(wxHORIZONTAL);
 
     canvas = new Canvas(this);
 
     control_panel = new ControlPanel(this);
 
-    sizer->Add(canvas, 0, wxEXPAND);
+//    sizer->Add(canvas, 0, wxALL);
 
-    sizer->Add(control_panel, 0, wxEXPAND);
+//    sizer->Add(control_panel, 0, wxALIGN_RIGHT);
 
-    SetSizerAndFit(sizer);
+//    SetSizerAndFit(sizer);
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
@@ -33,8 +33,6 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 
     dY = font.GetPointSize() + 5;
     sbPPU = dY;
-
-    Refresh();
 }
 
 
@@ -42,12 +40,15 @@ void Page::OnSizeEvent(wxSizeEvent &)
 {
     wxSize size = GetSize();
 
-    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator    %d : %d", size.x, size.y));
+    wxSize size_panel = size;
+    size_panel.x = 300;
 
-    size.x -= 10;
-    size.y -= 10;
+    control_panel->SetSize(size_panel);
 
-    SetSize(size);
+    wxSize size_canvas = size;
+    size_canvas.x = size.x - size_panel.x;
+
+    canvas->SetSize(size_canvas);
 
     Refresh();
 }
