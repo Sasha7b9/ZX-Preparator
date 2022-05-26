@@ -10,7 +10,7 @@ public:
 
     PageBASIC(wxNotebook *parent, pchar name) : Page(parent, TypePage::BASIC, name) { }
 
-    virtual void OnDraw(wxDC &) override;
+    virtual void OnPaint(wxPaintEvent &event) override;
 
     void SetProgram(ProgramBASIC &);
 

@@ -10,7 +10,7 @@ public:
 
     PageASM(wxNotebook *parent, pchar name) : Page(parent, TypePage::ASM, name) { }
 
-    virtual void OnDraw(wxDC &) override;
+    virtual void OnPaint(wxPaintEvent &event) override;
 
     void SetProgram(ProgramASM &);
 

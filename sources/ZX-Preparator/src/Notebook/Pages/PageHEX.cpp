@@ -16,7 +16,7 @@ void PageHEX::SetDump(DumpHEX &_dump)
 }
 
 
-void PageHEX::OnDraw(wxDC &dc)
+void PageHEX::OnPaint(wxPaintEvent &)
 {
     if (dump.bytes.empty())
     {
@@ -26,6 +26,9 @@ void PageHEX::OnDraw(wxDC &dc)
     static wxSize prev_size { 0, 0 };
 
     TimerMS timer;
+
+    wxPaintDC dc(this);
+    PrepareDC(dc);
 
     hdc = &dc;
 
@@ -59,7 +62,7 @@ void PageHEX::OnDraw(wxDC &dc)
         WriteBytes(&address, &dump.bytes.data()[index], num, x, y, y > y_min && y < y_max);
     }
 
-    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+//    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 

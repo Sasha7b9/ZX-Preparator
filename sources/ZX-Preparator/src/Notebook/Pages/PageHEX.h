@@ -9,7 +9,7 @@ class PageHEX : public Page
 public:
     PageHEX(wxNotebook* parent) : Page(parent, TypePage::HEX, "HEX") { }
 
-    virtual void OnDraw(wxDC &) override;
+    virtual void OnPaint(wxPaintEvent &event);
 
     void SetDump(DumpHEX &);
 

@@ -14,8 +14,11 @@ void PageInfo::SetDescriptionTAP(DescriptionTAP &desc)
 }
 
 
-void PageInfo::OnDraw(wxDC &dc)
+void PageInfo::OnPaint(wxPaintEvent &)
 {
+    wxPaintDC dc(this);
+    PrepareDC(dc);
+
     dc.SetFont(font);
 
     int x = 10;

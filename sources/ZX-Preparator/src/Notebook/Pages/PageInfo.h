@@ -9,7 +9,7 @@ class PageInfo : public Page
 public:
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
-    virtual void OnDraw(wxDC &) override;
+    virtual void OnPaint(wxPaintEvent &event);
 
     void SetDescriptionTAP(DescriptionTAP&);
 

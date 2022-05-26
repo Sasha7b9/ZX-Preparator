@@ -24,13 +24,13 @@ struct TypePage
 };
 
 
-class Page : public wxScrolledWindow
+class Page : public wxWindow
 {
 public:
 
     Page(wxNotebook* parent, TypePage::E, pchar name);
 
-    virtual void OnDraw(wxDC&) override {};
+    virtual void OnPaint(wxPaintEvent &) {};
     void OnSizeEvent(wxSizeEvent&);
 
 protected:

@@ -19,7 +19,7 @@ void PageBASIC::SetProgram(ProgramBASIC &program)
 }
 
 
-void PageBASIC::OnDraw(wxDC &dc)
+void PageBASIC::OnPaint(wxPaintEvent &)
 {
     TimerMS timer;
 
@@ -29,6 +29,9 @@ void PageBASIC::OnDraw(wxDC &dc)
     {
         return;
     }
+
+    wxPaintDC dc(this);
+    PrepareDC(dc);
 
     hdc = &dc;
 
@@ -77,7 +80,7 @@ void PageBASIC::OnDraw(wxDC &dc)
         y += font.GetPixelSize().y + 10;
     }
 
-    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+//    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 

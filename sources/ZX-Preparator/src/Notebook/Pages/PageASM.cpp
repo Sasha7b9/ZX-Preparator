@@ -8,7 +8,7 @@
 #pragma warning(pop)
 
 
-void PageASM::OnDraw(wxDC &dc)
+void PageASM::OnPaint(wxPaintEvent &)
 {
     TimerMS timer;
 
@@ -19,6 +19,9 @@ void PageASM::OnDraw(wxDC &dc)
 
     static wxSize prev_size { 0, 0 };
 
+    wxPaintDC dc(this);
+    PrepareDC(dc);
+
     hdc = &dc;
 
     int x = margin_x;
@@ -26,14 +29,14 @@ void PageASM::OnDraw(wxDC &dc)
 
     dc.SetFont(font);
 
-    int pos = GetScrollPos(wxVERTICAL);
+//    int pos = GetScrollPos(wxVERTICAL);
 
     for (LineASM line : program.lines)
     {
         DrawLine(x, y, line);
     }
 
-    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+//    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 
