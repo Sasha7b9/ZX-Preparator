@@ -3,6 +3,7 @@
 #include "Notebook/Pages/PageInfo.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
+#include <wx/dcclient.h>
 #pragma warning(pop)
 
 
@@ -108,4 +109,10 @@ void PageInfo::OnPaint(wxPaintEvent &)
     {
         dc.DrawText("Is not TAP file", x, y);
     }
+}
+
+
+ControlPanelInfo::ControlPanelInfo(wxWindow *parent) : ControlPanel(parent)
+{
+
 }

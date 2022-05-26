@@ -14,7 +14,9 @@ Canvas::Canvas(wxWindow *parent) :
 {
     SetScrollbars(10, 10, 200, 200);
 
-    SetClientSize({ 100, 100 });
+//    SetMinSize({ 300, 1 });
+//
+//    SetClientSize({ 100, 100 });
 
     SetBackgroundColour(*wxWHITE);
 }

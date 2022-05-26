@@ -17,3 +17,11 @@ private:
 
     DescriptionTAP descTAP;
 };
+
+
+class ControlPanelInfo : public ControlPanel
+{
+public:
+    ControlPanelInfo(wxWindow *);
+private:
+};

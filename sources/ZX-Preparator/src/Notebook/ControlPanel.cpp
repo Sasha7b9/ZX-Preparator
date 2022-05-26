@@ -5,5 +5,6 @@
 
 ControlPanel::ControlPanel(wxWindow *parent) : wxPanel(parent)
 {
-
+//    SetMaxSize({ 100, 100000 });
+//    SetMinSize({ 100, 1 });
 }

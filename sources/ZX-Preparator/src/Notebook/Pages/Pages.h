@@ -7,6 +7,7 @@
 #include <wx/notebook.h>
 #include <wx/dc.h>
 #include <wx/splitter.h>
+#include <wx/sizer.h>
 #pragma warning(pop)
 
 
@@ -43,6 +44,7 @@ protected:
     wxSplitterWindow *splitter = nullptr;
     Canvas *canvas = nullptr;               // For drawing info
     ControlPanel *control_panel = nullptr;  // For settings
+    wxBoxSizer *sizer = nullptr;
 
     const int margin_x = 10;
     const int margin_y = 10;
