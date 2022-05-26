@@ -13,5 +13,8 @@
 class ControlPanel : public wxPanel
 {
 public:
+
+    ControlPanel(wxWindow *);
+
 private:
 };

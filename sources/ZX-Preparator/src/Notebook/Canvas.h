@@ -8,8 +8,7 @@
 class Canvas : public wxScrolledWindow
 {
 public:
-    Canvas() { }
-    Canvas(wxWindow *parent);
+    Canvas(wxWindow *);
     ~Canvas();
 
     void SetFontSize(int);

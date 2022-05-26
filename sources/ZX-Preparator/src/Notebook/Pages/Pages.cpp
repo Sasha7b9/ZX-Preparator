@@ -14,11 +14,11 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 
     splitter->SetMinSize({ 100, 100 });
 
-    canvas = new wxPanel(splitter);
+    canvas = new Canvas(splitter);
 
     canvas->SetMinClientSize({ 100, 100 });
 
-    control_panel = new wxPanel(splitter);
+    control_panel = new ControlPanel(splitter);
 
     splitter->SplitVertically(canvas, control_panel);
 

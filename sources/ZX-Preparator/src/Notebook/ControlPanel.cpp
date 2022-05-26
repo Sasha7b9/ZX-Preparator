@@ -3,4 +3,7 @@
 #include "Notebook/ControlPanel.h"
 
 
+ControlPanel::ControlPanel(wxWindow *parent) : wxPanel(parent)
+{
 
+}
