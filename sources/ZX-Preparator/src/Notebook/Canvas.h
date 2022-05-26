@@ -19,7 +19,9 @@ protected:
 
     wxFont  font;
     wxDC   *hdc = nullptr;
-    Page   *page = nullptr;     // parent
+    Page   *page = nullptr;             // parent
     const int margin_x = 10;
     const int margin_y = 10;
+    int dY = 0;
+    int sbPPU = 0;                      // Scrollbar pixels for unit
 };

@@ -41,7 +41,4 @@ protected:
     TypePage::E type = TypePage::Count;
     Canvas *canvas = nullptr;               // For drawing info
     ControlPanel *control_panel = nullptr;  // For settings
-
-    int dY = 0;
-    int sbPPU = 0;                    // Scrollbar pixels for unit
 };

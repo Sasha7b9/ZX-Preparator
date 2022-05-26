@@ -13,10 +13,6 @@ public:
     PageASM(wxNotebook *parent, pchar name) : Page(parent, TypePage::ASM, name) { }
 
     void SetProgram(ProgramASM &);
-
-private:
-
-    void DrawLine(int x, int &y, const LineASM &);
 };
 
 
@@ -27,4 +23,8 @@ public:
     CanvasASM(wxWindow *);
 
     virtual void OnEventPaint(wxPaintEvent &) override;
+
+private:
+
+    void DrawLine(int x, int &y, const LineASM &);
 };

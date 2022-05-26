@@ -54,7 +54,7 @@ void PageASM::SetProgram(ProgramASM &_program)
 }
 
 
-void PageASM::DrawLine(int x, int &y, const LineASM &line)
+void CanvasASM::DrawLine(int x, int &y, const LineASM &line)
 {
     int x_start = x;
 
