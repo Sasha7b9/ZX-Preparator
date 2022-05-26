@@ -23,6 +23,8 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 {
     TimerMS timer;
 
+    std::vector<LineBASIC> &lines = ((PageBASIC *)page)->lines;
+
     static wxSize prev_size{ 0, 0 };
 
     if (lines.empty())
@@ -88,7 +90,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 }
 
 
-void PageBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, bool draw)
+void CanvasBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, bool draw)
 {
     wxSize size = hdc->GetTextExtent(text);
 

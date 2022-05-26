@@ -18,6 +18,8 @@ void PageHEX::SetDump(DumpHEX &_dump)
 
 void CanvasHEX::OnEventPaint(wxPaintEvent &)
 {
+    DumpHEX &dump = ((PageHEX *)page)->dump;
+
     if (dump.bytes.empty())
     {
         return;
@@ -70,7 +72,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void PageHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
+void CanvasHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
 {
     if (num == 16)
     {

@@ -25,13 +25,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
         control_panel = new ControlPanel(this);
     }
 
-    font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
-    font.SetWeight(wxFONTWEIGHT_BOLD);
-
     Bind(wxEVT_SIZE, &Page::OnSizeEvent, this);
-
-    dY = font.GetPointSize() + 5;
-    sbPPU = dY;
 }
 
 
@@ -46,4 +40,18 @@ void Page::OnSizeEvent(wxSizeEvent &)
     control_panel->SetPosition({ canvas->GetSize().x, 0 });
 
     Refresh();
+}
+
+
+Canvas::Canvas(Page *parent) :
+    wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER),
+    page(parent)
+{
+    SetBackgroundColour(*wxWHITE);
+
+    font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
+    font.SetWeight(wxFONTWEIGHT_BOLD);
+
+    dY = font.GetPointSize() + 5;
+    sbPPU = dY;
 }

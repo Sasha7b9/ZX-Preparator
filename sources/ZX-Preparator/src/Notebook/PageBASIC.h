@@ -12,13 +12,7 @@ public:
 
     void SetProgram(ProgramBASIC &);
 
-private:
-
     std::vector<LineBASIC> lines;
-
-    void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
-
-    const int width_line_field = 65;
 };
 
 
@@ -28,6 +22,11 @@ public:
 
     CanvasBASIC(Page *);
 
-
     virtual void OnEventPaint(wxPaintEvent &) override;
+
+private:
+
+    const int width_line_field = 65;
+
+    void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
 };

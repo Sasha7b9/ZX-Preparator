@@ -11,11 +11,7 @@ public:
 
     void SetDump(DumpHEX &);
 
-private:
-
     DumpHEX dump;
-
-    void WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
 };
 
 
@@ -26,4 +22,8 @@ public:
     CanvasHEX(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) override;
+
+private:
+
+    void WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
 };
