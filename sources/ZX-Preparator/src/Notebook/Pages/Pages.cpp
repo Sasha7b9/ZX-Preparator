@@ -11,19 +11,27 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL | wxHSCROLL),
     type(_type)
 {
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+
     splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER);
 
     canvas = new Canvas(splitter);
 
+    canvas->SetMaxSize({ 500, 100000 });
+
     control_panel = new ControlPanel(splitter);
 
-    splitter->SplitVertically(canvas, control_panel);
+    control_panel->SetMinSize({ 100, 10000 });
 
-    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    splitter->SplitVertically(canvas, control_panel);
 
     sizer->Add(splitter, 1, wxEXPAND);
 
     SetSizerAndFit(sizer);
+
+    SetMaxSize({ 500, 500 });
+
+    Refresh();
 
     /*
     SetBackgroundColour(*wxWHITE);

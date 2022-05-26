@@ -12,21 +12,11 @@
 Canvas::Canvas(wxWindow *parent) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER)
 {
-    text = (wxChar *)NULL;
+    SetScrollbars(10, 10, 200, 200);
+
+    SetClientSize({ 100, 100 });
 
     SetBackgroundColour(*wxWHITE);
-
-    SetFontSize(12);
-
-    xCaret = 0;
-    yCaret = 0;
-    xChars = 0;
-    yChars = 0;
-
-    xMargin = 5;
-    yMargin = 5;
-
-    CreateCaret();
 }
 
 
