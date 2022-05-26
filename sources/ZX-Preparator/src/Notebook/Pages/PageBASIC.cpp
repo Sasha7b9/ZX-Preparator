@@ -39,7 +39,6 @@ void PageBASIC::OnDraw(wxDC &dc)
 
     wxSize size = GetSize();
 
-    int x = margin_x;
     int y = margin_y;
 
     int y_min = 0;          // Redraw symbols on y from y_min
@@ -55,7 +54,7 @@ void PageBASIC::OnDraw(wxDC &dc)
     }
 
     const int x0 = margin_x + width_line_field;
-    x = x0;
+    int x = x0;
 
     for (LineBASIC line : lines)
     {
