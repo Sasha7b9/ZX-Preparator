@@ -14,19 +14,17 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 {
     SetName(name);
 
-//    sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER);
+    canvas = new Canvas(this);
 
-    canvas = new Canvas(splitter);
+    control_panel = new ControlPanel(this);
 
-    control_panel = new ControlPanel(splitter);
+    sizer->Add(canvas, 0, wxEXPAND);
 
-    splitter->SplitVertically(canvas, control_panel, 100);
+    sizer->Add(control_panel, 0, wxEXPAND);
 
-//    sizer->Add(splitter, 0, wxEXPAND);
-
-//    SetSizerAndFit(sizer);
+    SetSizerAndFit(sizer);
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
@@ -35,8 +33,6 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 
     dY = font.GetPointSize() + 5;
     sbPPU = dY;
-
-    splitter->SetSashPosition(100);
 
     Refresh();
 }

@@ -41,7 +41,6 @@ protected:
     TypePage::E type = TypePage::Count;
     wxFont font;
     wxDC *hdc = nullptr;
-    wxSplitterWindow *splitter = nullptr;
     Canvas *canvas = nullptr;               // For drawing info
     ControlPanel *control_panel = nullptr;  // For settings
     wxBoxSizer *sizer = nullptr;
