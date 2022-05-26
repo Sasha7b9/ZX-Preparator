@@ -10,8 +10,6 @@ public:
 
     PageBASIC(wxNotebook *parent, pchar name) : Page(parent, TypePage::BASIC, name) { }
 
-    virtual void OnPaint(wxPaintEvent &event) override;
-
     void SetProgram(ProgramBASIC &);
 
 private:
@@ -21,4 +19,15 @@ private:
     void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
 
     const int width_line_field = 65;
+};
+
+
+class CanvasBASIC : public Canvas
+{
+public:
+
+    CanvasBASIC(Page *);
+
+
+    virtual void OnEventPaint(wxPaintEvent &) override;
 };

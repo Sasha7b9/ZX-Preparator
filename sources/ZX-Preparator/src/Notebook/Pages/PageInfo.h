@@ -11,8 +11,6 @@ public:
 
     void SetDescriptionTAP(DescriptionTAP&);
 
-private:
-
     DescriptionTAP descTAP;
 };
 
@@ -20,7 +18,7 @@ private:
 class CanvasInfo : public Canvas
 {
 public:
-    CanvasInfo(wxWindow *);
+    CanvasInfo(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) override;
 };

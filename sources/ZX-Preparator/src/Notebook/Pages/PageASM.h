@@ -20,7 +20,7 @@ class CanvasASM : public Canvas
 {
 public:
 
-    CanvasASM(wxWindow *);
+    CanvasASM(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) override;
 

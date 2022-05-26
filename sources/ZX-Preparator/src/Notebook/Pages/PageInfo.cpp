@@ -4,6 +4,7 @@
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #include <wx/dcclient.h>
+#include <wx/button.h>
 #pragma warning(pop)
 
 
@@ -24,6 +25,8 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 
     int x = 10;
     int y = 10;
+
+    DescriptionTAP &descTAP = ((PageInfo *)page)->descTAP;
 
     if (descTAP.valid)
     {
