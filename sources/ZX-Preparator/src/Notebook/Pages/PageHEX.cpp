@@ -1,6 +1,6 @@
 // 2022/05/23 09:52:23 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Notebook/PageHEX.h"
+#include "Notebook/Pages/PageHEX.h"
 #include "Utils/Timer.h"
 #include "Frame.h"
 #pragma warning(push, 0)

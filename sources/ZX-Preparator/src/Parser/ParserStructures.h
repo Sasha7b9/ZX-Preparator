@@ -85,6 +85,8 @@ struct ProgramASM
     void Clear() { lines.clear(); }
 
     std::vector<LineASM> lines;
+
+    std::vector<LineASM> bad_lines;
 };
 
 

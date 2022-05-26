@@ -4,6 +4,7 @@
 #include <wx/scrolwin.h>
 #include <wx/notebook.h>
 #include <wx/dc.h>
+#include <wx/splitter.h>
 #pragma warning(pop)
 
 
@@ -35,10 +36,11 @@ public:
 protected:
 
     TypePage::E type = TypePage::Count;
-
     wxFont font;
-
-    wxDC *hdc;
+    wxDC *hdc = nullptr;
+    wxSplitterWindow *splitter = nullptr;
+    wxPanel *canvas = nullptr;              // For drawing info
+    wxPanel *control_panel = nullptr;       // For settings
 
     const int margin_x = 10;
     const int margin_y = 10;
