@@ -3,6 +3,7 @@
 #include "Notebook/Pages/Pages.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
+#include <wx/sizer.h>
 #pragma warning(pop)
 
 
@@ -12,16 +13,19 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 {
     splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER);
 
-    splitter->SetMinSize({ 100, 100 });
-
     canvas = new Canvas(splitter);
-
-    canvas->SetMinClientSize({ 100, 100 });
 
     control_panel = new ControlPanel(splitter);
 
     splitter->SplitVertically(canvas, control_panel);
 
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+
+    sizer->Add(splitter, 1, wxEXPAND);
+
+    SetSizerAndFit(sizer);
+
+    /*
     SetBackgroundColour(*wxWHITE);
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
@@ -35,6 +39,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     sbPPU = dY;
 
     SetClientSize(splitter->GetBestSize());
+    */
 }
 
 
