@@ -8,9 +8,11 @@
 #pragma warning(pop)
 
 
-void PageASM::OnPaint(wxPaintEvent &)
+void CanvasASM::OnEventPaint(wxPaintEvent &)
 {
     TimerMS timer;
+
+    ProgramASM &program = ((PageASM *)page)->program;
 
     if (program.lines.empty())
     {

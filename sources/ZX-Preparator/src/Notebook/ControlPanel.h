@@ -14,6 +14,8 @@ class ControlPanel : public wxPanel
 {
 public:
 
+    static const int WIDTH = 200;
+
     ControlPanel(wxWindow *);
 
 private:

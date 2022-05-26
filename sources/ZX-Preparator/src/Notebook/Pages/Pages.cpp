@@ -9,22 +9,21 @@
 
 
 Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
-    wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL | wxHSCROLL),
+    wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize),
     type(_type)
 {
     SetName(name);
 
-//    sizer = new wxBoxSizer(wxHORIZONTAL);
-
-    canvas = new Canvas(this);
-
-    control_panel = new ControlPanel(this);
-
-//    sizer->Add(canvas, 0, wxALL);
-
-//    sizer->Add(control_panel, 0, wxALIGN_RIGHT);
-
-//    SetSizerAndFit(sizer);
+    if (type == TypePage::Info)
+    {
+        canvas = new CanvasInfo(this);
+        control_panel = new ControlPanelInfo(this);
+    }
+    else
+    {
+        canvas = new Canvas(this);
+        control_panel = new ControlPanel(this);
+    }
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
@@ -38,17 +37,13 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 
 void Page::OnSizeEvent(wxSizeEvent &)
 {
-    wxSize size = GetSize();
+    wxSize size = GetClientSize();
 
-    wxSize size_panel = size;
-    size_panel.x = 300;
+    control_panel->SetSize({ ControlPanel::WIDTH, size.y });
 
-    control_panel->SetSize(size_panel);
+    canvas->SetSize({ size.x - ControlPanel::WIDTH, size.y });;
 
-    wxSize size_canvas = size;
-    size_canvas.x = size.x - size_panel.x;
-
-    canvas->SetSize(size_canvas);
+    control_panel->SetPosition({ canvas->GetSize().x, 0 });
 
     Refresh();
 }

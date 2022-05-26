@@ -8,15 +8,23 @@ class PageASM : public Page
 {
 public:
 
-    PageASM(wxNotebook *parent, pchar name) : Page(parent, TypePage::ASM, name) { }
+    ProgramASM program;
 
-    virtual void OnPaint(wxPaintEvent &event) override;
+    PageASM(wxNotebook *parent, pchar name) : Page(parent, TypePage::ASM, name) { }
 
     void SetProgram(ProgramASM &);
 
 private:
 
-    ProgramASM program;
-
     void DrawLine(int x, int &y, const LineASM &);
+};
+
+
+class CanvasASM : public Canvas
+{
+public:
+
+    CanvasASM(wxWindow *);
+
+    virtual void OnEventPaint(wxPaintEvent &) override;
 };

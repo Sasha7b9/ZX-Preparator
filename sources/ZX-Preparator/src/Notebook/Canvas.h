@@ -5,24 +5,21 @@
 #pragma warning(pop)
 
 
+class Page;
+
+
 class Canvas : public wxScrolledWindow
 {
 public:
-    Canvas(wxWindow *);
-    ~Canvas();
+    Canvas(Page *);
 
-    void SetFontSize(int);
-    void CreateCaret();
+    virtual void OnEventPaint(wxPaintEvent &) { };
 
-private:
+protected:
 
     wxFont  font;
-    long    widthChar = 0, heightChar = 0;      // size (in pixels) of one character
-    int     xChars = 0, yChars = 0;             // the size (in text coords) of the window
-    int     xMargin = 0, yMargin = 0;           // the margin around the text (looks nicer)
-    int     xCaret = 0, yCaret = 0;             // position (in text coords) of the caret
-    wxChar *text = nullptr;
-
-    // update the geometry
-    void ChangeSize();
+    wxDC   *hdc = nullptr;
+    Page   *page = nullptr;     // parent
+    const int margin_x = 10;
+    const int margin_y = 10;
 };

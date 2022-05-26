@@ -33,5 +33,5 @@ private:
 
     PageInfo *GetPageInfo() { return pageInfo; }
 
-    Page *GetPageN(int) const;
+//    Page *GetPageN(int) const;
 };

@@ -9,13 +9,20 @@ class PageInfo : public Page
 public:
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
-    virtual void OnPaint(wxPaintEvent &event);
-
     void SetDescriptionTAP(DescriptionTAP&);
 
 private:
 
     DescriptionTAP descTAP;
+};
+
+
+class CanvasInfo : public Canvas
+{
+public:
+    CanvasInfo(wxWindow *);
+
+    virtual void OnEventPaint(wxPaintEvent &) override;
 };
 
 

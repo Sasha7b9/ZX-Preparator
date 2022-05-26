@@ -15,7 +15,7 @@ void PageInfo::SetDescriptionTAP(DescriptionTAP &desc)
 }
 
 
-void PageInfo::OnPaint(wxPaintEvent &)
+void CanvasInfo::OnEventPaint(wxPaintEvent &)
 {
     wxPaintDC dc(this);
     PrepareDC(dc);
@@ -113,6 +113,14 @@ void PageInfo::OnPaint(wxPaintEvent &)
 
 
 ControlPanelInfo::ControlPanelInfo(wxWindow *parent) : ControlPanel(parent)
+{
+    wxButton *button = new wxButton(this, wxID_ANY, "Open");
+
+    button->SetPosition({ 10, 10 });
+}
+
+
+CanvasInfo::CanvasInfo(wxWindow *parent) : Canvas(parent)
 {
 
 }

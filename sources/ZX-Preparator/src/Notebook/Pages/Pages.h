@@ -39,14 +39,9 @@ public:
 protected:
 
     TypePage::E type = TypePage::Count;
-    wxFont font;
-    wxDC *hdc = nullptr;
     Canvas *canvas = nullptr;               // For drawing info
     ControlPanel *control_panel = nullptr;  // For settings
-    wxBoxSizer *sizer = nullptr;
 
-    const int margin_x = 10;
-    const int margin_y = 10;
     int dY = 0;
     int sbPPU = 0;                    // Scrollbar pixels for unit
 };
