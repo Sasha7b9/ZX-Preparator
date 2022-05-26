@@ -1,7 +1,6 @@
 // 2022/5/22 10:30:05 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Notebook/Pages/Pages.h"
-#include "Notebook/Canvas.h"
+#include "Notebook/Pages.h"
 #pragma warning(push, 0)
 #include <wx/dcclient.h>
 #include <wx/caret.h>

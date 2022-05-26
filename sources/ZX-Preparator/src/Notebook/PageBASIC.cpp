@@ -1,6 +1,6 @@
 // 2022/05/23 09:52:02 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Notebook/Pages/PageBASIC.h"
+#include "Notebook/PageBASIC.h"
 #include "Utils/Timer.h"
 #include "Frame.h"
 #pragma warning(push, 0)
@@ -19,7 +19,7 @@ void PageBASIC::SetProgram(ProgramBASIC &program)
 }
 
 
-void PageBASIC::OnPaint(wxPaintEvent &)
+void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 {
     TimerMS timer;
 

@@ -1,6 +1,6 @@
 // 2022/05/23 09:52:42 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Notebook/Pages/PageInfo.h"
+#include "Notebook/PageInfo.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #include <wx/dcclient.h>
@@ -123,7 +123,7 @@ ControlPanelInfo::ControlPanelInfo(wxWindow *parent) : ControlPanel(parent)
 }
 
 
-CanvasInfo::CanvasInfo(wxWindow *parent) : Canvas(parent)
+CanvasInfo::CanvasInfo(Page *parent) : Canvas(parent)
 {
 
 }

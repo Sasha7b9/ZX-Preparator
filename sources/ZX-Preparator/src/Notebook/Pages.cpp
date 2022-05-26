@@ -1,7 +1,7 @@
 // 2022/05/23 10:00:20 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Frame.h"
-#include "Notebook/Pages/Pages.h"
+#include "Notebook/Pages.h"
 #pragma warning(push, 0)
 #include <wx/dc.h>
 #include <wx/sizer.h>

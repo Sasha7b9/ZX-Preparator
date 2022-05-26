@@ -1,6 +1,6 @@
 // 2022/05/23 09:51:14 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
-#include "Notebook/Pages/PageASM.h"
+#include "Notebook/PageASM.h"
 #include "Frame.h"
 #include "Utils/Timer.h"
 #pragma warning(push, 0)

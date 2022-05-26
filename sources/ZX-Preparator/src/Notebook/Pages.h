@@ -10,6 +10,9 @@
 #pragma warning(pop)
 
 
+class Canvas;
+
+
 struct TypePage
 {
     enum E

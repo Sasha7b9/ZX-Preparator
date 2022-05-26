@@ -1,12 +1,12 @@
 // 2022/5/22 9:25:12 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Notebook/Notebook.h"
-#include "Notebook/Pages/PageInfo.h"
-#include "Notebook/Pages/PageHEX.h"
-#include "Notebook/Pages/PageBASIC.h"
-#include "Notebook/Pages/PageArrayNumber.h"
-#include "Notebook/Pages/PageArrayCharacter.h"
-#include "Notebook/Pages/PagePureBytes.h"
+#include "Notebook/PageInfo.h"
+#include "Notebook/PageHEX.h"
+#include "Notebook/PageBASIC.h"
+#include "Notebook/PageArrayNumber.h"
+#include "Notebook/PageArrayCharacter.h"
+#include "Notebook/PagePureBytes.h"
 #pragma warning(push, 0)
 #include <wx/file.h>
 #pragma warning(pop)
