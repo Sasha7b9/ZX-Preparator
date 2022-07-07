@@ -8,3 +8,10 @@ class PageArrayNumber : public Page
 public:
     PageArrayNumber(wxNotebook *parent, pchar name) : Page(parent, TypePage::ArrayNumber, name) { }
 };
+
+
+class ControlPanelArrayNumber : public ControlPanel
+{
+public:
+    ControlPanelArrayNumber(wxWindow *);
+};

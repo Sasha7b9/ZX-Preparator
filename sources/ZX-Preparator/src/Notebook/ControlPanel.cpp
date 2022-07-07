@@ -6,6 +6,7 @@
 #include "Notebook/PageHEX.h"
 #include "Notebook/PageASM.h"
 #include "Notebook/PageBASIC.h"
+#include "Notebook/PageArrayNumber.h"
 #pragma warning(push, 0)
 #include <wx/button.h>
 #pragma warning(pop)
@@ -20,10 +21,10 @@ ControlPanel *ControlPanel::Create(Page *page)
 {
     switch (page->GetType())
     {
-        case TypePage::Info:            return new ControlPanelInfo(page);  break;
-        case TypePage::HEX:             return new ControlPanelHEX(page);   break;
-        case TypePage::BASIC:           return new ControlPanelBASIC(page); break;
-        case TypePage::ArrayNumber:     break;
+        case TypePage::Info:            return new ControlPanelInfo(page);          break;
+        case TypePage::HEX:             return new ControlPanelHEX(page);           break;
+        case TypePage::BASIC:           return new ControlPanelBASIC(page);         break;
+        case TypePage::ArrayNumber:     return new ControlPanelArrayNumber(page);   break;
         case TypePage::ArrayCharacter:  break;
         case TypePage::ASM:             return new ControlPanelASM(page);   break;
         case TypePage::PureBytes:       break;
