@@ -15,19 +15,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     SetName(name);
 
     canvas = Canvas::Create(this);
-
-    if (type == TypePage::Info)
-    {
-        control_panel = new ControlPanelInfo(this);
-    }
-    else if (type == TypePage::HEX)
-    {
-        control_panel = new ControlPanelHEX(this);
-    }
-    else
-    {
-        control_panel = new ControlPanel(this);
-    }
+    control_panel = ControlPanel::Create(this);
 
     Bind(wxEVT_SIZE, &Page::OnSizeEvent, this);
 }
@@ -59,7 +47,7 @@ Canvas::Canvas(Page *parent) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER),
     page(parent)
 {
-    SetBackgroundColour(*wxLIGHT_GREY);
+    SetBackgroundColour(*wxWHITE);
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);

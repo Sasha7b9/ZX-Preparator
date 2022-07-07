@@ -10,6 +10,9 @@
 */
 
 
+class Page;
+
+
 class ControlPanel : public wxPanel
 {
 public:
@@ -17,6 +20,8 @@ public:
     static const int WIDTH = 200;
 
     ControlPanel(wxWindow *);
+
+    static ControlPanel *Create(Page *);
 
 private:
 };
