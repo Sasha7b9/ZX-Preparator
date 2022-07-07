@@ -8,6 +8,12 @@
 #pragma warning(pop)
 
 
+CanvasASM::CanvasASM(Page *parent) : Canvas(parent)
+{
+    Bind(wxEVT_PAINT, &CanvasASM::OnEventPaint, this);
+}
+
+
 void CanvasASM::OnEventPaint(wxPaintEvent &)
 {
     TimerMS timer;
@@ -74,4 +80,10 @@ void CanvasASM::DrawLine(int x, int &y, const LineASM &line)
     hdc->DrawText(line.symbols[0].string.c_str(), x, y);
 
     y += dY;
+}
+
+
+ControlPanelASM::ControlPanelASM(wxWindow *parent) : ControlPanel(parent)
+{
+
 }

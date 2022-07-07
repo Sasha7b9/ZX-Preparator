@@ -28,3 +28,10 @@ private:
 
     void DrawLine(int x, int &y, const LineASM &);
 };
+
+
+class ControlPanelASM : public ControlPanel
+{
+public:
+    ControlPanelASM(wxWindow *);
+};

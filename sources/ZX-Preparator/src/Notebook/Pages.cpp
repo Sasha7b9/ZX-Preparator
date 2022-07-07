@@ -66,7 +66,7 @@ Canvas *Canvas::Create(Page *page)
     case TypePage::BASIC:           return new CanvasBASIC(page);   break;
     case TypePage::ArrayNumber:     break;
     case TypePage::ArrayCharacter:  break;
-    case TypePage::ASM:             break;
+    case TypePage::ASM:             return new CanvasASM(page);     break;
     case TypePage::PureBytes:       break;
     case TypePage::Count:           break;
     }
