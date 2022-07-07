@@ -125,5 +125,5 @@ ControlPanelInfo::ControlPanelInfo(wxWindow *parent) : ControlPanel(parent)
 
 CanvasInfo::CanvasInfo(Page *parent) : Canvas(parent)
 {
-
+    Bind(wxEVT_PAINT, &CanvasInfo::OnEventPaint, this);
 }

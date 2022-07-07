@@ -35,7 +35,7 @@ public:
 
     Page(wxNotebook* parent, TypePage::E, pchar name);
 
-    virtual void OnPaint(wxPaintEvent &) {};
+    virtual void OnPaint(wxPaintEvent &);
     void OnSizeEvent(wxSizeEvent&);
 
 protected:

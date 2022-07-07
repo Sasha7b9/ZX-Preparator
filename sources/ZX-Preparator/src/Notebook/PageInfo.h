@@ -9,7 +9,7 @@ class PageInfo : public Page
 public:
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
-    void SetDescriptionTAP(DescriptionTAP&);
+    void SetDescriptionTAP(DescriptionTAP &);
 
     DescriptionTAP descTAP;
 };
@@ -28,5 +28,4 @@ class ControlPanelInfo : public ControlPanel
 {
 public:
     ControlPanelInfo(wxWindow *);
-private:
 };

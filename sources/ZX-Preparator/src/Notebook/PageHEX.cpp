@@ -90,3 +90,15 @@ void CanvasHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y,
         *address = *address + 16;
     }
 }
+
+
+ControlPanelHEX::ControlPanelHEX(wxWindow *parent) : ControlPanel(parent)
+{
+
+}
+
+
+CanvasHEX::CanvasHEX(Page *parent) : Canvas(parent)
+{
+    Bind(wxEVT_PAINT, &CanvasHEX::OnEventPaint, this);
+}

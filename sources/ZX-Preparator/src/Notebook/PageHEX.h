@@ -27,3 +27,10 @@ private:
 
     void WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
 };
+
+
+class ControlPanelHEX : public ControlPanel
+{
+public:
+    ControlPanelHEX(wxWindow *);
+};
