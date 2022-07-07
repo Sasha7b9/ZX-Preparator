@@ -19,6 +19,12 @@ void PageBASIC::SetProgram(ProgramBASIC &program)
 }
 
 
+CanvasBASIC::CanvasBASIC(Page *parent) : Canvas(parent)
+{
+    Bind(wxEVT_PAINT, &CanvasBASIC::OnEventPaint, this);
+}
+
+
 void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 {
     TimerMS timer;

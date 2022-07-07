@@ -30,3 +30,10 @@ private:
 
     void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
 };
+
+
+class ControlPanelBASIC : public ControlPanel
+{
+public:
+    ControlPanelBASIC(wxWindow *);
+};

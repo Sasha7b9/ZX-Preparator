@@ -14,19 +14,18 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
 {
     SetName(name);
 
+    canvas = Canvas::Create(this);
+
     if (type == TypePage::Info)
     {
-        canvas = new CanvasInfo(this);
         control_panel = new ControlPanelInfo(this);
     }
     else if (type == TypePage::HEX)
     {
-        canvas = new CanvasHEX(this);
         control_panel = new ControlPanelHEX(this);
     }
     else
     {
-        canvas = new Canvas(this);
         control_panel = new ControlPanel(this);
     }
 
@@ -67,4 +66,22 @@ Canvas::Canvas(Page *parent) :
 
     dY = font.GetPointSize() + 5;
     sbPPU = dY;
+}
+
+
+Canvas *Canvas::Create(Page *page)
+{
+    switch (page->GetType())
+    {
+    case TypePage::Info:            return new CanvasInfo(page);    break;
+    case TypePage::HEX:             return new CanvasHEX(page);     break;
+    case TypePage::BASIC:           return new CanvasBASIC(page);   break;
+    case TypePage::ArrayNumber:     break;
+    case TypePage::ArrayCharacter:  break;
+    case TypePage::ASM:             break;
+    case TypePage::PureBytes:       break;
+    case TypePage::Count:           break;
+    }
+
+    return new Canvas(page);
 }

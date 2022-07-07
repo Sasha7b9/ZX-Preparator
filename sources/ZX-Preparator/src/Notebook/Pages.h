@@ -38,6 +38,8 @@ public:
     virtual void OnPaint(wxPaintEvent &);
     void OnSizeEvent(wxSizeEvent&);
 
+    TypePage::E GetType() const { return type; }
+
 protected:
 
     TypePage::E type = TypePage::Count;
@@ -52,6 +54,8 @@ public:
     Canvas(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) { };
+
+    static Canvas *Create(Page *);
 
 protected:
 
