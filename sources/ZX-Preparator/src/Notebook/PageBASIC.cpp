@@ -124,3 +124,9 @@ void CanvasBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, boo
 
     x += size.x;
 }
+
+
+ControlPanelBASIC::ControlPanelBASIC(wxWindow *parent) : ControlPanel(parent)
+{
+
+}
