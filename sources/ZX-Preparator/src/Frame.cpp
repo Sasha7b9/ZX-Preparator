@@ -59,7 +59,7 @@ Frame::Frame(const wxString &title)
     menuHelp->Append(wxID_ABOUT);
     menuBar->Append(menuHelp, "Help");
 
-    SetMenuBar(menuBar);
+    wxFrame::SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, &Frame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &Frame::OnOpen, this, wxID_OPEN);
@@ -89,7 +89,7 @@ Frame::Frame(const wxString &title)
 
     notebook->AssignFIle("c:/Temp/_Another Brick on the Wall.tap");
 
-    Maximize(true);
+    wxFrame::Maximize(true);
 }
 
 

@@ -28,7 +28,7 @@ private:
 
     const int width_line_field = 65;
 
-    void WriteText(const wxString &, int &x, int &y, bool fill, bool draw);
+    void WriteText(wxDC *hdc, const wxString &, int &x, int &y, bool fill, bool draw);
 };
 
 

@@ -26,7 +26,7 @@ public:
 
 private:
 
-    void DrawLine(int x, int &y, const LineASM &);
+    void DrawLine(wxDC *hdc, int x, int &y, const LineASM &);
 };
 
 

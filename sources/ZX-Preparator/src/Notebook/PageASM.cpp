@@ -25,12 +25,8 @@ void CanvasASM::OnEventPaint(wxPaintEvent &)
         return;
     }
 
-    static wxSize prev_size { 0, 0 };
-
     wxPaintDC dc(this);
     PrepareDC(dc);
-
-    hdc = &dc;
 
     int x = margin_x;
     int y = margin_y;
@@ -41,14 +37,12 @@ void CanvasASM::OnEventPaint(wxPaintEvent &)
 
     for (LineASM line : program.lines)
     {
-        DrawLine(x, y, line);
+        DrawLine(&dc, x, y, line);
     }
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
-
-    prev_size = GetSize();
 }
 
 
@@ -60,7 +54,7 @@ void PageASM::SetProgram(ProgramASM &_program)
 }
 
 
-void CanvasASM::DrawLine(int x, int &y, const LineASM &line)
+void CanvasASM::DrawLine(wxDC *hdc, int x, int &y, const LineASM &line)
 {
     int x_start = x;
 

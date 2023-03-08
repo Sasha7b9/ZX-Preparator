@@ -16,7 +16,7 @@ Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPos
 {
     pageInfo = new PageInfo(this);
 
-    AddPage(pageInfo, pageInfo->GetName());
+    wxNotebook::AddPage(pageInfo, pageInfo->GetName());
 
 //    Ge
 }

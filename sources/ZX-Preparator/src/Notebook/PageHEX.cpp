@@ -32,8 +32,6 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
     wxPaintDC dc(this);
     PrepareDC(dc);
 
-    hdc = &dc;
-
     dc.SetFont(font);
 
     int x = margin_x;
@@ -61,7 +59,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
             num = (int)(dump.bytes.size() - index);
         }
 
-        WriteBytes(&address, &dump.bytes.data()[index], num, x, y, y > y_min && y < y_max);
+        WriteBytes(&dc, &address, &dump.bytes.data()[index], num, x, y, y > y_min && y < y_max);
     }
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
@@ -72,7 +70,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasHEX::WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
+void CanvasHEX::WriteBytes(wxDC *hdc, uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
 {
     if (num == 16)
     {

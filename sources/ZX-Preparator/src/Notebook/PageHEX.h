@@ -25,7 +25,7 @@ public:
 
 private:
 
-    void WriteBytes(uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
+    void WriteBytes(wxDC *hdc, uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
 };
 
 

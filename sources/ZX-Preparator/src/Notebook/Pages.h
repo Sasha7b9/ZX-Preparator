@@ -60,7 +60,7 @@ public:
 protected:
 
     wxFont  font;
-    wxDC *hdc = nullptr;
+//    wxDC *hdc = nullptr;
     Page *page = nullptr;             // parent
     const int margin_x = 10;
     const int margin_y = 10;

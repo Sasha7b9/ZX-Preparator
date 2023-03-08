@@ -41,8 +41,6 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
     wxPaintDC dc(this);
     PrepareDC(dc);
 
-    hdc = &dc;
-
     dc.SetFont(*wxSWISS_FONT);
     dc.SetPen(*wxGREEN_PEN);
 
@@ -82,7 +80,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
         {
             fill = !fill;
 
-            WriteText(symbol.string, x, y, fill, draw);
+            WriteText(&dc, symbol.string, x, y, fill, draw);
         }
 
         y += font.GetPixelSize().y + 10;
@@ -96,7 +94,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasBASIC::WriteText(const wxString &text, int &x, int &y, bool fill, bool draw)
+void CanvasBASIC::WriteText(wxDC *hdc, const wxString &text, int &x, int &y, bool fill, bool draw)
 {
     wxSize size = hdc->GetTextExtent(text);
 
