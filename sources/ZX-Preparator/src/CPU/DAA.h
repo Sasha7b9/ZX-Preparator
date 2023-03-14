@@ -2,6 +2,13 @@
 #pragma once
 
 
-int DAA_dec(void);
+namespace Decode
+{
+    int DAA(void);
+}
 
-int DAA_run(void);
+
+namespace Run
+{
+    int DAA(void);
+}

@@ -7,7 +7,7 @@
 #include <cstdio>
 
 
-int DAA_dec(void)
+int Decode::DAA(void)
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "DAA");
@@ -15,7 +15,7 @@ int DAA_dec(void)
 }
 
 
-int DAA_run(void)
+int Run::DAA(void)
 {
     const uint8 DAAadjust[4096] =
     {

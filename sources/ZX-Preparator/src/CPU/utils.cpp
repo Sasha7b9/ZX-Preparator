@@ -14,8 +14,8 @@ bool IsEven(uint8 value)
         {
             numOnes++;
         }
-        numOnes >>= 1;
+        value >>= 1;
     }
 
-    return (numOnes / 2) == 0 ? true : false ;
+    return (numOnes & 1) == 0;
 }
