@@ -9,10 +9,10 @@
 
 
 
-static TypeIR typeIR = IR_IX;
+static TypeIR::E typeIR = TypeIR::IX;
 
 
-#define OPERAND (typeIR == IR_IX ? Operand_IX : Operand_IY)
+#define OPERAND (typeIR == TypeIR::IX ? Operand_IX : Operand_IY)
 
 
 
@@ -151,7 +151,7 @@ int SET_B_pIR_D(void)
 #include "FuncThird.h"
 
 
-int RunThridLevel(TypeIR type)
+int RunThridLevel(TypeIR::E type)
 {
     typeIR = type;
 

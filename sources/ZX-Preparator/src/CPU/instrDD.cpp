@@ -223,7 +223,7 @@ int JP_pIX(void)
 
 int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
 {
-    return RunThridLevel(IR_IX);
+    return RunThridLevel(TypeIR::IX);
 
     /*
 #ifdef LISTING

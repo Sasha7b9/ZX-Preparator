@@ -150,8 +150,11 @@ char* QQ_45_Name(uint8 value);
 char* PP_45_Name(uint8 value);
 
 
-typedef enum
+struct TypeIR
 {
-    IR_IX,
-    IR_IY
-} TypeIR;
+    enum E
+    {
+        IX,
+        IY
+    };
+};

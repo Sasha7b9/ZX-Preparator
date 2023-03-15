@@ -5,7 +5,7 @@
 #include "registers.h"
 
 
-int RunThridLevel(TypeIR type);
+int RunThridLevel(TypeIR::E type);
 
 
 int RLC_pIR_D_R(void);
