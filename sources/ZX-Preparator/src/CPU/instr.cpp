@@ -64,6 +64,72 @@ namespace Decode
         sprintf(MNEMONIC, "INC %s", R8_HI_Name(prevPC));
         return -1;
     }
+
+    // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int DEC_R(void)
+    {
+        AddAddress(rPC);
+        sprintf(MNEMONIC, "DEC %s", R8_HI_Name(prevPC));
+        return -1;
+    }
+
+    // 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int LD_R_N(void)
+    {
+        AddAddress(rPC + 1);
+        AddOpcode(RAM8(rPC));
+        TACKTS = 7;
+
+        uint8 valR = prevPC;
+        uint8 N = PCandInc();
+
+        sprintf(MNEMONIC, "LD %s,#%02X", R8_HI_Name(valR), N);
+
+        return -1;
+    }
+
+    // 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int RLCA(void)
+    {
+        AddAddress(rPC);
+        strcpy(MNEMONIC, "RLCA");
+        return -1;
+    }
+
+    int EX_AF_AFalt(void)
+    {
+        AddAddress(rPC);
+        strcpy(MNEMONIC, "EX AF,AF\'");
+        return -1;
+    }
+
+    int ADD_HL_SS(void)
+    {
+        AddAddress(rPC);
+        TACKTS = 11;
+        sprintf(MNEMONIC, "ADD HL,%s", SS_45_Name(prevPC));
+        sprintf(TRANSCRIPT, "HL<-HL+%s", SS_45_Name(prevPC));
+        strcat(FLAGS, "++XXXV0+");
+        return -1;
+    }
+
+    int LD_A_pBC(void)
+    {
+        AddAddress(rPC);
+        sprintf(MNEMONIC, "LD A,[BC]");
+        return -1;
+    }
+
+    int DEC_SS(void)
+    {
+        TACKTS = 6;
+        AddAddress(rPC);
+
+        sprintf(MNEMONIC, "DEC %s", SS_45_Name(prevPC));
+        sprintf(TRANSCRIPT, "%s<-%s-1", SS_45_Name(prevPC), SS_45_Name(prevPC));
+
+        return -1;
+    }
 }
 
 namespace Run
@@ -117,159 +183,79 @@ namespace Run
 
         return 4;
     }
-}
 
+    // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int DEC_R(void)
+    {
+        uint8 before = R8_HI(prevPC);
 
-// 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int DEC_R_dec(void)
-{
-    AddAddress(rPC);
-    sprintf(MNEMONIC, "DEC %s", R8_HI_Name(prevPC));
-    return -1;
-}
+        R8_HI(prevPC) -= 1;
 
+        uint8 after = R8_HI(prevPC);
 
-// 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int DEC_R_run(void)
-{
-    uint8 before = R8_HI(prevPC);
+        // S Z   H  PV N C
+        // + + x + x v 1 .
 
-    R8_HI(prevPC) -= 1;
+        CALC_S(after);
+        CALC_Z(after);
+        CALC_H(before, after);
+        LOAD_V(after == 0);
+        SET_N;
 
-    uint8 after = R8_HI(prevPC);
+        return 4;
+    }
 
-    // S Z   H  PV N C
-    // + + x + x v 1 .
+    // 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int LD_R_N(void)
+    {
+        R8_HI(prevPC) = PCandInc();
 
-    CALC_S(after);
-    CALC_Z(after);
-    CALC_H(before, after);
-    LOAD_V(after == 0);
-    SET_N;
+        return 7;
+    }
 
-    return 4;
-}
+    // 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
+    int RLCA(void)
+    {
+        return RLC(Operand_A);
+    }
 
+    int EX_AF_AFlat(void)
+    {
+        uint8 temp;
 
-// 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int LD_R_N_dec(void)
-{
-    AddAddress(rPC + 1);
-    AddOpcode(RAM8(rPC));
-    TACKTS = 7;
+        EXCH(rA, Aalt);
+        EXCH(rF, RFalt);
 
-    uint8 valR = prevPC;
-    uint8 N = PCandInc();
+        return 4;
 
-    sprintf(MNEMONIC, "LD %s,#%02X", R8_HI_Name(valR), N);
+    }
 
-    return -1;
-}
+    int ADD_HL_SS(void)
+    {
+        rHL += SS_45(prevPC);
 
+        // . . x x x . 0 +
 
-// 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int LD_R_N_run(void)
-{
-    R8_HI(prevPC) = PCandInc();
+        RES_N;
 
-    return 7;
-}
+        // C WARN
 
+        return 11;
+    }
 
-// 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int RLCA_dec(void)
-{
-    AddAddress(rPC);
-    strcpy(MNEMONIC, "RLCA");
-    return -1;
-}
+    int LD_A_pBC(void)
+    {
+        rA = RAM[rBC];
 
+        return 7;
+    }
 
-// 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
-int RLCA_run(void)
-{
-    return RLC(Operand_A);
-}
+    int DEC_SS(void)
+    {
+        SS_45(prevPC) -= 1;
 
-
-int EX_AF_AFalt_dec(void)
-{
-    AddAddress(rPC);
-    strcpy(MNEMONIC, "EX AF,AF\'");
-    return -1;
-}
-
-
-int EX_AF_AFlat_run(void)
-{
-    uint8 temp;
-
-    EXCH(rA, Aalt);
-    EXCH(rF, RFalt);
-
-    return 4;
-
-}
-
-
-int ADD_HL_SS_dec(void)
-{
-    AddAddress(rPC);
-    TACKTS = 11;
-    sprintf(MNEMONIC, "ADD HL,%s", SS_45_Name(prevPC));
-    sprintf(TRANSCRIPT, "HL<-HL+%s", SS_45_Name(prevPC));
-    strcat(FLAGS, "++XXXV0+");
-    return -1;
-}
-
-
-int ADD_HL_SS_run(void)
-{
-    rHL += SS_45(prevPC);
-
-    // . . x x x . 0 +
-
-    RES_N;
-
-    // C WARN
-
-    return 11;
-}
-
-
-int LD_A_pBC_dec(void)
-{
-    AddAddress(rPC);
-    sprintf(MNEMONIC, "LD A,[BC]");
-    return -1;
-}
-
-
-int LD_A_pBC_run(void)
-{
-    rA = RAM[rBC];
-
-    return 7;
-}
-
-
-int DEC_SS_dec(void)
-{
-    TACKTS = 6;
-    AddAddress(rPC);
-
-    sprintf(MNEMONIC, "DEC %s", SS_45_Name(prevPC));
-    sprintf(TRANSCRIPT, "%s<-%s-1", SS_45_Name(prevPC), SS_45_Name(prevPC));
-
-    return -1;
-}
-
-
-int DEC_SS_run(void)
-{
-    SS_45(prevPC) -= 1;
-
-    return 6;
+        return 6;
+    }
 }
 
 
