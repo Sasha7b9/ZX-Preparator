@@ -45,3 +45,11 @@ void Application::OnTimer(wxTimerEvent &)
 {
     Update();
 }
+
+
+int Application::OnExit()
+{
+    delete g_file_config;
+
+    return wxApp::OnExit();
+}
