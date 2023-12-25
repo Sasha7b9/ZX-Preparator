@@ -5,13 +5,7 @@
 #include "Notebook/Notebook.h"
 #include "Notebook/PageInfo.h"
 #include "Notebook/PageBASIC.h"
-#pragma warning (push, 0)
-#include <wx/statline.h>
-#include <wx/file.h>
-#include <wx/wfstream.h>
-#include <wx/textfile.h>
-#include <wx/splitter.h>
-#pragma warning (pop)
+#include "Utils/Configurator.h"
 
 
 Frame *Frame::self = nullptr;
@@ -81,6 +75,13 @@ Frame::Frame(const wxString &title)
     controlDir->Bind(wxEVT_TREE_SEL_CHANGING, &Frame::OnEventTreeSelChanging, this);
     controlDir->SetMaxSize({ 200, 2000 });
 
+    wxString path = Config::ReadString("path_tree");
+
+    if (!path.IsEmpty())
+    {
+        controlDir->SetPath(path);
+    }
+
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->Add(controlDir, 1, wxEXPAND);
     sizer->Add(notebook, 1, wxEXPAND);
@@ -105,6 +106,10 @@ void Frame::CreateFrameToolBar()
 
 void Frame::OnEventTreeItemActivated(wxTreeEvent &event)
 {
+    wxString path = controlDir->GetPath();
+
+    Config::WriteString("path_tree", path);
+
     event.Skip();
 }
 

@@ -1,8 +1,17 @@
 // 2022/04/29 14:52:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable : 4668 5267)
 #include <wx/config.h>
 #include <wx/fileconf.h>
+#include <wx/statline.h>
+#include <wx/file.h>
+#include <wx/wfstream.h>
+#include <wx/textfile.h>
+#include <wx/splitter.h>
+#pragma warning(pop)
+
 
 
 typedef const char        *pchar;

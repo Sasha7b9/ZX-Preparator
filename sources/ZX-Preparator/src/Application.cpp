@@ -2,6 +2,7 @@
 #include "defines.h"
 #include "Application.h"
 #include "Frame.h"
+#include "Utils/Configurator.h"
 
 
 wxIMPLEMENT_APP(Application);
@@ -20,6 +21,8 @@ bool Application::OnInit()
         return false;
 
     g_file_config = new wxFileConfig("", "", file_name_config);
+
+    Config::SetFile("");
 
     // we use a PNG image in our HTML page
     wxImage::AddHandler(new wxPNGHandler);
@@ -49,6 +52,10 @@ void Application::OnTimer(wxTimerEvent &)
 
 int Application::OnExit()
 {
+    wxConfigBase::Get(false)->Flush();
+
+    wxConfigBase::Set(nullptr);
+
     delete g_file_config;
 
     return wxApp::OnExit();
