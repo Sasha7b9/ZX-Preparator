@@ -1,7 +1,9 @@
 // 2022/05/23 16:56:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
+#pragma warning(push, 0)
 #include <vector>
 #include <string>
+#pragma warning(pop)
 
 
 struct Instruction
