@@ -1,4 +1,4 @@
-// 2022/04/29 13:56:43 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+﻿// 2022/04/29 13:56:43 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "defines.h"
 #define WIN32_LEAN_AND_MEAN
@@ -13,6 +13,8 @@ public:
     virtual bool OnInit() wxOVERRIDE;
 
     void OnTimer(wxTimerEvent &);
+
+    static wxString file_name_config;       // Имя файла конфигурации
 
 private:
 
