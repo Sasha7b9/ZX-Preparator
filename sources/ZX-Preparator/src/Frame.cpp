@@ -106,9 +106,7 @@ void Frame::CreateFrameToolBar()
 
 void Frame::OnEventTreeItemActivated(wxTreeEvent &event)
 {
-    wxString path = controlDir->GetPath();
-
-    Config::WriteString("path_tree", path);
+    Config::WriteString("path_tree", controlDir->GetPath());
 
     event.Skip();
 }
@@ -116,6 +114,8 @@ void Frame::OnEventTreeItemActivated(wxTreeEvent &event)
 
 void Frame::OnEventTreeItemKeyDown(wxTreeEvent &event)
 {
+    Config::WriteString("path_tree", controlDir->GetPath());
+
     event.Skip();
 }
 
@@ -126,6 +126,8 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 
     if (wxFile::Exists(file))               // Проверка на то, что это файл, а не каталог
     {
+        Config::WriteString("path_tree", controlDir->GetPath());
+
         notebook->AssignFIle(file);
     }
 
@@ -135,6 +137,8 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 
 void Frame::OnEventTreeSelChanging(wxTreeEvent &event)
 {
+    Config::WriteString("path_tree", controlDir->GetPath());
+
     event.Skip();
 }
 

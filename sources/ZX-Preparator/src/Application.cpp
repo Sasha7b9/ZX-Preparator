@@ -7,7 +7,7 @@
 
 wxIMPLEMENT_APP(Application);
 
-wxString Application::file_name_config(wxGetCwd() + "/CPD-213.conf");
+wxString Application::file_name_config(wxGetCwd() + "/ZX-Preparator.conf");
 
 enum
 {
