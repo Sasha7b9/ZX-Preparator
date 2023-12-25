@@ -12,7 +12,7 @@ Page::Page(wxNotebook *parent, TypePage::E _type, pchar name) :
     wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize),
     type(_type)
 {
-    SetName(name);
+    wxWindowBase::SetName(name);
 
     canvas = Canvas::Create(this);
     control_panel = ControlPanel::Create(this);

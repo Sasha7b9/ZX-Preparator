@@ -117,9 +117,7 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 
 ControlPanelInfo::ControlPanelInfo(wxWindow *parent) : ControlPanel(parent)
 {
-    wxButton *button = new wxButton(this, wxID_ANY, "Open");
-
-    button->SetPosition({ 10, 10 });
+    (new wxButton(this, wxID_ANY, "Open"))->SetPosition({ 10, 10 });
 }
 
 
