@@ -1,5 +1,5 @@
-wxWidgets 3.2.2.1 Release Notes
-===============================
+wxWidgets 3.2.4 Release Notes
+=============================
 
 Welcome to the new stable release of wxWidgets, a free and open source
 cross-platform C++ framework for writing advanced GUI applications using
@@ -16,7 +16,7 @@ more about wxWidgets at:
 
 Documentation is available online at:
 
-* https://docs.wxwidgets.org/3.2.2/
+* https://docs.wxwidgets.org/3.2.4/
 
 wxWidgets sources and binaries for the selected platforms are available for
 download from:
@@ -25,56 +25,36 @@ download from:
 
 or, for a more more permanent but less convenient to use link, from
 
-* https://github.com/wxWidgets/wxWidgets/releases/tag/v3.2.2.1/
+* https://github.com/wxWidgets/wxWidgets/releases/tag/v3.2.4/
 
-Please see https://docs.wxwidgets.org/3.2.2/overview_install.html for full
+Please see https://docs.wxwidgets.org/3.2.4/overview_install.html for full
 installation instructions.
 
 
 
-Changes since 3.2.1
+Changes since 3.2.3
 -------------------
 
-This release comes only a few months after the previous 3.2.1, but contains
-an important number of bug fixes and enhancements, further improving high DPI
-support, including:
+This release comes very soon after 3.2.3 because some of the changes
+in the last release resulted in regressions fixed by this release.
+Notably, 3.2.4 fixes a critical bug which made applications using wxGTK
+but not initializing the GUI to crash (see issue #23981).
 
-- Better window resizing on DPI change in wxMSW.
-- Fix using native icons returned by wxArtProvider.
-- Fix menu items using custom font in high DPI.
-- High resolution icons support in wxGenericTreeCtrl and wxGenericListCtrl.
+Other bug fixes include:
 
-and also improving locale-related code under Mac and Unix systems:
+- Fix regression in wxTranslations::AddCatalog() return value (#24019).
+- Fix possible crash and too high CPU use when using EGL (#24018).
+- Fix losing clipboard contents when clearing a different selection (#23988).
+- Fix possible crash when dragging pages in wxAuiNotebook (#24027).
+- Fix refreshing multiple selection items in generic wxListCtrl.
+- Fix showing windows for background apps under macOS Sonoma (#23893).
 
-- wxUILocale::UseDefault() works for locales using different language and
-  region under Mac and fails when used for unsupported locale under Unix.
-- New wxUILocale::GetSystemLocaleId() allows to retrieve such locales IDs.
-- wxUILocale::GetCurrent() works currently for "C" locale under Mac.
+The only new addition in this release is the possibility to create objects
+of wx legacy "dynamic arrays" class from std::initializer_list<> (#23966).
 
-Some other user-visible enhancements made in this release:
+Please see the full change log for more details:
 
-- Allow selecting and copying text in wxMessageDialog in wxGTK.
-- Improve size and behaviour of in-place editor in wxGenericTreeCtrl.
-- Fix sometimes missing overwrite prompt in "Save" file dialog in wxMSW.
-- Fix glitch in drawing wxStaticBox with a control as label in wxMSW.
-
-There are also some important bug fixes:
-
-- Fix regression in saving TIFF images that could end up truncated.
-- Fix long standing bug in parsing wxHTTP responses.
-- Fix data race when processing events generated in a worker thread.
-- Avoid appending extraneous NUL bytes to wxTextDataObject text in wxMSW.
-- Fix handling of fonts with fractional sizes in wxOSX.
-- Fix resizing wxGLCanvas with EGL and Wayland in wxGTK.
-- Fix display artefacts when using AUI without compositor under X11.
-- Work around crashes when using wxTextCtrl with MinGW TDM 64.
-- Fix for a possible crash when handling menu events under Mac.
-- Third-party libraries have been updated to the latest versions.
-
-All in all, this release includes ~150 fixes from 27 unique contributors,
-please see the full change log for more details:
-
-https://raw.githubusercontent.com/wxWidgets/wxWidgets/v3.2.2.1/docs/changes.txt
+https://raw.githubusercontent.com/wxWidgets/wxWidgets/v3.2.4/docs/changes.txt
 
 This release is API and ABI-compatible with the previous 3.2.x releases, so
 the existing applications don't even need to be rebuilt to profit from all the
@@ -174,4 +154,4 @@ developed by its users and your contributions to it are always welcome!
 
 Have fun!
 
-The wxWidgets Team, February 2023
+The wxWidgets Team, November 2023
