@@ -16,6 +16,8 @@ struct DescriptionTAP
 
     int unused_memory = 0;      // КОличество нераспознанной памяти
 
+    int full_size = 0;          // Количество байт в исходном файле
+
     struct Block
     {
         Block(pchar n, uint8 t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2), name(n) {}

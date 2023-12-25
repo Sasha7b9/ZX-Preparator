@@ -34,6 +34,10 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 
         y += dY;
 
+        dc.DrawText(wxString::Format("Full size %d", descTAP.full_size), x, y);
+
+        y += dY;
+
         if (descTAP.unused_memory)
         {
             dc.DrawText(wxString::Format("!!! WARNING !!! In file discovered %d bytes unused memory", descTAP.unused_memory), x, y);
