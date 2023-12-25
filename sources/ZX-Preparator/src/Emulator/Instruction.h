@@ -1,6 +1,7 @@
 // 2022/05/23 16:56:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-#pragma warning(push, 0)
+#pragma warning(push)
+#pragma warning(disable: 4668)
 #include <vector>
 #include <string>
 #pragma warning(pop)
