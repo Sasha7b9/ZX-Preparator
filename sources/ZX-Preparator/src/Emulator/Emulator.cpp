@@ -1,8 +1,5 @@
-// 2022/05/23 17:19:52 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
-#define WIN32_LEAN_AND_MEAN
-#pragma warning(push, 0)
-#include <Windows.h>
-#pragma warning(pop)
+﻿// 2022/05/23 17:19:52 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+//#define WIN32_LEAN_AND_MEAN
 #include "CPU/registers.h"
 #include "defines.h"
 #include "Emulator/Emulator.h"

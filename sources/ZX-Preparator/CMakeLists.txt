@@ -2,7 +2,7 @@
 
 project (ZX-Preparator)
 
-set(CMAKE_UNITY_BUILD OFF)
+#set(CMAKE_UNITY_BUILD OFF)
 
 include_directories(src/
                     ../ThirdParty/wxWidgets/include/
@@ -17,6 +17,7 @@ if(WIN32)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MP -Wall -std:c++17")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /STACK:10000000")
 
+    add_compile_options(/wd4355)
     add_compile_options(/wd4365)    # 'argument': conversion from 'int' to 'uint', signed/unsigned mismatch
     add_compile_options(/wd4514)
     add_compile_options(/wd4623)
@@ -62,7 +63,7 @@ add_executable(${PROJECT_NAME} ${SRC}
 )
 
 
-target_link_libraries(${PROJECT_NAME} wxbase32ud wxmsw32ud_core)
+target_link_libraries(${PROJECT_NAME} wxbase33ud wxmsw33ud_core)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxbase32ud_vc_custom.dll $(OutputPath) /Y)
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxmsw32ud_core_vc_custom.dll $(OutputPath) /Y)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxbase331ud_vc_custom.dll $(OutputPath) /Y)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND copy ..\\..\\ThirdParty\\lib\\vc_dll\\wxmsw331ud_core_vc_custom.dll $(OutputPath) /Y)
