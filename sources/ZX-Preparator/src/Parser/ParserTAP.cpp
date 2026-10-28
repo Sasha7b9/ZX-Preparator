@@ -1,4 +1,4 @@
-// 2022/05/20 15:48:04 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+п»ї// 2022/05/20 15:48:04 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Parser/ParserTAP.h"
 #include "Emulator/Emulator.h"
@@ -405,11 +405,11 @@ bool BlockTAP::Header::Read()
 
     size = stream.Read16();
 
-    if (size == 19)             // Для заголовка здесь всегда 19
+    if (size == 19)             // Р”Р»СЏ Р·Р°РіРѕР»РѕРІРєР° Р·РґРµСЃСЊ РІСЃРµРіРґР° 19
     {
-        if (Read8() == 0)       // Чтение флага - для заголовка 0
+        if (Read8() == 0)       // Р§С‚РµРЅРёРµ С„Р»Р°РіР° - РґР»СЏ Р·Р°РіРѕР»РѕРІРєР° 0
         {
-            type_data = Read8();
+            type_data = (BlockTAP::Header::TypeData::E)Read8();
 
             if (type_data < 4)
             {
@@ -437,7 +437,7 @@ bool BlockTAP::Header::Read()
     }
     else if (size != 0)
     {
-        type_data = 4;
+        type_data = BlockTAP::Header::TypeData::PURE_BYTES;
         size_data = (uint16)(size - 2);
         valid = true;
     }
@@ -476,7 +476,7 @@ bool BlockTAP::Data::Read(const Header &header)
 
         if (size == header.size_data + 2)
         {
-            if (Read8() == 0xff)        // Для данных должно быть 255
+            if (Read8() == 0xff)        // Р”Р»СЏ РґР°РЅРЅС‹С… РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 255
             {
                 for (int i = 0; i < header.size_data; i++)
                 {

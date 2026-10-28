@@ -1,22 +1,56 @@
-// 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+Ôªø// 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
-#include "Parser/ParserStructures.h"
 #include <vector>
 #include <string>
 
 
 class wxBufferedInputStream;
 class wxDataInputStream;
+struct ProgramBASIC;
+struct ProgramASM;
+
+
+// –û–ø–∏—Å—ã–≤–∞–µ—Ç —ç–ª–µ–º–µ–Ω—Ç –≤ —Å—Ç—Ä–æ–∫–µ
+struct SymbolBASIC
+{
+    SymbolBASIC(const char *symbol) : string(symbol)
+    {}
+
+    std::string string;
+};
+
+
+// –û–ø–∏—Å—ã–≤–∞–µ—Ç —Å—Ç—Ä–æ–∫—É
+struct LineBASIC
+{
+    int number;
+    int size;
+
+    std::vector<SymbolBASIC> symbols;
+};
+
+
+struct DumpHEX
+{
+    void Clear()
+    {
+        bytes.clear();
+    }
+
+    void FillFrom(pchar name_file);
+
+    std::vector<uint8> bytes;
+};
 
 
 struct BlockTAP
 {
     BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
 
-    // ◊ËÚ‡Ú¸ ‰‡ÌÌ˚Â ËÁ ‚ıÓ‰ÌÓ„Ó ÔÓÚÓÍ‡
+    // –ß–∏—Ç–∞—Ç—å –¥–∞–Ω–Ω—ã–µ –∏–∑ –≤—Ö–æ–¥–Ω–æ–≥–æ –ø–æ—Ç–æ–∫–∞
     bool Read();
 
-    // –‡ÒÔ‡ÒËÚ¸ Ò˜ËÚ‡ÌÌ˚Â ‰‡ÌÌ˚Â ‚ Ï‡ÒÒË‚ lines
+    // –†–∞—Å–ø–∞—Ä—Å–∏—Ç—å —Å—á–∏—Ç–∞–Ω–Ω—ã–µ –¥–∞–Ω–Ω—ã–µ –≤ –º–∞—Å—Å–∏–≤ lines
     bool ParseBASIC(ProgramBASIC &);
 
     // Parse machine ocde block to asm program
@@ -59,14 +93,23 @@ struct BlockTAP
             std::memset(file_name, 0, 11);
         }
 
-        uint8 type_data = 0xff;     // “ËÔ ‰‡ÌÌ˚ı, ÒÎÂ‰Û˛˘Ëı Á‡ Á‡„ÓÎÓ‚ÍÓÏ
-                                    // 00 - program
-                                    // 01 - number array
-                                    // 02 - character array
-                                    // 03 - code
-                                    // 04 - pure bytes (bytes without a header)
+        struct TypeData
+        {
+            enum E
+            {
+                BASIC_PROGRAM,
+                NUMBER_ARRAY,
+                CHARACTER_ARRAY,
+                CODE,
+                PURE_BYTES,
+                Undefined = 255
+            };
+        };
+
+        TypeData::E type_data = TypeData::Undefined;
+
         char file_name[11];
-        uint16 size_data = 0;   // ƒÎËÌ‡ ·ÎÓÍ‡ ‰‡ÌÌ˚ı, ÒÎÂ‰Û˛¯Â„Ó Á‡ Á‡„ÓÎÓ‚ÍÓÏ, ·ÂÁ Û˜∏Ú‡ ÙÎ‡„‡ Ë ÍÓÌÚÓÎ¸ÌÓÈ ÒÛÏÏ˚
+        uint16 size_data = 0;   // –î–ª–∏–Ω–∞ –±–ª–æ–∫–∞ –¥–∞–Ω–Ω—ã—Ö, —Å–ª–µ–¥—É—é—à–µ–≥–æ –∑–∞ –∑–∞–≥–æ–ª–æ–≤–∫–æ–º, –±–µ–∑ —É—á—ë—Ç–∞ —Ñ–ª–∞–≥–∞ –∏ –∫–æ–Ω—Ç—Ä–æ–ª—å–Ω–æ–π —Å—É–º–º—ã
 
         uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
                                 // arrays 01, 02 : variable name
@@ -115,6 +158,33 @@ struct FileTAP
     std::vector<BlockTAP> blocks;
 
     DumpHEX dump;
+};
+
+
+struct DescriptionTAP
+{
+    void Clear();
+
+    bool valid = false;
+
+    int numberBlocks = 0;
+
+    int unused_memory = 0;      // –ö–û–ª–∏—á–µ—Å—Ç–≤–æ –Ω–µ—Ä–∞—Å–ø–æ–∑–Ω–∞–Ω–Ω–æ–π –ø–∞–º—è—Ç–∏
+
+    int full_size = 0;          // –ö–æ–ª–∏—á–µ—Å—Ç–≤–æ –±–∞–π—Ç –≤ –∏—Å—Ö–æ–¥–Ω–æ–º —Ñ–∞–π–ª–µ
+
+    struct Block
+    {
+        Block(pchar n, BlockTAP::Header::TypeData::E t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2), name(n)
+        {}
+        BlockTAP::Header::TypeData::E type = BlockTAP::Header::TypeData::Undefined;
+        uint16 size = 0;
+        uint16 param1 = 0;
+        uint16 param2 = 0;
+        std::string name;
+    };
+
+    std::vector<Block> blocks;
 };
 
 
