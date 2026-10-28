@@ -26,7 +26,7 @@ void Notebook::RemoveAllPages()
 {
     if (pages.size())
     {
-        for (uint i = pages.size(); i > 0; i--)
+        for (size_t i = pages.size(); i > 0; i--)
         {
             DeletePage(i);
         }

@@ -325,7 +325,7 @@ bool ParserTAP::Execute(pchar fileName)
 
     file.dump.FillFrom(fileName);
 
-    desc.full_size = file.dump.bytes.size();
+    desc.full_size = (int)file.dump.bytes.size();
 
     wxFileInputStream file_input(fileName);
 

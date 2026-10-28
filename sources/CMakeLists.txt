@@ -5,6 +5,8 @@ project (ZX-Preparator)
 
 set(CMAKE_UNITY_BUILD ON)
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+
 set (TARGET_NAME ZX-Preparator)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL Debug)

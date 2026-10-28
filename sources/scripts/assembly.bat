@@ -21,7 +21,7 @@ cmake ../CMakeLists.txt -B../generated/ZX-Preparator -G "Visual Studio 18 2026" 
 :BUILDING
 if %isBuild%==0 goto EXIT
 @echo on
-MSBuild.exe ../generated/ZX-Preparator/ZX-Preparator.sln -clp:ErrorsOnly;WarningsOnly -nologo /m
+MSBuild.exe ../generated/ZX-Preparator/ZX-Preparator.slnx -clp:ErrorsOnly;WarningsOnly -nologo /m
 @echo off
 goto EXIT
 
