@@ -165,8 +165,6 @@ void Frame::OnQuit(wxCommandEvent &WXUNUSED(event))
     self = nullptr;
 
     Close(true);
-
-    OnClose();
 }
 
 
@@ -175,8 +173,6 @@ void Frame::OnCloseWindow(wxCloseEvent &event)
     self = nullptr;
 
     event.Skip();
-
-    OnClose();
 }
 
 

@@ -47,7 +47,7 @@ Canvas::Canvas(Page *parent) :
     wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER),
     page(parent)
 {
-    SetBackgroundColour(*wxWHITE);
+    wxWindowBase::SetBackgroundColour(*wxWHITE);
 
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);

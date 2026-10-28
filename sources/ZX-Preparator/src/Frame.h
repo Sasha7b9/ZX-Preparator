@@ -39,6 +39,4 @@ private:
     void OnEventTreeSelChanged(wxTreeEvent &);
     // Вызывается после снятия выделения итема
     void OnEventTreeSelChanging(wxTreeEvent &);
-
-    void OnClose();
 };

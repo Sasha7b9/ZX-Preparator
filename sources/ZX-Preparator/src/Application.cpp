@@ -32,21 +32,7 @@ bool Application::OnInit()
 
     frame->Show();
 
-    Init();
-
-    Bind(wxEVT_TIMER, &Application::OnTimer, this, TIMER_ID);
-
-    timer.SetOwner(this, TIMER_ID);
-
-    timer.Start();
-
     return true;
-}
-
-
-void Application::OnTimer(wxTimerEvent &)
-{
-    Update();
 }
 
 

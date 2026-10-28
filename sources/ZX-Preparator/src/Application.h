@@ -12,17 +12,9 @@ class Application : public wxApp
 public:
     virtual bool OnInit() wxOVERRIDE;
 
-    void OnTimer(wxTimerEvent &);
-
     static wxString file_name_config;       // Имя файла конфигурации
 
 private:
-
-    wxTimer timer;
-
-    void Init();
-
-    void Update();
 
     virtual int OnExit() wxOVERRIDE;
 };
