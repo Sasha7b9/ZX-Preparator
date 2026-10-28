@@ -411,7 +411,7 @@ bool BlockTAP::Header::Read()
         {
             type_data = (BlockTAP::Header::TypeData::E)Read8();
 
-            if (type_data < 4)
+            if (type_data < BlockTAP::Header::TypeData::PURE_BYTES)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -454,7 +454,7 @@ bool BlockTAP::Data::Read(const Header &header)
 
     data.clear();
 
-    if (header.type_data == 4)
+    if (header.type_data == BlockTAP::Header::TypeData::PURE_BYTES)
     {
         size = header.size_data;
 
@@ -521,7 +521,7 @@ bool BlockTAP::ParseBASIC(ProgramBASIC &program)
 {
     program.Clear();
 
-    if (header.type_data == 0)
+    if (header.type_data == BlockTAP::Header::TypeData::BASIC_PROGRAM)
     {
         while (data.data.size())
         {
@@ -539,7 +539,7 @@ bool BlockTAP::ParseASM(ProgramASM &program)
 {
     program.Clear();
 
-    if (header.type_data == 3)
+    if (header.type_data == BlockTAP::Header::TypeData::CODE)
     {
         InfoStruct params;
 

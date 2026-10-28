@@ -58,11 +58,11 @@ struct BlockTAP
 
     bool IsValid() const;
 
-    bool IsBASIC()          const { return header.type_data == 0; }
-    bool IsArrayNumber()    const { return header.type_data == 1; }
-    bool IsArrayCharacter() const { return header.type_data == 2; }
-    bool IsASM()            const { return header.type_data == 3; }
-    bool IsPureBytes()      const { return header.type_data == 4; }
+    bool IsBASIC()          const { return header.type_data == Header::TypeData::BASIC_PROGRAM; }
+    bool IsArrayNumber()    const { return header.type_data == Header::TypeData::NUMBER_ARRAY; }
+    bool IsArrayCharacter() const { return header.type_data == Header::TypeData::CHARACTER_ARRAY; }
+    bool IsASM()            const { return header.type_data == Header::TypeData::CODE; }
+    bool IsPureBytes()      const { return header.type_data == Header::TypeData::PURE_BYTES; }
 
     struct CommonStruct
     {
