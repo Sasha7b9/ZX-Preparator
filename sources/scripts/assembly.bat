@@ -15,7 +15,7 @@ cd ..
 rmdir generated\ZX-Preparator /s /q
 cd scripts
 @echo on
-cmake ../CMakeLists.txt -B../generated/ZX-Preparator -G "Visual Studio 17 2022" -A Win32 -DCMAKE_BUILD_TYPE=Debug
+cmake ../CMakeLists.txt -B../generated/ZX-Preparator -G "Visual Studio 18 2026" -A x64 -DCMAKE_BUILD_TYPE=Debug
 @echo off
 
 :BUILDING

@@ -4,9 +4,11 @@ project (ZX-Preparator)
 
 #set(CMAKE_UNITY_BUILD OFF)
 
-include_directories(src/
-                    ../ThirdParty/wxWidgets/include/
-                    ../generated/ThirdParty/lib/vc_dll/mswud/)
+include_directories(
+    src/
+    ../ThirdParty/wxWidgets/include/
+    ../generated/ThirdParty/lib/vc_dll/mswud/
+)
 
 link_directories(../generated/ThirdParty/lib/vc_dll)
 
@@ -34,14 +36,14 @@ else()
 
 endif()
 
-file(GLOB SRC            src/*.*)
-file(GLOB COMPUTER       src/Computer/*.*)
-file(GLOB CPU            src/CPU/*.*)
-file(GLOB EMULATOR       src/Emulator/*.*)
-file(GLOB DISPLAY        src/Display/*.*)
-file(GLOB NOTEBOOK       src/Notebook/*.*)
-file(GLOB PARSER         src/Parser/*.*)
-file(GLOB UTILS          src/Utils/*.*)
+file(GLOB SRC            ./src/*.*)
+file(GLOB COMPUTER       ./src/Computer/*.*)
+file(GLOB CPU            ./src/CPU/*.*)
+file(GLOB EMULATOR       ./src/Emulator/*.*)
+file(GLOB DISPLAY        ./src/Display/*.*)
+file(GLOB NOTEBOOK       ./src/Notebook/*.*)
+file(GLOB PARSER         ./src/Parser/*.*)
+file(GLOB UTILS          ./src/Utils/*.*)
 
 source_group(src            FILES ${SRC})
 source_group(Computer       FILES ${COMPUTER})
@@ -52,14 +54,15 @@ source_group(Notebook       FILES ${NOTEBOOK})
 source_group(Parser         FILES ${PARSER})
 source_group(Utils          FILES ${UTILS})
 
-add_executable(${PROJECT_NAME} ${SRC}
-                               ${COMPUTER}
-                               ${CPU}
-                               ${EMULATOR}
-                               ${DISPLAY}
-                               ${NOTEBOOK}
-                               ${PARSER}
-                               ${UTILS}
+add_executable(${PROJECT_NAME}
+    ${SRC}
+    ${COMPUTER}
+    ${CPU}
+    ${EMULATOR}
+    ${DISPLAY}
+    ${NOTEBOOK}
+    ${PARSER}
+    ${UTILS}
 )
 
 
