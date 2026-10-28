@@ -4,6 +4,13 @@
 #include <string>
 
 
+/*
+
+    Описание : https://sinclair.wiki.zxnet.co.uk/wiki/TAP_format
+
+*/
+
+
 class wxBufferedInputStream;
 class wxDataInputStream;
 struct ProgramBASIC;
