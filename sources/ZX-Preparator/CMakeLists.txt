@@ -34,6 +34,7 @@ if(WIN32)
         /wd5027
         /wd5039
         /wd5045
+        /wd5267     # definition of implicit copy constructor for 'Block' is deprecated because it has a user-provided destructor
     )
 else()
 

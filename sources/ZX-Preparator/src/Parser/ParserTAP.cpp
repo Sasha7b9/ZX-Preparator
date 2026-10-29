@@ -335,13 +335,12 @@ bool ParserTAP::Execute(pchar fileName)
 
     wxDataInputStream data(stream);
 
-    BlockTAP block(data);
-
     while (data.IsOk())
     {
+        BlockTAP block(data);
         if (block.Read())
         {
-            file.AppendBlock(block);
+            file.AppendBlock(std::make_shared<BlockTAP>(std::move(block)));
             DescriptionTAP::Block descBlock(block.header.file_name, block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
             desc.numberBlocks++;
             desc.blocks.push_back(descBlock);

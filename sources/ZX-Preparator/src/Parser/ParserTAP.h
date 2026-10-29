@@ -11,7 +11,7 @@ struct BlockTAP : public Block
     BlockTAP(wxDataInputStream &stream) : Block(stream), header(this), data(this) {}
 
     // Читать данные из входного потока
-    bool Read();
+    virtual bool Read() override;
 
     // Распарсить считанные данные в массив lines
     bool ParseBASIC(ProgramBASIC &);
@@ -113,19 +113,20 @@ private:
 };
 
 
-struct FileTAP
+struct FileTAP : public File
 {
     void Clear();
 
-    void AppendBlock(BlockTAP &block) { blocks.push_back(block); }
+    void AppendBlock(std::shared_ptr<BlockTAP> block)
+    {
+        blocks.push_back(std::move(block));
+    }
 
     int NumberBlocks() const { return (int)blocks.size(); }
 
-    BlockTAP &GetBlock(int index) { return blocks[(uint)index]; }
+    std::shared_ptr<BlockTAP> GetBlock(int index) { return blocks[(uint)index]; }
 
-    std::vector<BlockTAP> blocks;
-
-    DumpHEX dump;
+    std::vector<std::shared_ptr<BlockTAP>> blocks;
 };
 
 

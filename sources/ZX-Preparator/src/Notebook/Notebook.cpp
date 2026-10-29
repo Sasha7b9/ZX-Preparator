@@ -74,41 +74,41 @@ void Notebook::AssignFIle(const wxString &file_name)
         int num_ASM = 1;
         int num_pure = 1;
 
-        for (BlockTAP block : parser.file.blocks)
+        for (auto block : parser.file.blocks)
         {
-            if (block.IsBASIC())
+            if (block->IsBASIC())
             {
                 PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
 
                 ProgramBASIC program;
 
-                block.ParseBASIC(program);
+                block->ParseBASIC(program);
 
                 page->SetProgram(program);
 
                 AppendPage(page);
             }
-            else if (block.IsArrayNumber())
+            else if (block->IsArrayNumber())
             {
                 AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
             }
-            else if (block.IsArrayCharacter())
+            else if (block->IsArrayCharacter())
             {
                 AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
             }
-            else if (block.IsASM())
+            else if (block->IsASM())
             {
                 PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
 
                 ProgramASM program;
 
-                block.ParseASM(program);
+                block->ParseASM(program);
 
                 page->SetProgram(program);
 
                 AppendPage(page);
             }
-            else if (block.IsPureBytes())
+            else if (block->IsPureBytes())
             {
                 AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter++, num_pure++)));
             }

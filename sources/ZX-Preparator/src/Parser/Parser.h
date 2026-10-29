@@ -9,6 +9,17 @@
 struct Block
 {
     Block(wxDataInputStream &_stream) : stream(_stream) { }
+    virtual ~Block() = default;
+
+    virtual bool Read() = 0;
 
     wxDataInputStream &stream;
+};
+
+
+struct File
+{
+    virtual ~File() = default;
+
+    DumpHEX dump;
 };
