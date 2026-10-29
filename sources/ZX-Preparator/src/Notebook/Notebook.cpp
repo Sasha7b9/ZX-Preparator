@@ -30,6 +30,8 @@ Notebook::Notebook(wxWindow *parent) :
 
 void Notebook::RemoveAllPages()
 {
+    Unbind(wxEVT_NOTEBOOK_PAGE_CHANGED, &Notebook::OnEventNotebookPageChanged, this);
+
     if (pages.size())
     {
         for (size_t i = pages.size(); i > 0; i--)
@@ -39,6 +41,8 @@ void Notebook::RemoveAllPages()
 
         pages.clear();
     }
+
+    Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &Notebook::OnEventNotebookPageChanged, this);
 }
 
 
@@ -236,6 +240,11 @@ void NotebookHistory::RestoreState()
         {
             if (notebook->GetPageText(i) == name_page)
             {
+                if (i == 0)
+                {
+                    i = i;
+                }
+
                 notebook->SetSelection(static_cast<int>(i));
 
                 break;
@@ -247,7 +256,7 @@ void NotebookHistory::RestoreState()
 
 void Notebook::OnEventNotebookPageChanged(wxBookCtrlEvent &event)
 {
-    history.SaveState();
-
     event.Skip();
+
+    history.SaveState();
 }

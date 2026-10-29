@@ -353,9 +353,3 @@ char BlockTAP::Data::GetChar()
 {
     return (char)GetData8();
 }
-
-
-bool Description::IsTAP() const
-{
-    return dynamic_cast<const DescriptionTAP *>(this) != nullptr;
-}

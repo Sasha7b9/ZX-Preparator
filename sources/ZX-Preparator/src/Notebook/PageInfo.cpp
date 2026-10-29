@@ -2,6 +2,7 @@
 #include "defines.h"
 #include "Notebook/PageInfo.h"
 #include "Parser/ParserTAP.h"
+#include "Parser/ParserHEX.h"
 #pragma warning(push, 0)
     #include <wx/dc.h>
     #include <wx/dcclient.h>
@@ -27,18 +28,18 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
     int x = 10;
     int y = 10;
 
-    auto _desc = ((PageInfo *)page)->desc;
+    auto desc = ((PageInfo *)page)->desc;
 
-    if (!_desc)
+    if (!desc)
     {
         dc.DrawText("Is not valid file", x, y);
 
         return;
     }
 
-    if (_desc->IsTAP() && _desc->valid)
+    if (desc->IsTAP() && desc->valid)
     {
-        auto descTAP = std::dynamic_pointer_cast<DescriptionTAP>(_desc);
+        auto descTAP = std::dynamic_pointer_cast<DescriptionTAP>(desc);
 
         dc.DrawText("Is TAP file", x, y);
 
@@ -121,6 +122,16 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
                 y += dY;
             }
         }
+    }
+    else if (desc->IsHEX() && desc->valid)
+    {
+        auto descTAP = std::dynamic_pointer_cast<DescriptionHEX>(desc);
+
+        dc.DrawText("Unsupported file", x, y);
+
+        y += dY;
+
+        dc.DrawText(wxString::Format("Full size %d", descTAP->full_size), x, y);
     }
 }
 

@@ -48,6 +48,7 @@ struct File
 struct Description
 {
     bool IsTAP() const;
+    bool IsHEX() const;
 
     virtual ~Description() = default;
 
