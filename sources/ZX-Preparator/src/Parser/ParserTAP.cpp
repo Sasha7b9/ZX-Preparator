@@ -14,6 +14,8 @@
 
 
 /*
+    Описание : https://sinclair.wiki.zxnet.co.uk/wiki/TAP_format
+
     Then raw tape data follows, including the flag andchecksum bytes.The checksum is the bitwise XOR of all bytes including the flag byte.
     For example, when you execute the line SAVE "ROM" CODE 0, 2 this will result :
 
@@ -635,3 +637,11 @@ void FileTAP::Clear()
     blocks.clear();
     dump.Clear();
 };
+
+
+void DescriptionTAP::Clear()
+{
+    valid = false;
+
+    numberBlocks = 0;
+}

@@ -1,14 +1,8 @@
 ﻿// 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
+#include "Parser/StructuresZX.h"
 #include <vector>
 #include <string>
-
-
-/*
-
-    Описание : https://sinclair.wiki.zxnet.co.uk/wiki/TAP_format
-
-*/
 
 
 class wxBufferedInputStream;
@@ -16,38 +10,6 @@ class wxDataInputStream;
 struct ProgramBASIC;
 struct ProgramASM;
 
-
-// Описывает элемент в строке
-struct SymbolBASIC
-{
-    SymbolBASIC(const char *symbol) : string(symbol)
-    {}
-
-    std::string string;
-};
-
-
-// Описывает строку
-struct LineBASIC
-{
-    int number;
-    int size;
-
-    std::vector<SymbolBASIC> symbols;
-};
-
-
-struct DumpHEX
-{
-    void Clear()
-    {
-        bytes.clear();
-    }
-
-    void FillFrom(pchar name_file);
-
-    std::vector<uint8> bytes;
-};
 
 
 struct BlockTAP
