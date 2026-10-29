@@ -68,15 +68,11 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 
     if (id == Type::ID::_10_Standard_speed_data_block)
     {
-        BlockTZX *bl = new BlockTZX_10(stream);
-
-        return (BlockTZX *)bl->Read();
+        return (BlockTZX *)((new BlockTZX_10(stream))->Read());
     }
     else if (id == Type::ID::_30_Text_description)
     {
-        BlockTZX *bl = new BlockTZX_30(stream);
-
-        return (BlockTZX *)bl->Read();
+        return (BlockTZX *)((new BlockTZX_30(stream))->Read());
     }
 
     return nullptr;
