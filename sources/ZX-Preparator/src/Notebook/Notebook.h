@@ -14,7 +14,8 @@ public:
 
     Notebook(wxWindow *parent);
 
-    void AssignFIle(const wxString &file_name);
+    // Применяем/парсим файл
+    void AssignFile(const wxString &file_name);
 
     PageInfo *GetPageInfo()
     {

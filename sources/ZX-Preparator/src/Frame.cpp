@@ -88,7 +88,7 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-    notebook->AssignFIle("c:/Temp/_Another Brick on the Wall.tap");
+    notebook->AssignFile("c:/Temp/_Another Brick on the Wall.tap");
 
     wxFrame::Maximize(true);
 }
@@ -128,7 +128,7 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
     {
         Config::WriteString("path_tree", controlDir->GetPath());
 
-        notebook->AssignFIle(file);
+        notebook->AssignFile(file);
     }
 
     event.Skip();

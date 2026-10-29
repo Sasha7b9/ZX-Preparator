@@ -44,7 +44,7 @@ void Notebook::AppendPage(Page *page)
 }
 
 
-void Notebook::AssignFIle(const wxString &file_name)
+void Notebook::AssignFile(const wxString &file_name)
 {
     if (!wxFile::Exists(file_name))
     {
