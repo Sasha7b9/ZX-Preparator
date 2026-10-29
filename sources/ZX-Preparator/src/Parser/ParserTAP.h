@@ -5,13 +5,6 @@
 #include <string>
 
 
-class wxBufferedInputStream;
-class wxDataInputStream;
-struct ProgramBASIC;
-struct ProgramASM;
-
-
-
 struct BlockTAP
 {
     BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
