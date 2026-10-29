@@ -7,6 +7,46 @@
 */
 
 
+struct SymbolASM
+{
+    SymbolASM(pchar symbol) : string(symbol)
+    {}
+
+    SymbolASM(std::string symbol) : string(symbol)
+    {}
+
+    std::string string;
+};
+
+
+struct LineASM
+{
+    LineASM(std::string &mnemonic)
+    {
+        symbols.emplace_back(SymbolASM(mnemonic));
+    }
+
+    std::vector<SymbolASM> symbols;
+
+    std::vector<uint8> codes;
+
+    int address = -1;
+};
+
+
+struct ProgramASM
+{
+    void Clear()
+    {
+        lines.clear();
+    }
+
+    std::vector<LineASM> lines;
+
+    std::vector<LineASM> bad_lines;
+};
+
+
 // Описывает элемент в строке
 struct SymbolBASIC
 {
@@ -24,6 +64,17 @@ struct LineBASIC
     int size;
 
     std::vector<SymbolBASIC> symbols;
+};
+
+
+struct ProgramBASIC
+{
+    void Clear()
+    {
+        lines.clear();
+    }
+
+    std::vector<LineBASIC> lines;
 };
 
 

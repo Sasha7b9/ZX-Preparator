@@ -2,7 +2,7 @@
 #pragma once
 #include "Emulator/Instruction.h"
 #include "Emulator/Emulator.h"
-#include "Parser/ParserStructures.h"
+#include "Parser/StructuresZX.h"
 
 
 class StorageInstructions
