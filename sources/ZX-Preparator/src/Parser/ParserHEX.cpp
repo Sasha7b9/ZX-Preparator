@@ -3,7 +3,24 @@
 #include "Parser/ParserHEX.h"
 
 
-bool ParserHEX::Execute(pchar)
+bool ParserHEX::Execute(pchar fileName)
 {
-    return false;
+    desc = std::make_shared<DescriptionHEX>();
+
+    file.Clear();
+
+    if (!wxFile::Exists(fileName))
+    {
+        return false;
+    }
+
+    file.dump.FillFrom(fileName);
+
+    desc->full_size = (int)file.dump.bytes.size();
+
+    desc->unused_memory = 0;
+
+    desc->valid = (desc->full_size != 0);
+
+    return desc->valid;
 }

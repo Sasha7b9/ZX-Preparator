@@ -353,11 +353,3 @@ char BlockTAP::Data::GetChar()
 {
     return (char)GetData8();
 }
-
-
-void DescriptionTAP::Clear()
-{
-    valid = false;
-
-    numberBlocks = 0;
-}
