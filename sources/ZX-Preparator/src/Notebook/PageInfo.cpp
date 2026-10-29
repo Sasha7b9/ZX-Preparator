@@ -50,7 +50,7 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasInfo::Writer::DrawNextString(const wxString &line, int dx)
+void Writer::DrawNextString(const wxString &line, int dx)
 {
     dc->DrawText(line, x + dx * 40, y);
 
@@ -127,13 +127,24 @@ void CanvasInfo::DrawHEX(std::shared_ptr<File> file)
 }
 
 
-void CanvasInfo::DrawTZX(std::shared_ptr<File> desc)
+void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
 {
-    auto fileTZX = std::dynamic_pointer_cast<FileTZX>(desc);
+    auto file = std::dynamic_pointer_cast<FileTZX>(_file);
 
     writer.DrawNextString("Is TZX file");
 
-    writer.DrawNextString(wxString::Format("Full size %d", fileTZX->FullSize()));
+    writer.DrawNextString(wxString::Format("Full size %d", file->FullSize()));
+
+    writer.DrawNextString(wxString::Format("Number blocks : %d", file->NumberBlocks()));
+
+    for (uint i = 0; i < file->FullSize(); i++)
+    {
+        auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[i]);
+
+        writer.DrawNextString(wxString::Format("Block %u:", i), 1);
+
+        block->Write(writer, 2);
+    }
 }
 
 

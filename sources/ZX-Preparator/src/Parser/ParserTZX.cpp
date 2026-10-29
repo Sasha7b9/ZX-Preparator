@@ -122,3 +122,15 @@ bool HeaderTZX::IsValid() const
 
     return true;
 }
+
+
+void BlockTZX::WriteType(Writer &writer, const wxString &type, int dx)
+{
+    writer.DrawNextString(wxString::Format("Type : %s", type), dx);
+}
+
+
+void BlockTZX_30::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Text description", dx);
+}

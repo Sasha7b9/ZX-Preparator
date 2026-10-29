@@ -3,6 +3,9 @@
 #include "Parser/Parser.h"
 
 
+struct Writer;
+
+
 struct HeaderTZX
 {
     char signature[7];          // TZX signature = "ZXTape!"
@@ -23,6 +26,13 @@ struct BlockTZX : public Block
     }
 
     virtual bool Read() override;
+
+    virtual void Write(Writer &, int /*dx*/)
+    {}
+
+protected:
+
+    void WriteType(Writer &, const wxString &type, int dx);
 
 private:
 
@@ -67,6 +77,8 @@ struct BlockTZX_30 : public BlockTZX
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream) { }
 
     virtual bool Read() override;
+
+    virtual void Write(Writer &, int dx) override;
 
 private:
 

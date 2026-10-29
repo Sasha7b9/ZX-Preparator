@@ -4,6 +4,27 @@
 #include "Parser/Parser.h"
 
 
+struct Writer
+{
+    void Set(wxPaintDC *_dc, int _x, int _y, int _dY)
+    {
+        dc = _dc;
+        x = _x;
+        y = _y;
+        dY = _dY;
+    }
+
+    void DrawNextString(const wxString &, int dx = 0);
+
+private:
+
+    wxPaintDC *dc;
+    int x;
+    int y;
+    int dY;
+};
+
+
 class PageInfo : public Page
 {
 public:
@@ -29,26 +50,6 @@ private:
     void DrawTAP(std::shared_ptr<File>);
     void DrawTZX(std::shared_ptr<File>);
     void DrawHEX(std::shared_ptr<File>);
-
-    struct Writer
-    {
-        void Set(wxPaintDC *_dc, int _x, int _y, int _dY)
-        {
-            dc = _dc;
-            x = _x;
-            y = _y;
-            dY = _dY;
-        }
-
-        void DrawNextString(const wxString &, int dx = 0);
-
-    private:
-
-        wxPaintDC *dc;
-        int x;
-        int y;
-        int dY;
-    };
 
     Writer writer;
 };
