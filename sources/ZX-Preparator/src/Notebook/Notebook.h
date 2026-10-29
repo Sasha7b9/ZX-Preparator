@@ -3,6 +3,7 @@
 #include "Notebook/PageInfo.h"
 #include "Parser/ParserTAP.h"
 #include "Parser/ParserTZX.h"
+#include "Parser/ParserHEX.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
     #include <wx/wx.h>
@@ -32,6 +33,8 @@ private:
     void FillTAP(ParserTAP &);
 
     void FillTZX(ParserTZX &);
+
+    void FillHEX(ParserHEX &);
 
     PageInfo *GetPageInfo()
     {

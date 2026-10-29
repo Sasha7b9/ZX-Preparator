@@ -9,6 +9,7 @@
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
 #include "Parser/ParserTZX.h"
+#include "Parser/ParserHEX.h"
 #pragma warning(push, 0)
     #include <wx/file.h>
 #pragma warning(pop)
@@ -73,6 +74,12 @@ void Notebook::AssignFile(const wxString &file_name)
 
         return;
     }
+
+    ParserHEX hex;
+
+    hex.Execute(file_name);
+
+    FillHEX(hex);
 }
 
 
@@ -157,6 +164,12 @@ void Notebook::FillTAP(ParserTAP &parser)
 
 
 void Notebook::FillTZX(ParserTZX &)
+{
+
+}
+
+
+void Notebook::FillHEX(ParserHEX &)
 {
 
 }
