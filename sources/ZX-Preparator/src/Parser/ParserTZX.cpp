@@ -1,6 +1,7 @@
 // 2026/10/29 09:12:28 (c) Aleksandr Shevchenko e-mail : Sasha7b9@gmail.com
 #include "defines.h"
 #include "Parser/ParserTZX.h"
+#include "Notebook/PageInfo.h"
 #pragma warning (push, 0)
     #include <wx/statline.h>
     #include <wx/statline.h>
@@ -126,7 +127,7 @@ bool HeaderTZX::IsValid() const
 
 void BlockTZX::WriteType(Writer &writer, const wxString &type, int dx)
 {
-    writer.DrawNextString(wxString::Format("Type : %s", type), dx);
+    writer.DrawNextString(wxString::Format("Type : %s", type.c_str().AsChar()), dx);
 }
 
 
