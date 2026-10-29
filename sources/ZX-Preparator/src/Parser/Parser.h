@@ -47,6 +47,8 @@ struct File
 
 struct Description
 {
+    bool IsTAP() const;
+
     virtual ~Description() = default;
 
     bool valid = false;

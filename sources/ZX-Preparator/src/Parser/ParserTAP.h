@@ -121,8 +121,8 @@ struct FileTAP : public File
 };
 
 
-struct DescriptionTAP : public Description
-{
+    struct DescriptionTAP : public Description
+    {
     struct Block
     {
         Block(pchar n, BlockTAP::Header::TypeData::E t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2), name(n)

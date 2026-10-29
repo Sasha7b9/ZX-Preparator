@@ -27,30 +27,39 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
     int x = 10;
     int y = 10;
 
-    auto desc = std::dynamic_pointer_cast<DescriptionTAP>(((PageInfo *)page)->desc);
+    auto _desc = ((PageInfo *)page)->desc;
 
-    if (desc && desc->valid)
+    if (!_desc)
     {
+        dc.DrawText("Is not valid file", x, y);
+
+        return;
+    }
+
+    if (_desc->IsTAP() && _desc->valid)
+    {
+        auto descTAP = std::dynamic_pointer_cast<DescriptionTAP>(_desc);
+
         dc.DrawText("Is TAP file", x, y);
 
         y += dY;
 
-        dc.DrawText(wxString::Format("Full size %d", desc->full_size), x, y);
+        dc.DrawText(wxString::Format("Full size %d", descTAP->full_size), x, y);
 
         y += dY;
 
-        if (desc->unused_memory)
+        if (descTAP->unused_memory)
         {
-            dc.DrawText(wxString::Format("!!! WARNING !!! In file discovered %d bytes unused memory", desc->unused_memory), x, y);
+            dc.DrawText(wxString::Format("!!! WARNING !!! In file discovered %d bytes unused memory", descTAP->unused_memory), x, y);
 
             y += dY;
         }
 
-        dc.DrawText(wxString::Format("Number blocks : %d", desc->numberBlocks), x, y);
+        dc.DrawText(wxString::Format("Number blocks : %d", descTAP->numberBlocks), x, y);
 
         y += dY;
 
-        for (uint i = 0; i < (uint)desc->numberBlocks; i++)
+        for (uint i = 0; i < (uint)descTAP->numberBlocks; i++)
         {
             dc.DrawText(wxString::Format("Block %d:", i + 1), x + 20, y);
 
@@ -65,7 +74,7 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
                 "PURE BYTES (bytes without header)"
             };
 
-            DescriptionTAP::Block &block = desc->blocks[i];
+            DescriptionTAP::Block &block = descTAP->blocks[i];
 
             if (block.type < 4)
             {
@@ -112,10 +121,6 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
                 y += dY;
             }
         }
-    }
-    else
-    {
-        dc.DrawText("Is not valid file", x, y);
     }
 }
 
