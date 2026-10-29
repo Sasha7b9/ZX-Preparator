@@ -4,11 +4,16 @@
 #include "Emulator/Emulator.h"
 #include "Emulator/Memory.h"
 #include "Emulator/DataBase.h"
+#include "Notebook/Notebook.h"
+#include "Notebook/PageHEX.h"
+#include "Notebook/PageBASIC.h"
+#include "Notebook/PageArrayCharacter.h"
+#include "Notebook/PagePureBytes.h"
 #pragma warning (push, 0)
-#include <wx/statline.h>
-#include <wx/file.h>
-#include <wx/wfstream.h>
-#include <wx/datstrm.h>
+    #include <wx/statline.h>
+    #include <wx/file.h>
+    #include <wx/wfstream.h>
+    #include <wx/datstrm.h>
 #pragma warning (pop)
 #include <sstream>
 
@@ -314,7 +319,7 @@ namespace KeyCodes
 }
 
 
-bool ParserTAP::Execute(pchar fileName)
+bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
 {
     desc.Clear();
 
@@ -359,6 +364,74 @@ bool ParserTAP::Execute(pchar fileName)
     {
         data.Read8();
         desc.unused_memory++;
+    }
+
+    notebook->GetPageInfo()->SetDescriptionTAP(desc);
+
+    PageHEX *pageHEX = new PageHEX(notebook);
+
+    pageHEX->SetDump(file.dump);
+
+    notebook->AppendPage(pageHEX);
+
+    if (desc.valid)
+    {
+        int counter = 1;
+        int num_BASIC = 1;
+        int num_ArrayNumber = 1;
+        int num_ArrayCharacter = 1;
+        int num_ASM = 1;
+        int num_pure = 1;
+
+        for (auto b : file.blocks)
+        {
+            auto block = std::dynamic_pointer_cast<BlockTAP>(b);
+
+            if (block)
+            {
+                if (block->IsBASIC())
+                {
+                    PageBASIC *page = new PageBASIC(notebook, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
+
+                    ProgramBASIC program;
+
+                    block->ParseBASIC(program);
+
+                    page->SetProgram(program);
+
+                    notebook->AppendPage(page);
+                }
+                else if (block->IsArrayNumber())
+                {
+                    notebook->AppendPage(new PageArrayNumber(notebook, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
+                }
+                else if (block->IsArrayCharacter())
+                {
+                    notebook->AppendPage(new PageArrayCharacter(notebook, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
+                }
+                else if (block->IsASM())
+                {
+                    PageASM *page = new PageASM(notebook, wxString::Format("%d - ASM %d", counter++, num_ASM++));
+
+                    ProgramASM program;
+
+                    block->ParseASM(program);
+
+                    page->SetProgram(program);
+
+                    notebook->AppendPage(page);
+                }
+                else if (block->IsPureBytes())
+                {
+                    notebook->AppendPage(new PagePureBytes(notebook, wxString::Format("%d - Pure %d", counter++, num_pure++)));
+                }
+            }
+
+            if (counter > 32)
+            {
+                break;
+            }
+        }
     }
 
     return desc.valid;
@@ -629,13 +702,6 @@ char BlockTAP::Data::GetChar()
 {
     return (char)GetData8();
 }
-
-
-void FileTAP::Clear()
-{
-    blocks.clear();
-    dump.Clear();
-};
 
 
 void DescriptionTAP::Clear()

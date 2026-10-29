@@ -2,9 +2,10 @@
 #include "defines.h"
 #include "Frame.h"
 #include "Notebook/Pages.h"
+#include "Notebook/PageASM.h"
 #pragma warning(push, 0)
-#include <wx/dc.h>
-#include <wx/sizer.h>
+    #include <wx/dc.h>
+    #include <wx/sizer.h>
 #pragma warning(pop)
 
 

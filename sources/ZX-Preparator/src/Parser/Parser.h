@@ -1,5 +1,6 @@
 // 2026/10/29 09:15:55 (c) Aleksandr Shevchenko e-mail : Sasha7b9@gmail.com
 #pragma once
+#include "Parser/StructuresZX.h"
 
 
 /*
@@ -20,6 +21,25 @@ struct Block
 struct File
 {
     virtual ~File() = default;
+
+    void Clear();
+
+    void AppendBlock(std::shared_ptr<Block> block)
+    {
+        blocks.push_back(std::move(block));
+    }
+
+    std::shared_ptr<Block> GetBlock(int index)
+    {
+        return blocks[(uint)index];
+    }
+
+    int NumberBlocks() const
+    {
+        return (int)blocks.size();
+    }
+
+    std::vector<std::shared_ptr<Block>> blocks;
 
     DumpHEX dump;
 };

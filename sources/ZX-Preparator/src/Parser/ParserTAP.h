@@ -6,6 +6,9 @@
 #include <string>
 
 
+class Notebook;
+
+
 struct BlockTAP : public Block
 {
     BlockTAP(wxDataInputStream &stream) : Block(stream), header(this), data(this) {}
@@ -115,18 +118,6 @@ private:
 
 struct FileTAP : public File
 {
-    void Clear();
-
-    void AppendBlock(std::shared_ptr<BlockTAP> block)
-    {
-        blocks.push_back(std::move(block));
-    }
-
-    int NumberBlocks() const { return (int)blocks.size(); }
-
-    std::shared_ptr<BlockTAP> GetBlock(int index) { return blocks[(uint)index]; }
-
-    std::vector<std::shared_ptr<BlockTAP>> blocks;
 };
 
 
@@ -161,7 +152,7 @@ class ParserTAP
 {
 public:
 
-    bool Execute(pchar fileName);
+    bool Execute(pchar fileName, Notebook *);
 
     FileTAP file;
 

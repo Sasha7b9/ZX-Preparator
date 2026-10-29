@@ -149,13 +149,13 @@ void Frame::OnOpen(wxCommandEvent &)
 
     if (dialog.ShowModal() == wxID_OK)
     {
-        ParserTAP parser;
-
-        parser.Execute(dialog.GetPath());
-
-        ProgramBASIC program;
-
-        parser.file.GetBlock(0)->ParseBASIC(program);
+//        ParserTAP parser;
+//
+//        parser.Execute(dialog.GetPath());
+//
+//        ProgramBASIC program;
+//
+//        parser.file.GetBlock(0)->ParseBASIC(program);
     }
 }
 
