@@ -144,7 +144,7 @@ class ParserTAP
 {
 public:
 
-    bool Execute(pchar fileName, Notebook *);
+    bool Execute(pchar fileName);
 
     FileTAP file;
 

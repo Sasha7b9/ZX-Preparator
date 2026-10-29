@@ -17,13 +17,6 @@ public:
     // Применяем/парсим файл
     void AssignFile(const wxString &file_name);
 
-    PageInfo *GetPageInfo()
-    {
-        return pageInfo;
-    }
-
-    void AppendPage(Page *);
-
 private:
 
     PageInfo *pageInfo = nullptr;
@@ -31,4 +24,13 @@ private:
     std::vector<Page *> pages;
 
     void RemoveAllPages();
+
+    void FillTAP(ParserTAP &);
+
+    PageInfo *GetPageInfo()
+    {
+        return pageInfo;
+    }
+
+    void AppendPage(Page *);
 };

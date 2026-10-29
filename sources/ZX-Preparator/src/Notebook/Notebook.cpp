@@ -4,6 +4,7 @@
 #include "Notebook/PageInfo.h"
 #include "Notebook/PageHEX.h"
 #include "Notebook/PageBASIC.h"
+#include "Notebook/PageASM.h"
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
@@ -53,7 +54,82 @@ void Notebook::AssignFile(const wxString &file_name)
 
     RemoveAllPages();
 
-    ParserTAP parser;
+    ParserTAP tap;
 
-    parser.Execute(file_name, this);
+    if (tap.Execute(file_name))
+    {
+        FillTAP(tap);
+    }
+}
+
+
+void Notebook::FillTAP(ParserTAP &parser)
+{
+    GetPageInfo()->SetDescription(parser.desc);
+
+    PageHEX *pageHEX = new PageHEX(this);
+
+    pageHEX->SetDump(parser.file.dump);
+
+    AppendPage(pageHEX);
+
+    if (parser.desc->valid)
+    {
+        int counter = 1;
+        int num_BASIC = 1;
+        int num_ArrayNumber = 1;
+        int num_ArrayCharacter = 1;
+        int num_ASM = 1;
+        int num_pure = 1;
+
+        for (auto b : parser.file.blocks)
+        {
+            auto block = std::dynamic_pointer_cast<BlockTAP>(b);
+
+            if (block)
+            {
+                if (block->IsBASIC())
+                {
+                    PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
+
+                    ProgramBASIC program;
+
+                    block->ParseBASIC(program);
+
+                    page->SetProgram(program);
+
+                    AppendPage(page);
+                }
+                else if (block->IsArrayNumber())
+                {
+                    AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
+                }
+                else if (block->IsArrayCharacter())
+                {
+                    AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
+                }
+                else if (block->IsASM())
+                {
+                    PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
+
+                    ProgramASM program;
+
+                    block->ParseASM(program);
+
+                    page->SetProgram(program);
+
+                    AppendPage(page);
+                }
+                else if (block->IsPureBytes())
+                {
+                    AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter++, num_pure++)));
+                }
+            }
+
+            if (counter > 32)
+            {
+                break;
+            }
+        }
+    }
 }
