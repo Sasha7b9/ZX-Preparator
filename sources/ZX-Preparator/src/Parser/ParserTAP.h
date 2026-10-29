@@ -14,7 +14,7 @@ struct BlockTAP : public Block
     BlockTAP(wxDataInputStream &stream) : Block(stream), header(this), data(this) {}
 
     // Читать данные из входного потока
-    virtual bool Read() override;
+    virtual Block *Read() override;
 
     // Распарсить считанные данные в массив lines
     bool ParseBASIC(ProgramBASIC &);

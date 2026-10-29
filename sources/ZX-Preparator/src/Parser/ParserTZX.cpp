@@ -44,9 +44,11 @@ bool ParserTZX::Execute(pchar fileName)
         {
             BlockTZX block(data);
 
-            if (block.Read())
+            BlockTZX *bl = (BlockTZX *)block.Read();
+
+            if (bl)
             {
-                file->AppendBlock(std::make_shared<BlockTZX>(std::move(block)));
+                file->AppendBlock(std::make_shared<BlockTZX>(std::move(*bl)));
             }
             else
             {
@@ -61,7 +63,7 @@ bool ParserTZX::Execute(pchar fileName)
 }
 
 
-bool BlockTZX::Read()
+Block *BlockTZX::Read()
 {
     id = (Type::ID)stream.Read8();
 
@@ -69,20 +71,18 @@ bool BlockTZX::Read()
     {
         BlockTZX *bl = new BlockTZX_30(stream);
 
-        bl->Read();
-
-        bl = bl;
+        return bl->Read();
     }
     else
     {
-        return false;
+        return nullptr;
     }
 
-    return true;
+    return this;
 }
 
 
-bool BlockTZX_30::Read()
+Block *BlockTZX_30::Read()
 {
     int num_sybmols = stream.Read8();
 
@@ -91,7 +91,7 @@ bool BlockTZX_30::Read()
         text.Append((char)stream.Read8());
     }
 
-    return true;
+    return this;
 }
 
 

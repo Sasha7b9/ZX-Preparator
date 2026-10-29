@@ -25,7 +25,7 @@ struct BlockTZX : public Block
     {
     }
 
-    virtual bool Read() override;
+    virtual Block *Read() override;
 
     virtual void Write(Writer &, int /*dx*/)
     {}
@@ -76,7 +76,7 @@ struct BlockTZX_30 : public BlockTZX
 {
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream) { }
 
-    virtual bool Read() override;
+    virtual Block *Read() override;
 
     virtual void Write(Writer &, int dx) override;
 

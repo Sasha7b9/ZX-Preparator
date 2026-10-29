@@ -74,7 +74,7 @@ bool ParserTAP::Execute(pchar fileName)
 }
 
 
-bool BlockTAP::Read()
+Block *BlockTAP::Read()
 {
     Clear();
 
@@ -89,7 +89,7 @@ bool BlockTAP::Read()
         data.Read(header);
     }
 
-    return header.IsValid() && data.IsValid();
+    return (header.IsValid() && data.IsValid()) ? this : nullptr;
 }
 
 
