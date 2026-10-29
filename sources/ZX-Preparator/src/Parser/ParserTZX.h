@@ -32,7 +32,7 @@ struct BlockTZX : public Block
 
     static BlockTZX *ReadBlock(wxDataInputStream &);
 
-    virtual void Write(Writer &, int /*dx*/)  { }
+    virtual void Write(Writer &, int /*dx*/) override  { }
 
 protected:
 

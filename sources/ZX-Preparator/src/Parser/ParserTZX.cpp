@@ -47,7 +47,7 @@ bool ParserTZX::Execute(pchar fileName)
 
             if (bl)
             {
-                file->AppendBlock(std::make_shared<BlockTZX>(std::move(*bl)));
+                file->AppendBlock(std::shared_ptr<BlockTZX>(bl));
             }
             else
             {

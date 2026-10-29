@@ -11,6 +11,7 @@
 struct FileTAP;
 struct FileHEX;
 struct FileTZX;
+struct Writer;
 
 
 struct Block
@@ -21,6 +22,9 @@ struct Block
     virtual Block *Read() = 0;
 
     wxDataInputStream &stream;
+
+    virtual void Write(Writer &, int /*dx*/) { }
+
 };
 
 
