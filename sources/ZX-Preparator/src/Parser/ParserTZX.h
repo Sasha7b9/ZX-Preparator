@@ -25,10 +25,14 @@ struct BlockTZX : public Block
     {
     }
 
-    virtual Block *Read() override;
+    virtual Block *Read() override
+    {
+        return nullptr;
+    }
 
-    virtual void Write(Writer &, int /*dx*/)
-    {}
+    static BlockTZX *ReadBlock(wxDataInputStream &);
+
+    virtual void Write(Writer &, int /*dx*/)  { }
 
 protected:
 

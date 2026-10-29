@@ -43,9 +43,7 @@ bool ParserTZX::Execute(pchar fileName)
     {
         while (data.IsOk())
         {
-            BlockTZX block(data);
-
-            BlockTZX *bl = (BlockTZX *)block.Read();
+            BlockTZX *bl = BlockTZX::ReadBlock(data);
 
             if (bl)
             {
@@ -64,22 +62,18 @@ bool ParserTZX::Execute(pchar fileName)
 }
 
 
-Block *BlockTZX::Read()
+BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 {
-    id = (Type::ID)stream.Read8();
+    Type::ID id = (Type::ID)stream.Read8();
 
     if (id == Type::ID::_30_Text_description)
     {
         BlockTZX *bl = new BlockTZX_30(stream);
 
-        return bl->Read();
-    }
-    else
-    {
-        return nullptr;
+        return (BlockTZX *)bl->Read();
     }
 
-    return this;
+    return nullptr;
 }
 
 
