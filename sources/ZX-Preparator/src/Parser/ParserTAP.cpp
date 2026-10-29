@@ -9,6 +9,8 @@
 #include "Notebook/PageBASIC.h"
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
+#include "Notebook/PageArrayNumber.h"
+#include "Notebook/PageASM.h"
 #pragma warning (push, 0)
     #include <wx/statline.h>
     #include <wx/file.h>

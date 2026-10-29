@@ -3,6 +3,8 @@
 #include "Frame.h"
 #include "Notebook/Pages.h"
 #include "Notebook/PageASM.h"
+#include "Notebook/PageHEX.h"
+#include "Notebook/PageBASIC.h"
 #pragma warning(push, 0)
     #include <wx/dc.h>
     #include <wx/sizer.h>
