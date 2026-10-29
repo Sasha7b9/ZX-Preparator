@@ -1,13 +1,14 @@
 ﻿// 2022/05/20 15:47:59 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Parser/StructuresZX.h"
+#include "Parser/Parser.h"
 #include <vector>
 #include <string>
 
 
 struct BlockTAP
 {
-    BlockTAP(wxDataInputStream &stream) : header(stream), data(stream) {}
+    BlockTAP(wxDataInputStream &_stream) : stream(_stream), header(this), data(this) {}
 
     // Читать данные из входного потока
     bool Read();
@@ -26,9 +27,11 @@ struct BlockTAP
     bool IsASM()            const { return header.type_data == Header::TypeData::CODE; }
     bool IsPureBytes()      const { return header.type_data == Header::TypeData::PURE_BYTES; }
 
+    wxDataInputStream &stream;
+
     struct CommonStruct
     {
-        CommonStruct(wxDataInputStream &_stream) : stream(_stream) {}
+        CommonStruct(BlockTAP *_block) : block(_block) {}
 
         uint16 size = 0;
         uint8 crc = 0;
@@ -39,9 +42,14 @@ struct BlockTAP
 
     protected:
 
-        bool valid = false;
+        wxDataInputStream &GetStream()
+        {
+            return block->stream;
+        }
 
-        wxDataInputStream &stream;
+        BlockTAP *block;
+
+        bool valid = false;
 
         uint16 Read16();
 
@@ -50,7 +58,7 @@ struct BlockTAP
 
     struct Header : public CommonStruct
     {
-        Header(wxDataInputStream &stream) : CommonStruct(stream)
+        Header(BlockTAP *block) : CommonStruct(block)
         {
             std::memset(file_name, 0, 11);
         }
@@ -86,7 +94,7 @@ struct BlockTAP
 
     struct Data : public CommonStruct
     {
-        Data(wxDataInputStream &stream) : CommonStruct(stream) {}
+        Data(BlockTAP *block) : CommonStruct(block) {}
 
         bool Read(const Header &);
 

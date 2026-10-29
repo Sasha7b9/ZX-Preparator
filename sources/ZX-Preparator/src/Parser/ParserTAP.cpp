@@ -405,7 +405,7 @@ bool BlockTAP::Header::Read()
 
     crc = 0;
 
-    size = stream.Read16();
+    size = GetStream().Read16();
 
     if (size == 19)             // Для заголовка здесь всегда 19
     {
@@ -428,9 +428,9 @@ bool BlockTAP::Header::Read()
 
                 param2 = Read16();
 
-                valid = stream.IsOk();
+                valid = GetStream().IsOk();
 
-                if (stream.Read8() != crc)
+                if (GetStream().Read8() != crc)
                 {
                     valid = false;
                 }
@@ -465,16 +465,16 @@ bool BlockTAP::Data::Read(const Header &header)
             data.push_back(Read8());
         }
 
-        valid = stream.IsOk();
+        valid = GetStream().IsOk();
 
-        if (stream.Read8() != crc)
+        if (GetStream().Read8() != crc)
         {
             valid = false;
         }
     }
     else
     {
-        size = stream.Read16();
+        size = GetStream().Read16();
 
         if (size == header.size_data + 2)
         {
@@ -485,9 +485,9 @@ bool BlockTAP::Data::Read(const Header &header)
                     data.push_back(Read8());
                 }
 
-                valid = stream.IsOk();
+                valid = GetStream().IsOk();
 
-                if (stream.Read8() != crc)
+                if (GetStream().Read8() != crc)
                 {
                     valid = false;
                 }
@@ -501,7 +501,7 @@ bool BlockTAP::Data::Read(const Header &header)
 
 uint8 BlockTAP::CommonStruct::Read8()
 {
-    uint8 byte = stream.Read8();
+    uint8 byte = GetStream().Read8();
 
     crc ^= byte;
 
