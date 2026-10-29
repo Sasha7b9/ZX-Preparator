@@ -10,6 +10,41 @@
     #include <wx/wx.h>
     #include <wx/notebook.h>
 #pragma warning(pop)
+#include <map>
+
+
+class Notebook;
+
+
+// Здесь будем хранить историю, чтобы при переключениями между файлами восстанавливать состояние вкладок
+struct NotebookHistory
+{
+    NotebookHistory(Notebook *_notebook) : notebook(_notebook) { }
+
+    // Теперь поддерживаем историю данного файла
+    void SetCurrentFile(const wxString &file_name);
+
+    // Сохранить состояние для файла, установленного функцией SetCurrentFile()
+    void SaveState();
+
+    // Восстановить состояние для файла, установленного функциенй SetCurrentFile();
+    void RestoreState();
+
+private:
+
+    struct HistoryStruct
+    {
+        HistoryStruct(const wxString &file = "") : name_file(file) {}
+        wxString name_file;     // Файл, для которого сохранены настройки
+        wxString name_page;     // Открытая страница для данного файла
+    };
+
+    std::map <wxString, HistoryStruct> files;
+
+    wxString current_file;
+
+    Notebook *notebook;
+};
 
 
 class Notebook : public wxNotebook
@@ -26,6 +61,8 @@ private:
     PageInfo *pageInfo = nullptr;
 
     std::vector<Page *> pages;
+
+    NotebookHistory history;
 
     void Clear();
 
@@ -45,4 +82,6 @@ private:
     }
 
     void AppendPage(Page *);
+
+    void OnEventNotebookPageChanged(wxBookCtrlEvent &);
 };

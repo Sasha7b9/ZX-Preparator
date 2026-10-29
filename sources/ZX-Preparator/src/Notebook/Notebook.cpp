@@ -16,13 +16,15 @@
 #pragma warning(pop)
 
 
-Notebook::Notebook(wxWindow *parent) : wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
+Notebook::Notebook(wxWindow *parent) :
+    wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP),
+    history(this)
 {
     pageInfo = new PageInfo(this);
 
     wxNotebook::AddPage(pageInfo, pageInfo->GetName());
 
-//    Ge
+    Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &Notebook::OnEventNotebookPageChanged, this);
 }
 
 
@@ -55,6 +57,8 @@ void Notebook::AssignFile(const wxString &file_name)
         return;
     }
 
+    history.SetCurrentFile(file_name);
+
     Clear();
 
     ParserTAP tap;
@@ -65,7 +69,6 @@ void Notebook::AssignFile(const wxString &file_name)
 
         return;
     }
-
 
     ParserTZX tzx;
 
@@ -170,18 +173,20 @@ void Notebook::FillTAP(ParserTAP &parser)
             }
         }
     }
+
+    history.RestoreState();
 }
 
 
 void Notebook::FillTZX(ParserTZX &)
 {
-
+    history.RestoreState();
 }
 
 
 void Notebook::FillZ80(ParserZ80 &)
 {
-
+    history.RestoreState();
 }
 
 
@@ -194,4 +199,55 @@ void Notebook::FillHEX(ParserHEX &parser)
     pageHEX->SetDump(parser.file.dump);
 
     AppendPage(pageHEX);
+
+    history.RestoreState();
+}
+
+
+void NotebookHistory::SetCurrentFile(const wxString &file_name)
+{
+    if (files.find(file_name) == files.end())
+    {
+        files[file_name] = HistoryStruct(file_name);
+    }
+
+    current_file = file_name;
+}
+
+
+void NotebookHistory::SaveState()
+{
+    if (files.find(current_file) != files.end())
+    {
+        files[current_file].name_page = notebook->GetCurrentPage()->GetName();
+    }
+}
+
+
+void NotebookHistory::RestoreState()
+{
+    if (files.find(current_file) != files.end())
+    {
+        wxString name_page = files[current_file].name_page;
+
+        const size_t pageCount = notebook->GetPageCount();
+
+        for (size_t i = 0; i < pageCount; ++i)
+        {
+            if (notebook->GetPageText(i) == name_page)
+            {
+                notebook->SetSelection(static_cast<int>(i));
+
+                break;
+            }
+        }
+    }
+}
+
+
+void Notebook::OnEventNotebookPageChanged(wxBookCtrlEvent &event)
+{
+    history.SaveState();
+
+    event.Skip();
 }
