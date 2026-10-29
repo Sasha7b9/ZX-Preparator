@@ -1,6 +1,8 @@
 // 2022/5/22 10:31:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Notebook/PageInfo.h"
+#include "Parser/ParserTAP.h"
+#include "Parser/ParserTZX.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
     #include <wx/wx.h>
@@ -23,9 +25,13 @@ private:
 
     std::vector<Page *> pages;
 
+    void Clear();
+
     void RemoveAllPages();
 
     void FillTAP(ParserTAP &);
+
+    void FillTZX(ParserTZX &);
 
     PageInfo *GetPageInfo()
     {

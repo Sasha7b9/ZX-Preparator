@@ -114,7 +114,7 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
     }
     else
     {
-        dc.DrawText("Is not TAP file", x, y);
+        dc.DrawText("Is not valid file", x, y);
     }
 }
 

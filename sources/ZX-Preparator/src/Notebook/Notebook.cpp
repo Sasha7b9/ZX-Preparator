@@ -8,8 +8,9 @@
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
+#include "Parser/ParserTZX.h"
 #pragma warning(push, 0)
-#include <wx/file.h>
+    #include <wx/file.h>
 #pragma warning(pop)
 
 
@@ -52,14 +53,34 @@ void Notebook::AssignFile(const wxString &file_name)
         return;
     }
 
-    RemoveAllPages();
+    Clear();
 
     ParserTAP tap;
 
     if (tap.Execute(file_name))
     {
         FillTAP(tap);
+
+        return;
     }
+
+
+    ParserTZX tzx;
+
+    if (tzx.Execute(file_name))
+    {
+        FillTZX(tzx);
+
+        return;
+    }
+}
+
+
+void Notebook::Clear()
+{
+    RemoveAllPages();
+
+    GetPageInfo()->SetDescription(nullptr);
 }
 
 
@@ -132,4 +153,10 @@ void Notebook::FillTAP(ParserTAP &parser)
             }
         }
     }
+}
+
+
+void Notebook::FillTZX(ParserTZX &)
+{
+
 }

@@ -2,4 +2,9 @@
 #pragma once
 
 
+class ParserTZX
+{
+public:
 
+    bool Execute(pchar fileName);
+};

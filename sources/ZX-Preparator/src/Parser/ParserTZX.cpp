@@ -8,3 +8,7 @@
 */
 
 
+bool ParserTZX::Execute(pchar)
+{
+    return false;
+}
