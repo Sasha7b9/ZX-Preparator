@@ -10,6 +10,7 @@
 #include "Notebook/PagePureBytes.h"
 #include "Parser/ParserTZX.h"
 #include "Parser/ParserHEX.h"
+#include "Parser/ParserZ80.h"
 #pragma warning(push, 0)
     #include <wx/file.h>
 #pragma warning(pop)
@@ -71,6 +72,15 @@ void Notebook::AssignFile(const wxString &file_name)
     if (tzx.Execute(file_name))
     {
         FillTZX(tzx);
+
+        return;
+    }
+
+    ParserZ80 z80;
+
+    if (z80.Execute(file_name))
+    {
+        FillZ80(z80);
 
         return;
     }
@@ -164,6 +174,12 @@ void Notebook::FillTAP(ParserTAP &parser)
 
 
 void Notebook::FillTZX(ParserTZX &)
+{
+
+}
+
+
+void Notebook::FillZ80(ParserZ80 &)
 {
 
 }

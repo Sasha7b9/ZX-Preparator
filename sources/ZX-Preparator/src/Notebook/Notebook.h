@@ -4,6 +4,7 @@
 #include "Parser/ParserTAP.h"
 #include "Parser/ParserTZX.h"
 #include "Parser/ParserHEX.h"
+#include "Parser/ParserZ80.h"
 #pragma warning(push, 0)
 #define WIN32_LEAN_AND_MEAN
     #include <wx/wx.h>
@@ -33,6 +34,8 @@ private:
     void FillTAP(ParserTAP &);
 
     void FillTZX(ParserTZX &);
+
+    void FillZ80(ParserZ80 &);
 
     void FillHEX(ParserHEX &);
 
