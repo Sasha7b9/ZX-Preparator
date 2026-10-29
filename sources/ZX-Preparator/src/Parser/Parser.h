@@ -8,5 +8,7 @@
 
 struct Block
 {
+    Block(wxDataInputStream &_stream) : stream(_stream) { }
 
+    wxDataInputStream &stream;
 };

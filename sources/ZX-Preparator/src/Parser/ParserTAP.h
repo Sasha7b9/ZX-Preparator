@@ -6,9 +6,9 @@
 #include <string>
 
 
-struct BlockTAP
+struct BlockTAP : public Block
 {
-    BlockTAP(wxDataInputStream &_stream) : stream(_stream), header(this), data(this) {}
+    BlockTAP(wxDataInputStream &stream) : Block(stream), header(this), data(this) {}
 
     // Читать данные из входного потока
     bool Read();
@@ -26,8 +26,6 @@ struct BlockTAP
     bool IsArrayCharacter() const { return header.type_data == Header::TypeData::CHARACTER_ARRAY; }
     bool IsASM()            const { return header.type_data == Header::TypeData::CODE; }
     bool IsPureBytes()      const { return header.type_data == Header::TypeData::PURE_BYTES; }
-
-    wxDataInputStream &stream;
 
     struct CommonStruct
     {
