@@ -66,16 +66,28 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 {
     Type::ID id = (Type::ID)stream.Read8();
 
+    std::unique_ptr<BlockTZX> block;
+
     if (id == Type::ID::_10_Standard_speed_data_block)
     {
-        return (BlockTZX *)((new BlockTZX_10(stream))->Read());
+        block = std::make_unique<BlockTZX_10>(stream);
     }
     else if (id == Type::ID::_30_Text_description)
     {
-        return (BlockTZX *)((new BlockTZX_30(stream))->Read());
+        block = std::make_unique<BlockTZX_30>(stream);
+    }
+    else
+    {
+        return nullptr;
     }
 
-    return nullptr;
+    BlockTZX *result = (BlockTZX *)block->Read();
+    if (result)
+    {
+        block.release();  // владение передаётся вызывающему коду
+    }
+
+    return result;
 }
 
 
@@ -146,8 +158,6 @@ void BlockTZX_30::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Text description", dx);
 
-    dx++;
-
     writer.DrawNextString(wxString::Format("Description : %s", text), dx);
 }
 
@@ -155,8 +165,6 @@ void BlockTZX_30::Write(Writer &writer, int dx)
 void BlockTZX_10::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Standard Speed Data Block", dx);
-
-    dx++;
 
     writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_block), dx);
 
