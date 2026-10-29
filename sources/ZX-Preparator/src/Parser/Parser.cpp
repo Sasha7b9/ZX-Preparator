@@ -13,19 +13,19 @@ void File::Clear()
 };
 
 
-bool File::IsHEX() const
+FileHEX *File::ToHEX()
 {
-    return dynamic_cast<const FileHEX *>(this) != nullptr;
+    return dynamic_cast<FileHEX *>(this);
 }
 
 
-bool File::IsTAP() const
+FileTAP *File::ToTAP()
 {
-    return dynamic_cast<const FileTAP *>(this) != nullptr;
+    return dynamic_cast<FileTAP *>(this);
 }
 
 
-bool File::IsTZX() const
+FileTZX *File::ToTZX()
 {
-    return dynamic_cast<const FileTZX *>(this) != nullptr;
+    return dynamic_cast<FileTZX *>(this);
 }

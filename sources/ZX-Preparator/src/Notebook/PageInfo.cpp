@@ -28,22 +28,22 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 
     auto file = ((PageInfo *)page)->file;
 
-    if (!file)
+    if (!file || !file->is_valid)
     {
         writer.DrawNextString("Is not valid file");
 
         return;
     }
 
-    if (file->IsTAP() && file->is_valid)
+    if (file->ToTAP() && file->is_valid)
     {
         DrawTAP(file);
     }
-    else if (file->IsTZX() && file->is_valid)
+    else if (file->ToTZX() && file->is_valid)
     {
         DrawTZX(file);
     }
-    else if (file->IsHEX() && file->is_valid)
+    else if (file->ToHEX() && file->is_valid)
     {
         DrawHEX(file);
     }

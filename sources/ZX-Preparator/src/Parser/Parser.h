@@ -7,6 +7,12 @@
     Все типы образов состоят из блоков. Эта структура описывает общий интерфейс блоков
 */
 
+
+struct FileTAP;
+struct FileHEX;
+struct FileTZX;
+
+
 struct Block
 {
     Block(wxDataInputStream &_stream) : stream(_stream) { }
@@ -50,7 +56,7 @@ struct File
 
     bool is_valid = false;
 
-    bool IsTAP() const;
-    bool IsHEX() const;
-    bool IsTZX() const;
+    FileTAP *ToTAP();
+    FileHEX *ToHEX();
+    FileTZX *ToTZX();
 };
