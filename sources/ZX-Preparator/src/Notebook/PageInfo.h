@@ -9,9 +9,9 @@ class PageInfo : public Page
 public:
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
-    void SetDescriptionTAP(DescriptionTAP &);
+    void SetDescription(std::shared_ptr<Description>);
 
-    DescriptionTAP descTAP;
+    std::shared_ptr<Description> desc;
 };
 
 

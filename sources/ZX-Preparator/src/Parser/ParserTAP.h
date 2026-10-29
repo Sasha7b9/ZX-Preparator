@@ -121,17 +121,9 @@ struct FileTAP : public File
 };
 
 
-struct DescriptionTAP
+struct DescriptionTAP : public Description
 {
     void Clear();
-
-    bool valid = false;
-
-    int numberBlocks = 0;
-
-    int unused_memory = 0;      // КОличество нераспознанной памяти
-
-    int full_size = 0;          // Количество байт в исходном файле
 
     struct Block
     {
@@ -156,5 +148,5 @@ public:
 
     FileTAP file;
 
-    DescriptionTAP desc;
+    std::shared_ptr<DescriptionTAP> desc;
 };

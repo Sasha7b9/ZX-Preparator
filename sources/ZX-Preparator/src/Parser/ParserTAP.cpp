@@ -323,7 +323,7 @@ namespace KeyCodes
 
 bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
 {
-    desc.Clear();
+    desc = std::make_shared<DescriptionTAP>();
 
     file.Clear();
 
@@ -334,7 +334,7 @@ bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
 
     file.dump.FillFrom(fileName);
 
-    desc.full_size = (int)file.dump.bytes.size();
+    desc->full_size = (int)file.dump.bytes.size();
 
     wxFileInputStream file_input(fileName);
 
@@ -349,8 +349,8 @@ bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
         {
             file.AppendBlock(std::make_shared<BlockTAP>(std::move(block)));
             DescriptionTAP::Block descBlock(block.header.file_name, block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
-            desc.numberBlocks++;
-            desc.blocks.push_back(descBlock);
+            desc->numberBlocks++;
+            desc->blocks.push_back(descBlock);
         }
         else
         {
@@ -358,17 +358,17 @@ bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
         }
     }
 
-    desc.valid = (file.NumberBlocks() != 0);
+    desc->valid = (file.NumberBlocks() != 0);
 
-    desc.unused_memory = 0;
+    desc->unused_memory = 0;
 
     while (data.IsOk())
     {
         data.Read8();
-        desc.unused_memory++;
+        desc->unused_memory++;
     }
 
-    notebook->GetPageInfo()->SetDescriptionTAP(desc);
+    notebook->GetPageInfo()->SetDescription(desc);
 
     PageHEX *pageHEX = new PageHEX(notebook);
 
@@ -376,7 +376,7 @@ bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
 
     notebook->AppendPage(pageHEX);
 
-    if (desc.valid)
+    if (desc->valid)
     {
         int counter = 1;
         int num_BASIC = 1;
@@ -436,7 +436,7 @@ bool ParserTAP::Execute(pchar fileName, Notebook *notebook)
         }
     }
 
-    return desc.valid;
+    return desc->valid;
 }
 
 

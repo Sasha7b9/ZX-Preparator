@@ -43,3 +43,17 @@ struct File
 
     DumpHEX dump;
 };
+
+
+struct Description
+{
+    virtual ~Description() = default;
+
+    bool valid = false;
+
+    int full_size = 0;          // Количество байт в исходном файле
+
+    int unused_memory = 0;      // КОличество нераспознанной памяти
+
+    int numberBlocks = 0;
+};
