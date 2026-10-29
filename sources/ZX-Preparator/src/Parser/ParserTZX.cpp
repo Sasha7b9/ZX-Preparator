@@ -66,7 +66,13 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 {
     Type::ID id = (Type::ID)stream.Read8();
 
-    if (id == Type::ID::_30_Text_description)
+    if (id == Type::ID::_10_Standard_speed_data_block)
+    {
+        BlockTZX *bl = new BlockTZX_10(stream);
+
+        return (BlockTZX *)bl->Read();
+    }
+    else if (id == Type::ID::_30_Text_description)
     {
         BlockTZX *bl = new BlockTZX_30(stream);
 
@@ -74,6 +80,21 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     }
 
     return nullptr;
+}
+
+
+
+Block *BlockTZX_10::Read()
+{
+    pause_after_block = stream.Read16();
+    length_data = stream.Read16();
+
+    for (uint16 i = 0; i < length_data; i++)
+    {
+        data.push_back(stream.Read8());
+    }
+
+    return this;
 }
 
 
@@ -128,4 +149,20 @@ void BlockTZX::WriteType(Writer &writer, const wxString &type, int dx)
 void BlockTZX_30::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Text description", dx);
+
+    dx++;
+
+    writer.DrawNextString(wxString::Format("Description : %s", text), dx);
+}
+
+
+void BlockTZX_10::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Standard Speed Data Block", dx);
+
+    dx++;
+
+    writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_block), dx);
+
+    writer.DrawNextString(wxString::Format("Length of data : %u", length_data), dx);
 }

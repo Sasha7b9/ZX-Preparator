@@ -137,7 +137,7 @@ void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
 
     writer.DrawNextString(wxString::Format("Number blocks : %d", file->NumberBlocks()));
 
-    for (uint i = 0; i < 1; i++)
+    for (int i = 0; i < file->NumberBlocks(); i++)
     {
         auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[i]);
 

@@ -76,6 +76,22 @@ private:
 };
 
 
+struct BlockTZX_10 : public BlockTZX
+{
+    BlockTZX_10(wxDataInputStream &stream) : BlockTZX(stream) { }
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 pause_after_block;
+    uint16 length_data;
+    std::vector<uint8> data;
+};
+
+
 struct BlockTZX_30 : public BlockTZX
 {
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream) { }
