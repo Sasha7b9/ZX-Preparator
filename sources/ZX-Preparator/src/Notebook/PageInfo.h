@@ -7,6 +7,7 @@
 class PageInfo : public Page
 {
 public:
+
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
     void SetDescription(std::shared_ptr<Description>);
@@ -18,9 +19,16 @@ public:
 class CanvasInfo : public Canvas
 {
 public:
+
     CanvasInfo(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) override;
+
+private:
+
+    void DrawTAP(wxPaintDC &, std::shared_ptr<Description> desc, int x, int y);
+    void DrawTZX(wxPaintDC &, std::shared_ptr<Description> desc, int x, int y);
+    void DrawHEX(wxPaintDC &, std::shared_ptr<Description> desc, int x, int y);
 };
 
 

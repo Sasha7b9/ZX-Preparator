@@ -3,6 +3,7 @@
 #include "Parser/Parser.h"
 #include "Parser/ParserHEX.h"
 #include "Parser/ParserTAP.h"
+#include "Parser/ParserTZX.h"
 
 
 void File::Clear()
@@ -21,4 +22,10 @@ bool Description::IsHEX() const
 bool Description::IsTAP() const
 {
     return dynamic_cast<const DescriptionTAP *>(this) != nullptr;
+}
+
+
+bool Description::IsTZX() const
+{
+    return dynamic_cast<const DescriptionTZX *>(this) != nullptr;
 }

@@ -49,6 +49,7 @@ struct Description
 {
     bool IsTAP() const;
     bool IsHEX() const;
+    bool IsTZX() const;
 
     virtual ~Description() = default;
 
