@@ -182,8 +182,16 @@ void Notebook::FillTAP(ParserTAP &parser)
 }
 
 
-void Notebook::FillTZX(ParserTZX &)
+void Notebook::FillTZX(ParserTZX &parser)
 {
+    GetPageInfo()->SetDescription(parser.desc);
+
+    PageHEX *pageHEX = new PageHEX(this);
+
+    pageHEX->SetDump(parser.file.dump);
+
+    AppendPage(pageHEX);
+
     history.RestoreState();
 }
 

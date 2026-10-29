@@ -3,6 +3,7 @@
 #include "Notebook/PageInfo.h"
 #include "Parser/ParserTAP.h"
 #include "Parser/ParserHEX.h"
+#include "Parser/ParserTZX.h"
 #pragma warning(push, 0)
     #include <wx/dc.h>
     #include <wx/dcclient.h>
@@ -133,11 +134,11 @@ void CanvasInfo::DrawHEX(std::shared_ptr<Description> desc)
 
 void CanvasInfo::DrawTZX(std::shared_ptr<Description> desc)
 {
-    auto descTAP = std::dynamic_pointer_cast<DescriptionHEX>(desc);
+    auto descTZX = std::dynamic_pointer_cast<DescriptionTZX>(desc);
 
     writer.DrawNextString("Is TZX file");
 
-    writer.DrawNextString(wxString::Format("Full size %d", descTAP->full_size));
+    writer.DrawNextString(wxString::Format("Full size %d", descTZX->full_size));
 }
 
 

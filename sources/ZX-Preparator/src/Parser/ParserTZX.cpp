@@ -77,7 +77,35 @@ bool ParserTZX::Execute(pchar fileName)
 
 bool BlockTZX::Read()
 {
-    return false;
+    id = (Type::ID)stream.Read8();
+
+    if (id == Type::ID::_30_Text_description)
+    {
+        BlockTZX *bl = new BlockTZX_30(stream);
+
+        bl->Read();
+
+        bl = bl;
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
+
+bool BlockTZX_30::Read()
+{
+    int num_sybmols = stream.Read8();
+
+    for (int i = 0; i < num_sybmols; i++)
+    {
+        text.Append((char)stream.Read8());
+    }
+
+    return true;
 }
 
 
