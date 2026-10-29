@@ -10,9 +10,9 @@ public:
 
     PageInfo(wxNotebook* parent) : Page(parent, TypePage::Info, "Info") { }
 
-    void SetDescription(std::shared_ptr<Description>);
+    void SetFile(std::shared_ptr<File>);
 
-    std::shared_ptr<Description> desc;
+    std::shared_ptr<File> file;
 };
 
 
@@ -26,9 +26,9 @@ public:
 
 private:
 
-    void DrawTAP(std::shared_ptr<Description> desc);
-    void DrawTZX(std::shared_ptr<Description> desc);
-    void DrawHEX(std::shared_ptr<Description> desc);
+    void DrawTAP(std::shared_ptr<File>);
+    void DrawTZX(std::shared_ptr<File>);
+    void DrawHEX(std::shared_ptr<File>);
 
     struct Writer
     {

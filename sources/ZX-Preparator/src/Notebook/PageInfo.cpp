@@ -11,9 +11,9 @@
 #pragma warning(pop)
 
 
-void PageInfo::SetDescription(std::shared_ptr<Description> _desc)
+void PageInfo::SetFile(std::shared_ptr<File> _file)
 {
-    desc = std::move(_desc);
+    file = std::move(_file);
 
     Refresh();
 }
@@ -26,26 +26,26 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
 
     writer.Set(&dc, 10, 10, dY);
 
-    auto desc = ((PageInfo *)page)->desc;
+    auto file = ((PageInfo *)page)->file;
 
-    if (!desc)
+    if (!file)
     {
         writer.DrawNextString("Is not valid file");
 
         return;
     }
 
-    if (desc->IsTAP() && desc->valid)
+    if (file->IsTAP() && file->is_valid)
     {
-        DrawTAP(desc);
+        DrawTAP(file);
     }
-    else if (desc->IsTZX() && desc->valid)
+    else if (file->IsTZX() && file->is_valid)
     {
-        DrawTZX(desc);
+        DrawTZX(file);
     }
-    else if (desc->IsHEX() && desc->valid)
+    else if (file->IsHEX() && file->is_valid)
     {
-        DrawHEX(desc);
+        DrawHEX(file);
     }
 }
 
@@ -58,22 +58,17 @@ void CanvasInfo::Writer::DrawNextString(const wxString &line, int dx)
 }
 
 
-void CanvasInfo::DrawTAP(std::shared_ptr<Description> desc)
+void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 {
-    auto descTAP = std::dynamic_pointer_cast<DescriptionTAP>(desc);
+    auto fileTAP = std::dynamic_pointer_cast<FileTAP>(file);
 
     writer.DrawNextString("Is TAP file");
 
-    writer.DrawNextString(wxString::Format("Full size %d", descTAP->full_size));
+    writer.DrawNextString(wxString::Format("Full size %d", fileTAP->FullSize()));
 
-    if (descTAP->unused_memory)
-    {
-        writer.DrawNextString(wxString::Format("!!! WARNING !!! In file discovered %d bytes unused memory", descTAP->unused_memory));
-    }
+    writer.DrawNextString(wxString::Format("Number blocks : %d", fileTAP->NumberBlocks()));
 
-    writer.DrawNextString(wxString::Format("Number blocks : %d", descTAP->numberBlocks));
-
-    for (uint i = 0; i < (uint)descTAP->numberBlocks; i++)
+    for (uint i = 0; i < (uint)fileTAP->NumberBlocks(); i++)
     {
         writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
 
@@ -86,59 +81,59 @@ void CanvasInfo::DrawTAP(std::shared_ptr<Description> desc)
             "PURE BYTES (bytes without header)"
         };
 
-        DescriptionTAP::Block &block = descTAP->blocks[i];
+        auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
 
-        if (block.type < 4)
+        if (block->header.type < 4)
         {
-            writer.DrawNextString(wxString::Format("Name : %s", block.name.c_str()), 2);
+            writer.DrawNextString(wxString::Format("Name : %s", block->header.file_name), 2);
         }
 
-        if (block.type == 3 && block.size == 6912 && block.param1 == 16384)
+        if (block->header.type == 3 && block->data.size == 6912 && block->header.param1 == 16384)
         {
             writer.DrawNextString(wxString::Format("Type : %s", "DATA SCREEN"), 2);
         }
         else
         {
-            writer.DrawNextString(wxString::Format("Type : %s", types[block.type]), 2);
+            writer.DrawNextString(wxString::Format("Type : %s", types[block->header.type]), 2);
         }
 
-        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block.size, block.size), 2);
+        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->data.size, block->data.size), 2);
 
-        if (block.type == 0)
+        if (block->header.type == 0)
         {
-            writer.DrawNextString(wxString::Format("Line start : %d", block.param1), 2);
+            writer.DrawNextString(wxString::Format("Line start : %d", block->header.param1), 2);
 
-            writer.DrawNextString(wxString::Format("Offset data : #%05x/%d", block.param2, block.param2), 2);
+            writer.DrawNextString(wxString::Format("Offset data : #%05x/%d", block->header.param2, block->header.param2), 2);
         }
-        else if (block.type == 1 || block.type == 2)
+        else if (block->header.type == 1 || block->header.type == 2)
         {
-            writer.DrawNextString(wxString::Format("Name : %c", (char)(block.param1 >> 8)), 2);
+            writer.DrawNextString(wxString::Format("Name : %c", (char)(block->header.param1 >> 8)), 2);
         }
-        else if (block.type == 3)
+        else if (block->header.type == 3)
         {
-            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block.param1, block.param1), 2);
+            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->header.param1, block->header.param1), 2);
         }
     }
 }
 
 
-void CanvasInfo::DrawHEX(std::shared_ptr<Description> desc)
+void CanvasInfo::DrawHEX(std::shared_ptr<File> file)
 {
-    auto descTAP = std::dynamic_pointer_cast<DescriptionHEX>(desc);
+    auto fileTAP = std::dynamic_pointer_cast<FileHEX>(file);
 
     writer.DrawNextString("Unsupported file");
 
-    writer.DrawNextString(wxString::Format("Full size %d", descTAP->full_size));
+    writer.DrawNextString(wxString::Format("Full size %d", fileTAP->FullSize()));
 }
 
 
-void CanvasInfo::DrawTZX(std::shared_ptr<Description> desc)
+void CanvasInfo::DrawTZX(std::shared_ptr<File> desc)
 {
-    auto descTZX = std::dynamic_pointer_cast<DescriptionTZX>(desc);
+    auto fileTZX = std::dynamic_pointer_cast<FileTZX>(desc);
 
     writer.DrawNextString("Is TZX file");
 
-    writer.DrawNextString(wxString::Format("Full size %d", descTZX->full_size));
+    writer.DrawNextString(wxString::Format("Full size %d", fileTZX->FullSize()));
 }
 
 

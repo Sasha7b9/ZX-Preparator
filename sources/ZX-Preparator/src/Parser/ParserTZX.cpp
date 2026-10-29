@@ -17,18 +17,14 @@
 
 bool ParserTZX::Execute(pchar fileName)
 {
-    desc = std::make_shared<DescriptionTZX>();
-
-    file.Clear();
+    file = std::make_shared<FileTZX>();
 
     if (!wxFile::Exists(fileName))
     {
         return false;
     }
 
-    file.dump.FillFrom(fileName);
-
-    desc->full_size = (int)file.dump.bytes.size();
+    file->dump.FillFrom(fileName);
 
     wxFileInputStream file_input(fileName);
 
@@ -41,7 +37,6 @@ bool ParserTZX::Execute(pchar fileName)
 
     if (!header.IsValid())
     {
-        desc->valid = false;
     }
     else
     {
@@ -51,8 +46,7 @@ bool ParserTZX::Execute(pchar fileName)
 
             if (block.Read())
             {
-                file.AppendBlock(std::make_shared<BlockTZX>(std::move(block)));
-                desc->numberBlocks++;
+                file->AppendBlock(std::make_shared<BlockTZX>(std::move(block)));
             }
             else
             {
@@ -60,18 +54,10 @@ bool ParserTZX::Execute(pchar fileName)
             }
         }
 
-        desc->valid = (file.NumberBlocks() != 0);
-
-        desc->unused_memory = 0;
-
-        while (data.IsOk())
-        {
-            data.Read8();
-            desc->unused_memory++;
-        }
+        file->is_valid = (file->NumberBlocks() != 0);
     }
 
-    return desc->valid;
+    return file->is_valid;
 }
 
 

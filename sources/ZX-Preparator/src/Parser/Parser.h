@@ -39,25 +39,18 @@ struct File
         return (int)blocks.size();
     }
 
+    uint FullSize() const
+    {
+        return (uint)dump.bytes.size();
+    }
+
     std::vector<std::shared_ptr<Block>> blocks;
 
     DumpHEX dump;
-};
 
+    bool is_valid = false;
 
-struct Description
-{
     bool IsTAP() const;
     bool IsHEX() const;
     bool IsTZX() const;
-
-    virtual ~Description() = default;
-
-    bool valid = false;
-
-    int full_size = 0;          // Количество байт в исходном файле
-
-    int unused_memory = 0;      // КОличество нераспознанной памяти
-
-    int numberBlocks = 0;
 };

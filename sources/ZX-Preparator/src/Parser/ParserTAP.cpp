@@ -40,18 +40,14 @@
 
 bool ParserTAP::Execute(pchar fileName)
 {
-    desc = std::make_shared<DescriptionTAP>();
-
-    file.Clear();
+    file = std::make_shared<FileTAP>();
 
     if (!wxFile::Exists(fileName))
     {
         return false;
     }
 
-    file.dump.FillFrom(fileName);
-
-    desc->full_size = (int)file.dump.bytes.size();
+    file->dump.FillFrom(fileName);
 
     wxFileInputStream file_input(fileName);
 
@@ -64,10 +60,7 @@ bool ParserTAP::Execute(pchar fileName)
         BlockTAP block(data);
         if (block.Read())
         {
-            file.AppendBlock(std::make_shared<BlockTAP>(std::move(block)));
-            DescriptionTAP::Block descBlock(block.header.file_name, block.header.type_data, block.header.size_data, block.header.param1, block.header.param2);
-            desc->numberBlocks++;
-            desc->blocks.push_back(descBlock);
+            file->AppendBlock(std::make_shared<BlockTAP>(std::move(block)));
         }
         else
         {
@@ -75,17 +68,9 @@ bool ParserTAP::Execute(pchar fileName)
         }
     }
 
-    desc->valid = (file.NumberBlocks() != 0);
+    file->is_valid = (file->NumberBlocks() != 0);
 
-    desc->unused_memory = 0;
-
-    while (data.IsOk())
-    {
-        data.Read8();
-        desc->unused_memory++;
-    }
-
-    return desc->valid;
+    return file->is_valid;
 }
 
 
@@ -134,9 +119,9 @@ bool BlockTAP::Header::Read()
     {
         if (Read8() == 0)       // Чтение флага - для заголовка 0
         {
-            type_data = (BlockTAP::Header::TypeData::E)Read8();
+            type = (BlockTAP::Header::TypeData::E)Read8();
 
-            if (type_data < BlockTAP::Header::TypeData::PURE_BYTES)
+            if (type < BlockTAP::Header::TypeData::PURE_BYTES)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -162,7 +147,7 @@ bool BlockTAP::Header::Read()
     }
     else if (size != 0)
     {
-        type_data = BlockTAP::Header::TypeData::PURE_BYTES;
+        type = BlockTAP::Header::TypeData::PURE_BYTES;
         size_data = (uint16)(size - 2);
         valid = true;
     }
@@ -179,7 +164,7 @@ bool BlockTAP::Data::Read(const Header &header)
 
     data.clear();
 
-    if (header.type_data == BlockTAP::Header::TypeData::PURE_BYTES)
+    if (header.type == BlockTAP::Header::TypeData::PURE_BYTES)
     {
         size = header.size_data;
 
@@ -246,7 +231,7 @@ bool BlockTAP::ParseBASIC(ProgramBASIC &program)
 {
     program.Clear();
 
-    if (header.type_data == BlockTAP::Header::TypeData::BASIC_PROGRAM)
+    if (header.type == BlockTAP::Header::TypeData::BASIC_PROGRAM)
     {
         while (data.data.size())
         {
@@ -264,7 +249,7 @@ bool BlockTAP::ParseASM(ProgramASM &program)
 {
     program.Clear();
 
-    if (header.type_data == BlockTAP::Header::TypeData::CODE)
+    if (header.type == BlockTAP::Header::TypeData::CODE)
     {
         InfoStruct params;
 

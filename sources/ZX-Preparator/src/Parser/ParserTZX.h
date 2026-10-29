@@ -74,10 +74,12 @@ private:
 };
 
 
+/*
 struct DescriptionTZX : public Description
 {
 
 };
+*/
 
 
 struct FileTZX : public File
@@ -92,7 +94,5 @@ public:
 
     bool Execute(pchar fileName);
 
-    FileTZX file;
-
-    std::shared_ptr<DescriptionTZX> desc;
+    std::shared_ptr<FileTZX> file;
 };

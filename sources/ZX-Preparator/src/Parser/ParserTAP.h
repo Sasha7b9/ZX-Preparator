@@ -24,11 +24,11 @@ struct BlockTAP : public Block
 
     bool IsValid() const;
 
-    bool IsBASIC()          const { return header.type_data == Header::TypeData::BASIC_PROGRAM; }
-    bool IsArrayNumber()    const { return header.type_data == Header::TypeData::NUMBER_ARRAY; }
-    bool IsArrayCharacter() const { return header.type_data == Header::TypeData::CHARACTER_ARRAY; }
-    bool IsASM()            const { return header.type_data == Header::TypeData::CODE; }
-    bool IsPureBytes()      const { return header.type_data == Header::TypeData::PURE_BYTES; }
+    bool IsBASIC()          const { return header.type == Header::TypeData::BASIC_PROGRAM; }
+    bool IsArrayNumber()    const { return header.type == Header::TypeData::NUMBER_ARRAY; }
+    bool IsArrayCharacter() const { return header.type == Header::TypeData::CHARACTER_ARRAY; }
+    bool IsASM()            const { return header.type == Header::TypeData::CODE; }
+    bool IsPureBytes()      const { return header.type == Header::TypeData::PURE_BYTES; }
 
     struct CommonStruct
     {
@@ -77,7 +77,7 @@ struct BlockTAP : public Block
             };
         };
 
-        TypeData::E type_data = TypeData::Undefined;
+        TypeData::E type = TypeData::Undefined;
 
         char file_name[11];
         uint16 size_data = 0;   // Длина блока данных, следуюшего за заголовком, без учёта флага и контрольной суммы
@@ -121,6 +121,7 @@ struct FileTAP : public File
 };
 
 
+/*
 struct DescriptionTAP : public Description
 {
     struct Block
@@ -136,6 +137,7 @@ struct DescriptionTAP : public Description
 
     std::vector<Block> blocks;
 };
+*/
 
 
 class ParserTAP
@@ -144,7 +146,5 @@ public:
 
     bool Execute(pchar fileName);
 
-    FileTAP file;
-
-    std::shared_ptr<DescriptionTAP> desc;
+    std::shared_ptr<FileTAP> file;
 };

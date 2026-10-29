@@ -3,9 +3,11 @@
 #include "Parser/Parser.h"
 
 
+/*
 struct DescriptionHEX : public Description
 {
 };
+*/
 
 
 struct FileHEX : public File
@@ -20,7 +22,5 @@ public:
 
     bool Execute(pchar fileName);
 
-    FileHEX file;
-
-    std::shared_ptr<DescriptionHEX> desc;
+    std::shared_ptr<FileHEX> file;
 };

@@ -104,21 +104,21 @@ void Notebook::Clear()
 {
     RemoveAllPages();
 
-    GetPageInfo()->SetDescription(nullptr);
+    GetPageInfo()->SetFile(nullptr);
 }
 
 
 void Notebook::FillTAP(ParserTAP &parser)
 {
-    GetPageInfo()->SetDescription(parser.desc);
+    GetPageInfo()->SetFile(parser.file);
 
     PageHEX *pageHEX = new PageHEX(this);
 
-    pageHEX->SetDump(parser.file.dump);
+    pageHEX->SetDump(parser.file->dump);
 
     AppendPage(pageHEX);
 
-    if (parser.desc->valid)
+    if (parser.file->is_valid)
     {
         int counter = 1;
         int num_BASIC = 1;
@@ -127,7 +127,7 @@ void Notebook::FillTAP(ParserTAP &parser)
         int num_ASM = 1;
         int num_pure = 1;
 
-        for (auto b : parser.file.blocks)
+        for (auto b : parser.file->blocks)
         {
             auto block = std::dynamic_pointer_cast<BlockTAP>(b);
 
@@ -184,11 +184,11 @@ void Notebook::FillTAP(ParserTAP &parser)
 
 void Notebook::FillTZX(ParserTZX &parser)
 {
-    GetPageInfo()->SetDescription(parser.desc);
+    GetPageInfo()->SetFile(parser.file);
 
     PageHEX *pageHEX = new PageHEX(this);
 
-    pageHEX->SetDump(parser.file.dump);
+    pageHEX->SetDump(parser.file->dump);
 
     AppendPage(pageHEX);
 
@@ -204,11 +204,11 @@ void Notebook::FillZ80(ParserZ80 &)
 
 void Notebook::FillHEX(ParserHEX &parser)
 {
-    GetPageInfo()->SetDescription(parser.desc);
+    GetPageInfo()->SetFile(parser.file);
 
     PageHEX *pageHEX = new PageHEX(this);
 
-    pageHEX->SetDump(parser.file.dump);
+    pageHEX->SetDump(parser.file->dump);
 
     AppendPage(pageHEX);
 
