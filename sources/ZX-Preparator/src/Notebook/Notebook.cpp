@@ -169,7 +169,13 @@ void Notebook::FillTZX(ParserTZX &)
 }
 
 
-void Notebook::FillHEX(ParserHEX &)
+void Notebook::FillHEX(ParserHEX &parser)
 {
+    GetPageInfo()->SetDescription(parser.desc);
 
+    PageHEX *pageHEX = new PageHEX(this);
+
+    pageHEX->SetDump(parser.file.dump);
+
+    AppendPage(pageHEX);
 }
