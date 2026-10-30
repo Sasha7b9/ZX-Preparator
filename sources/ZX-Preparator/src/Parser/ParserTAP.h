@@ -27,7 +27,7 @@ struct BlockTAP : public Block
     bool IsBASIC()          const { return header.type == Header::TypeData::BASIC_PROGRAM; }
     bool IsArrayNumber()    const { return header.type == Header::TypeData::NUMBER_ARRAY; }
     bool IsArrayCharacter() const { return header.type == Header::TypeData::CHARACTER_ARRAY; }
-    bool IsASM()            const { return header.type == Header::TypeData::CODE; }
+    bool IsCODE()           const { return header.type == Header::TypeData::CODE; }
     bool IsPureBytes()      const { return header.type == Header::TypeData::PURE_BYTES; }
 
     struct CommonStruct
@@ -85,7 +85,7 @@ struct BlockTAP : public Block
         uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
                                 // arrays 01, 02 : variable name
                                 // code       03 : holds the start of the code block when saved
-        uint16 param2 = 0;      // program 00    : holds the start of the variable area relative to the start of the program
+        uint16 param2 = 0;      // program    00 : holds the start of the variable area relative to the start of the program
                                 // arrays 01, 02 : N/A
                                 // code       03 : holds 32768
 

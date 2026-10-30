@@ -231,7 +231,7 @@ bool BlockTAP::ParseBASIC(ProgramBASIC &program)
 {
     program.Clear();
 
-    if (header.type == BlockTAP::Header::TypeData::BASIC_PROGRAM)
+    if (IsBASIC())
     {
         while (data.data.size())
         {
@@ -249,7 +249,7 @@ bool BlockTAP::ParseASM(ProgramASM &program)
 {
     program.Clear();
 
-    if (header.type == BlockTAP::Header::TypeData::CODE)
+    if (IsCODE())
     {
         InfoStruct params;
 

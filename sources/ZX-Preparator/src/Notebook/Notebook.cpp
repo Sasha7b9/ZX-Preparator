@@ -153,7 +153,7 @@ void Notebook::FillTAP(ParserTAP &parser)
                 {
                     AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
                 }
-                else if (block->IsASM())
+                else if (block->IsCODE())
                 {
                     PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
 

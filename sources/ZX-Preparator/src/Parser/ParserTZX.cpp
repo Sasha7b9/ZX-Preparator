@@ -67,6 +67,11 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 {
     Type::ID id = (Type::ID)stream.Read8();
 
+    while ((id == 0 || id == 255) && stream.IsOk())
+    {
+        id = (Type::ID)stream.Read8();
+    }
+
     std::unique_ptr<BlockTZX> block;
 
     if (id == Type::ID::_10_Standard_speed_data_block)
@@ -143,10 +148,6 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     }
     else
     {
-        if (id != 0)
-        {
-            id = id;
-        }
         return nullptr;
     }
 
