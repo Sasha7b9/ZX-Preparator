@@ -82,6 +82,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_20>(stream);
     }
+    else if (id == Type::ID::_21_Group_start)
+    {
+        block = std::make_unique<BlockTZX_21>(stream);
+    }
     else if (id == Type::ID::_30_Text_description)
     {
         block = std::make_unique<BlockTZX_30>(stream);
@@ -123,6 +127,19 @@ Block *BlockTZX_10::Read()
 Block *BlockTZX_20::Read()
 {
     pause_duration = stream.Read16();
+
+    return this;
+}
+
+
+Block *BlockTZX_21::Read()
+{
+    uint8 length = stream.Read8();
+
+    for (size_t i = 0; i < length; i++)
+    {
+        group_name.Append((char)stream.Read8());
+    }
 
     return this;
 }
@@ -196,7 +213,7 @@ bool HeaderTZX::IsValid() const
 
 void BlockTZX::WriteType(Writer &writer, const wxString &type, int dx)
 {
-    writer.DrawNextString(wxString::Format("Type : %s", type.c_str().AsChar()), dx);
+    writer.DrawNextString(wxString::Format("Type ID %X : %s", id, type.c_str().AsChar()), dx);
 }
 
 
@@ -215,6 +232,14 @@ void BlockTZX_20::Write(Writer &writer, int dx)
     WriteType(writer, "Pause (silence) or 'Stop the Tape' command", dx);
 
     writer.DrawNextString(wxString::Format("duration : %u ms", pause_duration), dx);
+}
+
+
+void BlockTZX_21::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Group start", dx);
+
+    writer.DrawNextString(wxString::Format("Group name : %s", group_name), dx);
 }
 
 

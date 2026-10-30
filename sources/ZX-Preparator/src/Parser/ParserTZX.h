@@ -38,8 +38,6 @@ protected:
 
     void WriteType(Writer &, const wxString &type, int dx);
 
-private:
-
     struct Type
     {
         enum ID
@@ -68,9 +66,12 @@ private:
             _32_Archive_info = 0x32,
             _33_Hardware_type = 0x33,
             _35_Custom_info_block = 0x35,
-            _5A_Glue_block_90_dec,_ASCII_Letter_Z = 0x5A
+            _5A_Glue_block_90_dec, _ASCII_Letter_Z = 0x5A
         };
     };
+
+    BlockTZX(wxDataInputStream &stream, Type::ID _id) : Block(stream), id(_id)
+    {}
 
     Type::ID id;
 };
@@ -78,7 +79,7 @@ private:
 
 struct BlockTZX_10 : public BlockTZX
 {
-    BlockTZX_10(wxDataInputStream &stream) : BlockTZX(stream) { }
+    BlockTZX_10(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_10_Standard_speed_data_block) { }
 
     virtual Block *Read() override;
 
@@ -94,7 +95,7 @@ private:
 
 struct BlockTZX_20 : public BlockTZX
 {
-    BlockTZX_20(wxDataInputStream &stream) : BlockTZX(stream) { }
+    BlockTZX_20(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_20_Pause_or_Stop_The_Tape_command) { }
 
     virtual Block *Read() override;
 
@@ -106,9 +107,24 @@ private:
 };
 
 
+struct BlockTZX_21 : public BlockTZX
+{
+    BlockTZX_21(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_21_Group_start)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    wxString group_name;    // Group name in ASCII format (please keep it under 30 characters long)
+};
+
+
 struct BlockTZX_30 : public BlockTZX
 {
-    BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream) { }
+    BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_30_Text_description) { }
 
     virtual Block *Read() override;
 
@@ -122,7 +138,7 @@ private:
 
 struct BlockTZX_32 : public BlockTZX
 {
-    BlockTZX_32(wxDataInputStream &stream) : BlockTZX(stream) { }
+    BlockTZX_32(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX_32::Type::ID::_32_Archive_info) { }
 
     virtual Block *Read() override;
 
