@@ -12,7 +12,15 @@ void PageHEX::SetDump(DumpHEX &_dump)
 {
     dump = _dump;
 
+    wxSize size = canvas->GetVirtualSize();
+
+    size.y *= 2;
+
+    canvas->SetVirtualSize(size);
+
     Refresh();
+
+    canvas->Refresh();
 }
 
 

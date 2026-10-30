@@ -43,7 +43,7 @@ public:
 protected:
 
     TypePage::E type = TypePage::Count;
-    Canvas *canvas = nullptr;               // For drawing info
+    Canvas *canvas = nullptr;               // For drawing
     ControlPanel *control_panel = nullptr;  // For settings
 };
 
