@@ -463,6 +463,8 @@ void BlockTZX_11::Write(Writer &writer, int dx)
     WriteType(writer, "Turbo Speed Data Block", dx);
 
     writer.DrawNextString(wxString::Format("Length of PILOT pulse : %u", length_PILOT_pulse), dx);
+
+    writer.DrawNextString(wxString::Format("Data size : %zu", data.size()), dx);
 }
 
 
