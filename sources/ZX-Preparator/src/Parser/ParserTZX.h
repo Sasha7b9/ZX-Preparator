@@ -246,6 +246,21 @@ struct BlockTZX_22 : public BlockTZX
 };
 
 
+struct BlockTZX_24 : public BlockTZX
+{
+    BlockTZX_24(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_24_Loop_start)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 number_repetitions;  // Number of repetitions (greater than 1)
+};
+
+
 struct BlockTZX_30 : public BlockTZX
 {
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_30_Text_description) { }

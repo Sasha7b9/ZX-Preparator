@@ -109,6 +109,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_22>(stream);
     }
+    else if (id == Type::ID::_24_Loop_start)
+    {
+        block = std::make_unique<BlockTZX_24>(stream);
+    }
     else if (id == Type::ID::_30_Text_description)
     {
         block = std::make_unique<BlockTZX_30>(stream);
@@ -170,7 +174,7 @@ Block *BlockTZX_11::Read()
     uint length = 0;
     Read8((uint8 *)&length, 3);
 
-    data.reserve(length);
+    data.resize(length);
     Read8(data.data(), length);
 
     return this;
@@ -225,7 +229,7 @@ Block *BlockTZX_15::Read()
         uint length = 0;
         Read8((uint8 *)&length, 3);
 
-        samples_data.reserve(length);
+        samples_data.resize(length);
         Read8(samples_data.data(), length);
     }
 
@@ -271,6 +275,14 @@ Block *BlockTZX_21::Read()
 
 Block *BlockTZX_22::Read()
 {
+    return this;
+}
+
+
+Block *BlockTZX_24::Read()
+{
+    number_repetitions = Read16();
+
     return this;
 }
 
@@ -442,7 +454,7 @@ void BlockTZX_15::Write(Writer &writer, int dx)
 
     writer.DrawNextString(wxString::Format("Used bits (samples) in last byte of data (1-8) : %u", used_bits_in_last_byte_of_data), dx);
 
-    writer.DrawNextString(wxString::Format("Length of samples' data : %zu bytes", samples_data.size()), dx);
+    writer.DrawNextString(wxString::Format("Length of samples' data : %d bytes", (int)samples_data.size()), dx);
 }
 
 
@@ -491,6 +503,14 @@ void BlockTZX_21::Write(Writer &writer, int dx)
 void BlockTZX_22::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Group end", dx);
+}
+
+
+void BlockTZX_24::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Loop start", dx);
+
+    writer.DrawNextString(wxString::Format("Number of repetitions : %u", number_repetitions), dx);
 }
 
 
