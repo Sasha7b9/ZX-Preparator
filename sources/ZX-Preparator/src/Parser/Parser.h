@@ -60,6 +60,8 @@ struct File
 
     bool is_valid = false;
 
+    uint number_unreaded_bytes = 0;
+
     FileTAP *ToTAP();
     FileHEX *ToHEX();
     FileTZX *ToTZX();

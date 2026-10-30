@@ -51,6 +51,12 @@ bool ParserTZX::Execute(pchar fileName)
             }
             else
             {
+                while (data.IsOk())
+                {
+                    data.Read8();
+                    file->number_unreaded_bytes++;
+                }
+
                 break;
             }
         }
@@ -71,6 +77,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     if (id == Type::ID::_10_Standard_speed_data_block)
     {
         block = std::make_unique<BlockTZX_10>(stream);
+    }
+    else if (id == Type::ID::_20_Pause_or_Stop_The_Tape_command)
+    {
+        block = std::make_unique<BlockTZX_20>(stream);
     }
     else if (id == Type::ID::_30_Text_description)
     {
@@ -101,6 +111,14 @@ Block *BlockTZX_10::Read()
     {
         data.push_back(stream.Read8());
     }
+
+    return this;
+}
+
+
+Block *BlockTZX_20::Read()
+{
+    pause_duration = stream.Read16();
 
     return this;
 }
@@ -154,14 +172,6 @@ void BlockTZX::WriteType(Writer &writer, const wxString &type, int dx)
 }
 
 
-void BlockTZX_30::Write(Writer &writer, int dx)
-{
-    WriteType(writer, "Text description", dx);
-
-    writer.DrawNextString(wxString::Format("Description : %s", text), dx);
-}
-
-
 void BlockTZX_10::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Standard Speed Data Block", dx);
@@ -169,4 +179,20 @@ void BlockTZX_10::Write(Writer &writer, int dx)
     writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_block), dx);
 
     writer.DrawNextString(wxString::Format("Length of data : %u", length_data), dx);
+}
+
+
+void BlockTZX_20::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Pause (silence) or 'Stop the Tape' command", dx);
+
+    writer.DrawNextString(wxString::Format("duration : %u ms", pause_duration), dx);
+}
+
+
+void BlockTZX_30::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Text description", dx);
+
+    writer.DrawNextString(wxString::Format("Description : %s", text), dx);
 }

@@ -137,6 +137,11 @@ void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
 
     writer.DrawNextString(wxString::Format("Number blocks : %d", file->NumberBlocks()));
 
+    if (file->number_unreaded_bytes > 0)
+    {
+        writer.DrawNextString(wxString::Format("!!!Warning !!! Number unreaded bytes == % u", file->number_unreaded_bytes));
+    }
+
     for (int i = 0; i < file->NumberBlocks(); i++)
     {
         auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[i]);
