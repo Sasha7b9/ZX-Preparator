@@ -220,6 +220,22 @@ private:
 };
 
 
+struct BlockTZX_35 : public BlockTZX
+{
+    BlockTZX_35(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_35_Custom_info_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    wxString id_string;         // Identification string (in ASCII)
+    wxString custom_info;
+};
+
+
 struct FileTZX : public File
 {
     HeaderTZX header;

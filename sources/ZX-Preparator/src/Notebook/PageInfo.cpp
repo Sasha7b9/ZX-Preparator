@@ -131,7 +131,7 @@ void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
 {
     auto file = std::dynamic_pointer_cast<FileTZX>(_file);
 
-    writer.DrawNextString("Is TZX file");
+    writer.DrawNextString(wxString::Format("Is TZX file version %d:%d", file->header.revision_major, file->header.revision_minor));
 
     writer.DrawNextString(wxString::Format("Full size %d", file->FullSize()));
 

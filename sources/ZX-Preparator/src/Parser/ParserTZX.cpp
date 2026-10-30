@@ -33,10 +33,9 @@ bool ParserTZX::Execute(pchar fileName)
 
     wxDataInputStream data(stream);
 
-    HeaderTZX header;
-    header.Read(data);
+    file->header.Read(data);
 
-    if (!header.IsValid())
+    if (!file->header.IsValid())
     {
     }
     else
@@ -101,6 +100,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     else if (id == Type::ID::_33_Hardware_type)
     {
         block = std::make_unique<BlockTZX_33>(stream);
+    }
+    else if (id == Type::ID::_35_Custom_info_block)
+    {
+        block = std::make_unique<BlockTZX_35>(stream);
     }
     else
     {
@@ -231,6 +234,24 @@ Block *BlockTZX_33::Read()
         info.info = stream.Read8();
 
         hwinfo.push_back(info);
+    }
+
+    return this;
+}
+
+
+Block *BlockTZX_35::Read()
+{
+    for (int i = 0; i < 16; i++)
+    {
+        id_string.Append((char)stream.Read8());
+    }
+
+    size_t length_custom_info = stream.Read32();
+
+    for (size_t i = 0; i < length_custom_info; i++)
+    {
+        custom_info.Append((char)stream.Read8());
     }
 
     return this;
@@ -399,4 +420,13 @@ void BlockTZX_33::Write(Writer &writer, int dx)
 
         writer.DrawNextString(wxString::Format("Hardware info : %s", info), dx + 2);
     }
+}
+
+
+void BlockTZX_35::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Custom info block", dx);
+
+    writer.DrawNextString(wxString::Format("Identification string : %s", id_string), dx + 1);
+    writer.DrawNextString(wxString::Format("Custom info : %s", custom_info), dx + 1);
 }
