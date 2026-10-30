@@ -113,6 +113,14 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_24>(stream);
     }
+    else if (id == Type::ID::_25_Loop_end)
+    {
+        block = std::make_unique<BlockTZX_25>(stream);
+    }
+    else if (id == Type::ID::_28_Select_block)
+    {
+        block = std::make_unique<BlockTZX_28>(stream);
+    }
     else if (id == Type::ID::_30_Text_description)
     {
         block = std::make_unique<BlockTZX_30>(stream);
@@ -282,6 +290,38 @@ Block *BlockTZX_22::Read()
 Block *BlockTZX_24::Read()
 {
     number_repetitions = Read16();
+
+    return this;
+}
+
+
+Block *BlockTZX_25::Read()
+{
+    return this;
+}
+
+
+Block *BlockTZX_28::Read()
+{
+    length_block = Read16();
+
+    uint8 number = Read8();
+
+    for (uint8 i = 0; i < number; i++)
+    {
+        SELECT select;
+
+        select.relative_offset = Read16();
+
+        uint8 length = Read8();
+
+        for (uint8 l = 0; l < length; l++)
+        {
+            select.description.Append((char)Read8());
+        }
+
+        selects.push_back(select);
+    }
 
     return this;
 }
@@ -511,6 +551,27 @@ void BlockTZX_24::Write(Writer &writer, int dx)
     WriteType(writer, "Loop start", dx);
 
     writer.DrawNextString(wxString::Format("Number of repetitions : %u", number_repetitions), dx);
+}
+
+
+void BlockTZX_25::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Loop end", dx);
+}
+
+
+void BlockTZX_28::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Select block", dx);
+
+    writer.DrawNextString(wxString::Format("Length block : %u", length_block), dx);
+
+    for (size_t i = 0; i < selects.size(); i++)
+    {
+        writer.DrawNextString(wxString::Format("SELECT %zu", i), dx);
+        writer.DrawNextString(wxString::Format("Relative offset : %u", selects[i].relative_offset), dx + 1);
+        writer.DrawNextString(wxString::Format("Description : %s", selects[i].description), dx + 1);
+    }
 }
 
 

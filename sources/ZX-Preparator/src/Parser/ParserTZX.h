@@ -261,6 +261,40 @@ private:
 };
 
 
+struct BlockTZX_25 : public BlockTZX
+{
+    BlockTZX_25(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_25_Loop_end)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+};
+
+
+struct BlockTZX_28 : public BlockTZX
+{
+    BlockTZX_28(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_28_Select_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    struct SELECT
+    {
+        uint16 relative_offset;     // Relative Offset
+        wxString description;       // Description text (please use single line and max. 30 chars)
+    };
+
+    uint16 length_block;            // 	Length of the whole block (without these two bytes)
+
+    std::vector<SELECT> selects;    // List of selections
+};
+
+
 struct BlockTZX_30 : public BlockTZX
 {
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_30_Text_description) { }
