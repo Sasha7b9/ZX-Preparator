@@ -77,6 +77,18 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_11>(stream);
     }
+    else if (id == Type::ID::_12_Pure_tone)
+    {
+        block = std::make_unique<BlockTZX_12>(stream);
+    }
+    else if (id == Type::ID::_13_Sequence_of_pulses_of_various_lengths)
+    {
+        block = std::make_unique<BlockTZX_13>(stream);
+    }
+    else if (id == Type::ID::_14_Pure_data_block)
+    {
+        block = std::make_unique<BlockTZX_14>(stream);
+    }
     else if (id == Type::ID::_15_Direct_recording_block)
     {
         block = std::make_unique<BlockTZX_15>(stream);
@@ -111,6 +123,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     }
     else
     {
+        if (id != 0)
+        {
+            id = id;
+        }
         return nullptr;
     }
 
@@ -148,9 +164,47 @@ Block *BlockTZX_11::Read()
     used_bits_in_last_byte = Read8();
 
     uint length = 0;
-    Read8(&length, 3);
+    Read8((uint8 *)&length, 3);
 
     data.reserve(length);
+    Read8(data.data(), length);
+
+    return this;
+}
+
+
+Block *BlockTZX_12::Read()
+{
+    length_one_pulse = Read16();
+    number_pulses = Read16();
+
+    return this;
+}
+
+
+Block *BlockTZX_13::Read()
+{
+    uint8 number = Read8();
+
+    pulses_lengths.resize(number);
+
+    Read16(pulses_lengths.data(), number);
+
+    return this;
+}
+
+
+Block *BlockTZX_14::Read()
+{
+    length_ZERO_bit_pulse = Read16();
+    length_ONE_bit_pulse = Read16();
+    used_bits_in_last_byte = Read8();
+    pause_after_this_block = Read16();
+
+    uint length = 0;
+    Read8((uint8 *)&length, 3);
+
+    data.resize(length);
     Read8(data.data(), length);
 
     return this;
@@ -165,7 +219,7 @@ Block *BlockTZX_15::Read()
 
     {
         uint length = 0;
-        Read8(&length, 3);
+        Read8((uint8 *)&length, 3);
 
         samples_data.reserve(length);
         Read8(samples_data.data(), length);
@@ -338,6 +392,36 @@ void BlockTZX_11::Write(Writer &writer, int dx)
 }
 
 
+void BlockTZX_12::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Pure Tone", dx);
+
+    writer.DrawNextString(wxString::Format("Length of one pulse : %u T-states", length_one_pulse), dx);
+
+    writer.DrawNextString(wxString::Format("Number of pulses", number_pulses), dx);
+}
+
+
+void BlockTZX_13::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Pulse sequence", dx);
+
+    writer.DrawNextString(wxString::Format("Number of pulses : %zu", pulses_lengths.size()), dx);
+}
+
+
+void BlockTZX_14::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Pure Data Block", dx);
+
+    writer.DrawNextString(wxString::Format("Length of ZERO bit pulse : %u", length_ZERO_bit_pulse), dx);
+    writer.DrawNextString(wxString::Format("Length of ONE bit pulse : %u", length_ONE_bit_pulse), dx);
+    writer.DrawNextString(wxString::Format("Used bits in last byte : %u", used_bits_in_last_byte), dx);
+    writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_this_block), dx);
+    writer.DrawNextString(wxString::Format("Size data tap file : %zu bytes", data.size()), dx);
+}
+
+
 void BlockTZX_15::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Direct Recording", dx);
@@ -348,7 +432,7 @@ void BlockTZX_15::Write(Writer &writer, int dx)
 
     writer.DrawNextString(wxString::Format("Used bits (samples) in last byte of data (1-8) : %u", used_bits_in_last_byte_of_data), dx);
 
-    writer.DrawNextString(wxString::Format("Length of samples' data : %u bytes", samples_data.size()), dx);
+    writer.DrawNextString(wxString::Format("Length of samples' data : %zu bytes", samples_data.size()), dx);
 }
 
 

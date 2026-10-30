@@ -16,15 +16,21 @@ uint8 Block::Read8()
 }
 
 
-void Block::Read8(void *buffer, size_t size)
+void Block::Read8(uint8 *buffer, size_t size)
 {
-    stream.Read8((uint8 *)buffer, size);
+    stream.Read8(buffer, size);
 }
 
 
 uint16 Block::Read16()
 {
     return stream.Read16();
+}
+
+
+void Block::Read16(uint16 *buffer, size_t size)
+{
+    stream.Read16(buffer, size);
 }
 
 

@@ -146,7 +146,7 @@ void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
     {
         auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[i]);
 
-        writer.DrawNextString(wxString::Format("Block %u:", i), 1);
+        writer.DrawNextString(wxString::Format("Block %d:", i), 1);
 
         block->Write(writer, 2);
     }

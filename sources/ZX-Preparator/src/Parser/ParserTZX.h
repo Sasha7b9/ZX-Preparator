@@ -117,6 +117,57 @@ private:
 };
 
 
+struct BlockTZX_12 : public BlockTZX
+{
+    BlockTZX_12(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_12_Pure_tone)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 length_one_pulse;    // Length of one pulse in T-states
+    uint16 number_pulses;       // Number of pulses
+};
+
+
+struct BlockTZX_13 : public BlockTZX
+{
+    BlockTZX_13(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_13_Sequence_of_pulses_of_various_lengths)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    std::vector<uint16> pulses_lengths;
+};
+
+
+struct BlockTZX_14 : public BlockTZX
+{
+    BlockTZX_14(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_14_Pure_data_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 length_ZERO_bit_pulse;   // Length of ZERO bit pulse
+    uint16 length_ONE_bit_pulse;    // Length of ONE bit pulse
+    uint8  used_bits_in_last_byte;  // Used bits in last byte (other bits should be 0) (e.g. if this is 6, then the bits used(x)
+                                    // in the last byte are : xxxxxx00, where MSb is the leftmost bit, LSb is the rightmost bit)
+    uint16 pause_after_this_block;  // Pause after this block (ms.)
+    std::vector<uint8> data;        // Data as in .TAP files
+};
+
+
 struct BlockTZX_15 : public BlockTZX
 {
     BlockTZX_15(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_15_Direct_recording_block)
