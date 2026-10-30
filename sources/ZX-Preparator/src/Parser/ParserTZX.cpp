@@ -164,21 +164,11 @@ Block *BlockTZX_15::Read()
     used_bits_in_last_byte_of_data = Read8();
 
     {
-        // Читаем три байта значения
+        uint length = 0;
+        Read8(&length, 3);
 
-        length_of_samples_data = 0;
-
-        uint8 *pointer = (uint8 *)&length_of_samples_data;
-
-        for (int i = 0; i < 3; i++)
-        {
-            *pointer++ = Read8();
-        }
-
-        for (uint i = 0; i < length_of_samples_data; i++)
-        {
-            samples_data.push_back(Read8());
-        }
+        samples_data.reserve(length);
+        Read8(samples_data.data(), length);
     }
 
     return this;
@@ -358,7 +348,7 @@ void BlockTZX_15::Write(Writer &writer, int dx)
 
     writer.DrawNextString(wxString::Format("Used bits (samples) in last byte of data (1-8) : %u", used_bits_in_last_byte_of_data), dx);
 
-    writer.DrawNextString(wxString::Format("Length of samples' data : %u bytes", length_of_samples_data), dx);
+    writer.DrawNextString(wxString::Format("Length of samples' data : %u bytes", samples_data.size()), dx);
 }
 
 

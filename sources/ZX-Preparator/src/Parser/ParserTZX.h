@@ -131,7 +131,6 @@ private:
     uint16 number_t_states;                 // Number of T-states per sample (bit of data)
     uint16 pause_after_this_block;          // Pause after this block in milliseconds (ms.)
     uint8  used_bits_in_last_byte_of_data;  // Used bits (samples) in last byte of data (1-8) (e.g. if this is 2, only first two samples of the last byte will be played)
-    uint  length_of_samples_data;           // 3 byte Length of samples' data
     std::vector<uint8> samples_data;        // Samples data. Each bit represents a state on the EAR port (i.e. one sample). MSb is played first.
 };
 
