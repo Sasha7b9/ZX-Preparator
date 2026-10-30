@@ -6,8 +6,6 @@
     #include <wx/statline.h>
     #include <wx/statline.h>
     #include <wx/file.h>
-    #include <wx/wfstream.h>
-    #include <wx/datstrm.h>
 #pragma warning (pop)
 
 
@@ -77,9 +75,17 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_10>(stream);
     }
+    else if (id == Type::ID::_11_Turbo_speed_data_block)
+    {
+        block = std::make_unique<BlockTZX_11>(stream);
+    }
     else if (id == Type::ID::_15_Direct_recording_block)
     {
         block = std::make_unique<BlockTZX_15>(stream);
+    }
+    else if (id == Type::ID::_18_CSW_recording_block)
+    {
+        block = std::make_unique<BlockTZX_18>(stream);
     }
     else if (id == Type::ID::_20_Pause_or_Stop_The_Tape_command)
     {
@@ -135,6 +141,34 @@ Block *BlockTZX_10::Read()
 }
 
 
+Block *BlockTZX_11::Read()
+{
+    length_PILOT_pulse = Read16();
+    length_SYNC_first_pulse = Read16();
+    length_SYNC_second_pulse = Read16();
+    length_ZERO_bit_pulse = Read16();
+    length_ONE_bit_pulse = Read16();
+    length_PILOT_tone = Read16();
+    used_bits_in_last_byte = Read8();
+
+    uint length = 0;
+
+    uint8 *pointer = (uint8 *)&length;
+
+    for (int i = 0; i < 3; i++)
+    {
+        *pointer++ = Read8();
+    }
+
+    for (uint i = 0; i < length; i++)
+    {
+        data.push_back(Read8());
+    }
+
+    return this;
+}
+
+
 Block *BlockTZX_15::Read()
 {
     number_t_states = stream.Read16();
@@ -163,9 +197,24 @@ Block *BlockTZX_15::Read()
 }
 
 
+Block *BlockTZX_18::Read()
+{
+    block_length = Read32();
+    pause_after_this_block = Read16();
+    stream.Read8((uint8 *)&sampling_rate, 3);
+    compression_type = Read8();
+
+    uint size = Read32();
+    csw_data.resize(size);
+    stream.Read8(csw_data.data(), size);
+
+    return this;
+}
+
+
 Block *BlockTZX_20::Read()
 {
-    pause_duration = stream.Read16();
+    pause_duration = Read16();
 
     return this;
 }
@@ -303,6 +352,14 @@ void BlockTZX_10::Write(Writer &writer, int dx)
 }
 
 
+void BlockTZX_11::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Turbo Speed Data Block", dx);
+
+    writer.DrawNextString(wxString::Format("Length of PILOT pulse : %u", length_PILOT_pulse), dx);
+}
+
+
 void BlockTZX_15::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Direct Recording", dx);
@@ -314,6 +371,32 @@ void BlockTZX_15::Write(Writer &writer, int dx)
     writer.DrawNextString(wxString::Format("Used bits (samples) in last byte of data (1-8) : %u", used_bits_in_last_byte_of_data), dx);
 
     writer.DrawNextString(wxString::Format("Length of samples' data : %u bytes", length_of_samples_data), dx);
+}
+
+
+void BlockTZX_18::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "CSW Recording", dx);
+
+    writer.DrawNextString(wxString::Format("Block length : %u bytes", block_length), dx);
+    writer.DrawNextString(wxString::Format("Block length : %u ms", pause_after_this_block), dx);
+    writer.DrawNextString(wxString::Format("Sampling rate : %u", sampling_rate), dx);
+
+    wxString compression{ wxString::Format("Unknown value : %u", compression_type) };
+
+    if (compression_type == 1)
+    {
+        compression = "RLE";
+    }
+    else if (compression_type == 2)
+    {
+        compression = "Z-RLE";
+    }
+    writer.DrawNextString(wxString::Format("Compression type : %s", compression), dx);
+
+    writer.DrawNextString(wxString::Format("Number of stored pulses(after decompression, for validation purposes) : %u", number_stored_pulses), dx);
+
+    writer.DrawNextString(wxString::Format("Length CSW data : %u bytes", csw_data.size()), dx);
 }
 
 

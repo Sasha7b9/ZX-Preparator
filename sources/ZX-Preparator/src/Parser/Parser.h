@@ -25,6 +25,9 @@ struct Block
 
     virtual void Write(Writer &, int /*dx*/) { }
 
+    uint8 Read8();
+    uint16 Read16();
+    uint Read32();
 };
 
 

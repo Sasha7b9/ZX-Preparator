@@ -93,6 +93,30 @@ private:
 };
 
 
+struct BlockTZX_11 : public BlockTZX
+{
+    BlockTZX_11(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_11_Turbo_speed_data_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 length_PILOT_pulse;          // Length of PILOT pulse {2168}
+    uint16 length_SYNC_first_pulse;     // Length of SYNC first pulse {667}
+    uint16 length_SYNC_second_pulse;    // Length of SYNC second pulse {735}
+    uint16 length_ZERO_bit_pulse;       // Length of ZERO bit pulse {855}
+    uint16 length_ONE_bit_pulse;        // Length of ONE bit pulse {1710}
+    uint16 length_PILOT_tone;           // Length of PILOT tone (number of pulses) {8063 header (flag<128), 3223 data (flag>=128)}
+    uint8 used_bits_in_last_byte;       // Used bits in the last byte (other bits should be 0) {8}
+                                        // (e.g. if this is 6, then the bits used(x) in the last byte are : xxxxxx00, where MSb is the leftmost bit, LSb is the rightmost bit)
+    uint16 pause_after_this_block;      // Pause after this block (ms.) {1000}
+    std::vector<uint8> data;            // Data as in .TAP files
+};
+
+
 struct BlockTZX_15 : public BlockTZX
 {
     BlockTZX_15(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_15_Direct_recording_block)
@@ -109,6 +133,26 @@ private:
     uint8  used_bits_in_last_byte_of_data;  // Used bits (samples) in last byte of data (1-8) (e.g. if this is 2, only first two samples of the last byte will be played)
     uint  length_of_samples_data;           // 3 byte Length of samples' data
     std::vector<uint8> samples_data;        // Samples data. Each bit represents a state on the EAR port (i.e. one sample). MSb is played first.
+};
+
+
+struct BlockTZX_18 : public BlockTZX
+{
+    BlockTZX_18(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_18_CSW_recording_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint block_length;              // Block length (without these four bytes)
+    uint16 pause_after_this_block;  // Pause after this block (in ms).
+    uint sampling_rate;             // Sampling rate
+    uint8 compression_type;         // Compression type 0x01: RLE 0x02 : Z - RLE
+    uint number_stored_pulses;      // Number of stored pulses (after decompression, for validation purposes)
+    std::vector<uint8> csw_data;    // CSW data, encoded according to the CSW file format specification.
 };
 
 

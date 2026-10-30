@@ -4,6 +4,28 @@
 #include "Parser/ParserHEX.h"
 #include "Parser/ParserTAP.h"
 #include "Parser/ParserTZX.h"
+#pragma warning (push, 0)
+    #include <wx/wfstream.h>
+    #include <wx/datstrm.h>
+#pragma warning (pop)
+
+
+uint8 Block::Read8()
+{
+    return stream.Read8();
+}
+
+
+uint16 Block::Read16()
+{
+    return stream.Read16();
+}
+
+
+uint Block::Read32()
+{
+    return stream.Read32();
+}
 
 
 void File::Clear()
