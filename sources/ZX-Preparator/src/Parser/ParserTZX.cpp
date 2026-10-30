@@ -105,6 +105,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_21>(stream);
     }
+    else if (id == Type::ID::_22_Group_end)
+    {
+        block = std::make_unique<BlockTZX_22>(stream);
+    }
     else if (id == Type::ID::_30_Text_description)
     {
         block = std::make_unique<BlockTZX_30>(stream);
@@ -261,6 +265,12 @@ Block *BlockTZX_21::Read()
         group_name.Append((char)Read8());
     }
 
+    return this;
+}
+
+
+Block *BlockTZX_22::Read()
+{
     return this;
 }
 
@@ -475,6 +485,12 @@ void BlockTZX_21::Write(Writer &writer, int dx)
     WriteType(writer, "Group start", dx);
 
     writer.DrawNextString(wxString::Format("Group name : %s", group_name), dx);
+}
+
+
+void BlockTZX_22::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Group end", dx);
 }
 
 

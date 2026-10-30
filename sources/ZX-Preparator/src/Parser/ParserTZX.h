@@ -235,6 +235,17 @@ private:
 };
 
 
+struct BlockTZX_22 : public BlockTZX
+{
+    BlockTZX_22(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_22_Group_end)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+};
+
+
 struct BlockTZX_30 : public BlockTZX
 {
     BlockTZX_30(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_30_Text_description) { }
