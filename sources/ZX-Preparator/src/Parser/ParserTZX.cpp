@@ -86,6 +86,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_30>(stream);
     }
+    else if (id == Type::ID::_32_Archive_info)
+    {
+        block = std::make_unique<BlockTZX_32>(stream);
+    }
     else
     {
         return nullptr;
@@ -131,6 +135,30 @@ Block *BlockTZX_30::Read()
     for (int i = 0; i < num_sybmols; i++)
     {
         text.Append((char)stream.Read8());
+    }
+
+    return this;
+}
+
+
+Block *BlockTZX_32::Read()
+{
+    length_whole_block = stream.Read16();
+    number_text_strings = stream.Read8();
+
+    for (uint8 i = 0; i < number_text_strings; i++)
+    {
+        Text text;
+        text.type = (Text::Type::E)stream.Read8();
+
+        uint8 size = stream.Read8();
+
+        for (int s = 0; s < size; s++)
+        {
+            text.string.Append((char)stream.Read8());
+        }
+
+        strings.push_back(text);
     }
 
     return this;
@@ -195,4 +223,47 @@ void BlockTZX_30::Write(Writer &writer, int dx)
     WriteType(writer, "Text description", dx);
 
     writer.DrawNextString(wxString::Format("Description : %s", text), dx);
+}
+
+
+void BlockTZX_32::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Archive info", dx);
+
+    writer.DrawNextString(wxString::Format("Length of the whole block : %u bytes", length_whole_block), dx);
+
+    for (size_t i = 0; i < strings.size(); i++)
+    {
+        writer.DrawNextString(strings[i].GetString(), dx + 1);
+    }
+}
+
+
+wxString BlockTZX_32::Text::GetString() const
+{
+    wxString _id{ "Comment(s)" };
+
+    static const wxString ids[] =
+    {
+        "Full title",
+        "Software house/publisher",
+        "Author(s)",
+        "Year of publication",
+        "Language",
+        "Game/utility type",
+        "Price",
+        "Protection scheme/loader",
+        "Origin"
+    };
+
+    if (type < std::size(ids))
+    {
+        _id = ids[type];
+    }
+    else
+    {
+        _id = "!!! Warning !!! Unknown ID text";
+    }
+
+    return wxString::Format("%s : %s", _id, string);
 }

@@ -120,12 +120,47 @@ private:
 };
 
 
-/*
-struct DescriptionTZX : public Description
+struct BlockTZX_32 : public BlockTZX
 {
+    BlockTZX_32(wxDataInputStream &stream) : BlockTZX(stream) { }
 
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 length_whole_block = 0;      // Length of the whole block (without these two bytes)
+    uint8 number_text_strings = 0;      // Number of text strings
+
+    struct Text
+    {
+        struct Type
+        {
+            enum E
+            {
+                _00_Full_title,
+                _01_Software_house_publisher,
+                _02_Author,
+                _03_Year_of_publication,
+                _04_Language,
+                _05_Game_utility_type,
+                _06_Price,
+                _07_Protection_scheme_loader,
+                _08_Origin,
+                _FF_Comment = 0xFF
+            };
+        };
+
+        Type::E type;
+
+        wxString string;
+
+        wxString GetString() const;
+    };
+
+    std::vector<Text> strings;  // List of text strings
 };
-*/
 
 
 struct FileTZX : public File
