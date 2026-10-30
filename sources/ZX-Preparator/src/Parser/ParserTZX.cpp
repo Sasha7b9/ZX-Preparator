@@ -128,12 +128,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 Block *BlockTZX_10::Read()
 {
     pause_after_block = Read16();
-    length_data = Read16();
 
-    for (uint16 i = 0; i < length_data; i++)
-    {
-        data.push_back(Read8());
-    }
+    length_data = Read16();
+    data.resize(length_data);
+    Read8(data.data(), length_data);
 
     return this;
 }
@@ -150,18 +148,10 @@ Block *BlockTZX_11::Read()
     used_bits_in_last_byte = Read8();
 
     uint length = 0;
+    Read8(&length, 3);
 
-    uint8 *pointer = (uint8 *)&length;
-
-    for (int i = 0; i < 3; i++)
-    {
-        *pointer++ = Read8();
-    }
-
-    for (uint i = 0; i < length; i++)
-    {
-        data.push_back(Read8());
-    }
+    data.reserve(length);
+    Read8(data.data(), length);
 
     return this;
 }

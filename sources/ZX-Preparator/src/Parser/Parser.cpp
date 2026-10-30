@@ -16,9 +16,9 @@ uint8 Block::Read8()
 }
 
 
-void Block::Read8(uint8 *buffer, size_t size)
+void Block::Read8(void *buffer, size_t size)
 {
-    stream.Read8(buffer, size);
+    stream.Read8((uint8 *)buffer, size);
 }
 
 
