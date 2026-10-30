@@ -246,6 +246,21 @@ struct BlockTZX_22 : public BlockTZX
 };
 
 
+struct BlockTZX_23 : public BlockTZX
+{
+    BlockTZX_23(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_23_Jump_to_block)
+    {}
+
+    virtual Block *Read() override;
+
+    virtual void Write(Writer &, int dx) override;
+
+private:
+
+    uint16 relative_jump_value;
+};
+
+
 struct BlockTZX_24 : public BlockTZX
 {
     BlockTZX_24(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_24_Loop_start)

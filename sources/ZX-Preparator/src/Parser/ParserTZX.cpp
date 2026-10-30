@@ -109,6 +109,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_22>(stream);
     }
+    else if (id == Type::ID::_23_Jump_to_block)
+    {
+        block = std::make_unique<BlockTZX_23>(stream);
+    }
     else if (id == Type::ID::_24_Loop_start)
     {
         block = std::make_unique<BlockTZX_24>(stream);
@@ -283,6 +287,14 @@ Block *BlockTZX_21::Read()
 
 Block *BlockTZX_22::Read()
 {
+    return this;
+}
+
+
+Block *BlockTZX_23::Read()
+{
+    relative_jump_value = Read16();
+
     return this;
 }
 
@@ -543,6 +555,14 @@ void BlockTZX_21::Write(Writer &writer, int dx)
 void BlockTZX_22::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Group end", dx);
+}
+
+
+void BlockTZX_23::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Jump to block", dx);
+
+    writer.DrawNextString(wxString::Format("Relative jump value : %u", relative_jump_value), dx);
 }
 
 
