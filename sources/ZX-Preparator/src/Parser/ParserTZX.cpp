@@ -78,6 +78,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     {
         block = std::make_unique<BlockTZX_10>(stream);
     }
+    else if (id == Type::ID::_15_Direct_recording_block)
+    {
+        block = std::make_unique<BlockTZX_15>(stream);
+    }
     else if (id == Type::ID::_20_Pause_or_Stop_The_Tape_command)
     {
         block = std::make_unique<BlockTZX_20>(stream);
@@ -93,6 +97,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     else if (id == Type::ID::_32_Archive_info)
     {
         block = std::make_unique<BlockTZX_32>(stream);
+    }
+    else if (id == Type::ID::_33_Hardware_type)
+    {
+        block = std::make_unique<BlockTZX_33>(stream);
     }
     else
     {
@@ -118,6 +126,34 @@ Block *BlockTZX_10::Read()
     for (uint16 i = 0; i < length_data; i++)
     {
         data.push_back(stream.Read8());
+    }
+
+    return this;
+}
+
+
+Block *BlockTZX_15::Read()
+{
+    number_t_states = stream.Read16();
+    pause_after_this_block = stream.Read16();
+    used_bits_in_last_byte_of_data = stream.Read8();
+
+    {
+        // Читаем три байта значения
+
+        length_of_samples_data = 0;
+
+        uint8 *pointer = (uint8 *)&length_of_samples_data;
+
+        for (int i = 0; i < 3; i++)
+        {
+            *pointer++ = stream.Read8();
+        }
+
+        for (uint i = 0; i < length_of_samples_data; i++)
+        {
+            samples_data.push_back(stream.Read8());
+        }
     }
 
     return this;
@@ -182,6 +218,25 @@ Block *BlockTZX_32::Read()
 }
 
 
+Block *BlockTZX_33::Read()
+{
+    uint8 num = stream.Read8();
+
+    for (uint8 i = 0; i < num; i++)
+    {
+        HWINFO info;
+
+        info.type = stream.Read8();
+        info.id = stream.Read8();
+        info.info = stream.Read8();
+
+        hwinfo.push_back(info);
+    }
+
+    return this;
+}
+
+
 void HeaderTZX::Read(wxDataInputStream &stream)
 {
     uint8 *pointer = (uint8 *)this;
@@ -224,6 +279,20 @@ void BlockTZX_10::Write(Writer &writer, int dx)
     writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_block), dx);
 
     writer.DrawNextString(wxString::Format("Length of data : %u", length_data), dx);
+}
+
+
+void BlockTZX_15::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Direct Recording", dx);
+
+    writer.DrawNextString(wxString::Format("Number of T-states per sample (bit of data) : %u", number_t_states), dx);
+
+    writer.DrawNextString(wxString::Format("Pause after this block : %u ms", pause_after_this_block), dx);
+
+    writer.DrawNextString(wxString::Format("Used bits (samples) in last byte of data (1-8) : %u", used_bits_in_last_byte_of_data), dx);
+
+    writer.DrawNextString(wxString::Format("Length of samples' data : %u bytes", length_of_samples_data), dx);
 }
 
 
@@ -285,10 +354,49 @@ wxString BlockTZX_32::Text::GetString() const
     {
         _id = ids[type];
     }
-    else
+    else if(type != 0xFF)
     {
-        _id = "!!! Warning !!! Unknown ID text";
+        _id = wxString::Format("!!! Warning !!! Unknown ID text %d", (int)type);
     }
 
     return wxString::Format("%s : %s", _id, string);
+}
+
+
+void BlockTZX_33::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Hardware type", dx);
+
+    size_t size = hwinfo.size();
+
+    for (size_t i = 0; i < size; i++)
+    {
+        writer.DrawNextString(wxString::Format("HWINFO %d", (int)i), dx + 1);
+
+        HWINFO &hw = hwinfo[i];
+
+        writer.DrawNextString(wxString::Format("Hardware type : %u", hw.type), dx + 2);
+        writer.DrawNextString(wxString::Format("Hardware ID : %u", hw.id), dx + 2);
+
+        wxString info{ "Unknown" };
+
+        if (hw.info == 0)
+        {
+            info = "The tape RUNS on this machine or with this hardware, but may or may not use the hardware or special features of the machine";
+        }
+        else if (hw.info == 1)
+        {
+            info = "The tape USES the hardware or special features of the machine, such as extra memory or a sound chip";
+        }
+        else if (hw.info == 2)
+        {
+            info = "The tape RUNS but it DOESN'T use the hardware or special features of the machine";
+        }
+        else if (hw.info == 3)
+        {
+            info = "The tape DOESN'T RUN on this machine or with this hardware";
+        }
+
+        writer.DrawNextString(wxString::Format("Hardware info : %s", info), dx + 2);
+    }
 }
