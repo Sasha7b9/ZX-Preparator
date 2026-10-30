@@ -3,9 +3,7 @@
 #include "Parser/ParserTZX.h"
 #include "Notebook/PageInfo.h"
 #pragma warning (push, 0)
-    #include <wx/statline.h>
-    #include <wx/statline.h>
-    #include <wx/file.h>
+    #include <wx/datstrm.h>
 #pragma warning (pop)
 
 
@@ -129,12 +127,12 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
 
 Block *BlockTZX_10::Read()
 {
-    pause_after_block = stream.Read16();
-    length_data = stream.Read16();
+    pause_after_block = Read16();
+    length_data = Read16();
 
     for (uint16 i = 0; i < length_data; i++)
     {
-        data.push_back(stream.Read8());
+        data.push_back(Read8());
     }
 
     return this;
@@ -171,9 +169,9 @@ Block *BlockTZX_11::Read()
 
 Block *BlockTZX_15::Read()
 {
-    number_t_states = stream.Read16();
-    pause_after_this_block = stream.Read16();
-    used_bits_in_last_byte_of_data = stream.Read8();
+    number_t_states = Read16();
+    pause_after_this_block = Read16();
+    used_bits_in_last_byte_of_data = Read8();
 
     {
         // Читаем три байта значения
@@ -184,12 +182,12 @@ Block *BlockTZX_15::Read()
 
         for (int i = 0; i < 3; i++)
         {
-            *pointer++ = stream.Read8();
+            *pointer++ = Read8();
         }
 
         for (uint i = 0; i < length_of_samples_data; i++)
         {
-            samples_data.push_back(stream.Read8());
+            samples_data.push_back(Read8());
         }
     }
 
@@ -201,12 +199,12 @@ Block *BlockTZX_18::Read()
 {
     block_length = Read32();
     pause_after_this_block = Read16();
-    stream.Read8((uint8 *)&sampling_rate, 3);
+    Read8((uint8 *)&sampling_rate, 3);
     compression_type = Read8();
 
     uint size = Read32();
     csw_data.resize(size);
-    stream.Read8(csw_data.data(), size);
+    Read8(csw_data.data(), size);
 
     return this;
 }
@@ -222,11 +220,11 @@ Block *BlockTZX_20::Read()
 
 Block *BlockTZX_21::Read()
 {
-    uint8 length = stream.Read8();
+    uint8 length = Read8();
 
     for (size_t i = 0; i < length; i++)
     {
-        group_name.Append((char)stream.Read8());
+        group_name.Append((char)Read8());
     }
 
     return this;
@@ -235,11 +233,11 @@ Block *BlockTZX_21::Read()
 
 Block *BlockTZX_30::Read()
 {
-    int num_sybmols = stream.Read8();
+    int num_sybmols = Read8();
 
     for (int i = 0; i < num_sybmols; i++)
     {
-        text.Append((char)stream.Read8());
+        text.Append((char)Read8());
     }
 
     return this;
@@ -248,19 +246,19 @@ Block *BlockTZX_30::Read()
 
 Block *BlockTZX_32::Read()
 {
-    length_whole_block = stream.Read16();
-    number_text_strings = stream.Read8();
+    length_whole_block = Read16();
+    number_text_strings = Read8();
 
     for (uint8 i = 0; i < number_text_strings; i++)
     {
         Text text;
-        text.type = (Text::Type::E)stream.Read8();
+        text.type = (Text::Type::E)Read8();
 
-        uint8 size = stream.Read8();
+        uint8 size = Read8();
 
         for (int s = 0; s < size; s++)
         {
-            text.string.Append((char)stream.Read8());
+            text.string.Append((char)Read8());
         }
 
         strings.push_back(text);
@@ -272,15 +270,15 @@ Block *BlockTZX_32::Read()
 
 Block *BlockTZX_33::Read()
 {
-    uint8 num = stream.Read8();
+    uint8 num = Read8();
 
     for (uint8 i = 0; i < num; i++)
     {
         HWINFO info;
 
-        info.type = stream.Read8();
-        info.id = stream.Read8();
-        info.info = stream.Read8();
+        info.type = Read8();
+        info.id = Read8();
+        info.info = Read8();
 
         hwinfo.push_back(info);
     }
@@ -293,14 +291,14 @@ Block *BlockTZX_35::Read()
 {
     for (int i = 0; i < 16; i++)
     {
-        id_string.Append((char)stream.Read8());
+        id_string.Append((char)Read8());
     }
 
-    size_t length_custom_info = stream.Read32();
+    size_t length_custom_info = Read32();
 
     for (size_t i = 0; i < length_custom_info; i++)
     {
-        custom_info.Append((char)stream.Read8());
+        custom_info.Append((char)Read8());
     }
 
     return this;
