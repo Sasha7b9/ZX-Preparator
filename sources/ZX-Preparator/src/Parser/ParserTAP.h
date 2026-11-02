@@ -220,7 +220,7 @@ struct BlockTAP_Code : public BlockTAP
 
 struct BlockTAP_PureBytes : public BlockTAP
 {
-    BlockTAP_PureBytes(wxDataInputStream &, BlockTAP_Header *);
+    BlockTAP_PureBytes(wxDataInputStream &);
 
     virtual pchar NameASCII() const override;
 };
@@ -228,7 +228,7 @@ struct BlockTAP_PureBytes : public BlockTAP
 
 struct BlockTAP_Undefined : public BlockTAP
 {
-    BlockTAP_Undefined(wxDataInputStream &, BlockTAP_Header *);
+    BlockTAP_Undefined(wxDataInputStream &);
 
     virtual pchar NameASCII() const override;
 };

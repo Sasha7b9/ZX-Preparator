@@ -36,6 +36,70 @@
 */
 
 
+bool ParserTAP::Execute(pchar fileName)
+{
+    file = std::make_shared<FileTAP>();
+
+    if (!wxFile::Exists(fileName))
+    {
+        return false;
+    }
+
+    file->dump.FillFrom(fileName);
+
+    wxFileInputStream file_input(fileName);
+
+    wxBufferedInputStream stream(file_input);
+
+    wxDataInputStream data(stream);
+
+    while (data.IsOk())
+    {
+        wxFileOffset posBefore = stream.TellI();
+
+        BlockTAP_Header *header = new BlockTAP_Header(data);
+
+        if (header->IsValid())
+        {
+            file->AppendBlock(std::shared_ptr<BlockTAP>(header));
+
+            BlockTAP *block = BlockTAP::ReadDataBlock(data, header);
+
+            if (block)
+            {
+                file->AppendBlock(std::shared_ptr<BlockTAP>(block));
+            }
+        }
+        else
+        {
+            stream.SeekI(posBefore);
+
+            BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data, header);
+
+            if (pure_bytes->IsValid())
+            {
+                file->AppendBlock(std::shared_ptr<BlockTAP>(pure_bytes));
+            }
+            else
+            {
+                stream.SeekI(posBefore);
+
+                BlockTAP_Undefined *undef = new BlockTAP_Undefined(data, header);
+
+                if (undef->IsValid())
+                {
+                    file->AppendBlock(std::shared_ptr<BlockTAP>(undef));
+                }
+            }
+        }
+    }
+
+    file->is_valid = (file->NumberBlocks() != 0);
+
+    return file->is_valid;
+}
+
+
 pchar BlockTAP::NameASCII() const
 {
     return "Generic block TAP";
@@ -259,7 +323,7 @@ BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *)
 }
 
 
-BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream, BlockTAP_Header *)
+BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
 
@@ -269,7 +333,7 @@ BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream, BlockTAP_Heade
 }
 
 
-BlockTAP_Undefined::BlockTAP_Undefined(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_Undefined::BlockTAP_Undefined(wxDataInputStream &)
 {
 
 }
@@ -297,70 +361,6 @@ BlockTAP *BlockTAP::ReadDataBlock(wxDataInputStream &stream, BlockTAP_Header *he
     }
 
     return block;
-}
-
-
-bool ParserTAP::Execute(pchar fileName)
-{
-    file = std::make_shared<FileTAP>();
-
-    if (!wxFile::Exists(fileName))
-    {
-        return false;
-    }
-
-    file->dump.FillFrom(fileName);
-
-    wxFileInputStream file_input(fileName);
-
-    wxBufferedInputStream stream(file_input);
-
-    wxDataInputStream data(stream);
-
-    while (data.IsOk())
-    {
-        wxFileOffset posBefore = stream.TellI();
-
-        BlockTAP_Header *header = new BlockTAP_Header(data);
-
-        if (header->IsValid())
-        {
-            file->AppendBlock(std::shared_ptr<BlockTAP>(header));
-
-            BlockTAP *block = BlockTAP::ReadDataBlock(data, header);
-
-            if (block)
-            {
-                file->AppendBlock(std::shared_ptr<BlockTAP>(block));
-            }
-        }
-        else
-        {
-            stream.SeekI(posBefore);
-
-            BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data, header);
-
-            if (pure_bytes->IsValid())
-            {
-                file->AppendBlock(std::shared_ptr<BlockTAP>(pure_bytes));
-            }
-            else
-            {
-                stream.SeekI(posBefore);
-
-                BlockTAP_Undefined *undef = new BlockTAP_Undefined(data, header);
-
-                if (undef->IsValid())
-                {
-                    file->AppendBlock(std::shared_ptr<BlockTAP>(undef));
-                }
-            }
-        }
-    }
-
-    file->is_valid = (file->NumberBlocks() != 0);
-
-    return file->is_valid;
 }
 
 
