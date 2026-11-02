@@ -83,7 +83,7 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 
         auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
 
-        writer.DrawNextString(wxString::Format("Name : %s", block->IsUndefined() ? "Unknown" : block->file_name), 2);
+        writer.DrawNextString(wxString::Format("Name : %s", block->ToUndefined() ? "Unknown" : block->file_name), 2);
 
         if (block->ToCode() && block->GetSize() == 6912 && block->ToCode()->StartAddressCode() == 16384)
         {

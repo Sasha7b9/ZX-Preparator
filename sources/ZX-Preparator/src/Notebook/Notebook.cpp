@@ -165,7 +165,7 @@ void Notebook::FillTAP(ParserTAP &parser)
 
                     AppendPage(page);
                 }
-                else if (block->IsPureBytes())
+                else if (block->ToPureBytes())
                 {
                     AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter++, num_pure++)));
                 }
