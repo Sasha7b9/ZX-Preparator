@@ -160,9 +160,11 @@ struct BlockTAP_BASIC : public BlockTAP
     }
 
     // Распарсить считанные данные в массив lines
-    bool ParseBASIC(ProgramBASIC &);
+    bool ParseBASIC();
 
     LineBASIC ParseLineProgram();
+
+    ProgramBASIC program;
 };
 
 

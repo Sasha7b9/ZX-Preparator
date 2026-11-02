@@ -137,11 +137,7 @@ void Notebook::FillTAP(ParserTAP &parser)
                 {
                     PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
 
-                    ProgramBASIC program;
-
-                    block->ToBASIC()->ParseBASIC(program);
-
-                    page->SetProgram(program);
+                    page->SetProgram(block->ToBASIC()->program);
 
                     AppendPage(page);
                 }

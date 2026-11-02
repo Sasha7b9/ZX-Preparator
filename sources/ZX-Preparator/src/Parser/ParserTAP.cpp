@@ -139,9 +139,57 @@ void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
 }
 
 
-BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *header)
 {
+    data.AppendBytes(stream, header->size_data);
 
+    if (ParseBASIC())
+    {
+        is_valid = true;
+    }
+}
+
+
+bool BlockTAP_BASIC::ParseBASIC()
+{
+    program.Clear();
+
+    while (data.GetSize())
+    {
+        program.lines.push_back(ParseLineProgram());
+    }
+
+    return true;
+}
+
+
+LineBASIC BlockTAP_BASIC::ParseLineProgram()
+{
+    LineBASIC line;
+
+    line.number = data.Read16Reverse();
+    line.size = data.Read16();
+
+    for (int i = 0; (i < line.size - 1) && (data.GetSize() != 0); i++)
+    {
+        uint8 code = data.Read8();
+
+        const char *string = KeyCodes::Get(code);
+
+        line.symbols.push_back(string);
+    }
+
+    if (!data.IsEmpty())
+    {
+        data.ReadChar();
+    }
+
+    if (!data.IsEmpty())
+    {
+        data.ReadChar();
+    }
+
+    return line;
 }
 
 
@@ -261,49 +309,6 @@ bool ParserTAP::Execute(pchar fileName)
     file->is_valid = (file->NumberBlocks() != 0);
 
     return file->is_valid;
-}
-
-
-bool BlockTAP_BASIC::ParseBASIC(ProgramBASIC &program)
-{
-    program.Clear();
-
-    while (data.GetSize())
-    {
-        program.lines.push_back(ParseLineProgram());
-    }
-
-    return true;
-}
-
-
-LineBASIC BlockTAP_BASIC::ParseLineProgram()
-{
-    LineBASIC line;
-
-    line.number = data.Read16Reverse();
-    line.size = data.Read16();
-
-    for (int i = 0; (i < line.size - 1) && (data.GetSize() != 0); i++)
-    {
-        uint8 code = data.Read8();
-
-        const char *string = KeyCodes::Get(code);
-
-        line.symbols.push_back(string);
-    }
-
-    if (!data.IsEmpty())
-    {
-        data.ReadChar();
-    }
-
-    if (!data.IsEmpty())
-    {
-        data.ReadChar();
-    }
-
-    return line;
 }
 
 
