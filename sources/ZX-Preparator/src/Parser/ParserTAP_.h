@@ -121,25 +121,6 @@ struct FileTAP : public File
 };
 
 
-/*
-struct DescriptionTAP : public Description
-{
-    struct Block
-    {
-        Block(pchar n, BlockTAP::Header::TypeData::E t, uint16 s, uint16 p1, uint16 p2) : type(t), size(s), param1(p1), param2(p2), name(n)
-        {}
-        BlockTAP::Header::TypeData::E type = BlockTAP::Header::TypeData::Undefined;
-        uint16 size = 0;
-        uint16 param1 = 0;
-        uint16 param2 = 0;
-        std::string name;
-    };
-
-    std::vector<Block> blocks;
-};
-*/
-
-
 class ParserTAP
 {
 public:

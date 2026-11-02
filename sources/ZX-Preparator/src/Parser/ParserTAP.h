@@ -3,6 +3,12 @@
 #include "Parser/Parser.h"
 
 
+struct BlockTAP_Code;
+struct BlockTAP_BASIC;
+struct BlockTAP_ArrayNumber;
+struct BlockTAP_ArrayCharacter;
+
+
 struct BlockTAP : public Block
 {
     BlockTAP(wxDataInputStream &stream) : Block(stream)
@@ -13,10 +19,10 @@ struct BlockTAP : public Block
     static BlockTAP *ReadDataBlock(wxDataInputStream &, BlockTAP *header);
 
     bool IsHeader() const;
-    bool IsBASIC() const;
-    bool IsArrayNumber() const;
-    bool IsArrayCharacter() const;
-    bool IsCode() const;
+    BlockTAP_BASIC *ToBASIC() const;
+    BlockTAP_ArrayNumber *ToArrayNumber() const;
+    BlockTAP_ArrayCharacter *ToArrayCharacter() const;
+    BlockTAP_Code *ToCode() const;
     bool IsPureBytes() const;
     bool IsUndefined() const;
 
@@ -30,6 +36,8 @@ struct BlockTAP : public Block
 
     uint16 param1 = 0;
     uint16 param2 = 0;
+
+    int GetSize() const;
 
     struct Data
     {
@@ -62,25 +70,45 @@ struct BlockTAP_Header : public BlockTAP
 
 struct BlockTAP_BASIC : public BlockTAP
 {
+    // С этой строки программа должна запуститься автоматически после загрузки
+    int NumberLineStart() const
+    {
+        return param1;
+    }
 
+    // Смещение адреса переменных относительно начала программы
+    int OffsetVariables() const
+    {
+        return param2;
+    }
 };
 
 
-struct BlockTAP_NumberArray : public BlockTAP
+struct BlockTAP_ArrayNumber : public BlockTAP
 {
-
+    char NameVariable() const
+    {
+        return (char)(param1 >> 8);
+    }
 };
 
 
-struct BlockTAP_CharacterArray : public BlockTAP
+struct BlockTAP_ArrayCharacter : public BlockTAP
 {
-
+    char NameVariable() const
+    {
+        return (char)(param1 >> 8);
+    }
 };
 
 
 struct BlockTAP_Code : public BlockTAP
 {
-
+    // Адрес загрузки
+    int StartAddressCode() const
+    {
+        return param1;
+    }
 };
 
 

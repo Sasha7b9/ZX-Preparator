@@ -133,7 +133,7 @@ void Notebook::FillTAP(ParserTAP &parser)
 
             if (block)
             {
-                if (block->IsBASIC())
+                if (block->ToBASIC())
                 {
                     PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
 
@@ -145,15 +145,15 @@ void Notebook::FillTAP(ParserTAP &parser)
 
                     AppendPage(page);
                 }
-                else if (block->IsArrayNumber())
+                else if (block->ToArrayNumber())
                 {
                     AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
                 }
-                else if (block->IsArrayCharacter())
+                else if (block->ToArrayCharacter())
                 {
                     AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
                 }
-                else if (block->IsCode())
+                else if (block->ToCode())
                 {
                     PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
 

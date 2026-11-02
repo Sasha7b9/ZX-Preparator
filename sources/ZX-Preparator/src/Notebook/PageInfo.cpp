@@ -85,7 +85,7 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 
         writer.DrawNextString(wxString::Format("Name : %s", block->IsUndefined() ? "Unknown" : block->file_name), 2);
 
-        if (block->IsCode() && block->data.data.size() == 6912 && block->param1 == 16384)
+        if (block->ToCode() && block->GetSize() == 6912 && block->ToCode()->StartAddressCode() == 16384)
         {
             writer.DrawNextString(wxString::Format("Type : %s", "DATA SCREEN"), 2);
         }
@@ -94,21 +94,26 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
             writer.DrawNextString(wxString::Format("Type : %s", types[block->type]), 2);
         }
 
-        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->data.data.size(), block->data.data.size()), 2);
+        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->GetSize(), block->GetSize()), 2);
 
-        if(block->IsBASIC())
+        if(block->ToBASIC())
         {
-            writer.DrawNextString(wxString::Format("Line start : %d", block->param1), 2);
+            writer.DrawNextString(wxString::Format("Line start : %d", block->ToBASIC()->NumberLineStart()), 2);
 
-            writer.DrawNextString(wxString::Format("The start of the variable area relative to the start of the program : #%05x/%d", block->param2, block->param2), 2);
+            writer.DrawNextString(wxString::Format("The start of the variable area relative to the start of the program : #%05x/%d",
+                block->ToBASIC()->OffsetVariables(), block->ToBASIC()->OffsetVariables()), 2);
         }
-        else if (block->IsArrayNumber() || block->IsArrayCharacter())
+        else if (block->ToArrayNumber())
         {
-            writer.DrawNextString(wxString::Format("Name : %c", (char)(block->param1 >> 8)), 2);
+            writer.DrawNextString(wxString::Format("Name : %c", block->ToArrayNumber()->NameVariable()), 2);
         }
-        else if (block->IsCode())
+        else if (block->ToArrayCharacter())
         {
-            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->param1, block->param1), 2);
+            writer.DrawNextString(wxString::Format("Name : %c", block->ToArrayCharacter()->NameVariable()), 2);
+        }
+        else if (block->ToCode())
+        {
+            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->ToCode()->StartAddressCode(), block->ToCode()->StartAddressCode()), 2);
         }
     }
 }
