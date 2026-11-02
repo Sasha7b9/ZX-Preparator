@@ -86,9 +86,9 @@ BlockTAP_Header *BlockTAP::ReadHeaderBlock(wxDataInputStream &stream)
 
     if (size == 19)                 // У заголовка размер всегда 19
     {
-        block->data.Resize(size);
+        block->data.ReadBytes(stream, 19);
 
-        block->type = (Type::E)block->Read8();
+        block->type = (Type::E)block->data.Read8();
 
         if (block->type < Type::PURE_BYTES)
         {
@@ -133,9 +133,7 @@ BlockTAP *BlockTAP::ReadDataBlock(wxDataInputStream &stream, BlockTAP_Header *he
         block = new BlockTAP_Code(stream);
     }
 
-    block->data.Resize(header->size_data);
-
-    block->Read8(block->data.BeginData(), header->size_data);
+    block->data.ReadBytes(stream, header->size_data);
 
     return block;
 }
@@ -208,12 +206,12 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram()
 {
     LineBASIC line;
 
-    line.number = data.GetData16Reverse();
-    line.size = data.GetData16();
+    line.number = data.Read16Reverse();
+    line.size = data.Read16();
 
     for (int i = 0; (i < line.size - 1) && (data.GetSize() != 0); i++)
     {
-        uint8 code = data.GetData8();
+        uint8 code = data.Read8();
 
         const char *string = KeyCodes::Get(code);
 
@@ -222,26 +220,32 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram()
 
     if (!data.IsEmpty())
     {
-        data.GetChar();
+        data.ReadChar();
     }
 
     if (!data.IsEmpty())
     {
-        data.GetChar();
+        data.ReadChar();
     }
 
     return line;
 }
 
 
-uint16 BlockTAP::Data::GetData16Reverse()
+void BlockTAP::Data::ReadBytes(wxDataInputStream &s, int size)
 {
-    if (data.size() >= 2)
+    data.resize(size);
+
+    s.Read8(data.data(), size);
+}
+
+
+uint16 BlockTAP::Data::Read16Reverse()
+{
+    if (BytesLast() >= 2)
     {
-        auto it = data.begin();
-        uint8 first = *it++;
-        uint8 second = *it++;
-        data.erase(data.begin(), it);
+        uint8 first = data.data()[pointer++];
+        uint8 second = data.data()[pointer++];
 
         return (first << 8) + second;
     }
@@ -252,14 +256,12 @@ uint16 BlockTAP::Data::GetData16Reverse()
 }
 
 
-uint16 BlockTAP::Data::GetData16()
+uint16 BlockTAP::Data::Read16()
 {
-    if (data.size() >= 2)
+    if (BytesLast() >= 2)
     {
-        auto it = data.begin();
-        uint8 first = *it++;
-        uint8 second = *it++;
-        data.erase(data.begin(), it);
+        uint8 first = data.data()[pointer++];
+        uint8 second = data.data()[pointer++];
 
         return (first) + (second << 8);
     }
@@ -270,14 +272,11 @@ uint16 BlockTAP::Data::GetData16()
 }
 
 
-uint8 BlockTAP::Data::GetData8()
+uint8 BlockTAP::Data::Read8()
 {
-    if (data.size())
+    if (GetSize())
     {
-        auto it = data.begin();
-        uint8 result = *it++;;
-        data.erase(data.begin(), it);
-        return result;
+        return data.data()[pointer++];
     }
 
     LOG_ERROR("Not enough elements in the array");
@@ -286,9 +285,9 @@ uint8 BlockTAP::Data::GetData8()
 }
 
 
-char BlockTAP::Data::GetChar()
+char BlockTAP::Data::ReadChar()
 {
-    return (char)GetData8();
+    return (char)Read8();
 }
 
 

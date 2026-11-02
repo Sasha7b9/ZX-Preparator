@@ -48,10 +48,7 @@ struct BlockTAP : public Block
 
     struct Data
     {
-        void Resize(int size)
-        {
-            data.resize(size);
-        }
+        void ReadBytes(wxDataInputStream &, int size);
 
         uint8 *BeginData()
         {
@@ -63,19 +60,32 @@ struct BlockTAP : public Block
             return (int)data.size();
         }
 
-        uint16 GetData16Reverse();
+        uint16 Read16Reverse();
 
-        uint16 GetData16();
+        uint16 Read16();
 
-        uint8 GetData8();
+        uint8 Read8();
 
-        char GetChar();
+        char ReadChar();
 
         bool IsEmpty() const;
+
+        // Осталось байт для чтения
+        int BytesLast() const
+        {
+            if (pointer >= GetSize())
+            {
+                return 0;
+            }
+
+            return GetSize() - pointer;
+        }
 
     private:
 
         std::vector<uint8> data;
+
+        int pointer = 0;
 
     } data;
 
