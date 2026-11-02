@@ -78,37 +78,47 @@ BlockTAP_PureBytes *BlockTAP::ToPureBytes() const
 }
 
 
-BlockTAP_Header *BlockTAP::ReadHeaderBlock(wxDataInputStream &stream)
+BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 {
-    BlockTAP_Header *block = new BlockTAP_Header(stream);
-
     uint16 size = stream.Read16();
 
     if (size == 19)                 // У заголовка размер всегда 19
     {
-        block->data.ReadBytes(stream, 19);
+        data.Push16(size);
 
-        block->type = (Type::E)block->data.Read8();
+        data.AppendBytes(stream, size);
 
-        if (block->type < Type::PURE_BYTES)
+        data.SetPointer(2);         // Перемещаемся к первому байту содержимого
+
+        if (data.Read8() == 0)      // У заголовка здесь всегда 0
         {
-            block->Read8((uint8 *)block->file_name, 10);
+            type = (Type::E)data.Read8();
 
-            block->file_name[10] = '\0';
+            if (type < Type::PURE_BYTES)
+            {
+                data.ReadBytes((uint8 *)file_name, 10);
 
-            block->size_data = block->Read16();
+                size_data = data.Read16();
 
-            block->param1 = block->Read16();
+                param1 = data.Read16();
 
-            block->param2 = block->Read16();
+                param2 = data.Read16();
 
-            block->valid = (block->Read8() == 0);
+                if (data.Read8() != 0)
+                {
+                    is_valid = false;
+                }
+            }
+            else
+            {
+                is_valid = false;
+            }
         }
-
-        return block;
+        else
+        {
+            is_valid = false;
+        }
     }
-
-    return nullptr;
 }
 
 
@@ -118,22 +128,20 @@ BlockTAP *BlockTAP::ReadDataBlock(wxDataInputStream &stream, BlockTAP_Header *he
 
     if (header->type == BlockTAP::Type::BASIC_PROGRAM)
     {
-        block = new BlockTAP_BASIC(stream);
+        block = new BlockTAP_BASIC(stream, header);
     }
     else if (header->type == BlockTAP::Type::ARRAY_NUMBER)
     {
-        block = new BlockTAP_ArrayNumber(stream);
+        block = new BlockTAP_ArrayNumber(stream, header);
     }
     else if (header->type == BlockTAP::Type::ARRAY_CHARACTER)
     {
-        block = new BlockTAP_ArrayCharacter(stream);
+        block = new BlockTAP_ArrayCharacter(stream, header);
     }
     else if (header->type == BlockTAP::Type::CODE)
     {
-        block = new BlockTAP_Code(stream);
+        block = new BlockTAP_Code(stream, header);
     }
-
-    block->data.ReadBytes(stream, header->size_data);
 
     return block;
 }
@@ -158,7 +166,7 @@ bool ParserTAP::Execute(pchar fileName)
 
     while (data.IsOk())
     {
-        BlockTAP_Header *header = BlockTAP::ReadHeaderBlock(data);
+        BlockTAP_Header *header = new BlockTAP_Header(data);
 
         if (header)
         {
@@ -232,11 +240,22 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram()
 }
 
 
-void BlockTAP::Data::ReadBytes(wxDataInputStream &s, int size)
+void BlockTAP::Data::Push16(uint16 value)
 {
-    data.resize(size);
+    data.push_back((uint8)value);
+    data.push_back((uint8)(value >> 8));
+}
 
-    s.Read8(data.data(), size);
+
+void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
+{
+    int offset =(int)data.size();
+
+    data.resize(data.size() + size);
+
+    stream.Read8(data.data() + offset, size);
+
+    pointer = 0;
 }
 
 

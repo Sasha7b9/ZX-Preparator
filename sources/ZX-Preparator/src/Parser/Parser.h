@@ -16,20 +16,12 @@ struct Writer;
 
 struct Block
 {
-    Block(wxDataInputStream &_stream) : stream(_stream) { }
+    Block() { }
     virtual ~Block() = default;
 
     virtual Block *Read() = 0;
 
-    wxDataInputStream &stream;
-
     virtual void Write(Writer &, int /*dx*/) { }
-
-    uint8 Read8();
-    void Read8(uint8 *, size_t);
-    uint16 Read16();
-    void Read16(uint16 *, size_t);
-    uint Read32();
 };
 
 

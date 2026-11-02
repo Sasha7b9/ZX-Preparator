@@ -14,7 +14,7 @@ struct BlockTAP_Undefined;
 
 struct BlockTAP : public Block
 {
-    BlockTAP(wxDataInputStream &stream) : Block(stream)
+    BlockTAP() : Block()
     {
     }
 
@@ -23,7 +23,6 @@ struct BlockTAP : public Block
         return nullptr;
     }
 
-    static BlockTAP_Header *ReadHeaderBlock(wxDataInputStream &);
     static BlockTAP *ReadDataBlock(wxDataInputStream &, BlockTAP_Header *);
 
     BlockTAP_Header *ToHeader() const;
@@ -39,8 +38,6 @@ struct BlockTAP : public Block
     uint16 param1 = 0;
     uint16 param2 = 0;
 
-    bool valid = false;
-
     int GetSize() const
     {
         return data.GetSize();
@@ -48,7 +45,9 @@ struct BlockTAP : public Block
 
     struct Data
     {
-        void ReadBytes(wxDataInputStream &, int size);
+        void Push16(uint16);
+
+        void AppendBytes(wxDataInputStream &, int size);
 
         uint8 *BeginData()
         {
@@ -59,6 +58,8 @@ struct BlockTAP : public Block
         {
             return (int)data.size();
         }
+
+        void ReadBytes(uint8 *, int size);
 
         uint16 Read16Reverse();
 
@@ -79,6 +80,11 @@ struct BlockTAP : public Block
             }
 
             return GetSize() - pointer;
+        }
+
+        void SetPointer(int offset)
+        {
+            pointer = offset;
         }
 
     private:
@@ -103,12 +109,21 @@ struct BlockTAP : public Block
     };
 
     Type::E type = Type::Undefined;
+
+    bool IsValid() const
+    {
+        return is_valid;
+    }
+
+protected:
+
+    bool is_valid = false;
 };
 
 
 struct BlockTAP_Header : public BlockTAP
 {
-    BlockTAP_Header(wxDataInputStream &stream) : BlockTAP(stream) { }
+    BlockTAP_Header(wxDataInputStream &);
 
     int size_data = 0;      // Это размер данных, на которые указывает данный заголовок
 };
@@ -116,7 +131,7 @@ struct BlockTAP_Header : public BlockTAP
 
 struct BlockTAP_BASIC : public BlockTAP
 {
-    BlockTAP_BASIC(wxDataInputStream &stream) : BlockTAP(stream) { }
+    BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
 
     // С этой строки программа должна запуститься автоматически после загрузки
     int NumberLineStart() const
@@ -139,7 +154,7 @@ struct BlockTAP_BASIC : public BlockTAP
 
 struct BlockTAP_ArrayNumber : public BlockTAP
 {
-    BlockTAP_ArrayNumber(wxDataInputStream &stream) : BlockTAP(stream) { }
+    BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
 
     char NameVariable() const
     {
@@ -150,7 +165,7 @@ struct BlockTAP_ArrayNumber : public BlockTAP
 
 struct BlockTAP_ArrayCharacter : public BlockTAP
 {
-    BlockTAP_ArrayCharacter(wxDataInputStream &stream) : BlockTAP(stream) { }
+    BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
 
     char NameVariable() const
     {
@@ -161,7 +176,7 @@ struct BlockTAP_ArrayCharacter : public BlockTAP
 
 struct BlockTAP_Code : public BlockTAP
 {
-    BlockTAP_Code(wxDataInputStream &stream) : BlockTAP(stream) { }
+    BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
 
     // Адрес загрузки
     int StartAddressCode() const
