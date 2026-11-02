@@ -183,9 +183,11 @@ bool ParserTAP::Execute(pchar fileName)
 
     while (data.IsOk())
     {
+        wxFileOffset posBefore = stream.TellI();
+
         BlockTAP_Header *header = new BlockTAP_Header(data);
 
-        if (header)
+        if (header->IsValid())
         {
             file->AppendBlock(std::shared_ptr<BlockTAP>(header));
 
@@ -198,13 +200,25 @@ bool ParserTAP::Execute(pchar fileName)
         }
         else
         {
-            while (data.IsOk())
-            {
-                data.Read8();
-                file->number_unreaded_bytes++;
-            }
+            stream.SeekI(posBefore);
 
-            break;
+            BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data, header);
+
+            if (pure_bytes->IsValid())
+            {
+                file->AppendBlock(std::shared_ptr<BlockTAP>(pure_bytes));
+            }
+            else
+            {
+                stream.SeekI(posBefore);
+
+                BlockTAP_Undefined *undef = new BlockTAP_Undefined(data, header);
+
+                if (undef->IsValid())
+                {
+                    file->AppendBlock(std::shared_ptr<BlockTAP>(undef));
+                }
+            }
         }
     }
 

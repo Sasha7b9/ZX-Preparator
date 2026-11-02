@@ -145,7 +145,7 @@ private:
 
 struct BlockTAP_BASIC : public BlockTAP
 {
-    BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
+    BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *);
 
     // С этой строки программа должна запуститься автоматически после загрузки
     int NumberLineStart() const
@@ -168,7 +168,7 @@ struct BlockTAP_BASIC : public BlockTAP
 
 struct BlockTAP_ArrayNumber : public BlockTAP
 {
-    BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
+    BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *);
 
     char NameVariable() const
     {
@@ -179,7 +179,7 @@ struct BlockTAP_ArrayNumber : public BlockTAP
 
 struct BlockTAP_ArrayCharacter : public BlockTAP
 {
-    BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
+    BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *);
 
     char NameVariable() const
     {
@@ -190,7 +190,7 @@ struct BlockTAP_ArrayCharacter : public BlockTAP
 
 struct BlockTAP_Code : public BlockTAP
 {
-    BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *) : BlockTAP() { }
+    BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *);
 
     // Адрес загрузки
     int StartAddressCode() const
@@ -205,13 +205,13 @@ struct BlockTAP_Code : public BlockTAP
 
 struct BlockTAP_PureBytes : public BlockTAP
 {
-
+    BlockTAP_PureBytes(wxDataInputStream &, BlockTAP_Header *);
 };
 
 
 struct BlockTAP_Undefined : public BlockTAP
 {
-
+    BlockTAP_Undefined(wxDataInputStream &, BlockTAP_Header *);
 };
 
 
