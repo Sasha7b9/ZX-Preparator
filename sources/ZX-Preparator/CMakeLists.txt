@@ -58,6 +58,11 @@ source_group(Notebook       FILES ${NOTEBOOK})
 source_group(Parser         FILES ${PARSER})
 source_group(Utils          FILES ${UTILS})
 
+
+set_source_files_properties(./src/Parser/ParserTAP_.cpp
+    PROPERTIES HEADER_FILE_ONLY ON)
+
+
 add_executable(${PROJECT_NAME}
     ${SRC}
     ${COMPUTER}

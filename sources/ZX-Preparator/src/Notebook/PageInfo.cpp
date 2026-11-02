@@ -83,32 +83,32 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 
         auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
 
-        writer.DrawNextString(wxString::Format("Name : %s", (block->header.type < 4) ? block->header.file_name : "Unknown"), 2);
+        writer.DrawNextString(wxString::Format("Name : %s", block->IsUndefined() ? "Unknown" : block->file_name), 2);
 
-        if (block->IsCODE() && block->data.size == 6912 && block->header.param1 == 16384)
+        if (block->IsCode() && block->data.data.size() == 6912 && block->param1 == 16384)
         {
             writer.DrawNextString(wxString::Format("Type : %s", "DATA SCREEN"), 2);
         }
         else
         {
-            writer.DrawNextString(wxString::Format("Type : %s", types[block->header.type]), 2);
+            writer.DrawNextString(wxString::Format("Type : %s", types[block->type]), 2);
         }
 
-        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->data.size, block->data.size), 2);
+        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->data.data.size(), block->data.data.size()), 2);
 
         if(block->IsBASIC())
         {
-            writer.DrawNextString(wxString::Format("Line start : %d", block->header.param1), 2);
+            writer.DrawNextString(wxString::Format("Line start : %d", block->param1), 2);
 
-            writer.DrawNextString(wxString::Format("The start of the variable area relative to the start of the program : #%05x/%d", block->header.param2, block->header.param2), 2);
+            writer.DrawNextString(wxString::Format("The start of the variable area relative to the start of the program : #%05x/%d", block->param2, block->param2), 2);
         }
         else if (block->IsArrayNumber() || block->IsArrayCharacter())
         {
-            writer.DrawNextString(wxString::Format("Name : %c", (char)(block->header.param1 >> 8)), 2);
+            writer.DrawNextString(wxString::Format("Name : %c", (char)(block->param1 >> 8)), 2);
         }
-        else if (block->IsCODE())
+        else if (block->IsCode())
         {
-            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->header.param1, block->header.param1), 2);
+            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->param1, block->param1), 2);
         }
     }
 }

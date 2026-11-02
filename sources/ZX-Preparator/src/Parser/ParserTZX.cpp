@@ -38,11 +38,11 @@ bool ParserTZX::Execute(pchar fileName)
     {
         while (data.IsOk())
         {
-            BlockTZX *bl = BlockTZX::ReadBlock(data);
+            BlockTZX *block = BlockTZX::ReadBlock(data);
 
-            if (bl)
+            if (block)
             {
-                file->AppendBlock(std::shared_ptr<BlockTZX>(bl));
+                file->AppendBlock(std::shared_ptr<BlockTZX>(block));
             }
             else
             {
