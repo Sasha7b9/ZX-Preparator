@@ -139,6 +139,42 @@ void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
 }
 
 
+BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
+BlockTAP_ArrayNumber::BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
+BlockTAP_ArrayCharacter::BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
+BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
+BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
+BlockTAP_Undefined::BlockTAP_Undefined(wxDataInputStream &, BlockTAP_Header *)
+{
+
+}
+
+
 BlockTAP *BlockTAP::ReadDataBlock(wxDataInputStream &stream, BlockTAP_Header *header)
 {
     BlockTAP *block = nullptr;
