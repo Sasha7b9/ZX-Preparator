@@ -139,7 +139,7 @@ void Notebook::FillTAP(ParserTAP &parser)
 
                     ProgramBASIC program;
 
-                    block->ParseBASIC(program);
+                    block->ToBASIC()->ParseBASIC(program);
 
                     page->SetProgram(program);
 
@@ -159,7 +159,7 @@ void Notebook::FillTAP(ParserTAP &parser)
 
                     ProgramASM program;
 
-                    block->ParseASM(program);
+                    block->ToCode()->ParseASM(program);
 
                     page->SetProgram(program);
 

@@ -34,12 +34,6 @@ struct BlockTAP : public Block
     BlockTAP_PureBytes *ToPureBytes() const;
     BlockTAP_Undefined *ToUndefined() const;
 
-    // Распарсить считанные данные в массив lines
-    bool ParseBASIC(ProgramBASIC &);
-
-    // Parse machine ocde block to asm program
-    bool ParseASM(ProgramASM &);
-
     char file_name[11];
 
     uint16 param1 = 0;
@@ -47,7 +41,10 @@ struct BlockTAP : public Block
 
     bool valid = false;
 
-    int GetSize() const;
+    int GetSize() const
+    {
+        return data.GetSize();
+    }
 
     struct Data
     {
@@ -60,6 +57,21 @@ struct BlockTAP : public Block
         {
             return data.data();
         }
+
+        int GetSize() const
+        {
+            return (int)data.size();
+        }
+
+        uint16 GetData16Reverse();
+
+        uint16 GetData16();
+
+        uint8 GetData8();
+
+        char GetChar();
+
+        bool IsEmpty() const;
 
     private:
 
@@ -107,6 +119,11 @@ struct BlockTAP_BASIC : public BlockTAP
     {
         return param2;
     }
+
+    // Распарсить считанные данные в массив lines
+    bool ParseBASIC(ProgramBASIC &);
+
+    LineBASIC ParseLineProgram();
 };
 
 
@@ -141,6 +158,9 @@ struct BlockTAP_Code : public BlockTAP
     {
         return param1;
     }
+
+    // Parse machine ocde block to asm program
+    bool ParseASM(ProgramASM &);
 };
 
 

@@ -53,3 +53,6 @@ extern wxFileConfig *g_file_config;
 void AddAddress(uint address);
 void AddOpcode(uint8 code);
 bool CalculateH(uint8 before, uint8 after); // Вычисление флага дополнительного переноса
+
+
+#include "Utils/Log.h"
