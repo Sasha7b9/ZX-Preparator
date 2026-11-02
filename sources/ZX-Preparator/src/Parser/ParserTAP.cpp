@@ -74,7 +74,7 @@ bool ParserTAP::Execute(pchar fileName)
         {
             stream.SeekI(posBefore);
 
-            BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data, header);
+            BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data);
 
             if (pure_bytes->IsValid())
             {
@@ -84,7 +84,7 @@ bool ParserTAP::Execute(pchar fileName)
             {
                 stream.SeekI(posBefore);
 
-                BlockTAP_Undefined *undef = new BlockTAP_Undefined(data, header);
+                BlockTAP_Undefined *undef = new BlockTAP_Undefined(data);
 
                 if (undef->IsValid())
                 {
