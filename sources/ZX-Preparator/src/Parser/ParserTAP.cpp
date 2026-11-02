@@ -154,7 +154,7 @@ bool BlockTAP_BASIC::ParseBASIC()
 {
     program.Clear();
 
-    while (data.GetSize())
+    while (data.BytesLast())
     {
         program.lines.push_back(ParseLineProgram());
     }
@@ -170,7 +170,7 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram()
     line.number = data.Read16Reverse();
     line.size = data.Read16();
 
-    for (int i = 0; (i < line.size - 1) && (data.GetSize() != 0); i++)
+    for (int i = 0; (i < line.size - 1) && (data.BytesLast() != 0); i++)
     {
         uint8 code = data.Read8();
 
@@ -373,7 +373,7 @@ void BlockTAP::Data::ReadBytes(uint8 *buffer, int size)
 
 uint8 BlockTAP::Data::Read8()
 {
-    if (GetSize())
+    if (BytesLast())
     {
         return data.data()[pointer++];
     }
@@ -392,7 +392,7 @@ char BlockTAP::Data::ReadChar()
 
 bool BlockTAP::Data::IsEmpty() const
 {
-    return GetSize() == 0;
+    return BytesLast() == 0;
 }
 
 
@@ -404,9 +404,9 @@ bool BlockTAP_Code::ParseASM(ProgramASM &program)
 
     std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
 
-    std::memcpy(params.MEMORY + StartAddressCode(), data.BeginData(), data.GetSize());
+    std::memcpy(params.MEMORY + StartAddressCode(), data.BeginData(), data.AllBytes());
 
-    StorageInstructions storage(StartAddressCode(), StartAddressCode() + data.GetSize());
+    StorageInstructions storage(StartAddressCode(), StartAddressCode() + data.AllBytes());
 
     storage.AppendEntryPoint(StartAddressCode());
 

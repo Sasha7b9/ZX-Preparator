@@ -45,7 +45,7 @@ struct BlockTAP : public Block
 
     int GetSize() const
     {
-        return data.GetSize();
+        return data.AllBytes();
     }
 
     struct Data
@@ -57,11 +57,6 @@ struct BlockTAP : public Block
         uint8 *BeginData()
         {
             return data.data();
-        }
-
-        int GetSize() const
-        {
-            return (int)data.size();
         }
 
         void ReadBytes(uint8 *, int size);
@@ -76,15 +71,21 @@ struct BlockTAP : public Block
 
         bool IsEmpty() const;
 
+        // Всего байт в блоке
+        int AllBytes() const
+        {
+            return (int)data.size();
+        }
+
         // Осталось байт для чтения
         int BytesLast() const
         {
-            if (pointer >= GetSize())
+            if (pointer >= AllBytes())
             {
                 return 0;
             }
 
-            return GetSize() - pointer;
+            return AllBytes() - pointer;
         }
 
         void SetPointer(int offset)
