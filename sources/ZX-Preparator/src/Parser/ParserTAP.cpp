@@ -259,9 +259,13 @@ BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *)
 }
 
 
-BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream, BlockTAP_Header *)
 {
+    uint16 size = stream.Read16();
 
+    data.AppendBytes(stream, size);
+
+    is_valid = true;
 }
 
 
