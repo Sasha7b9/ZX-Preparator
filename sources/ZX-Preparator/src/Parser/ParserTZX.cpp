@@ -695,3 +695,33 @@ void BlockTZX_35::Write(Writer &writer, int dx)
     writer.DrawNextString(wxString::Format("Identification string : %s", id_string), dx + 1);
     writer.DrawNextString(wxString::Format("Custom info : %s", custom_info), dx + 1);
 }
+
+
+uint8 BlockTZX::Read8()
+{
+    return stream.Read8();
+}
+
+
+void BlockTZX::Read8(uint8 *buffer, size_t size)
+{
+    stream.Read8(buffer, size);
+}
+
+
+uint16 BlockTZX::Read16()
+{
+    return stream.Read16();
+}
+
+
+void BlockTZX::Read16(uint16 *buffer, size_t size)
+{
+    stream.Read16(buffer, size);
+}
+
+
+uint BlockTZX::Read32()
+{
+    return stream.Read32();
+}

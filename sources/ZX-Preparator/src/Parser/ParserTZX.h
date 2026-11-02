@@ -21,7 +21,7 @@ struct HeaderTZX
 
 struct BlockTZX : public Block
 {
-    BlockTZX(wxDataInputStream &stream) : Block(stream)
+    BlockTZX(wxDataInputStream &s) : Block(), stream(s)
     {
     }
 
@@ -70,16 +70,25 @@ protected:
         };
     };
 
-    BlockTZX(wxDataInputStream &stream, Type::ID _id) : Block(stream), id(_id)
+    BlockTZX(wxDataInputStream &s, Type::ID _id) : Block(), id(_id), stream(s)
     {}
 
     Type::ID id;
+
+    wxDataInputStream &stream;
+
+    uint8 Read8();
+    uint16 Read16();
+    uint Read32();
+
+    void Read8(uint8 *, size_t);
+    void Read16(uint16 *, size_t);
 };
 
 
 struct BlockTZX_10 : public BlockTZX
 {
-    BlockTZX_10(wxDataInputStream &stream) : BlockTZX(stream, BlockTZX::Type::ID::_10_Standard_speed_data_block) { }
+    BlockTZX_10(wxDataInputStream &s) : BlockTZX(s, BlockTZX::Type::ID::_10_Standard_speed_data_block) { }
 
     virtual Block *Read() override;
 

@@ -104,19 +104,11 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 
                 param2 = data.Read16();
 
-                if (data.Read8() != 0)
+                if (data.Read8() == 0)          // Проверка CRC
                 {
-                    is_valid = false;
+                    is_valid = true;
                 }
             }
-            else
-            {
-                is_valid = false;
-            }
-        }
-        else
-        {
-            is_valid = false;
         }
     }
 }
@@ -288,6 +280,14 @@ uint16 BlockTAP::Data::Read16()
     LOG_ERROR("Not enough elements in the array");
 
     return 0;
+}
+
+
+void BlockTAP::Data::ReadBytes(uint8 *buffer, int size)
+{
+    std::memcpy(data.data() + pointer, buffer, size);
+
+    pointer += size;
 }
 
 

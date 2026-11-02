@@ -35,8 +35,13 @@ struct BlockTAP : public Block
 
     char file_name[11];
 
-    uint16 param1 = 0;
-    uint16 param2 = 0;
+    uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
+                            // arrays 01, 02 : variable name
+                            // code       03 : holds the start of the code block when saved
+
+    uint16 param2 = 0;      // program    00 : holds the start of the variable area relative to the start of the program
+                            // arrays 01, 02 : N/A
+                            // code       03 : holds 32768
 
     int GetSize() const
     {
