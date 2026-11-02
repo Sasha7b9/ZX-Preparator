@@ -66,9 +66,11 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 
     writer.DrawNextString(wxString::Format("Full size %d", fileTAP->FullSize()));
 
-    writer.DrawNextString(wxString::Format("Number blocks : %d", fileTAP->NumberBlocks()));
+    const int number_blocks = fileTAP->NumberBlocks();
 
-    for (uint i = 0; i < (uint)fileTAP->NumberBlocks(); i++)
+    writer.DrawNextString(wxString::Format("Number blocks : %d", number_blocks));
+
+    for (uint i = 0; i < (uint)number_blocks; i++)
     {
         writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
 

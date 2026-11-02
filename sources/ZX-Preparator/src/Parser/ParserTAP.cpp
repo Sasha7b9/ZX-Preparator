@@ -13,6 +13,29 @@
 #pragma warning (pop)
 
 
+/*
+    Описание : https://sinclair.wiki.zxnet.co.uk/wiki/TAP_format
+
+    Then raw tape data follows, including the flag andchecksum bytes.The checksum is the bitwise XOR of all bytes including the flag byte.
+    For example, when you execute the line SAVE "ROM" CODE 0, 2 this will result :
+
+          |------ Spectrum generated data -------|       |---------|
+    13 00 00 03 52 4f 4d 7x20 02 00 00 00 00 80 f1 04 00 ff f3 af a3
+
+    ^^^^^...... first block is 19 bytes(17 bytes + flag + checksum)
+          ^^... flag byte(A reg, 00 for headers, ff for data blocks)
+             ^^ first byte of header, indicating a code block
+
+    file name .. ^^^^^^^^^^^^
+    header info ..............^^^^^^^^^^^^^^^^
+    checksum of header .........................^^
+    length of second block ........................^^^^^
+    flag byte ...........................................^^
+    first two bytes of rom .................................^^^^^
+    checksum(checkbittoggle would be a better name!)............. ^^
+*/
+
+
 BlockTAP_Header *BlockTAP::ToHeader() const
 {
     return dynamic_cast<BlockTAP_Header *>(const_cast<BlockTAP *>(this));
