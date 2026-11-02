@@ -25,6 +25,8 @@ struct BlockTAP : public Block
 
     static BlockTAP *ReadDataBlock(wxDataInputStream &, BlockTAP_Header *);
 
+    virtual pchar NameASCII() const;
+
     BlockTAP_Header *ToHeader() const;
     BlockTAP_BASIC *ToBASIC() const;
     BlockTAP_ArrayNumber *ToArrayNumber() const;
@@ -114,8 +116,6 @@ struct BlockTAP : public Block
         };
     };
 
-    Type::E type = Type::Undefined;
-
     bool IsValid() const
     {
         return is_valid;
@@ -132,6 +132,10 @@ struct BlockTAP_Header : public BlockTAP
     BlockTAP_Header(wxDataInputStream &);
 
     int size_data = 0;      // Это размер данных, на которые указывает данный заголовок
+
+    Type::E type = Type::Undefined;
+
+    virtual pchar NameASCII() const override;
 
 private:
 
@@ -166,6 +170,8 @@ struct BlockTAP_BASIC : public BlockTAP
     LineBASIC ParseLineProgram();
 
     ProgramBASIC program;
+
+    virtual pchar NameASCII() const override;
 };
 
 
@@ -177,6 +183,8 @@ struct BlockTAP_ArrayNumber : public BlockTAP
     {
         return (char)(param1 >> 8);
     }
+
+    virtual pchar NameASCII() const override;
 };
 
 
@@ -188,6 +196,8 @@ struct BlockTAP_ArrayCharacter : public BlockTAP
     {
         return (char)(param1 >> 8);
     }
+
+    virtual pchar NameASCII() const override;
 };
 
 
@@ -203,18 +213,24 @@ struct BlockTAP_Code : public BlockTAP
 
     // Parse machine ocde block to asm program
     bool ParseASM(ProgramASM &);
+
+    virtual pchar NameASCII() const override;
 };
 
 
 struct BlockTAP_PureBytes : public BlockTAP
 {
     BlockTAP_PureBytes(wxDataInputStream &, BlockTAP_Header *);
+
+    virtual pchar NameASCII() const override;
 };
 
 
 struct BlockTAP_Undefined : public BlockTAP
 {
     BlockTAP_Undefined(wxDataInputStream &, BlockTAP_Header *);
+
+    virtual pchar NameASCII() const override;
 };
 
 

@@ -74,27 +74,11 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
     {
         writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
 
-        static const pchar types[5] =
-        {
-            "BASIC PROGRAM",
-            "NUMBER ARRAY",
-            "CHARACTER ARRAY",
-            "MACHINE CODE",
-            "PURE BYTES (bytes without header)"
-        };
-
         auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
 
         writer.DrawNextString(wxString::Format("Name : %s", block->ToUndefined() ? "Unknown" : block->file_name), 2);
 
-        if (block->ToCode() && block->GetSize() == 6912 && block->ToCode()->StartAddressCode() == 16384)
-        {
-            writer.DrawNextString(wxString::Format("Type : %s", "DATA SCREEN"), 2);
-        }
-        else
-        {
-            writer.DrawNextString(wxString::Format("Type : %s", types[block->type]), 2);
-        }
+        writer.DrawNextString(wxString::Format("Type : %s", block->NameASCII()), 2);
 
         writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->GetSize(), block->GetSize()), 2);
 

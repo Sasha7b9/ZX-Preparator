@@ -36,6 +36,54 @@
 */
 
 
+pchar BlockTAP::NameASCII() const
+{
+    return "Generic block TAP";
+}
+
+
+pchar BlockTAP_Header::NameASCII() const
+{
+    return "Header";
+}
+
+pchar BlockTAP_BASIC::NameASCII() const
+{
+    return "BASIC PROGRAM";
+}
+
+pchar BlockTAP_ArrayCharacter::NameASCII() const
+{
+    return "ARRAY CHARACTER";
+}
+
+pchar BlockTAP_ArrayNumber::NameASCII() const
+{
+    return "ARRAY NUMBER";
+}
+
+pchar BlockTAP_Code::NameASCII() const
+{
+    if (ToCode() && GetSize() == 6912 && ToCode()->StartAddressCode() == 16384)
+    {
+        return "DATA SCREEN";
+    }
+
+    return "MACHINE CODE";
+}
+
+pchar BlockTAP_PureBytes::NameASCII() const
+{
+    return "Pure bytes (bytes without header)";
+}
+
+
+pchar BlockTAP_Undefined::NameASCII() const
+{
+    return "Undefined data";
+}
+
+
 BlockTAP_Header *BlockTAP::ToHeader() const
 {
     return dynamic_cast<BlockTAP_Header *>(const_cast<BlockTAP *>(this));
