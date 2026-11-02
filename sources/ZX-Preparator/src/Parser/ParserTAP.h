@@ -131,6 +131,15 @@ struct BlockTAP_Header : public BlockTAP
     BlockTAP_Header(wxDataInputStream &);
 
     int size_data = 0;      // Это размер данных, на которые указывает данный заголовок
+
+private:
+
+    uint8 Read8();
+    uint16 Read16();
+
+    void ReadBytes(uint8 *, int);
+
+    uint8 crc = 0;
 };
 
 

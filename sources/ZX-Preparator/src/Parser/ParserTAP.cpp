@@ -90,26 +90,51 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 
         data.SetPointer(2);         // Перемещаемся к первому байту содержимого
 
-        if (data.Read8() == 0)      // У заголовка здесь всегда 0
+        if (Read8() == 0)           // У заголовка здесь всегда 0
         {
-            type = (Type::E)data.Read8();
+            type = (Type::E)Read8();
 
             if (type < Type::PURE_BYTES)
             {
-                data.ReadBytes((uint8 *)file_name, 10);
+                ReadBytes((uint8 *)file_name, 10);
 
-                size_data = data.Read16();
+                size_data = Read16();
 
-                param1 = data.Read16();
+                param1 = Read16();
 
-                param2 = data.Read16();
+                param2 = Read16();
 
-                if (data.Read8() == 0)          // Проверка CRC
+                if (data.Read8() == crc)          // Проверка CRC
                 {
                     is_valid = true;
                 }
             }
         }
+    }
+}
+
+
+uint8 BlockTAP_Header::Read8()
+{
+    uint8 result = data.Read8();
+
+    crc ^= result;
+
+    return result;
+}
+
+
+uint16 BlockTAP_Header::Read16()
+{
+    return Read8() + (Read8() << 8);
+}
+
+
+void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        *buffer++ = Read8();
     }
 }
 
@@ -285,7 +310,7 @@ uint16 BlockTAP::Data::Read16()
 
 void BlockTAP::Data::ReadBytes(uint8 *buffer, int size)
 {
-    std::memcpy(data.data() + pointer, buffer, size);
+    std::memcpy(buffer, data.data() + pointer, size);
 
     pointer += size;
 }
