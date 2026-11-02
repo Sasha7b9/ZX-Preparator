@@ -64,11 +64,11 @@ Frame::Frame(const wxString &title)
 
     CreateFrameToolBar();
 
-//    wxSplitterWindow *splitter = new wxSplitterWindow(this);
+    wxSplitterWindow *splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE | wxSP_3DSASH);
 
-    notebook = new Notebook(this);
+    notebook = new Notebook(splitter);
 
-    controlDir = new wxGenericDirCtrl(this);
+    controlDir = new wxGenericDirCtrl(splitter);
     controlDir->Bind(wxEVT_TREE_ITEM_ACTIVATED, &Frame::OnEventTreeItemActivated, this);
     controlDir->Bind(wxEVT_TREE_KEY_DOWN, &Frame::OnEventTreeItemKeyDown, this);
     controlDir->Bind(wxEVT_TREE_SEL_CHANGED, &Frame::OnEventTreeSelChanged, this);
@@ -82,9 +82,10 @@ Frame::Frame(const wxString &title)
         controlDir->SetPath(path);
     }
 
+    splitter->SplitVertically(controlDir, notebook, 300);
+
     wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-    sizer->Add(controlDir, 1, wxEXPAND);
-    sizer->Add(notebook, 1, wxEXPAND);
+    sizer->Add(splitter, 1, wxEXPAND);
 
     SetSizerAndFit(sizer);
 
