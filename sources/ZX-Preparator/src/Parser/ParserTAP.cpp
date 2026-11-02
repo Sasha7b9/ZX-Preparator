@@ -119,9 +119,9 @@ bool BlockTAP::Header::Read()
     {
         if (Read8() == 0)       // Чтение флага - для заголовка 0
         {
-            type = (BlockTAP::Header::TypeData::E)Read8();
+            type = (BlockTAP::Header::Type::E)Read8();
 
-            if (type < BlockTAP::Header::TypeData::PURE_BYTES)
+            if (type < BlockTAP::Header::Type::PURE_BYTES)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -147,7 +147,7 @@ bool BlockTAP::Header::Read()
     }
     else if (size != 0)
     {
-        type = BlockTAP::Header::TypeData::PURE_BYTES;
+        type = BlockTAP::Header::Type::PURE_BYTES;
         size_data = (uint16)(size - 2);
         valid = true;
     }
@@ -164,7 +164,7 @@ bool BlockTAP::Data::Read(const Header &header)
 
     data.clear();
 
-    if (header.type == BlockTAP::Header::TypeData::PURE_BYTES)
+    if (header.type == BlockTAP::Header::Type::PURE_BYTES)
     {
         size = header.size_data;
 

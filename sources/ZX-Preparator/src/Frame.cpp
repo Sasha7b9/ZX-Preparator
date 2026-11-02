@@ -89,8 +89,6 @@ Frame::Frame(const wxString &title)
 
     SetSizerAndFit(sizer);
 
-    notebook->AssignFile("c:/Temp/_Another Brick on the Wall.tap");
-
     wxFrame::Maximize(true);
 }
 
