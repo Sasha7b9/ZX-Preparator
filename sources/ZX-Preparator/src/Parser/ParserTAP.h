@@ -129,7 +129,7 @@ protected:
 
     uint8 crc = 0;
 
-    uint8 Read8();
+    uint8 Read8(int offset = -1);
     uint16 Read16();
     uint16 Read16Reverse();
 

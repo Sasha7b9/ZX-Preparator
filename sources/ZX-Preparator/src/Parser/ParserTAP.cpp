@@ -194,15 +194,13 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
 
-    if (size == 19)                 // У заголовка ZX-Spectrum размер всегда 19
+    if (size == 19)                                 // У заголовка ZX-Spectrum размер всегда 19
     {
         data.Push16(size);
 
         data.AppendBytes(stream, size);
 
-        data.SetPointer(2);         // Перемещаемся к первому байту содержимого
-
-        if (Read8() == 0)           // У заголовка здесь всегда 0
+        if (Read8(2) == 0)                          // У заголовка здесь всегда 0
         {
             type = (Type::E)Read8();
 
@@ -216,7 +214,7 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 
                 param2 = Read16();
 
-                if (data.Read8() == crc)          // Проверка CRC
+                if (data.Read8() == crc)            // Проверка CRC
                 {
                     is_valid = true;
                 }
@@ -236,13 +234,9 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
 
         data.AppendBytes(stream, size);
 
-        data.SetPointer(2);
-
-        uint8 type = Read8();
-
-        if (type == 0xFF)                   // Для данных здесь 0xFF
+        if (Read8(2) == 0xFF)                   // Для данных здесь 0xFF
         {
-            if (ParseBASIC(size - 4))
+            if (ParseBASIC(size - 4))           // 4 == два байта размера + 0xFF + контрольная сумма
             {
                 if (crc == data.Read8())
                 {
@@ -297,8 +291,13 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
 }
 
 
-uint8 BlockTAP::Read8()
+uint8 BlockTAP::Read8(int offset)
 {
+    if (offset >= 0)
+    {
+        data.SetPointer(offset);
+    }
+
     uint8 result = data.Read8();
 
     crc ^= result;
