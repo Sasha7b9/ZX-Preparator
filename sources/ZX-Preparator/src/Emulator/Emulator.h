@@ -32,7 +32,10 @@ union REGS
 
 struct InfoStruct
 {
+private:
     unsigned char  MEMORY[65536];       // Full computer memory
+
+public:
     char           mnemonic[100];       // Mnemonic current instruction
     char           comment[100];
     char           flags[100];          // Incstruction effect onf flags
@@ -50,6 +53,11 @@ private:
 public:
     int            numOpCodes;
     int            tackts;
+
+    uint8 *GetMEMORY()
+    {
+        return MEMORY;
+    }
 
     unsigned char &GetOpcode(int i)
     {

@@ -15,7 +15,7 @@ uint8 *RAM = 0;
 void Emulator::Init(InfoStruct *out_)
 {
     out = out_;
-    RAM = out->MEMORY;
+    RAM = out->GetMEMORY();
 }
 
 

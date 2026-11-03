@@ -12,7 +12,7 @@ static InfoStruct params;
 
 void DecompileROM()
 {
-    std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
+    std::memcpy(params.GetMEMORY(), Memory::_48, 64 * 1024);
 
     Emulator::Init(&params);
 

@@ -578,11 +578,18 @@ bool BlockTAP_Code::ParseASM()
 
     InfoStruct params;
 
-    std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
+    std::memcpy(params.GetMEMORY(), Memory::_48, 64 * 1024);
 
     int size = SizeCode();
 
-    std::memcpy(params.MEMORY + address_load, BeginCode(), size);
+    int end_address = address_load + size;
+
+    if (end_address > 64 * 1024)
+    {
+        end_address = end_address;
+    }
+
+    std::memcpy(params.GetMEMORY() + address_load, BeginCode(), size);
 
     StorageInstructions storage(address_load, address_load + size);
 
