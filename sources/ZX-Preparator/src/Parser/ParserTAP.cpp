@@ -266,9 +266,12 @@ bool BlockTAP_BASIC::ParseBASIC()
 {
     program.Clear();
 
-    while (data.BytesLast())
+    int last_bytes = data.BytesLast();
+
+    while (last_bytes)
     {
         program.lines.push_back(ParseLineProgram());
+        last_bytes = data.BytesLast();
     }
 
     return true;
