@@ -176,20 +176,17 @@ int INC_pIX_D(void)
 }
 
 
-int ADD_IX_PP(void)
+int ADD_IX_PP_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "ADD IX,%s", PP_45_Name(prevPC));
     return -1;
+}
 
-#else
-
+int ADD_IX_PP_run(void)
+{
     rIX += PP_45(prevPC);
     return 15;
-
-#endif
 }
 
 
@@ -212,7 +209,7 @@ int INC_IX_dec(void)
 int JP_pIX(void)
 {
 #ifdef LISTING
-
+    AddAddress(rPC);
     strcpy(MNEMONIC, "JP [IX]");
     return -1;
 
@@ -222,6 +219,18 @@ int JP_pIX(void)
     return 8;
 
 #endif
+}
+
+int CP_pIX_D_dec()
+{
+    AddAddress(rPC);
+    return 0;
+}
+
+
+int CP_pIX_D_run()
+{
+    return 0;
 }
 
 

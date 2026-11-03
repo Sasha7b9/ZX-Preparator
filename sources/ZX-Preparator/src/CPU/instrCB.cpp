@@ -80,20 +80,18 @@ int RRC_R(void)
 }
 
 
-int RES_B_M(void)
+int RES_B_M_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
     sprintf(MNEMONIC, "RES %d,%s", numBit, R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
 
+int RES_B_M_run(void)
+{
     return 0;
-
-#endif
 }
 
 

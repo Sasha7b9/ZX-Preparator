@@ -65,12 +65,10 @@ int LD_pIY_D_R(void)
 }
 
 
-int LD_IY_NN(void)
+int LD_IY_NN_dec(void)
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
+    AddOpcode(RAM8(rPC + 1));
 
     uint16 NN = PC16andInc();
 
@@ -79,12 +77,11 @@ int LD_IY_NN(void)
     sprintf(MNEMONIC, "LD IY, %04x", NN);
 
     return -1;
+}
 
-#else
-
+int LD_IY_NN_run(void)
+{
     return 0;
-
-#endif
 }
 
 
