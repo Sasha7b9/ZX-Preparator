@@ -6,6 +6,7 @@
 #include "Emulator/Memory.h"
 #include "Emulator/DataBase.h"
 #include "Controls/Controls.h"
+#include "Notebook/PageInfo.h"
 #pragma warning (push, 0)
     #include <wx/statline.h>
     #include <wx/file.h>
@@ -544,4 +545,52 @@ bool BlockTAP_Code::ParseASM(ProgramASM &program)
     storage.CreateProgram(program);
 
     return true;
+}
+
+
+void BlockTAP_Header::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Header", dx);
+}
+
+
+void BlockTAP_BASIC::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "BASIC program", dx);
+}
+
+
+void BlockTAP_ArrayNumber::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Array of numbers", dx);
+}
+
+
+void BlockTAP_ArrayCharacter::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Array of characters", dx);
+}
+
+
+void BlockTAP_Code::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Code", dx);
+}
+
+
+void BlockTAP_PureBytes::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Pure bytes", dx);
+}
+
+
+void BlockTAP_Undefined::Write(Writer &writer, int dx)
+{
+    WriteType(writer, "Undefined bytes", dx);
+}
+
+
+void BlockTAP::WriteType(Writer &writer, const wxString &type, int dx)
+{
+    writer.DrawNextString(wxString::Format("Type : %s", type.c_str().AsChar()), dx);
 }

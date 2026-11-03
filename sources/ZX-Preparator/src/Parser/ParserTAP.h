@@ -35,6 +35,8 @@ struct BlockTAP : public Block
     BlockTAP_PureBytes *ToPureBytes() const;
     BlockTAP_Undefined *ToUndefined() const;
 
+    void WriteType(Writer &, const wxString &, int);
+
     char file_name[11];
 
     uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
@@ -146,6 +148,8 @@ struct BlockTAP_Header : public BlockTAP
     Type::E type = Type::Undefined;
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -175,6 +179,8 @@ struct BlockTAP_BASIC : public BlockTAP
     ProgramBASIC program;
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -188,6 +194,8 @@ struct BlockTAP_ArrayNumber : public BlockTAP
     }
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -201,6 +209,8 @@ struct BlockTAP_ArrayCharacter : public BlockTAP
     }
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -218,6 +228,8 @@ struct BlockTAP_Code : public BlockTAP
     bool ParseASM(ProgramASM &);
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -226,6 +238,8 @@ struct BlockTAP_PureBytes : public BlockTAP
     BlockTAP_PureBytes(wxDataInputStream &);
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 
@@ -234,6 +248,8 @@ struct BlockTAP_Undefined : public BlockTAP
     BlockTAP_Undefined(wxDataInputStream &);
 
     virtual pchar NameASCII() const override;
+
+    virtual void Write(Writer &, int) override;
 };
 
 

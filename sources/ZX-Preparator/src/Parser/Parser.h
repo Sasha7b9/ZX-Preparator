@@ -21,7 +21,7 @@ struct Block
 
     virtual Block *Read() = 0;
 
-    virtual void Write(Writer &, int /*dx*/) { }
+    virtual void Write(Writer &, int /*dx*/) = 0;
 };
 
 

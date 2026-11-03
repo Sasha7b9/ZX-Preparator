@@ -60,20 +60,9 @@ void Writer::DrawNextString(const wxString &line, int dx)
 
 void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 {
-    auto fileTAP = std::dynamic_pointer_cast<FileTAP>(file);
-
-    writer.DrawNextString("Is TAP file");
-
-    writer.DrawNextString(wxString::Format("Full size %d", fileTAP->FullSize()));
-
-    const int number_blocks = fileTAP->NumberBlocks();
-
-    writer.DrawNextString(wxString::Format("Number blocks : %d", number_blocks));
-
+    /*
     for (uint i = 0; i < (uint)number_blocks; i++)
     {
-        writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
-
         auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
 
         writer.DrawNextString(wxString::Format("Name : %s", block->ToUndefined() ? "Unknown" : block->file_name), 2);
@@ -101,6 +90,31 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
         {
             writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->ToCode()->StartAddressCode(), block->ToCode()->StartAddressCode()), 2);
         }
+    }
+    */
+
+    auto fileTAP = std::dynamic_pointer_cast<FileTAP>(file);
+
+    writer.DrawNextString("Is TAP file");
+
+    writer.DrawNextString(wxString::Format("Full size %d", fileTAP->FullSize()));
+
+    const int number_blocks = fileTAP->NumberBlocks();
+
+    writer.DrawNextString(wxString::Format("Number blocks : %d", number_blocks));
+
+    if (file->number_unreaded_bytes > 0)
+    {
+        writer.DrawNextString(wxString::Format("!!!Warning !!! Number unreaded bytes == % u", file->number_unreaded_bytes));
+    }
+
+    for (int i = 0; i < file->NumberBlocks(); i++)
+    {
+        auto block = std::dynamic_pointer_cast<BlockTAP>(file->blocks[i]);
+
+        writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
+
+        block->Write(writer, 2);
     }
 }
 
