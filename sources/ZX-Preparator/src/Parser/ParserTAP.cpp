@@ -355,27 +355,39 @@ BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
 
-    data.Push16(size);
-
-    data.AppendBytes(stream, size);
-
-    data.SetPointer(2);
-
-    for (uint16 i = 0; i < size - 1; i++)
+    if (size)
     {
-        Read8();
-    }
+        data.Push16(size);
 
-    if (crc == Read8())
-    {
-        is_valid = true;
+        data.AppendBytes(stream, size);
+
+        {
+            // Проверка контрольной суммы
+
+            data.SetPointer(2);
+
+            for (uint16 i = 0; i < size - 1; i++)
+            {
+                Read8();
+            }
+
+            if (crc == data.Read8())
+            {
+                is_valid = true;
+            }
+        }
     }
 }
 
 
-BlockTAP_Undefined::BlockTAP_Undefined(wxDataInputStream &)
+BlockTAP_Undefined::BlockTAP_Undefined(wxDataInputStream &stream)
 {
+    while (stream.IsOk())
+    {
+        data.Push8(stream.Read8());
+    }
 
+    is_valid = (data.AllBytes() != 0);
 }
 
 
