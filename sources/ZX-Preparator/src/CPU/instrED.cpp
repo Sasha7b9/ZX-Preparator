@@ -15,10 +15,8 @@ int LD_A_I(void)
 }
 
 
-int LD_I_A(void)
+int LD_I_A_dec(void)
 {
-#ifdef LISTING
-
     TACKTS = 9;
     AddAddress(rPC);
 
@@ -27,12 +25,12 @@ int LD_I_A(void)
     strcpy(COMMENT, "I - Interrupt Control Vector Register");
 
     return -1;
+}
 
-#else
 
-    return 9;   // WARN
-
-#endif
+int LD_I_A_run(void)
+{
+    return 0;   // WARN
 }
 
 
@@ -259,29 +257,35 @@ int NEG_run(void)
 
 int IM0(void)
 {
-    return 8;   // WARN
+    return 0;   // WARN
 }
 
 
-int IM1(void)
+int IM1_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     strcpy(MNEMONIC, "IM1");
     return -1;
-
-#else
-
-    return 8;   // WARN
-
-#endif
 }
 
 
-int IM2(void)
+int IM1_run(void)
 {
-    return 8;   // WARN
+    return 0;   // WARN
+}
+
+
+int IM2_dec()
+{
+    AddAddress(rPC);
+    strcpy(MNEMONIC, "IM2");
+    return -1;
+}
+
+
+int IM2_run(void)
+{
+    return 0;   // WARN
 }
 
 
