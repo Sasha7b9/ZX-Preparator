@@ -270,12 +270,13 @@ bool BlockTAP::VerifyCRC() const
         return false;
     }
 
-    const uint8 *buf = data.BeginData();
+    const uint8 *buf = data.BeginData() + 2;
 
     uint8 crc = 0;
-    for (uint i = 2; i < size - 1; ++i)
+
+    for (uint i = 0; i < size - 3; ++i)
     {
-        crc ^= buf[i];
+        crc ^= *buf++;
     }
 
     return (crc == GetCRC());
