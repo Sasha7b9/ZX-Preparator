@@ -153,11 +153,7 @@ void Notebook::FillTAP(ParserTAP &parser)
                 {
                     PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
 
-                    ProgramASM program;
-
-                    block->ToCode()->ParseASM(program);
-
-                    page->SetProgram(program);
+                    page->SetProgram(block->ToCode()->program);
 
                     AppendPage(page);
                 }

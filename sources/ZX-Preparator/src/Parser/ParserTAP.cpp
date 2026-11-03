@@ -231,10 +231,7 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 
             param2 = Read16();
 
-            if (data.Read8() == crc)            // Проверка CRC
-            {
-                is_valid = true;
-            }
+            is_valid = VerifyCRC();
         }
     }
 }
@@ -254,16 +251,64 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
         {
             if (ParseBASIC(size - 4))           // 4 == два байта размера + 0xFF + контрольная сумма
             {
-                if (crc == data.Read8())
-                {
-                    number_line_start = header->param1;
-                    offset_variables = header->param2;
+                number_line_start = header->param1;
+                offset_variables = header->param2;
 
-                    is_valid = true;
-                }
+                is_valid = VerifyCRC();
             }
         }
     }
+}
+
+
+bool BlockTAP::VerifyCRC() const
+{
+    const uint size = data.AllBytes();
+
+    if (size < 5 || data.BeginData() == nullptr)
+    {
+        return false;
+    }
+
+    const uint8 *buf = data.BeginData();
+
+    uint8 crc = 0;
+    for (uint i = 2; i < size - 1; ++i)
+    {
+        crc ^= buf[i];
+    }
+
+    return (crc == GetCRC());
+}
+
+
+uint8 BlockTAP::GetCRC() const
+{
+    return data.BeginData()[data.AllBytes() - 1];
+}
+
+
+BlockTAP_Code::BlockTAP_Code(wxDataInputStream &stream, BlockTAP_Header *header)
+{
+    uint16 size = stream.Read16();
+
+    if (size == header->size_data + 2)
+    {
+        data.Push16(size);
+
+        data.AppendBytes(stream, size);
+
+        if (Read8(2) == 0xFF)
+        {
+            ParseASM(size - 4);
+
+            start_addres = header->param1;
+
+            is_valid = VerifyCRC();
+        }
+    }
+
+    start_addres = header->param1;
 }
 
 
@@ -317,19 +362,12 @@ uint8 BlockTAP::Read8(int offset)
         data.SetPointer(offset);
     }
 
-    uint8 result = data.Read8();
-
-    crc ^= result;
-
-    return result;
+    return data.Read8();
 }
 
 
 uint16 BlockTAP::Read16()
 {
-    uint8 *d = data.BeginData();
-    d = d;
-
     return Read8() + (Read8() << 8);
 }
 
@@ -364,12 +402,6 @@ BlockTAP_ArrayCharacter::BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_H
 }
 
 
-BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *header)
-{
-    start_addres = header->param1;
-}
-
-
 BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
@@ -390,10 +422,7 @@ BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream)
                 Read8();
             }
 
-            if (crc == data.Read8())
-            {
-                is_valid = true;
-            }
+            is_valid = VerifyCRC();
         }
     }
 }
@@ -455,9 +484,6 @@ void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
     data.resize(data.size() + size);
 
     stream.Read8(data.data() + offset, size);
-
-    uint8 *d = data.data();
-    d = d;
 
     pointer = 0;
 }
@@ -528,7 +554,7 @@ bool BlockTAP::Data::IsEmpty() const
 }
 
 
-bool BlockTAP_Code::ParseASM(ProgramASM &program)
+bool BlockTAP_Code::ParseASM(uint16 /*size*/)
 {
     program.Clear();
 
@@ -642,5 +668,5 @@ void BlockTAP::WriteType(Writer &writer, const wxString &type, int dx)
     writer.DrawNextString(wxString::Format("Type : %s", type.c_str().AsChar()), dx);
     writer.DrawNextString(wxString::Format("Size full : %d", data.AllBytes()), dx);
     writer.DrawNextString(wxString::Format("Size data : %d", data.AllBytes() - 2), dx);
-    writer.DrawNextString(wxString::Format("crc = #%02X / %d", crc, crc), dx);
+    writer.DrawNextString(wxString::Format("crc = #%02X / %d", GetCRC(), GetCRC()), dx);
 }

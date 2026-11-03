@@ -52,7 +52,7 @@ struct BlockTAP : public Block
 
         void AppendBytes(wxDataInputStream &, int size);
 
-        uint8 *BeginData()
+        const uint8 *BeginData() const
         {
             return data.data();
         }
@@ -119,13 +119,16 @@ protected:
 
     bool is_valid = false;
 
-    uint8 crc = 0;
-
     uint8 Read8(int offset = -1);
     uint16 Read16();
     uint16 Read16Reverse();
 
     void ReadBytes(uint8 *, int);
+
+    // Проверить контрольную сумму
+    bool VerifyCRC() const;
+
+    uint8 GetCRC() const;
 };
 
 
@@ -201,14 +204,15 @@ struct BlockTAP_Code : public BlockTAP
 {
     BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *);
 
-    // Parse machine ocde block to asm program
-    bool ParseASM(ProgramASM &);
+    bool ParseASM(uint16 size);
 
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
 
     int start_addres = -1;      // Адрес загрузки
+
+    ProgramASM program;
 };
 
 
