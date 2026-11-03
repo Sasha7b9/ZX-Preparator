@@ -226,6 +226,17 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 }
 
 
+BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *header)
+{
+    data.AppendBytes(stream, header->size_data);
+
+    if (ParseBASIC())
+    {
+        is_valid = true;
+    }
+}
+
+
 uint8 BlockTAP_Header::Read8()
 {
     uint8 result = data.Read8();
@@ -247,17 +258,6 @@ void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
     for (int i = 0; i < size; i++)
     {
         *buffer++ = Read8();
-    }
-}
-
-
-BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *header)
-{
-    data.AppendBytes(stream, header->size_data);
-
-    if (ParseBASIC())
-    {
-        is_valid = true;
     }
 }
 
