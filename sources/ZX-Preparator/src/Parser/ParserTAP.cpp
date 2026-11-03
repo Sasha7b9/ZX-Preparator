@@ -249,15 +249,68 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
 
         if (Read8(2) == 0xFF)                   // Для данных здесь 0xFF
         {
-            if (ParseBASIC(size - 4))           // 4 == два байта размера + 0xFF + контрольная сумма
-            {
-                number_line_start = header->param1;
-                offset_variables = header->param2;
+            number_line_start = header->param1;
+            offset_variables = header->param2;
 
+            if (ParseBASIC(size - 2))           // 2 == 0xFF и контрольная сумма
+            {
                 is_valid = VerifyCRC();
             }
         }
     }
+}
+
+
+bool BlockTAP_BASIC::ParseBASIC(uint16 size)
+{
+    program.Clear();
+
+    if (offset_variables < size)
+    {
+        size = (uint16)offset_variables;
+    }
+
+    while (size)
+    {
+        uint16 deparsed_bytes = 0;
+
+        LineBASIC line = ParseLineProgram(deparsed_bytes);
+
+        if (line.size == 0)
+        {
+            break;
+        }
+
+        program.lines.push_back(line);
+
+        size -= deparsed_bytes;
+    }
+
+    return true;
+}
+
+
+LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
+{
+    LineBASIC line;
+
+    line.number = Read16Reverse();
+    line.size = Read16();
+
+    num_bytes = 0;  // Сразу забиваем место для символа завершения строки
+
+    for (int i = 0; i < line.size && data.BytesLast(); i++)
+    {
+        uint8 code = Read8();
+
+        num_bytes++;
+
+        const char *string = KeyCodes::Get(code);
+
+        line.symbols.push_back(string);
+    }
+
+    return line;
 }
 
 
@@ -303,54 +356,11 @@ BlockTAP_Code::BlockTAP_Code(wxDataInputStream &stream, BlockTAP_Header *header)
         {
             address_load = header->param1;
 
-            ParseASM(size - 4);
+            ParseASM();
 
             is_valid = VerifyCRC();
         }
     }
-}
-
-
-bool BlockTAP_BASIC::ParseBASIC(uint16 size)
-{
-    program.Clear();
-
-    while (size)
-    {
-        uint16 deparsed_bytes = 0;
-
-        program.lines.push_back(ParseLineProgram(deparsed_bytes));
-
-        size -= deparsed_bytes;
-    }
-
-    return true;
-}
-
-
-LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
-{
-    LineBASIC line;
-
-    line.number = Read16Reverse();
-    line.size = Read16();
-
-    num_bytes = 1;  // Сразу забиваем место для символа завершения строки
-
-    for (int i = 0; 
-        (i < line.size - 1)             // Последний символ считывать не будем - символ завершения строки
-        && data.BytesLast(); i++)
-    {
-        uint8 code = Read8();
-
-        num_bytes++;
-
-        const char *string = KeyCodes::Get(code);
-
-        line.symbols.push_back(string);
-    }
-
-    return line;
 }
 
 
@@ -553,17 +563,28 @@ bool BlockTAP::Data::IsEmpty() const
 }
 
 
-bool BlockTAP_Code::ParseASM(uint16 /*size*/)
+bool BlockTAP_Code::ParseASM()
 {
+    static int counter = 0;
+
+    counter++;
+
+    if (counter == 6)
+    {
+        counter = counter;
+    }
+
     program.Clear();
 
     InfoStruct params;
 
     std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
 
-    std::memcpy(params.MEMORY + address_load, data.BeginData(), data.AllBytes());
+    int size = SizeCode();
 
-    StorageInstructions storage(address_load, address_load + data.AllBytes());
+    std::memcpy(params.MEMORY + address_load, BeginCode(), size);
+
+    StorageInstructions storage(address_load, address_load + size);
 
     storage.AppendEntryPoint(address_load);
 
@@ -571,7 +592,7 @@ bool BlockTAP_Code::ParseASM(uint16 /*size*/)
 
     int address = storage.NextAddress();
 
-    while (address > 0)
+    while (address >= 0 && address < 64 * 1024)
     {
         bool res = Emulator::Decode((uint16)address) != 0;
 
@@ -583,6 +604,18 @@ bool BlockTAP_Code::ParseASM(uint16 /*size*/)
     storage.CreateProgram(program);
 
     return true;
+}
+
+
+const uint8 *BlockTAP_Code::BeginCode() const
+{
+    return data.BeginData() + 3;
+}
+
+
+int BlockTAP_Code::SizeCode() const
+{
+    return data.AllBytes() - 4;
 }
 
 

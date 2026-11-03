@@ -204,7 +204,7 @@ struct BlockTAP_Code : public BlockTAP
 {
     BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *);
 
-    bool ParseASM(uint16 size);
+    bool ParseASM();
 
     virtual pchar NameASCII() const override;
 
@@ -213,6 +213,9 @@ struct BlockTAP_Code : public BlockTAP
     int address_load = -1;      // Адрес загрузки
 
     ProgramASM program;
+
+    const uint8 *BeginCode() const;
+    int SizeCode() const;
 };
 
 
