@@ -608,6 +608,11 @@ bool BlockTAP_Code::ParseASM()
         address = storage.NextAddress();
     }
 
+    if (address < 0)
+    {
+        address = address;
+    }
+
     storage.CreateProgram(program);
 
     return true;

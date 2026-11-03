@@ -28,7 +28,7 @@ static void WriteE(char *name)
     int shift = ((int)((int8)value)) + 2;
     uint newAddress = rPC + shift - 2;
 
-    sprintf(MNEMONIC, "JR %s%d {#%04X}", name, shift, newAddress);
+    out->SetMnemonic(wxString::Format("JR %s%d {#%04X}", name, shift, newAddress));
 
     AddAddress(newAddress);
 }
@@ -40,7 +40,7 @@ namespace Decode
     {
         AddAddress(rPC);
         TACKTS = 4;
-        strcpy(MNEMONIC, "NOP");
+        out->SetMnemonic("NOP");
         return -1;
     }
 
@@ -53,7 +53,7 @@ namespace Decode
         AddAddress(rPC + 2);
         uint16 NN = PC16andInc();
 
-        sprintf(MNEMONIC, "LD %s,#%04X", DD_45_Name(valDD), NN);
+        out->SetMnemonic(wxString::Format("LD %s,#%04X", DD_45_Name(valDD), NN));
 
         return -1;
     }
@@ -1700,5 +1700,21 @@ int DecodeCommand(void)
 {
     AddOpcode(RAM8(rPC));
 
-    return firstLevel[PCandInc()][0]();
+    static int counter = 0;
+
+    counter++;
+
+    if (counter == 9)
+    {
+        counter = counter;
+    }
+
+    int result = firstLevel[PCandInc()][0]();
+
+    if (result != -1)
+    {
+        result = result;
+    }
+
+    return result;
 }

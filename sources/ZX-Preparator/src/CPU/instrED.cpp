@@ -73,15 +73,13 @@ int LD_DD_pNN(void)
 }
 
 
-int LD_pNN_DD(void)
+int LD_pNN_DD_dec(void)
 {
-#ifdef LISTING
-
     TACKTS = 20;
 
     uint8 valDD = prevPC;
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
+    AddOpcode(RAM8(rPC + 1));
     uint16 address = PC16andInc();
     AddAddress(rPC);
 
@@ -89,14 +87,13 @@ int LD_pNN_DD(void)
     sprintf(TRANSCRIPT, "[%4X]<-%s", address, DD_45_Name(prevPC));
 
     return -1;
+}
 
-#else
-
+int LD_pNN_DD_run(void)
+{
     uint valDD = prevPC;
     RAM16(PC16andInc()) = DD_45(valDD);
     return 20;
-
-#endif
 }
 
 

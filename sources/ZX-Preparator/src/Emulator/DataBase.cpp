@@ -21,6 +21,7 @@ int StorageInstructions::NextAddress()
     {
         return addressesForScan[0];
     }
+
     return -1;
 }
 
@@ -42,7 +43,7 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
     {
         instruction.numTackts = params->tackts;
 
-        instruction.mnemonic = std::string(params->mnemonic);
+        instruction.mnemonic = params->GetMnemonic();
 
         for(int i = 0; i < params->numAddresses; i++)
         {

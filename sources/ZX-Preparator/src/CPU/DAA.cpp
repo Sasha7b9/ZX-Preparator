@@ -10,7 +10,7 @@
 int Decode::DAA(void)
 {
     AddAddress(rPC);
-    strcpy(MNEMONIC, "DAA");
+    out->SetMnemonic("DAA");
     return -1;
 }
 

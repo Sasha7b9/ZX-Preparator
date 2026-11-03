@@ -40,8 +40,6 @@ public:
     char           comment[100];
     char           flags[100];          // Incstruction effect onf flags
     char           transcript[100];     // Instruction summary
-
-private:
     unsigned int   addresses[10];
 
 public:
@@ -53,6 +51,30 @@ private:
 public:
     int            numOpCodes;
     int            tackts;
+
+    void SetMnemonic(const wxString &mnem)
+    {
+        if (mnem.Length() < 100)
+        {
+            std::strcpy(mnemonic, mnem.c_str().AsChar());
+        }
+        else
+        {
+            mnemonic[0] = '\0';
+        }
+    }
+
+    std::string GetMnemonic()
+    {
+        std::string result(mnemonic);
+
+        if (result.size() >= 100)
+        {
+            result = result;
+        }
+
+        return result;
+    }
 
     uint8 *GetMEMORY()
     {
