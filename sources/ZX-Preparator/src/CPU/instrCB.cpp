@@ -116,35 +116,29 @@ int RES_B_pHL(void)
 }
 
 
-int SET_B_R(void)
+int SET_B_R_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
-
+int SET_B_R_run(void)
+{
     return 0;
-
-#endif
 }
 
 
-int SET_B_pHL(void)
+int SET_B_pHL_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,[HL]", (prevPC >> 3) & 7);
     return -1;
+}
 
-#else
-
+int SET_B_pHL_run(void)
+{
     return 0;
-
-#endif
 }
 
 
