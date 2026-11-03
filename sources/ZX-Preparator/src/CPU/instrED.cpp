@@ -140,16 +140,16 @@ int LDD(void)
 }
 
 
-int LDDR(void)
+int LDDR_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "LDDR");
     return -1;
+}
 
-#else
 
+int LDDR_run(void)
+{
     int time = 0;
 
     do
@@ -161,8 +161,6 @@ int LDDR(void)
     time += 16;
 
     return time;
-
-#endif
 }
 
 
