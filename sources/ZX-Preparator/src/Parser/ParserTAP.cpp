@@ -5,10 +5,10 @@
 #include "Emulator/Emulator.h"
 #include "Emulator/Memory.h"
 #include "Emulator/DataBase.h"
+#include "Controls/Controls.h"
 #pragma warning (push, 0)
     #include <wx/statline.h>
     #include <wx/file.h>
-    #include <wx/wfstream.h>
     #include <wx/datstrm.h>
 #pragma warning (pop)
 
@@ -49,13 +49,21 @@ bool ParserTAP::Execute(pchar fileName)
 
     wxFileInputStream file_input(fileName);
 
-    wxBufferedInputStream stream(file_input);
+    BufferedInputStream stream(file_input);
 
     wxDataInputStream data(stream);
 
     while (data.IsOk())
     {
-        wxFileOffset posBefore = stream.TellI();
+        stream.StorePointer();
+
+        if (data.Read16() == 0)
+        {
+            // Выходим, если размер следующего блока - ноль
+            break;
+        }
+
+        stream.RestorePointer();
 
         BlockTAP_Header *header = new BlockTAP_Header(data);
 
@@ -72,7 +80,7 @@ bool ParserTAP::Execute(pchar fileName)
         }
         else
         {
-            stream.SeekI(posBefore);
+            stream.RestorePointer();
 
             BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data);
 
@@ -82,7 +90,7 @@ bool ParserTAP::Execute(pchar fileName)
             }
             else
             {
-                stream.SeekI(posBefore);
+                stream.RestorePointer();
 
                 BlockTAP_Undefined *undef = new BlockTAP_Undefined(data);
 
