@@ -106,8 +106,7 @@ struct BlockTAP : public Block
             BASIC_PROGRAM,
             ARRAY_NUMBER,
             ARRAY_CHARACTER,
-            CODE,
-            PURE_BYTES
+            CODE
         };
     };
 

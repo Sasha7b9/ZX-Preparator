@@ -213,20 +213,18 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
         {
             type = (Type::E)Read8();
 
-            if (type < Type::PURE_BYTES)
+            ReadBytes((uint8 *)file_name, 10);
+            file_name[10] = '\0';
+
+            size_data = Read16();
+
+            param1 = Read16();
+
+            param2 = Read16();
+
+            if (data.Read8() == crc)            // Проверка CRC
             {
-                ReadBytes((uint8 *)file_name, 10);
-
-                size_data = Read16();
-
-                param1 = Read16();
-
-                param2 = Read16();
-
-                if (data.Read8() == crc)            // Проверка CRC
-                {
-                    is_valid = true;
-                }
+                is_valid = true;
             }
         }
     }
@@ -449,6 +447,9 @@ void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
 
     stream.Read8(data.data() + offset, size);
 
+    uint8 *d = data.data();
+    d = d;
+
     pointer = 0;
 }
 
@@ -555,23 +556,23 @@ void BlockTAP_Header::Write(Writer &writer, int dx)
 {
     wxString t{ "Header of " };
 
-    if (type == Type::BASIC_PROGRAM)
+    if (ToBASIC())
     {
         t.Append("BASIC program");
     }
-    else if (type == Type::ARRAY_NUMBER)
+    else if (ToArrayNumber())
     {
         t.Append("array numbers");
     }
-    else if (type == Type::ARRAY_CHARACTER)
+    else if (ToArrayCharacter())
     {
         t.Append("array characters");
     }
-    else if (type == Type::CODE)
+    else if (ToCode())
     {
         t.Append("code");
     }
-    else if (type == Type::PURE_BYTES)
+    else if (ToPureBytes())
     {
         t.Append("pure bytes");
     }
@@ -581,12 +582,22 @@ void BlockTAP_Header::Write(Writer &writer, int dx)
     }
 
     WriteType(writer, t, dx);
+
+    writer.DrawNextString(wxString::Format("Name : %s", file_name), dx);
+    writer.DrawNextString(wxString::Format("Parameter 1 : #%04X / %d", param1, param1), dx);
+    writer.DrawNextString(wxString::Format("Parameter 2 : #%04X / %d", param2, param2), dx);
+    writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
+    writer.DrawNextString(wxString::Format("Type data : #%02X", Read8(3)), dx);
 }
 
 
 void BlockTAP_BASIC::Write(Writer &writer, int dx)
 {
     WriteType(writer, "BASIC program", dx);
+
+    writer.DrawNextString(wxString::Format("Line start : %d", number_line_start), dx);
+    writer.DrawNextString(wxString::Format("Offset variables : %d", offset_variables), dx);
+    writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
 }
 
 
@@ -611,6 +622,7 @@ void BlockTAP_Code::Write(Writer &writer, int dx)
 void BlockTAP_PureBytes::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Pure bytes", dx);
+    writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
 }
 
 
