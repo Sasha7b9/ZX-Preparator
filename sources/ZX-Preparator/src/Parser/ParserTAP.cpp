@@ -382,6 +382,9 @@ void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
 
     stream.Read8(data.data() + offset, size);
 
+    uint8 *d = data.data();
+    d = d;
+
     pointer = 0;
 }
 
