@@ -115,8 +115,7 @@ struct BlockTAP : public Block
             ARRAY_NUMBER,
             ARRAY_CHARACTER,
             CODE,
-            PURE_BYTES,
-            Undefined = 255
+            PURE_BYTES
         };
     };
 
@@ -145,7 +144,7 @@ struct BlockTAP_Header : public BlockTAP
 
     int size_data = 0;      // Это размер данных, на которые указывает данный заголовок
 
-    Type::E type = Type::Undefined;
+    Type::E type = (Type::E)128;
 
     virtual pchar NameASCII() const override;
 

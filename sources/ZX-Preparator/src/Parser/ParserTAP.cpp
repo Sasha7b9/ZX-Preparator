@@ -550,7 +550,34 @@ bool BlockTAP_Code::ParseASM(ProgramASM &program)
 
 void BlockTAP_Header::Write(Writer &writer, int dx)
 {
-    WriteType(writer, "Header", dx);
+    wxString t{ "Header of " };
+
+    if (type == Type::BASIC_PROGRAM)
+    {
+        t.Append("BASIC program");
+    }
+    else if (type == Type::ARRAY_NUMBER)
+    {
+        t.Append("array numbers");
+    }
+    else if (type == Type::ARRAY_CHARACTER)
+    {
+        t.Append("array characters");
+    }
+    else if (type == Type::CODE)
+    {
+        t.Append("code");
+    }
+    else if (type == Type::PURE_BYTES)
+    {
+        t.Append("pure bytes");
+    }
+    else
+    {
+        t = wxString::Format("INVALID HEADER.Type % d", type);
+    }
+
+    WriteType(writer, t, dx);
 }
 
 
