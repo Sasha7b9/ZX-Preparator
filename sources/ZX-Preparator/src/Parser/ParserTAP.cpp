@@ -54,17 +54,9 @@ bool ParserTAP::Execute(pchar fileName)
 
     wxDataInputStream data(stream);
 
-    while (data.IsOk())
+    while (file_input.GetLength() != stream.TellI())
     {
         stream.StorePointer();
-
-        if (data.Read16() == 0)
-        {
-            // Выходим, если размер следующего блока - ноль
-            break;
-        }
-
-        stream.RestorePointer();
 
         BlockTAP_Header *header = new BlockTAP_Header(data);
 
@@ -81,6 +73,8 @@ bool ParserTAP::Execute(pchar fileName)
         }
         else
         {
+            delete header;
+
             stream.RestorePointer();
 
             BlockTAP_PureBytes *pure_bytes = new BlockTAP_PureBytes(data);
@@ -91,6 +85,8 @@ bool ParserTAP::Execute(pchar fileName)
             }
             else
             {
+                delete pure_bytes;
+
                 stream.RestorePointer();
 
                 BlockTAP_Undefined *undef = new BlockTAP_Undefined(data);
@@ -98,6 +94,10 @@ bool ParserTAP::Execute(pchar fileName)
                 if (undef->IsValid())
                 {
                     file->AppendBlock(std::shared_ptr<BlockTAP>(undef));
+                }
+                else
+                {
+                    delete undef;
                 }
             }
         }
@@ -623,6 +623,9 @@ void BlockTAP_PureBytes::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Pure bytes", dx);
     writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
+
+    uint8 *d = data.BeginData();
+    d = d;
 }
 
 
