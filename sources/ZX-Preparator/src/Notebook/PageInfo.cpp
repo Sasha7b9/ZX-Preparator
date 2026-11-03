@@ -60,39 +60,6 @@ void Writer::DrawNextString(const wxString &line, int dx)
 
 void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 {
-    /*
-    for (uint i = 0; i < (uint)number_blocks; i++)
-    {
-        auto block = std::dynamic_pointer_cast<BlockTAP>(fileTAP->blocks[i]);
-
-        writer.DrawNextString(wxString::Format("Name : %s", block->ToUndefined() ? "Unknown" : block->file_name), 2);
-
-        writer.DrawNextString(wxString::Format("Type : %s", block->NameASCII()), 2);
-
-        writer.DrawNextString(wxString::Format("Size : #%05x/%d", block->GetSize(), block->GetSize()), 2);
-
-        if(block->ToBASIC())
-        {
-            writer.DrawNextString(wxString::Format("Line start : %d", block->ToBASIC()->NumberLineStart()), 2);
-
-            writer.DrawNextString(wxString::Format("The start of the variable area relative to the start of the program : #%05x/%d",
-                block->ToBASIC()->OffsetVariables(), block->ToBASIC()->OffsetVariables()), 2);
-        }
-        else if (block->ToArrayNumber())
-        {
-            writer.DrawNextString(wxString::Format("Name : %c", block->ToArrayNumber()->NameVariable()), 2);
-        }
-        else if (block->ToArrayCharacter())
-        {
-            writer.DrawNextString(wxString::Format("Name : %c", block->ToArrayCharacter()->NameVariable()), 2);
-        }
-        else if (block->ToCode())
-        {
-            writer.DrawNextString(wxString::Format("Begin data : #%05x/%d", block->ToCode()->StartAddressCode(), block->ToCode()->StartAddressCode()), 2);
-        }
-    }
-    */
-
     auto fileTAP = std::dynamic_pointer_cast<FileTAP>(file);
 
     writer.DrawNextString("Is TAP file");
