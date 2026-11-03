@@ -390,11 +390,9 @@ int RETN(void)
 }
 
 
-int IN_R_pC(void)
+int IN_R_pC_dec(void)
 {
-#ifdef LISTING
-
-    if(((prevPC >> 3) & 7) != 6)
+    if (((prevPC >> 3) & 7) != 6)
     {
         sprintf(MNEMONIC, "IN %s,(C)", R8_HI_Name(prevPC));
         sprintf(TRANSCRIPT, "%s<-(C)", R8_HI_Name(prevPC));
@@ -408,8 +406,10 @@ int IN_R_pC(void)
     AddAddress(rPC);
 
     return -1;
-#else
+}
 
+int IN_R_pC_run(void)
+{
     if(((prevPC >> 3) & 7) == 6)
     {
 
@@ -427,7 +427,6 @@ int IN_R_pC(void)
     RES_N;
 
     return 12;
-#endif
 }
 
 
