@@ -623,4 +623,6 @@ void BlockTAP_Undefined::Write(Writer &writer, int dx)
 void BlockTAP::WriteType(Writer &writer, const wxString &type, int dx)
 {
     writer.DrawNextString(wxString::Format("Type : %s", type.c_str().AsChar()), dx);
+    writer.DrawNextString(wxString::Format("Size full : %d", data.AllBytes()), dx);
+    writer.DrawNextString(wxString::Format("Size data : %d", data.AllBytes() - 2), dx);
 }

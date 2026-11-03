@@ -149,7 +149,6 @@ struct BlockTAP_Header : public BlockTAP
     uint16 param2 = 0;      // program    00 : holds the start of the variable area relative to the start of the program
                             // arrays 01, 02 : N/A
                             // code       03 : holds 32768
-
 };
 
 
