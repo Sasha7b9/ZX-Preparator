@@ -355,9 +355,21 @@ BlockTAP_PureBytes::BlockTAP_PureBytes(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
 
+    data.Push16(size);
+
     data.AppendBytes(stream, size);
 
-    is_valid = true;
+    data.SetPointer(2);
+
+    for (uint16 i = 0; i < size - 1; i++)
+    {
+        Read8();
+    }
+
+    if (crc == Read8())
+    {
+        is_valid = true;
+    }
 }
 
 
