@@ -84,22 +84,19 @@ int LD_pIX_D_N_dec(void)
 }
 
 
-int LD_IX_NN(void)
+int LD_IX_NN_dec(void)
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
-    AddAddress(PC + 2);
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 2);
     sprintf(MNEMONIC, "LD IX, #%04X", PC16andInc());
     return -1;
+}
 
-#else
-
+int LD_IX_NN_run(void)
+{
     rIX = PC16andInc();
     return 14;
-
-#endif
 }
 
 

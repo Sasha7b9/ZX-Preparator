@@ -36,15 +36,25 @@ int LD_I_A(void)
 }
 
 
-int LD_A_R(void)
+int LD_A_R_dec(void)
 {
-    return 9;   // WARN
+    TACKTS = 9;
+    AddAddress(rPC);
+    strcpy(MNEMONIC, "LD A, R");
+    strcpy(TRANSCRIPT, "A<-R");
+    strcpy(COMMENT, "Load Refresh Register in accumulator");
+    return -1;
 }
 
 
+int LD_A_R_run(void)
+{
+    return 0;   // WARN
+}
+
 int LD_R_A(void)
 {
-    return 9;   // WARN
+    return 0;   // WARN
 }
 
 
@@ -107,16 +117,16 @@ int LDI(void)
 }
 
 
-int LDIR(void)
+int LDIR_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     strcpy(MNEMONIC, "LDIR");
     return -1;
+}
 
-#else
 
+int LDIR_run(void)
+{
     int time = 0;
     do
     {
@@ -125,8 +135,6 @@ int LDIR(void)
     } while(rBC != 0);
 
     return time + 16;
-
-#endif
 }
 
 
@@ -423,6 +431,19 @@ int IN_R_pC_run(void)
     RES_N;
 
     return 12;
+}
+
+
+int OUT_pC_A_dec(void)
+{
+    AddAddress(rPC);
+    sprintf(MNEMONIC, "OUT (C), A");
+    return -1;
+}
+
+int OUT_pC_A_run(void)
+{
+    return 0;
 }
 
 
