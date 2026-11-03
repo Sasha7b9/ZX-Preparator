@@ -11,19 +11,17 @@
 
 
 
-int BIT_B_R(void)
+int BIT_B_R_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "BIT %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
 
+int BIT_B_R_run(void)
+{
     return 0;
-
-#endif
 }
 
 
@@ -99,20 +97,17 @@ int RES_B_M(void)
 }
 
 
-int RES_B_pHL(void)
+int RES_B_pHL_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
     sprintf(MNEMONIC, "RES %d,[HL]", numBit);
     return -1;
+}
 
-#else
-
+int RES_B_pHL_run(void)
+{
     return 0;
-
-#endif
 }
 
 

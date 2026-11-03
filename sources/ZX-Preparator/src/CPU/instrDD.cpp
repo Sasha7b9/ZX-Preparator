@@ -139,7 +139,14 @@ int LD_SP_IX(void)
 }
 
 
-int PUSH_IX(void)
+int PUSH_IX_dec(void)
+{
+    AddAddress(rPC);
+    strcpy(MNEMONIC, "PUSH IX");
+    return -1;
+}
+
+int PUSH_IX_run(void)
 {
     RAM16(rSP - 2) = rIX;
     rSP -= 2;
