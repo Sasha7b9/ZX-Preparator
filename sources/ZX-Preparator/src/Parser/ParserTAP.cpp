@@ -68,7 +68,7 @@ bool ParserTAP::Execute(pchar fileName)
 
             BlockTAP *block = BlockTAP::ReadDataBlock(data, header);
 
-            if (block)
+            if (block && block->IsValid())
             {
                 file->AppendBlock(std::shared_ptr<BlockTAP>(block));
             }

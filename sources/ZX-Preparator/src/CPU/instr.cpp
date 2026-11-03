@@ -800,6 +800,15 @@ static int ADC_A_S_dec(void)
 }
 
 
+static int ADC_A_pHL_dec(void)
+{
+    AddAddress(rPC + 1);
+    AddOpcode(RAM8(rPC));
+    std::strcpy(MNEMONIC, "ADC A,[HL]");
+    return -1;
+}
+
+
 static int ADC_A_S_run(void)
 {
     rA += R8_LO(prevPC) + CF;
@@ -820,6 +829,13 @@ static int SUB_S_dec(void)
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SUB %s", R8_LO_Name(prevPC));
+    return -1;
+}
+
+static int SUB_pHL_dec(void)
+{
+    AddAddress(rPC);
+    std::strcpy(MNEMONIC, "SUB [HL]");
     return -1;
 }
 
