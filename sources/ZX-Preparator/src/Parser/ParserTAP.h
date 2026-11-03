@@ -167,7 +167,7 @@ struct BlockTAP_BASIC : public BlockTAP
 
     // Распарсить считанные данные в массив lines
     // num_bytes - столько байт нужно распарсить
-    bool ParseBASIC(int offset, uint16 num_bytes);
+    bool ParseBASIC(uint16 num_bytes);
 
     // nym_bytes - количество распарсенных байт
     LineBASIC ParseLineProgram(uint16 &num_bytes);

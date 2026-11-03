@@ -194,7 +194,7 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
 {
     uint16 size = stream.Read16();
 
-    if (size == 19)                 // У заголовка размер всегда 19
+    if (size == 19)                 // У заголовка ZX-Spectrum размер всегда 19
     {
         data.Push16(size);
 
@@ -223,10 +223,6 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
             }
         }
     }
-    else
-    {
-        size = size;
-    }
 }
 
 
@@ -244,11 +240,11 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
 
         uint8 type = Read8();
 
-        if (type == 0xFF)
+        if (type == 0xFF)                   // Для данных здесь 0xFF
         {
-            if (ParseBASIC(3, size - 4))
+            if (ParseBASIC(size - 4))
             {
-                if (crc == Read8())
+                if (crc == data.Read8())
                 {
                     is_valid = true;
                 }
@@ -258,45 +254,9 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
 }
 
 
-uint8 BlockTAP::Read8()
-{
-    uint8 result = data.Read8();
-
-    crc ^= result;
-
-    return result;
-}
-
-
-uint16 BlockTAP::Read16()
-{
-    return Read8() + (Read8() << 8);
-}
-
-
-uint16 BlockTAP::Read16Reverse()
-{
-    uint8 first = Read8();
-    uint8 second = Read8();
-
-    return (first << 8) + second;
-}
-
-
-void BlockTAP::ReadBytes(uint8 *buffer, int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        *buffer++ = Read8();
-    }
-}
-
-
-bool BlockTAP_BASIC::ParseBASIC(int offset, uint16 size)
+bool BlockTAP_BASIC::ParseBASIC(uint16 size)
 {
     program.Clear();
-
-    data.SetPointer(offset);
 
     while (size)
     {
@@ -318,9 +278,11 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
     line.number = Read16Reverse();
     line.size = Read16();
 
-    num_bytes = 0;
+    num_bytes = 1;  // Сразу забиваем место для символа завершения строки
 
-    for (int i = 0; (i < line.size - 1); i++)
+    for (int i = 0; 
+        (i < line.size - 1)             // Последний символ считывать не будем - символ завершения строки
+        && data.BytesLast(); i++)
     {
         uint8 code = Read8();
 
@@ -332,6 +294,43 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
     }
 
     return line;
+}
+
+
+uint8 BlockTAP::Read8()
+{
+    uint8 result = data.Read8();
+
+    crc ^= result;
+
+    return result;
+}
+
+
+uint16 BlockTAP::Read16()
+{
+    uint8 *d = data.BeginData();
+    d = d;
+
+    return Read8() + (Read8() << 8);
+}
+
+
+uint16 BlockTAP::Read16Reverse()
+{
+    uint8 first = Read8();
+    uint8 second = Read8();
+
+    return (first << 8) + second;
+}
+
+
+void BlockTAP::ReadBytes(uint8 *buffer, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        *buffer++ = Read8();
+    }
 }
 
 
