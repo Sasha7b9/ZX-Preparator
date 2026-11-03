@@ -9,7 +9,7 @@ wxFileConfig *g_file_config = nullptr;
 
 void AddAddress(uint addr)
 {
-    out->addresses[out->numAddresses++] = addr;
+    out->AppendAddress(addr);
 }
 
 

@@ -37,7 +37,11 @@ struct InfoStruct
     char           comment[100];
     char           flags[100];          // Incstruction effect onf flags
     char           transcript[100];     // Instruction summary
+
+private:
     unsigned int   addresses[10];
+
+public:
     int            numAddresses;
 
 private:
@@ -49,7 +53,7 @@ public:
 
     unsigned char &GetOpcode(int i)
     {
-        if (i < 10)
+        if (i >= 0 && i < 10)
         {
             return opCodes[i];
         }
@@ -61,13 +65,37 @@ public:
 
     void AppendOpcode(uint8 code)
     {
-        if (numOpCodes++ < 10)
+        if (numOpCodes >= 0 && numOpCodes < 10)
         {
-            opCodes[numOpCodes] = code;
+            opCodes[numOpCodes++] = code;
         }
         else
         {
             code = code;
+        }
+    }
+
+    uint GetAddess(int i)
+    {
+        if (i >= 0 && i < 10)
+        {
+            return addresses[i];
+        }
+
+        static uint null = 0;
+
+        return null;
+    }
+
+    void AppendAddress(uint addr)
+    {
+        if (numAddresses >= 0 && numAddresses < 10)
+        {
+            addresses[numAddresses++] = addr;
+        }
+        else
+        {
+            addr = addr;
         }
     }
 };

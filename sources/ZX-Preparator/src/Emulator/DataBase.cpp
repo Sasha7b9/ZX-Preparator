@@ -46,7 +46,7 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
 
         for(int i = 0; i < params->numAddresses; i++)
         {
-            AppendEntryPoint((int)params->addresses[i]);
+            AppendEntryPoint((int)params->GetAddess(i));
         }
 
         instruction.transcript = string(params->transcript);
