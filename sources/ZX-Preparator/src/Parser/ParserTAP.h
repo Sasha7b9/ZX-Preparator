@@ -39,14 +39,6 @@ struct BlockTAP : public Block
 
     char file_name[11];
 
-    uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
-                            // arrays 01, 02 : variable name
-                            // code       03 : holds the start of the code block when saved
-
-    uint16 param2 = 0;      // program    00 : holds the start of the variable area relative to the start of the program
-                            // arrays 01, 02 : N/A
-                            // code       03 : holds 32768
-
     int GetSize() const
     {
         return data.AllBytes();
@@ -149,24 +141,21 @@ struct BlockTAP_Header : public BlockTAP
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
+
+    uint16 param1 = 0;      // program    00 : number line start (or a number >= 32768 if no line parameter was given)
+                            // arrays 01, 02 : variable name
+                            // code       03 : holds the start of the code block when saved
+
+    uint16 param2 = 0;      // program    00 : holds the start of the variable area relative to the start of the program
+                            // arrays 01, 02 : N/A
+                            // code       03 : holds 32768
+
 };
 
 
 struct BlockTAP_BASIC : public BlockTAP
 {
     BlockTAP_BASIC(wxDataInputStream &, BlockTAP_Header *);
-
-    // С этой строки программа должна запуститься автоматически после загрузки
-    int NumberLineStart() const
-    {
-        return param1;
-    }
-
-    // Смещение адреса переменных относительно начала программы
-    int OffsetVariables() const
-    {
-        return param2;
-    }
 
     // Распарсить считанные данные в массив lines
     // num_bytes - столько байт нужно распарсить
@@ -180,6 +169,9 @@ struct BlockTAP_BASIC : public BlockTAP
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
+
+    int number_line_start = -1;     // С этой строки программа должна запуститься автоматически после загрузки
+    int offset_variables = -1;      // Смещение адреса переменных относительно начала программы
 };
 
 
@@ -187,14 +179,11 @@ struct BlockTAP_ArrayNumber : public BlockTAP
 {
     BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *);
 
-    char NameVariable() const
-    {
-        return (char)(param1 >> 8);
-    }
-
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
+
+    char name_variable = '\0';
 };
 
 
@@ -202,14 +191,11 @@ struct BlockTAP_ArrayCharacter : public BlockTAP
 {
     BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *);
 
-    char NameVariable() const
-    {
-        return (char)(param1 >> 8);
-    }
-
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
+
+    char name_variable = '\0';
 };
 
 
@@ -217,18 +203,14 @@ struct BlockTAP_Code : public BlockTAP
 {
     BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *);
 
-    // Адрес загрузки
-    int StartAddressCode() const
-    {
-        return param1;
-    }
-
     // Parse machine ocde block to asm program
     bool ParseASM(ProgramASM &);
 
     virtual pchar NameASCII() const override;
 
     virtual void Write(Writer &, int) override;
+
+    int start_addres = -1;      // Адрес загрузки
 };
 
 

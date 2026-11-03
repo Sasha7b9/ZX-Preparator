@@ -137,7 +137,7 @@ pchar BlockTAP_ArrayNumber::NameASCII() const
 
 pchar BlockTAP_Code::NameASCII() const
 {
-    if (ToCode() && GetSize() == 6912 && ToCode()->StartAddressCode() == 16384)
+    if (ToCode() && GetSize() == 6912 && ToCode()->start_addres == 16384)
     {
         return "DATA SCREEN";
     }
@@ -249,6 +249,9 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
             {
                 if (crc == data.Read8())
                 {
+                    number_line_start = header->param1;
+                    offset_variables = header->param2;
+
                     is_valid = true;
                 }
             }
@@ -342,21 +345,21 @@ void BlockTAP::ReadBytes(uint8 *buffer, int size)
 }
 
 
-BlockTAP_ArrayNumber::BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_ArrayNumber::BlockTAP_ArrayNumber(wxDataInputStream &, BlockTAP_Header *header)
 {
-
+    name_variable = (char)(header->param1 >> 8);
 }
 
 
-BlockTAP_ArrayCharacter::BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_ArrayCharacter::BlockTAP_ArrayCharacter(wxDataInputStream &, BlockTAP_Header *header)
 {
-
+    name_variable = (char)(header->param1 >> 8);
 }
 
 
-BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *)
+BlockTAP_Code::BlockTAP_Code(wxDataInputStream &, BlockTAP_Header *header)
 {
-
+    start_addres = header->param1;
 }
 
 
@@ -523,11 +526,11 @@ bool BlockTAP_Code::ParseASM(ProgramASM &program)
 
     std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
 
-    std::memcpy(params.MEMORY + StartAddressCode(), data.BeginData(), data.AllBytes());
+    std::memcpy(params.MEMORY + start_addres, data.BeginData(), data.AllBytes());
 
-    StorageInstructions storage(StartAddressCode(), StartAddressCode() + data.AllBytes());
+    StorageInstructions storage(start_addres, start_addres + data.AllBytes());
 
-    storage.AppendEntryPoint(StartAddressCode());
+    storage.AppendEntryPoint(start_addres);
 
     Emulator::Init(&params);
 
