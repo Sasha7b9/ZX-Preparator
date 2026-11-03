@@ -210,7 +210,7 @@ struct BlockTAP_Code : public BlockTAP
 
     virtual void Write(Writer &, int) override;
 
-    int start_addres = -1;      // Адрес загрузки
+    int address_load = -1;      // Адрес загрузки
 
     ProgramASM program;
 };

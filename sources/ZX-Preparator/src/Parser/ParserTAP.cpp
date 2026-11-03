@@ -146,7 +146,7 @@ pchar BlockTAP_ArrayNumber::NameASCII() const
 
 pchar BlockTAP_Code::NameASCII() const
 {
-    if (ToCode() && GetSize() == 6912 && ToCode()->start_addres == 16384)
+    if (ToCode() && GetSize() == 6912 && ToCode()->address_load == 16384)
     {
         return "DATA SCREEN";
     }
@@ -301,15 +301,13 @@ BlockTAP_Code::BlockTAP_Code(wxDataInputStream &stream, BlockTAP_Header *header)
 
         if (Read8(2) == 0xFF)
         {
-            ParseASM(size - 4);
+            address_load = header->param1;
 
-            start_addres = header->param1;
+            ParseASM(size - 4);
 
             is_valid = VerifyCRC();
         }
     }
-
-    start_addres = header->param1;
 }
 
 
@@ -563,11 +561,11 @@ bool BlockTAP_Code::ParseASM(uint16 /*size*/)
 
     std::memcpy(params.MEMORY, Memory::_48, 64 * 1024);
 
-    std::memcpy(params.MEMORY + start_addres, data.BeginData(), data.AllBytes());
+    std::memcpy(params.MEMORY + address_load, data.BeginData(), data.AllBytes());
 
-    StorageInstructions storage(start_addres, start_addres + data.AllBytes());
+    StorageInstructions storage(address_load, address_load + data.AllBytes());
 
-    storage.AppendEntryPoint(start_addres);
+    storage.AppendEntryPoint(address_load);
 
     Emulator::Init(&params);
 
@@ -648,13 +646,14 @@ void BlockTAP_ArrayCharacter::Write(Writer &writer, int dx)
 void BlockTAP_Code::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Code", dx);
+
+    writer.DrawNextString(wxString::Format("Address load : #%04X / %d", address_load, address_load), dx);
 }
 
 
 void BlockTAP_PureBytes::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Pure bytes", dx);
-    writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
 }
 
 
