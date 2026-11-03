@@ -54,6 +54,8 @@ bool ParserTAP::Execute(pchar fileName)
 
     wxDataInputStream data(stream);
 
+    bool first = true;
+
     while (file_input.GetLength() != stream.TellI())
     {
         stream.StorePointer();
@@ -74,6 +76,11 @@ bool ParserTAP::Execute(pchar fileName)
         else
         {
             delete header;
+
+            if (first)              // Если не считан заголовок - это не TAP
+            {
+                break;
+            }
 
             stream.RestorePointer();
 
@@ -101,6 +108,8 @@ bool ParserTAP::Execute(pchar fileName)
                 }
             }
         }
+
+        first = false;
     }
 
     file->is_valid = (file->NumberBlocks() != 0);
@@ -556,25 +565,21 @@ void BlockTAP_Header::Write(Writer &writer, int dx)
 {
     wxString t{ "Header of " };
 
-    if (ToBASIC())
+    if (type == Type::BASIC_PROGRAM)
     {
         t.Append("BASIC program");
     }
-    else if (ToArrayNumber())
+    else if (type == Type::ARRAY_NUMBER)
     {
         t.Append("array numbers");
     }
-    else if (ToArrayCharacter())
+    else if (type == Type::ARRAY_CHARACTER)
     {
         t.Append("array characters");
     }
-    else if (ToCode())
+    else if (type == Type::CODE)
     {
         t.Append("code");
-    }
-    else if (ToPureBytes())
-    {
-        t.Append("pure bytes");
     }
     else
     {
@@ -623,9 +628,6 @@ void BlockTAP_PureBytes::Write(Writer &writer, int dx)
 {
     WriteType(writer, "Pure bytes", dx);
     writer.DrawNextString(wxString::Format("Flag : #%02X", Read8(2)), dx);
-
-    uint8 *d = data.BeginData();
-    d = d;
 }
 
 
