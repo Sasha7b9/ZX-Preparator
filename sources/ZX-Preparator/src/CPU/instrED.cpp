@@ -225,16 +225,16 @@ int CPDR(void)
 }
 
 
-int NEG(void)
+int NEG_dec(void)
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     strcpy(MNEMONIC, "NEG");
     return -1;
+}
 
-#else
 
+int NEG_run(void)
+{
     rA = (uint8)((~rA) + 1);
 
     // + + x + x V 1 +
@@ -246,8 +246,6 @@ int NEG(void)
     // C
 
     return 8;
-
-#endif
 }
 
 
@@ -500,19 +498,17 @@ int INDR(void)
 }
 
 
-int OUT_pC_R(void)
+int OUT_pC_R_dec(void)
 {
-#ifdef LISTING
-
     sprintf(MNEMONIC, "OUT (C), %s", R8_HI_Name(prevPC));
     sprintf(TRANSCRIPT, "(C)<-%s", R8_HI_Name(prevPC));
     return 0;
+}
 
-#else
 
+int OUT_pC_R_run(void)
+{
     return 0;
-
-#endif
 }
 
 
