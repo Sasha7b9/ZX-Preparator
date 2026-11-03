@@ -223,21 +223,42 @@ BlockTAP_Header::BlockTAP_Header(wxDataInputStream &stream)
             }
         }
     }
+    else
+    {
+        size = size;
+    }
 }
 
 
 BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *header)
 {
-    data.AppendBytes(stream, header->size_data);
+    uint16 size = stream.Read16();
 
-    if (ParseBASIC())
+    if (size == header->size_data + 2)
     {
-        is_valid = true;
+        data.Push16(size);
+
+        data.AppendBytes(stream, size);
+
+        data.SetPointer(2);
+
+        uint8 type = Read8();
+
+        if (type == 0xFF)
+        {
+            if (ParseBASIC(3, size - 4))
+            {
+                if (crc == Read8())
+                {
+                    is_valid = true;
+                }
+            }
+        }
     }
 }
 
 
-uint8 BlockTAP_Header::Read8()
+uint8 BlockTAP::Read8()
 {
     uint8 result = data.Read8();
 
@@ -247,13 +268,22 @@ uint8 BlockTAP_Header::Read8()
 }
 
 
-uint16 BlockTAP_Header::Read16()
+uint16 BlockTAP::Read16()
 {
     return Read8() + (Read8() << 8);
 }
 
 
-void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
+uint16 BlockTAP::Read16Reverse()
+{
+    uint8 first = Read8();
+    uint8 second = Read8();
+
+    return (first << 8) + second;
+}
+
+
+void BlockTAP::ReadBytes(uint8 *buffer, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -262,46 +292,43 @@ void BlockTAP_Header::ReadBytes(uint8 *buffer, int size)
 }
 
 
-bool BlockTAP_BASIC::ParseBASIC()
+bool BlockTAP_BASIC::ParseBASIC(int offset, uint16 size)
 {
     program.Clear();
 
-    int last_bytes = data.BytesLast();
+    data.SetPointer(offset);
 
-    while (last_bytes)
+    while (size)
     {
-        program.lines.push_back(ParseLineProgram());
-        last_bytes = data.BytesLast();
+        uint16 deparsed_bytes = 0;
+
+        program.lines.push_back(ParseLineProgram(deparsed_bytes));
+
+        size -= deparsed_bytes;
     }
 
     return true;
 }
 
 
-LineBASIC BlockTAP_BASIC::ParseLineProgram()
+LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
 {
     LineBASIC line;
 
-    line.number = data.Read16Reverse();
-    line.size = data.Read16();
+    line.number = Read16Reverse();
+    line.size = Read16();
 
-    for (int i = 0; (i < line.size - 1) && (data.BytesLast() != 0); i++)
+    num_bytes = 0;
+
+    for (int i = 0; (i < line.size - 1); i++)
     {
-        uint8 code = data.Read8();
+        uint8 code = Read8();
+
+        num_bytes++;
 
         const char *string = KeyCodes::Get(code);
 
         line.symbols.push_back(string);
-    }
-
-    if (!data.IsEmpty())
-    {
-        data.ReadChar();
-    }
-
-    if (!data.IsEmpty())
-    {
-        data.ReadChar();
     }
 
     return line;
@@ -374,6 +401,12 @@ void BlockTAP::Data::Push16(uint16 value)
 }
 
 
+void BlockTAP::Data::Push8(uint8 value)
+{
+    data.push_back(value);
+}
+
+
 void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
 {
     int offset =(int)data.size();
@@ -381,9 +414,6 @@ void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
     data.resize(data.size() + size);
 
     stream.Read8(data.data() + offset, size);
-
-    uint8 *d = data.data();
-    d = d;
 
     pointer = 0;
 }

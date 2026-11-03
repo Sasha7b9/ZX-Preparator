@@ -54,6 +54,8 @@ struct BlockTAP : public Block
     {
         void Push16(uint16);
 
+        void Push8(uint8);
+
         void AppendBytes(wxDataInputStream &, int size);
 
         uint8 *BeginData()
@@ -124,6 +126,14 @@ struct BlockTAP : public Block
 protected:
 
     bool is_valid = false;
+
+    uint8 crc = 0;
+
+    uint8 Read8();
+    uint16 Read16();
+    uint16 Read16Reverse();
+
+    void ReadBytes(uint8 *, int);
 };
 
 
@@ -136,15 +146,6 @@ struct BlockTAP_Header : public BlockTAP
     Type::E type = Type::Undefined;
 
     virtual pchar NameASCII() const override;
-
-private:
-
-    uint8 Read8();
-    uint16 Read16();
-
-    void ReadBytes(uint8 *, int);
-
-    uint8 crc = 0;
 };
 
 
@@ -165,9 +166,11 @@ struct BlockTAP_BASIC : public BlockTAP
     }
 
     // Распарсить считанные данные в массив lines
-    bool ParseBASIC();
+    // num_bytes - столько байт нужно распарсить
+    bool ParseBASIC(int offset, uint16 num_bytes);
 
-    LineBASIC ParseLineProgram();
+    // nym_bytes - количество распарсенных байт
+    LineBASIC ParseLineProgram(uint16 &num_bytes);
 
     ProgramBASIC program;
 
