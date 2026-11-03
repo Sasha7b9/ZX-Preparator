@@ -296,19 +296,18 @@ int ADC_HL_SS(void)
 }
 
 
-int SBC_HL_SS(void)
+int SBC_HL_SS_dec(void)
 {
-#ifdef LISTING
-
     TACKTS = 15;
     AddAddress(rPC);
     strcpy(FLAGS, "++XXXV1+");
     sprintf(MNEMONIC, "SBC HL,%s", SS_45_Name(prevPC));
     sprintf(TRANSCRIPT, "HL<-HL-%s-CY", SS_45_Name(prevPC));
     return -1;
+}
 
-#else
-
+int SBC_HL_SS_run(void)
+{
     rHL -= SS_45(prevPC) - CF;
 
     // + + x x x V 1 +
@@ -319,8 +318,6 @@ int SBC_HL_SS(void)
     // C
 
     return 15;
-
-#endif
 }
 
 
