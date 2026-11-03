@@ -39,9 +39,37 @@ struct InfoStruct
     char           transcript[100];     // Instruction summary
     unsigned int   addresses[10];
     int            numAddresses;
+
+private:
     unsigned char  opCodes[10];
+
+public:
     int            numOpCodes;
     int            tackts;
+
+    unsigned char &GetOpcode(int i)
+    {
+        if (i < 10)
+        {
+            return opCodes[i];
+        }
+
+        static unsigned char null = '\0';
+
+        return null;
+    }
+
+    void AppendOpcode(uint8 code)
+    {
+        if (numOpCodes++ < 10)
+        {
+            opCodes[numOpCodes] = code;
+        }
+        else
+        {
+            code = code;
+        }
+    }
 };
 
 

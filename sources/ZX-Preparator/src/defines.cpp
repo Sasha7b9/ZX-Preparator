@@ -15,7 +15,7 @@ void AddAddress(uint addr)
 
 void AddOpcode(uint8 code)
 {
-    out->opCodes[out->numOpCodes++] = code;
+    out->AppendOpcode(code);
 }
 
 

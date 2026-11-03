@@ -35,7 +35,7 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
 
     for(int i = 0; i < params->numOpCodes; i++)
     {
-        instruction.opCodes.push_back(params->opCodes[i]);
+        instruction.opCodes.push_back(params->GetOpcode(i));
     }
 
     if(succsefull)
