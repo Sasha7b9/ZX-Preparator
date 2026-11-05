@@ -57,26 +57,32 @@ int CRL_pHL(void)
 }
 
 
-int RLC_R(void)
+int RLC_R_dec()
+{
+    AddAddress(rPC);
+    sprintf(MNEMONIC, "RLC %s", R8_LO_Name(prevPC));
+    return -1;
+}
+
+
+int RLC_R_run()
 {
     return RLC(Operand_Reg8);
 }
 
 
 
-int RRC_R(void)
+int RRC_R_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "RRC %s", R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
 
-    return 0;
-
-#endif
+int RRC_R_run()
+{
+    return RRC(Operand_Reg8);
 }
 
 
