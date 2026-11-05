@@ -25,35 +25,31 @@ int BIT_B_R_run(void)
 }
 
 
-int CRL_R(void)
+int CRL_R_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "SRL %s", R8_LO_Name(prevPC));
     return -1;
-
-#else
-
-    return 0;
-
-#endif
 }
 
 
-int CRL_pHL(void)
+int CRL_R_run()
 {
-#ifdef LISTING
+    return 0;
+}
 
+
+int CRL_pHL_dec()
+{
     AddAddress(rPC);
     strcpy(MNEMONIC, "SRL [HL]");
     return -1;
+}
 
-#else
 
+int CRL_pHL_run()
+{
     return 0;
-
-#endif
 }
 
 
@@ -141,35 +137,30 @@ int SET_B_pHL_run(void)
 }
 
 
-int RL_R(void)
+int RL_R_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "RL %s", R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
-
+int RL_R_run()
+{
     return 0;
-
-#endif
 }
 
 
-int RR_R(void)
+int RR_R_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "RR %s", R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
 
+int RR_R_run()
+{
     return 0;
-
-#endif
 }
 
 

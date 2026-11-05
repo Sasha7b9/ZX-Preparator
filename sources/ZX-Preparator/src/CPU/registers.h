@@ -142,12 +142,12 @@ extern uint8 imfB;
     r1 = r2;            \
     r2 = temp;
 
-char* R8_HI_Name(uint8 value);
-char* R8_LO_Name(uint8 value);
-char* DD_45_Name(uint8 value);
-char* SS_45_Name(uint8 value);
-char* QQ_45_Name(uint8 value);
-char* PP_45_Name(uint8 value);
+char* R8_HI_Name(uint8 value);      // B, C, D, E, H, L, [HL], A
+char* R8_LO_Name(uint8 value);      // B, C, D, E, H, L, [HL], A
+char* DD_45_Name(uint8 value);      // BC, DE, HL, SP
+char* SS_45_Name(uint8 value);      // BC, DE, IY, SP
+char* QQ_45_Name(uint8 value);      // BC, DE, HL, AF
+char* PP_45_Name(uint8 value);      // BC, DE, IX, SP
 
 
 struct TypeIR

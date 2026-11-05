@@ -85,6 +85,21 @@ int LD_IY_NN_run(void)
 }
 
 
+int ADD_IY_SS_dec()
+{
+    AddAddress(rPC);
+    sprintf(MNEMONIC, "ADD IX, %s", SS_45_Name(prevPC));
+    sprintf(TRANSCRIPT, "IY<-IY+%s", SS_45_Name(prevPC));
+    return -1;
+}
+
+
+int ADD_IY_SS_run()
+{
+    return 0;
+}
+
+
 int DecodeCommandFDCB(void)
 {
     //return RunThridLevel(IR_IY);

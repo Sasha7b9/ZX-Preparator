@@ -56,12 +56,10 @@ int LD_R_A(void)
 }
 
 
-int LD_DD_pNN(void)
+int LD_DD_pNN_dec()
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
+    AddOpcode(RAM8(rPC + 1));
 
     uint8 retValue = prevPC;
 
@@ -70,14 +68,13 @@ int LD_DD_pNN(void)
     AddAddress(rPC);
 
     return -1;
+}
 
-#else
-
+int LD_DD_pNN_run()
+{
     uint8 valReg = prevPC;
     DD_45(valReg) = RAM16(PC16andInc());
     return 20;
-
-#endif
 }
 
 

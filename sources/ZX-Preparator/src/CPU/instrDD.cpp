@@ -136,7 +136,17 @@ int LD_IX_pNN(void)
 }
 
 
-int LD_pNN_IX(void)
+int LD_pNN_IX_dec(void)
+{
+    AddOpcode(RAM8(rPC));
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 2);
+    sprintf(MNEMONIC, "LD [#%04X], IX", PC16andInc());
+    return -1;
+}
+
+
+int LD_pNN_IX_run(void)
 {
     RAM16(PC16andInc()) = rIX;
     return 20;

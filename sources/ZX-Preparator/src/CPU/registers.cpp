@@ -129,20 +129,6 @@ pFuncpU16V funcsRegPP[4] =
 };
 
 
-char *PP_45_Name(uint8 value)
-{
-    const char *names[4] =
-    {
-        "BC",
-        "DE",
-        "IX",
-        "SP"
-    };
-
-    return (char*)names[(value >> 4) & 3];
-}
-
-
 void AddPC(uint8 delta)
 {
     int16 address = (int16)rPC + (int8)delta;
@@ -209,7 +195,7 @@ char *R8_LO_Name(uint8 value)
 }
 
 
-    char *DD_45_Name(uint8 value)
+char *DD_45_Name(uint8 value)
 {
     const char *names[4] =
     {
@@ -243,10 +229,23 @@ char *SS_45_Name(uint8 value) //-V524
     {
         "BC",
         "DE",
-        "HL",
+        "IY",
         "SP"
     };
 
     return (char*)names[(value >> 4) & 3];
 }
 
+
+char *PP_45_Name(uint8 value)
+{
+    const char *names[4] =
+    {
+        "BC",
+        "DE",
+        "IX",
+        "SP"
+    };
+
+    return (char *)names[(value >> 4) & 3];
+}
