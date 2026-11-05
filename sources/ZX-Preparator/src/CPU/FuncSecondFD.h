@@ -207,7 +207,7 @@ const pFuncIV secondLevelFD[256][2] =
     /*   11 001 000         */    {0, 0},
     /*   11 001 001         */    {0, 0},
     /*   11 001 010         */    {0, 0},
-    /*   11 001 011         */    {DecodeCommandFDCB, 0},
+    /*   11 001 011         */    {DecodeCommandFDCB_dec, DecodeCommandFDCB_run},
     /*   11 001 100         */    {0, 0},
     /*   11 001 101         */    {0, 0},
     /*   11 001 110         */    {0, 0},

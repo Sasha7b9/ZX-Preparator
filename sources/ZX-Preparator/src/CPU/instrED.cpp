@@ -380,18 +380,15 @@ int RRD()
 }
 
 
-int RETN()
+int RETN_dec()
 {
-#ifdef LISTING
-
     strcpy(MNEMONIC, "RETN");
     return -1;
+}
 
-#else
-
-    return 14;  // WARN
-
-#endif
+int RETN_run()
+{
+    return 0;  // WARN
 }
 
 
@@ -448,58 +445,51 @@ int OUT_pC_A_run()
 }
 
 
-int INI()
+int INI_dec()
 {
-#ifdef LISTING
-
     strcpy(MNEMONIC, "INI");
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; if B-1==0, Z set, else reset");
     strcpy(FLAGS, "X + X X X X 1 X");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++");
     AddAddress(rPC);
     return 0;
-
-#else
-
-    return 0;
-
-#endif
 }
 
 
-int INIR()
+int INI_run()
 {
-#ifdef LISTING
+    return 0;
+}
 
+
+int INIR_dec()
+{
     strcpy(MNEMONIC, "INIR");
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; z set only after finishing instruction");
     strcpy(FLAGS, "X 1 X X X X X 1 ");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++; while B!=0");
     AddAddress(rPC);
     return 0;
+}
 
-#else
-
+int INIR_run()
+{
     return 0;
-
-#endif
 }
 
 
-int IND()
+int IND_dec()
 {
-#ifdef LISTING
-
     strcpy(MNEMONIC, "IND");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--");
     AddAddress(rPC);
     return 0;
+}
 
-#else
 
+int IND_run()
+{
     return 0;
-
-#endif
 }
 
 

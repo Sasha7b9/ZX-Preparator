@@ -115,43 +115,38 @@ int DEC_IY_run()
 }
 
 
-int DecodeCommandFDCB()
+int DecodeCommandFDCB_dec()
 {
-    //return RunThridLevel(IR_IY);
-
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
-    AddAddress(PC + 2);
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 2);
 
     uint8 valD = PCandInc();
     uint8 valBit = PCandInc();
     uint8 bit = (valBit >> 3) & 7;
 
-    if((valBit & 0xc7) == 0xc6)       // SET B, (IY + D)
+    if ((valBit & 0xc7) == 0xc6)       // SET B, (IY + D)
     {
         sprintf(MNEMONIC, "SET %d,[IY+%02X]", bit, valD);
         return -1;
     }
-    else if((valBit & 0xc7) == 0x86)  // RES B, (IY + D)
+    else if ((valBit & 0xc7) == 0x86)  // RES B, (IY + D)
     {
         sprintf(MNEMONIC, "RES %d,[IY+%02X]", bit, valD);
         return -1;
     }
-    else if((valBit & 0xc7) == 0x46)  // BIT B, (IY + D)
+    else if ((valBit & 0xc7) == 0x46)  // BIT B, (IY + D)
     {
         sprintf(MNEMONIC, "BIT %d,[IY+%02X]", bit, valD);
         return -1;
     }
 
     return 1;
+}
 
-#else
-
+int DecodeCommandFDCB_run()
+{
     return 0;
-
-#endif
 }
 
 

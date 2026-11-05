@@ -245,19 +245,18 @@ int INC_IX_dec()
 }
 
 
-int JP_pIX()
+int JP_pIX_dec()
 {
-#ifdef LISTING
     AddAddress(rPC);
     strcpy(MNEMONIC, "JP [IX]");
     return -1;
+}
 
-#else
 
+int JP_pIX_run()
+{
     rPC = rIX;
     return 8;
-
-#endif
 }
 
 
