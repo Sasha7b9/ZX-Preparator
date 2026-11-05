@@ -10,6 +10,7 @@
 struct Instruction
 {
     bool bad = false;
+    bool is_bytes = false;              // Если true, это байты данных. Декодировать не нужно
     int address = 0;                    // Command location address
     std::vector<uint8> opCodes;         // Command codes
     std::string mnemonic;               // Command mnemonic

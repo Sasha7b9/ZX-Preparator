@@ -1,6 +1,7 @@
 // 2022/05/23 16:56:40 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Emulator/DataBase.h"
+#include "Computer/RAM.h"
 #pragma warning(push, 0)
 #include <iostream>
 #include <fstream>
@@ -14,46 +15,6 @@ using std::string;
 using std::vector;
 using std::endl;
 
-
-StorageInstructions::StorageInstructions(int _addr_min, int _addr_max) :
-    addr_min(_addr_min), addr_max(_addr_max)
-{
-    AppendEntryPoint(0x0066);
-    AppendEntryPoint(0x03F8);
-    AppendEntryPoint(0x04C2);
-    AppendEntryPoint(0x053F);
-    AppendEntryPoint(0x0605);
-    AppendEntryPoint(0x0A23);
-    AppendEntryPoint(0x0A3D);
-    AppendEntryPoint(0x0A4F);
-    AppendEntryPoint(0x0A5F);
-    AppendEntryPoint(0x0A87);
-    AppendEntryPoint(0x0EAC);
-    AppendEntryPoint(0x0FA9);
-    AppendEntryPoint(0x0FF3);
-
-    AppendEntryPoint(0x1015);
-    AppendEntryPoint(0x1059);
-    AppendEntryPoint(0x1076);
-    AppendEntryPoint(0x107F);
-    AppendEntryPoint(0x10A8);
-    AppendEntryPoint(0x10B7);
-    AppendEntryPoint(0x11B7);
-    AppendEntryPoint(0x1555);
-    AppendEntryPoint(0x15C4);
-    AppendEntryPoint(0x1634);
-    AppendEntryPoint(0x164D);
-    AppendEntryPoint(0x16D4);
-    AppendEntryPoint(0x16E5);
-    AppendEntryPoint(0x171C);
-    AppendEntryPoint(0x1736);
-    AppendEntryPoint(0x17F5);
-
-    AppendEntryPoint(0x3214);
-    AppendEntryPoint(0x351B);
-    AppendEntryPoint(0x353B);
-    AppendEntryPoint(0x35C9);
-}
 
 int StorageInstructions::NextAddress()
 {
@@ -126,6 +87,23 @@ void StorageInstructions::AppendEntryPoint(int address)
     {
         addressesForScan.push_back(address);
     }
+}
+
+
+void StorageInstructions::AppendDefBytes(int address, int num_bytes)
+{
+    Instruction instr;
+    instr.is_bytes = true;
+    instr.bad = false;
+    instr.address = address;
+
+    for (int i = 0; i < num_bytes; i++)
+    {
+        uint8 code = RAM8(address++);
+        instr.opCodes.push_back(code);
+    }
+
+    instructions.push_back(instr);
 }
 
 
@@ -347,4 +325,79 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
 
     file.Write();
     file.Close();
+}
+
+
+StorageInstructions::StorageInstructions(int _addr_min, int _addr_max) :
+    addr_min(_addr_min), addr_max(_addr_max)
+{
+    AppendEntryPoint(0x0066);
+    AppendEntryPoint(0x03F8);
+    AppendEntryPoint(0x04C2);
+    AppendEntryPoint(0x053F);
+    AppendEntryPoint(0x0605);
+    AppendEntryPoint(0x0A23);
+    AppendEntryPoint(0x0A3D);
+    AppendEntryPoint(0x0A4F);
+    AppendEntryPoint(0x0A5F);
+    AppendEntryPoint(0x0A87);
+    AppendEntryPoint(0x0EAC);
+    AppendEntryPoint(0x0FA9);
+    AppendEntryPoint(0x0FF3);
+
+    AppendEntryPoint(0x1015);
+    AppendEntryPoint(0x1059);
+    AppendEntryPoint(0x1076);
+    AppendEntryPoint(0x107F);
+    AppendEntryPoint(0x10A8);
+    AppendEntryPoint(0x10B7);
+    AppendEntryPoint(0x11B7);
+    AppendEntryPoint(0x1555);
+    AppendEntryPoint(0x15C4);
+    AppendEntryPoint(0x1634);
+    AppendEntryPoint(0x164D);
+    AppendEntryPoint(0x16D4);
+    AppendEntryPoint(0x16E5);
+    AppendEntryPoint(0x171C);
+    AppendEntryPoint(0x1736);
+    AppendEntryPoint(0x1781);
+    AppendEntryPoint(0x1793);
+    AppendEntryPoint(0x17F5);
+    AppendEntryPoint(0x1B76);
+    AppendEntryPoint(0x1C0D);
+    AppendEntryPoint(0x1C1F);
+    AppendEntryPoint(0x1C6C);
+    AppendEntryPoint(0x1C4E);
+    AppendEntryPoint(0x1CBE);
+    AppendEntryPoint(0x1D03);
+    AppendEntryPoint(0x1DEC);
+    AppendEntryPoint(0x1E27);
+    AppendEntryPoint(0x1E42);
+    AppendEntryPoint(0x1E4F);
+    AppendEntryPoint(0x1E5F);
+    AppendEntryPoint(0x1E7A);
+    AppendEntryPoint(0x1E80);
+
+    AppendEntryPoint(0x3214);
+    AppendEntryPoint(0x33A2);
+    AppendEntryPoint(0x33C6);
+    AppendEntryPoint(0x340F);
+    AppendEntryPoint(0x341B);
+    AppendEntryPoint(0x342D);
+    AppendEntryPoint(0x3449);
+    AppendEntryPoint(0x3492);
+    AppendEntryPoint(0x34A5);
+    AppendEntryPoint(0x34B3);
+    AppendEntryPoint(0x34BC);
+    AppendEntryPoint(0x351B);
+    AppendEntryPoint(0x353B);
+    AppendEntryPoint(0x35C9);
+    AppendEntryPoint(0x3645);
+    AppendEntryPoint(0x3669);
+    AppendEntryPoint(0x3674);
+    AppendEntryPoint(0x367A);
+    AppendEntryPoint(0x368F);
+    AppendEntryPoint(0x369B);
+    AppendEntryPoint(0x36A0);
+    AppendEntryPoint(0x37E2);
 }

@@ -13,6 +13,9 @@ public:
     // Append new entry point
     void AppendEntryPoint(int address);
 
+    // Эта область - данные. Декодировать не нужно
+    void AppendDefBytes(int address, int num_bytes);
+
     // Return address for decompilation. If == -1, addresses not exists
     int NextAddress();
 
