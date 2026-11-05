@@ -63,17 +63,27 @@ int LD_IY_NN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
-
     uint16 NN = PC16andInc();
-
     AddAddress(rPC);
-
     sprintf(MNEMONIC, "LD IY, %04x", NN);
-
     return -1;
 }
-
 int LD_IY_NN_run()
+{
+    return 0;
+}
+
+
+int LD_IY_pNN_dec()
+{
+    AddOpcode(RAM8(rPC));
+    AddOpcode(RAM8(rPC + 1));
+    uint16 NN = PC16andInc();
+    AddAddress(rPC);
+    sprintf(MNEMONIC, "LD IY, [%u]", NN);
+    return -1;
+}
+int LD_IY_pNN_run()
 {
     return 0;
 }
@@ -101,9 +111,20 @@ int DEC_IY_dec()
     strcpy(TRANSCRIPT, "IY<-IY-1");
     return -1;
 }
-
-
 int DEC_IY_run()
+{
+    return 0;
+}
+
+
+int INC_IY_dec()
+{
+    AddAddress(rPC);
+    strcpy(MNEMONIC, "INC IY");
+    strcpy(TRANSCRIPT, "IY<-IY+1");
+    return -1;
+}
+int INC_IY_run()
 {
     return 0;
 }
