@@ -4,6 +4,7 @@
 #include "Computer/RAM.h"
 
 
+bool need_append_address = true;
 uint8 prevValue = 0;
 
 uint8 regI = 0;     // Interrupt register

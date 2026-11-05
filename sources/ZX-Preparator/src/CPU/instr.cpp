@@ -1054,6 +1054,7 @@ static bool Cond(uint8 value)
 static int RET_dec()
 {
     strcpy(MNEMONIC, "RET");
+    need_append_address = false;
     return -1;
 }
 
@@ -1101,8 +1102,6 @@ static int JP_CC_NN_dec()
     AddAddress(NN);
     return -1;
 }
-
-
 static int JP_CC_NN_run()
 {
     bool cond = Cond(prevValue);
@@ -1117,21 +1116,23 @@ static int JP_CC_NN_run()
 
 static int JP_NN_dec()
 {
-    AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(rPC + 1));
-    uint16 address = PC16andInc();
-    AddAddress(address);
-    sprintf(MNEMONIC, "JP %04X", address);
-    sprintf(TRANSCRIPT, "PC<-%04X", address);
+    uint16 NN = PC16andInc();   
+    if (NN == 0x11CB)
+    {
+        NN = NN;
+    }
+    AddOpcode((uint8)NN);
+    AddOpcode((uint8)(NN >> 8));
+    AddAddress(NN);
+    sprintf(MNEMONIC, "JP #%04X", NN);
+    sprintf(TRANSCRIPT, "PC<-#%04X", NN);
     TACKTS = 10;
+    need_append_address = false;
     return -1;
 }
-
-
 static int JP_NN_run()
 {
     rPC = PC16andInc();
-
     return 10;
 }
 
@@ -1139,9 +1140,9 @@ static int JP_NN_run()
 static int CALL_NN_dec()
 {
     TACKTS = 17;
-    AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(rPC + 1));
     uint16 NN = PC16andInc();
+    AddOpcode((uint8)NN);
+    AddOpcode((uint8)(NN >> 8));
     AddAddress(NN);
     sprintf(MNEMONIC, "CALL %04X", NN);
     sprintf(TRANSCRIPT, "(SP-2)<-PC, PC<-%04X", NN);
@@ -1187,8 +1188,6 @@ static int PUSH_QQ_dec()
     sprintf(TRANSCRIPT, "(SP-2)<-%s, SP<-SP-2", QQ_45_Name(prevValue));
     return -1;
 }
-
-
 static int PUSH_QQ_run()
 {
     RAM[rSP - 2] = (uint8)QQ_45(prevValue);
@@ -1386,6 +1385,7 @@ static int AND_N_run()
 static int JP_pHL_dec()
 {
     strcpy(MNEMONIC, "JP [HL]");
+    need_append_address = false;
     return -1;
 }
 static int JP_pHL_run()
@@ -1515,9 +1515,10 @@ int DecodeCommand()
         counter = counter;
     }
 
-    uint8 *memory = RAM + prevValue;
+    uint8 *memory = RAM + rPC;
     memory = memory;
 
+    need_append_address = true;
     int result = firstLevel[code][0]();
 
     if (result != -1)
@@ -1525,7 +1526,10 @@ int DecodeCommand()
         result = result;
     }
 
-    AddAddress(rPC);
+    if (need_append_address)
+    {
+        AddAddress(rPC);
+    }
 
     return result;
 }

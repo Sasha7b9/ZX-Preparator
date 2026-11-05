@@ -611,8 +611,7 @@ bool wxICOResourceHandler::LoadIcon(wxIcon *icon,
     {
         hicon = ::LoadIcon(wxGetInstance(), name.t_str());
         if ( !hicon )
-        {
-            wxLogLastError(wxString::Format("LoadIcon(%s)", name));
+        {            wxLogLastError(wxString::Format("LoadIcon(%s)", name));
         }
     }
 

@@ -350,6 +350,7 @@ int RRD()
 int RETN_dec()
 {
     strcpy(MNEMONIC, "RETN");
+    need_append_address = false;
     return -1;
 }
 int RETN_run()

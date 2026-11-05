@@ -58,7 +58,7 @@ const pFuncIV secondLevelDD[256][2] =
     /*   00 110 011         */    {0, 0},
     /*   00 110 100         */    {INC_pIX_D, 0},
     /*   00 110 101         */    {0, 0},
-    /*   00 110 110         */    {0, LD_pIX_D_N_run},
+    /*   00 110 110 36   54 */    {LD_pIX_D_N_dec, LD_pIX_D_N_run},
     /*   00 110 111         */    {0, 0},
     /*   00 111 000         */    {0, 0},
     /*   00 111 001         */    { ADD_IX_PP_dec, ADD_IX_PP_run },

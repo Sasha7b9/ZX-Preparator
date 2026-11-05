@@ -107,19 +107,30 @@ int POP_IX_dec()
     sprintf(MNEMONIC, "POP IX");
     return -1;
 }
+
+
+int LD_pIX_D_N_dec()
+{
+    int8 d = (int)PCandInc();
+    uint8 n = PCandInc();
+    AddOpcode(d);
+    AddOpcode(n);
+    if (d >= 0)
+    {
+        sprintf(MNEMONIC, "LD [IX+%d], #%02X", d, n);
+    }
+    else
+    {
+        sprintf(MNEMONIC, "LD [IX%d], #%02X", d, n);
+    }
+    return -1;
+}
 int LD_pIX_D_N_run()
 {
     volatile uint8 valD = PCandInc();
     volatile uint8 valN = PCandInc(); //-V656
     RAM[rIX + valD] = valN;
     return 19;
-}
-
-
-
-int LD_pIX_D_N_dec()
-{
-    return 0;
 }
 
 
@@ -263,6 +274,7 @@ int INC_IX_run()
 int JP_pIX_dec()
 {
     strcpy(MNEMONIC, "JP [IX]");
+    need_append_address = false;
     return -1;
 }
 int JP_pIX_run()

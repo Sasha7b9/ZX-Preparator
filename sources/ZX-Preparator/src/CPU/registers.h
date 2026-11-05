@@ -34,6 +34,7 @@ uint16 PC16andInc();
 uint16 ValuePC();
 
 
+extern bool need_append_address;        // Если значение установлено в true, нужно добавить значение PC для декодирования следующей команды
 extern uint8 prevValue;
 extern pFuncpU8V funcsReg8[8];
 extern pFuncpU16V funcsRegDD[4];

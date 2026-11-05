@@ -82,7 +82,7 @@ void StorageInstructions::RemoveScanAddress(int address)
 
 void StorageInstructions::AppendEntryPoint(int address)
 {
-    if(address >= addr_min && address < addr_max && !AddressAlreadyScanOrFuture(address))
+    if(address >= 0 && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
         addressesForScan.push_back(address);
     }
@@ -230,6 +230,17 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
 
     program.Clear();
 
+    wxTextFile file{ "out.asm" };
+
+    file.Create();
+
+    Instruction prev_instruction;
+
+    if (instructions.size())
+    {
+        prev_instruction = instructions[0];
+    }
+
     for (Instruction instruction : instructions)
     {
         LineASM line(instruction.mnemonic);
@@ -242,5 +253,58 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
         }
 
         program.lines.push_back(line);
+
+        {
+            wxString text;
+
+            if (instruction.address > prev_instruction.address + (int)prev_instruction.opCodes.size())
+            {
+                // Некоторые байты не декодированы. Выведем их
+
+                size_t address = prev_instruction.address + prev_instruction.opCodes.size();
+
+                text = wxString::Format("%05d/#%04X :                       BYTES :", (int)address, (int)address);
+
+                size_t num_bytes = instruction.address - prev_instruction.address - prev_instruction.opCodes.size();
+
+                for (size_t i = 0; i < num_bytes; i++)
+                {
+                    text.Append(wxString::Format(" %02X", RAM8(address++)));
+                }
+
+                file.AddLine(text);
+            }
+
+            text = wxString::Format("%05d/#%04X : %s", instruction.address, instruction.address, instruction.mnemonic);
+
+            while (text.Length() < 60)
+            {
+                text.Append(" ");
+            }
+
+            text.Append(";");
+
+            for (uint i = 0; i < instruction.opCodes.size(); i++)
+            {
+                text.Append(wxString::Format(" %02X", instruction.opCodes[i]));
+            }
+
+            while (text.Length() < 80)
+            {
+                text.Append(" ");
+            }
+
+            for (uint i = 0; i < instruction.opCodes.size(); i++)
+            {
+                text.Append(wxString::Format(" %3d", instruction.opCodes[i]));
+            }
+
+            file.AddLine(text);
+        }
+
+        prev_instruction = instruction;
     }
+
+    file.Write();
+    file.Close();
 }
