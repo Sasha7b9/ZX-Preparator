@@ -10,44 +10,38 @@
 
 
 
-int INC_pIY_D()
+int INC_pIY_D_dec()
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "INC [IY+%02X]", PCandInc());
     AddAddress(rPC);
     return -1;
-
-#else
-
-    return 0;
-
-#endif
 }
 
 
-int DEC_pIY_D()
+int INC_pIY_D_run()
 {
-#ifdef LISTING
+    return 0;
+}
 
+
+int DEC_pIY_D_dec()
+{
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "DEC (IY+%d)", PCandInc());
     AddAddress(rPC);
     return -1;
-
-#else
-
-    return 0;
-
-#endif
 }
 
 
-int LD_pIY_D_R()
+int DEC_pIY_D_run()
 {
-#ifdef LISTING
+    return 0;
+}
 
+
+int LD_pIY_D_R_dec()
+{
     AddOpcode(RAM8(rPC));
 
     char *reg = R8_LO_Name(prevPC);
@@ -56,12 +50,12 @@ int LD_pIY_D_R()
     AddAddress(rPC);
 
     return -1;
+}
 
-#else
 
+int LD_pIY_D_R_run()
+{
     return 0;
-
-#endif
 }
 
 
