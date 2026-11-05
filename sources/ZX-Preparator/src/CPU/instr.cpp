@@ -43,10 +43,9 @@ namespace Decode
     static int LD_DD_NN()
     {
         uint8 valDD = prevPC;
-        AddOpcode(RAM8(rPC));
-        AddOpcode(RAM8(rPC + 1));
         uint16 NN = PC16andInc();
-
+        AddOpcode((uint8)NN);
+        AddOpcode((uint8)(NN >> 8));
         out->SetMnemonic(wxString::Format("LD %s,#%04X", DD_45_Name(valDD), NN));
 
         return -1;
@@ -1160,18 +1159,16 @@ static int CALL_NN_run()
 }
 
 
-static int CALL_CC_NN_dec()
+int CALL_CC_NN_dec()
 {
-    AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(rPC + 1));
     uint8 value = prevPC;
     uint16 newAddress = PC16andInc();
+    AddOpcode((uint8)newAddress);
+    AddOpcode((uint8)(newAddress >> 8));
     AddAddress(newAddress);
     sprintf(MNEMONIC, "CALL %s,%04X", Cond_Name(value), newAddress);
     return -1;
 }
-
-
 static int CALL_CC_NN_run()
 {
     if(Cond(prevPC))
@@ -1513,7 +1510,7 @@ int DecodeCommand()
     static int counter = 0;
     counter++;
 
-    if (counter == 276)
+    if (counter == 274)
     {
         counter = counter;
     }

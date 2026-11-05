@@ -241,6 +241,17 @@ int POP_IY_run()
 }
 
 
+int FD_F4_dec()
+{
+    int CALL_CC_NN_dec();
+    return CALL_CC_NN_dec();
+}
+int FD_F4_run()
+{
+    return 0;
+}
+
+
 #include "FuncSecondFD.h"
 
 
