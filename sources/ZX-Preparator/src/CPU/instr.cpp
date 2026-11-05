@@ -42,7 +42,7 @@ namespace Decode
     // 1 ------------------------------------------------------------------------------------------------------------------------------------------------------
     static int LD_DD_NN()
     {
-        uint8 valDD = prevPC;
+        uint8 valDD = prevValue;
         uint16 NN = PC16andInc();
         AddOpcode((uint8)NN);
         AddOpcode((uint8)(NN >> 8));
@@ -62,22 +62,22 @@ namespace Decode
     int INC_SS_dec()
     {
         TACKTS = 6;
-        sprintf(MNEMONIC, "INC %s", SS_45_Name(prevPC));
-        sprintf(TRANSCRIPT, "%s<-%s+1", SS_45_Name(prevPC), SS_45_Name(prevPC));
+        sprintf(MNEMONIC, "INC %s", SS_45_Name(prevValue));
+        sprintf(TRANSCRIPT, "%s<-%s+1", SS_45_Name(prevValue), SS_45_Name(prevValue));
         return -1;
     }
 
     // 4 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int INC_R()
     {
-        sprintf(MNEMONIC, "INC %s", R8_HI_Name(prevPC));
+        sprintf(MNEMONIC, "INC %s", R8_HI_Name(prevValue));
         return -1;
     }
 
     // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int DEC_R()
     {
-        sprintf(MNEMONIC, "DEC %s", R8_HI_Name(prevPC));
+        sprintf(MNEMONIC, "DEC %s", R8_HI_Name(prevValue));
         return -1;
     }
 
@@ -87,7 +87,7 @@ namespace Decode
         AddOpcode(RAM8(rPC));
         TACKTS = 7;
 
-        uint8 valR = prevPC;
+        uint8 valR = prevValue;
         uint8 N = PCandInc();
 
         sprintf(MNEMONIC, "LD %s,#%02X", R8_HI_Name(valR), N);
@@ -111,8 +111,8 @@ namespace Decode
     int ADD_HL_SS()
     {
         TACKTS = 11;
-        sprintf(MNEMONIC, "ADD HL,%s", SS_45_Name(prevPC));
-        sprintf(TRANSCRIPT, "HL<-HL+%s", SS_45_Name(prevPC));
+        sprintf(MNEMONIC, "ADD HL,%s", SS_45_Name(prevValue));
+        sprintf(TRANSCRIPT, "HL<-HL+%s", SS_45_Name(prevValue));
         strcat(FLAGS, "++XXXV0+");
         return -1;
     }
@@ -126,8 +126,8 @@ namespace Decode
     int DEC_SS()
     {
         TACKTS = 6;
-        sprintf(MNEMONIC, "DEC %s", SS_45_Name(prevPC));
-        sprintf(TRANSCRIPT, "%s<-%s-1", SS_45_Name(prevPC), SS_45_Name(prevPC));
+        sprintf(MNEMONIC, "DEC %s", SS_45_Name(prevValue));
+        sprintf(TRANSCRIPT, "%s<-%s-1", SS_45_Name(prevValue), SS_45_Name(prevValue));
         return -1;
     }
 
@@ -289,22 +289,22 @@ namespace Decode
     static int LD_R_R()
     {
         TACKTS = 4;
-        sprintf(MNEMONIC, "LD %s,%s", R8_HI_Name(prevPC), R8_LO_Name(prevPC));
-        sprintf(TRANSCRIPT, "%s<-%s", R8_HI_Name(prevPC), R8_LO_Name(prevPC));
+        sprintf(MNEMONIC, "LD %s,%s", R8_HI_Name(prevValue), R8_LO_Name(prevValue));
+        sprintf(TRANSCRIPT, "%s<-%s", R8_HI_Name(prevValue), R8_LO_Name(prevValue));
         return -1;
     }
 
     static int LD_R_pHL()
     {
         TACKTS = 7;
-        sprintf(MNEMONIC, "LD %s,[HL]", R8_HI_Name(prevPC));
-        sprintf(TRANSCRIPT, "%s<-[HL]", R8_HI_Name(prevPC));
+        sprintf(MNEMONIC, "LD %s,[HL]", R8_HI_Name(prevValue));
+        sprintf(TRANSCRIPT, "%s<-[HL]", R8_HI_Name(prevValue));
         return -1;
     }
 
     static int LD_pHL_R()
     {
-        sprintf(MNEMONIC, "LD [HL],%s", R8_LO_Name(prevPC));
+        sprintf(MNEMONIC, "LD [HL],%s", R8_LO_Name(prevValue));
         return -1;
     }
 
@@ -316,7 +316,7 @@ namespace Decode
 
     static int ADD_A_R()
     {
-        sprintf(MNEMONIC, "LD A,%s", R8_LO_Name(prevPC));
+        sprintf(MNEMONIC, "LD A,%s", R8_LO_Name(prevValue));
         return -1;
     }
 
@@ -338,7 +338,7 @@ namespace Run
     // 1 ------------------------------------------------------------------------------------------------------------------------------------------------------
     static int LD_DD_NN()
     {
-        DD_45(prevPC) = PC16andInc();
+        DD_45(prevValue) = PC16andInc();
 
         return 10;
     }
@@ -354,18 +354,18 @@ namespace Run
     // 3 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int INC_SS_run()
     {
-        SS_45(prevPC) += 1;
+        SS_45(prevValue) += 1;
         return 6;
     }
 
     // 4 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int INC_R()
     {
-        uint8 before = R8_HI(prevPC);
+        uint8 before = R8_HI(prevValue);
 
-        R8_HI(prevPC) += 1;
+        R8_HI(prevValue) += 1;
 
-        uint8 after = R8_HI(prevPC);
+        uint8 after = R8_HI(prevValue);
 
         // S Z   H  PV N C
         // + + x + x v 0 .
@@ -382,11 +382,11 @@ namespace Run
     // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int DEC_R()
     {
-        uint8 before = R8_HI(prevPC);
+        uint8 before = R8_HI(prevValue);
 
-        R8_HI(prevPC) -= 1;
+        R8_HI(prevValue) -= 1;
 
-        uint8 after = R8_HI(prevPC);
+        uint8 after = R8_HI(prevValue);
 
         // S Z   H  PV N C
         // + + x + x v 1 .
@@ -403,7 +403,7 @@ namespace Run
     // 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
     int LD_R_N()
     {
-        R8_HI(prevPC) = PCandInc();
+        R8_HI(prevValue) = PCandInc();
 
         return 7;
     }
@@ -427,7 +427,7 @@ namespace Run
 
     int ADD_HL_SS()
     {
-        rHL += SS_45(prevPC);
+        rHL += SS_45(prevValue);
 
         // . . x x x . 0 +
 
@@ -447,7 +447,7 @@ namespace Run
 
     int DEC_SS()
     {
-        SS_45(prevPC) -= 1;
+        SS_45(prevValue) -= 1;
 
         return 6;
     }
@@ -692,19 +692,19 @@ namespace Run
 
     static int LD_R_R()
     {
-        R8_HI(prevPC) = R8_LO(prevPC);
+        R8_HI(prevValue) = R8_LO(prevValue);
         return 4;
     }
 
     static int LD_R_pHL()
     {
-        R8_HI(prevPC) = pHL;
+        R8_HI(prevValue) = pHL;
         return 7;
     }
 
     static int LD_pHL_R()
     {
-        pHL = R8_LO(prevPC);
+        pHL = R8_LO(prevValue);
         return 7;
     }
 
@@ -715,7 +715,7 @@ namespace Run
 
     static int ADD_A_R()
     {
-        rA += R8_LO(prevPC);
+        rA += R8_LO(prevValue);
         return 4;
     }
 
@@ -730,12 +730,12 @@ namespace Run
 static int ADC_A_S_dec()
 {
     AddOpcode(RAM8(rPC));
-    sprintf(MNEMONIC, "ADC A,%s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "ADC A,%s", R8_LO_Name(prevValue));
     return -1;
 }
 static int ADC_A_S_run()
 {
-    rA += R8_LO(prevPC) + CF;
+    rA += R8_LO(prevValue) + CF;
     return 4;
 }
 
@@ -755,12 +755,12 @@ static int ADC_A_pHL_run()
 
 static int SUB_S_dec()
 {
-    sprintf(MNEMONIC, "SUB %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SUB %s", R8_LO_Name(prevValue));
     return -1;
 }
 static int SUB_S_run()
 {
-    rA -= R8_LO(prevPC);
+    rA -= R8_LO(prevValue);
     return 4;
 }
 
@@ -779,14 +779,14 @@ static int SUB_pHL_run()
 
 static int SBC_A_S_dec()
 {
-    sprintf(MNEMONIC, "SBC A,%s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SBC A,%s", R8_LO_Name(prevValue));
     return -1;
 }
 
 
 static int SBC_A_S_run()
 {
-    rA -= R8_LO(prevPC) - CF;
+    rA -= R8_LO(prevValue) - CF;
     return 4;
 }
 
@@ -808,8 +808,8 @@ static int SBC_A_pHL_run()
 static int AND_S_dec()
 {
     TACKTS = 4;
-    sprintf(MNEMONIC, "AND %s", R8_LO_Name(prevPC));
-    sprintf(TRANSCRIPT, "A<-A&%s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "AND %s", R8_LO_Name(prevValue));
+    sprintf(TRANSCRIPT, "A<-A&%s", R8_LO_Name(prevValue));
     strcpy(FLAGS, "++X1XP00");
     return -1;
 }
@@ -817,7 +817,7 @@ static int AND_S_dec()
 
 static int AND_S_run()
 {
-    rA &= R8_LO(prevPC);
+    rA &= R8_LO(prevValue);
     return 4;
 }
 
@@ -838,8 +838,8 @@ static int AND_pHL_run()
 
 static int XOR_S_dec()
 {
-    sprintf(MNEMONIC, "XOR %s", R8_LO_Name(prevPC));
-    sprintf(TRANSCRIPT, "A<-A(+)%s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "XOR %s", R8_LO_Name(prevValue));
+    sprintf(TRANSCRIPT, "A<-A(+)%s", R8_LO_Name(prevValue));
     strcpy(FLAGS, "++X0XP00");
     TACKTS = 4;
     return -1;
@@ -848,7 +848,7 @@ static int XOR_S_dec()
 
 static int XOR_S_run()
 {
-    rA ^= R8_LO(prevPC);
+    rA ^= R8_LO(prevValue);
     return 4;
 }
 
@@ -869,14 +869,14 @@ static int XOR_pHL_run()
 
 static int OR_S_dec()
 {
-    sprintf(MNEMONIC, "OR %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "OR %s", R8_LO_Name(prevValue));
     return -1;
 }
 
 
 static int OR_S_run()
 {
-    rA |= R8_LO(prevPC);
+    rA |= R8_LO(prevValue);
     return 4;
 }
 
@@ -899,8 +899,8 @@ static int CP_S_dec()
 {
     TACKTS = 4;
     strcpy(FLAGS, "++X+XV1+");
-    sprintf(MNEMONIC, "CP %s", R8_LO_Name(prevPC));
-    sprintf(TRANSCRIPT, "A ~ %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "CP %s", R8_LO_Name(prevValue));
+    sprintf(TRANSCRIPT, "A ~ %s", R8_LO_Name(prevValue));
     sprintf(COMMENT, "compare");
     return -1;
 }
@@ -908,7 +908,7 @@ static int CP_S_dec()
 
 static int CP_S_run()
 {
-    uint8 value = R8_LO(prevPC);
+    uint8 value = R8_LO(prevValue);
 
     SET_N;
 
@@ -978,7 +978,7 @@ static char* Cond_Name(uint8 value)
 
 static int RET_CC_dec()
 {
-    sprintf(MNEMONIC, "RET %s", Cond_Name(prevPC));
+    sprintf(MNEMONIC, "RET %s", Cond_Name(prevValue));
     return -1;
 }
 
@@ -1067,7 +1067,7 @@ static int RET_run()
 
 static int RET_CC_run()
 {
-    if(Cond(prevPC))
+    if(Cond(prevValue))
     {
         RET_run();
         return 11;
@@ -1078,14 +1078,14 @@ static int RET_CC_run()
 
 static int POP_QQ_dec()
 {
-    sprintf(MNEMONIC, "POP %s", QQ_45_Name(prevPC));
+    sprintf(MNEMONIC, "POP %s", QQ_45_Name(prevValue));
     return -1;
 }
 
 
 static int POP_QQ_run()
 {
-    QQ_45(prevPC) = RAM[rSP] + RAM[rSP + 1] * 256;
+    QQ_45(prevValue) = RAM[rSP] + RAM[rSP + 1] * 256;
     rSP += 2;
     return 10;
 }
@@ -1093,7 +1093,7 @@ static int POP_QQ_run()
 
 static int JP_CC_NN_dec()
 {
-    char *nameCC = Cond_Name(prevPC);
+    char *nameCC = Cond_Name(prevValue);
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
     uint16 NN = PC16andInc();
@@ -1105,7 +1105,7 @@ static int JP_CC_NN_dec()
 
 static int JP_CC_NN_run()
 {
-    bool cond = Cond(prevPC);
+    bool cond = Cond(prevValue);
     uint16 address = PC16andInc();
     if(cond)
     {
@@ -1161,7 +1161,7 @@ static int CALL_NN_run()
 
 int CALL_CC_NN_dec()
 {
-    uint8 value = prevPC;
+    uint8 value = prevValue;
     uint16 newAddress = PC16andInc();
     AddOpcode((uint8)newAddress);
     AddOpcode((uint8)(newAddress >> 8));
@@ -1171,7 +1171,7 @@ int CALL_CC_NN_dec()
 }
 static int CALL_CC_NN_run()
 {
-    if(Cond(prevPC))
+    if(Cond(prevValue))
     {
         return CALL_NN_run();
     }
@@ -1183,16 +1183,16 @@ static int CALL_CC_NN_run()
 static int PUSH_QQ_dec()
 {
     TACKTS = 11;
-    sprintf(MNEMONIC, "PUSH %s", QQ_45_Name(prevPC));
-    sprintf(TRANSCRIPT, "(SP-2)<-%s, SP<-SP-2", QQ_45_Name(prevPC));
+    sprintf(MNEMONIC, "PUSH %s", QQ_45_Name(prevValue));
+    sprintf(TRANSCRIPT, "(SP-2)<-%s, SP<-SP-2", QQ_45_Name(prevValue));
     return -1;
 }
 
 
 static int PUSH_QQ_run()
 {
-    RAM[rSP - 2] = (uint8)QQ_45(prevPC);
-    RAM[rSP - 1] = (uint8)(QQ_45(prevPC) >> 8);
+    RAM[rSP - 2] = (uint8)QQ_45(prevValue);
+    RAM[rSP - 1] = (uint8)(QQ_45(prevValue) >> 8);
     rSP -= 2;
     return 11;
 }
@@ -1229,7 +1229,7 @@ const uint8 rstP[8] =
 
 static int RST_P_dec()
 {
-    int address = rstP[(prevPC >> 3) & 7];
+    int address = rstP[(prevValue >> 3) & 7];
     if(address != 0x28 && address != 0x08) // Для калькулятора после команды вызова хранятся какие-то данные, поэтому не добавляем в спискок нужных адресов
     {
         AddAddress(rPC);
@@ -1243,7 +1243,7 @@ static int RST_P_dec()
 
 static int RST_P_run()
 {
-    uint8 T = (prevPC >> 3) & 7;
+    uint8 T = (prevValue >> 3) & 7;
     uint16 valuePC = ValuePC();
     RAM[rSP - 2] = (uint8)valuePC;
     RAM[rSP - 1] = (uint8)(valuePC >> 8);
@@ -1510,10 +1510,13 @@ int DecodeCommand()
     static int counter = 0;
     counter++;
 
-    if (counter == 274)
+    if (counter > 250)
     {
         counter = counter;
     }
+
+    uint8 *memory = RAM + prevValue;
+    memory = memory;
 
     int result = firstLevel[code][0]();
 

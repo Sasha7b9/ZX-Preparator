@@ -37,7 +37,7 @@ int DEC_pIY_D_run()
 int LD_pIY_D_R_dec()
 {
     AddOpcode(RAM8(rPC));
-    char *reg = R8_LO_Name(prevPC);
+    char *reg = R8_LO_Name(prevValue);
     sprintf(MNEMONIC, "LD (IY+%d), %s", PCandInc(), reg);
     return -1;
 }
@@ -77,8 +77,8 @@ int LD_IY_pNN_run()
 
 int ADD_IY_SS_dec()
 {
-    sprintf(MNEMONIC, "ADD IX, %s", SS_45_Name(prevPC));
-    sprintf(TRANSCRIPT, "IY<-IY+%s", SS_45_Name(prevPC));
+    sprintf(MNEMONIC, "ADD IX, %s", SS_45_Name(prevValue));
+    sprintf(TRANSCRIPT, "IY<-IY+%s", SS_45_Name(prevValue));
     return -1;
 }
 int ADD_IY_SS_run()
@@ -172,7 +172,7 @@ int SUB_pIY_D_run()
 
 int LD_R_pIY_D_dec()
 {
-    uint8 valReg = prevPC;
+    uint8 valReg = prevValue;
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "LD %s, [IY + %02X]", R8_HI_Name(valReg), PCandInc());
     return -1;
@@ -186,7 +186,7 @@ int LD_R_pIY_D_run()
 int ADD_A_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC));
-    sprintf(MNEMONIC, "ADD A,[IY+%02X]", prevPC);
+    sprintf(MNEMONIC, "ADD A,[IY+%02X]", prevValue);
     return -1;
 }
 int ADD_A_pIY_D_run()

@@ -4,7 +4,7 @@
 #include "Computer/RAM.h"
 
 
-uint8 prevPC = 0;
+uint8 prevValue = 0;
 
 uint8 regI = 0;     // Interrupt register
 uint8 regR = 0;     // Regeneration register
@@ -138,9 +138,9 @@ void AddPC(uint8 delta)
 
 uint8 PCandInc()
 {
-    prevPC = RAM[rPC];
+    prevValue = RAM[rPC];
     rPC++;
-    return prevPC;
+    return prevValue;
 }
 
 

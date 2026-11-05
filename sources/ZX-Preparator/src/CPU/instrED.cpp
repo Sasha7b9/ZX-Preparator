@@ -53,13 +53,13 @@ int LD_DD_pNN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
-    uint8 value = prevPC;
+    uint8 value = prevValue;
     sprintf(MNEMONIC, "LD %s, [#%04X]", DD_45_Name(value), PC16andInc());
     return -1;
 }
 int LD_DD_pNN_run()
 {
-    uint8 valReg = prevPC;
+    uint8 valReg = prevValue;
     DD_45(valReg) = RAM16(PC16andInc());
     return 20;
 }
@@ -68,18 +68,18 @@ int LD_DD_pNN_run()
 int LD_pNN_DD_dec()
 {
     TACKTS = 20;
-    uint8 valDD = prevPC;
+    uint8 valDD = prevValue;
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
     uint16 address = PC16andInc();
     sprintf(MNEMONIC, "LD [%4X],%s", address, DD_45_Name(valDD));
-    sprintf(TRANSCRIPT, "[%4X]<-%s", address, DD_45_Name(prevPC));
+    sprintf(TRANSCRIPT, "[%4X]<-%s", address, DD_45_Name(prevValue));
 
     return -1;
 }
 int LD_pNN_DD_run()
 {
-    uint valDD = prevPC;
+    uint valDD = prevValue;
     RAM16(PC16andInc()) = DD_45(valDD);
     return 20;
 }
@@ -256,7 +256,7 @@ int IM2_run()
 
 int ADC_HL_SS()
 {
-    rHL += SS_45(prevPC) + CF;
+    rHL += SS_45(prevValue) + CF;
 
     // + + x x x V 0 +
     // S
@@ -273,14 +273,14 @@ int SBC_HL_SS_dec()
 {
     TACKTS = 15;
     strcpy(FLAGS, "++XXXV1+");
-    sprintf(MNEMONIC, "SBC HL,%s", SS_45_Name(prevPC));
-    sprintf(TRANSCRIPT, "HL<-HL-%s-CY", SS_45_Name(prevPC));
+    sprintf(MNEMONIC, "SBC HL,%s", SS_45_Name(prevValue));
+    sprintf(TRANSCRIPT, "HL<-HL-%s-CY", SS_45_Name(prevValue));
     return -1;
 }
 
 int SBC_HL_SS_run()
 {
-    rHL -= SS_45(prevPC) - CF;
+    rHL -= SS_45(prevValue) - CF;
 
     // + + x x x V 1 +
     // S
@@ -360,10 +360,10 @@ int RETN_run()
 
 int IN_R_pC_dec()
 {
-    if (((prevPC >> 3) & 7) != 6)
+    if (((prevValue >> 3) & 7) != 6)
     {
-        sprintf(MNEMONIC, "IN %s,(C)", R8_HI_Name(prevPC));
-        sprintf(TRANSCRIPT, "%s<-(C)", R8_HI_Name(prevPC));
+        sprintf(MNEMONIC, "IN %s,(C)", R8_HI_Name(prevValue));
+        sprintf(TRANSCRIPT, "%s<-(C)", R8_HI_Name(prevValue));
         strcpy(COMMENT, "C - A0...A7, B - A8...A15");
     }
     else
@@ -375,13 +375,13 @@ int IN_R_pC_dec()
 }
 int IN_R_pC_run()
 {
-    if(((prevPC >> 3) & 7) == 6)
+    if(((prevValue >> 3) & 7) == 6)
     {
 
     }
     else
     {
-        R8_HI(prevPC) = ReadPort(rC);
+        R8_HI(prevValue) = ReadPort(rC);
     }
 
     // + + x + x P 0 .
@@ -460,8 +460,8 @@ int INDR_run()
 
 int OUT_pC_R_dec()
 {
-    sprintf(MNEMONIC, "OUT (C), %s", R8_HI_Name(prevPC));
-    sprintf(TRANSCRIPT, "(C)<-%s", R8_HI_Name(prevPC));
+    sprintf(MNEMONIC, "OUT (C), %s", R8_HI_Name(prevValue));
+    sprintf(TRANSCRIPT, "(C)<-%s", R8_HI_Name(prevValue));
     return 0;
 }
 int OUT_pC_R_run()

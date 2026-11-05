@@ -13,7 +13,7 @@
 
 int BIT_B_R_dec()
 {
-    sprintf(MNEMONIC, "BIT %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "BIT %d,%s", (prevValue >> 3) & 7, R8_LO_Name(prevValue));
     return -1;
 }
 int BIT_B_R_run()
@@ -24,7 +24,7 @@ int BIT_B_R_run()
 
 int CRL_R_dec()
 {
-    sprintf(MNEMONIC, "SRL %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SRL %s", R8_LO_Name(prevValue));
     return -1;
 }
 int CRL_R_run()
@@ -46,7 +46,7 @@ int CRL_pHL_run()
 
 int RLC_R_dec()
 {
-    sprintf(MNEMONIC, "RLC %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "RLC %s", R8_LO_Name(prevValue));
     return -1;
 }
 int RLC_R_run()
@@ -58,7 +58,7 @@ int RLC_R_run()
 
 int RRC_R_dec()
 {
-    sprintf(MNEMONIC, "RRC %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "RRC %s", R8_LO_Name(prevValue));
     return -1;
 }
 int RRC_R_run()
@@ -69,8 +69,8 @@ int RRC_R_run()
 
 int RES_B_M_dec()
 {
-    uint8 numBit = (prevPC >> 3) & 7;
-    sprintf(MNEMONIC, "RES %d,%s", numBit, R8_LO_Name(prevPC));
+    uint8 numBit = (prevValue >> 3) & 7;
+    sprintf(MNEMONIC, "RES %d,%s", numBit, R8_LO_Name(prevValue));
     return -1;
 }
 int RES_B_M_run()
@@ -81,7 +81,7 @@ int RES_B_M_run()
 
 int RES_B_pHL_dec()
 {
-    uint8 numBit = (prevPC >> 3) & 7;
+    uint8 numBit = (prevValue >> 3) & 7;
     sprintf(MNEMONIC, "RES %d,[HL]", numBit);
     return -1;
 }
@@ -93,7 +93,7 @@ int RES_B_pHL_run()
 
 int SET_B_R_dec()
 {
-    sprintf(MNEMONIC, "SET %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SET %d,%s", (prevValue >> 3) & 7, R8_LO_Name(prevValue));
     return -1;
 }
 int SET_B_R_run()
@@ -104,7 +104,7 @@ int SET_B_R_run()
 
 int SET_B_pHL_dec()
 {
-    sprintf(MNEMONIC, "SET %d,[HL]", (prevPC >> 3) & 7);
+    sprintf(MNEMONIC, "SET %d,[HL]", (prevValue >> 3) & 7);
     return -1;
 }
 int SET_B_pHL_run()
@@ -115,7 +115,7 @@ int SET_B_pHL_run()
 
 int RL_R_dec()
 {
-    sprintf(MNEMONIC, "RL %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "RL %s", R8_LO_Name(prevValue));
     return -1;
 }
 int RL_R_run()
@@ -126,7 +126,7 @@ int RL_R_run()
 
 int RR_R_dec()
 {
-    sprintf(MNEMONIC, "RR %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "RR %s", R8_LO_Name(prevValue));
     return -1;
 }
 int RR_R_run()
@@ -137,7 +137,7 @@ int RR_R_run()
 
 int SLA_dec()
 {
-    sprintf(MNEMONIC, "SLA %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SLA %s", R8_LO_Name(prevValue));
 
     return -1;
 }
@@ -149,7 +149,7 @@ int SLA_run()
 
 int SRA_dec()
 {
-    sprintf(MNEMONIC, "SRA %s", R8_LO_Name(prevPC));
+    sprintf(MNEMONIC, "SRA %s", R8_LO_Name(prevValue));
     return -1;
 }
 int SRA_run()

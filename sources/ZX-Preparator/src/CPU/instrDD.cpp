@@ -67,7 +67,7 @@ int LD_R_pIX_D_dec()
 }
 int LD_R_pIX_D_run()
 {
-    uint8 valueReg = prevPC;
+    uint8 valueReg = prevValue;
     R8_HI(valueReg) = RAM[rIX + PCandInc()];
     return 19;
 }
@@ -89,7 +89,7 @@ int LD_pIX_D_R_dec()
 }
 int LD_pIX_D_R_run()
 {
-    uint8 valueReg = prevPC;
+    uint8 valueReg = prevValue;
     RAM[rIX + PCandInc()] = R8_LO(valueReg);
     return 19;
 }
@@ -238,12 +238,12 @@ int INC_pIX_D()
 
 int ADD_IX_PP_dec()
 {
-    sprintf(MNEMONIC, "ADD IX,%s", PP_45_Name(prevPC));
+    sprintf(MNEMONIC, "ADD IX,%s", PP_45_Name(prevValue));
     return -1;
 }
 int ADD_IX_PP_run()
 {
-    rIX += PP_45(prevPC);
+    rIX += PP_45(prevValue);
     return 15;
 }
 

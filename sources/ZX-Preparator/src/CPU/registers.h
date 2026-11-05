@@ -34,7 +34,7 @@ uint16 PC16andInc();
 uint16 ValuePC();
 
 
-extern uint8 prevPC;
+extern uint8 prevValue;
 extern pFuncpU8V funcsReg8[8];
 extern pFuncpU16V funcsRegDD[4];
 extern pFuncpU16V funcsRegPP[4];

@@ -37,7 +37,7 @@ static int RLC_RRC(TypeOperand type, uint8 byte)
     }
     else if (type == Operand_Reg8)
     {
-        uint8 *pOperand = pR8_LO(prevPC);
+        uint8 *pOperand = pR8_LO(prevValue);
 
         RUN_RLC_RRC();
 
