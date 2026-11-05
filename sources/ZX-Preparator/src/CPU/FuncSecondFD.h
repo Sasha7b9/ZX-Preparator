@@ -58,7 +58,7 @@ const pFuncIV secondLevelFD[256][2] =
     /*   00 110 011         */    {0, 0},
     /*   00 110 100         */    {INC_pIY_D_dec, INC_pIY_D_run},
     /*   00 110 101         */    {DEC_pIY_D_dec, DEC_pIY_D_run},
-    /*   00 110 110         */    {LD_pIY_D_N, 0},
+    /*   00 110 110         */    {LD_pIY_D_N_dec, LD_pIY_D_N_run},
     /*   00 110 111         */    {0, 0},
     /*   00 111 000         */    {0, 0},
     /*   00 111 001 39  57  */    {ADD_IY_SS_dec, ADD_IY_SS_run},

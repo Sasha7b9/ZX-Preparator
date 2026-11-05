@@ -144,13 +144,11 @@ int DecodeCommandFDCB_run()
 }
 
 
-int LD_pIY_D_N()
+int LD_pIY_D_N_dec()
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(PC + 1));
-    AddAddress(PC + 2);
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 2);
 
     uint8 valD = PCandInc();
     uint8 valN = PCandInc();
@@ -158,12 +156,12 @@ int LD_pIY_D_N()
     sprintf(MNEMONIC, "LD [IY + %02X], #%02X", valD, valN);
 
     return -1;
+}
 
-#else
 
+int LD_pIY_D_N_run()
+{
     return 0;
-
-#endif
 }
 
 
