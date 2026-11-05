@@ -43,7 +43,7 @@ const pFuncIV secondLevelCB[256][2] =
     /*   00 100 100   */    {SLA_dec, SLA_run},
     /*   00 100 101   */    {SLA_dec, SLA_run},
     /*   00 100 110   */    {RLC_pHL, 0},
-    /*   00 100 111   */    { SLA_dec, SLA_run },
+    /*   00 100 111   */    {SLA_dec, SLA_run},
     /*   00 101 000   */    {SRA, 0},
     /*   00 101 001   */    {SRA, 0},
     /*   00 101 010   */    {SRA, 0},

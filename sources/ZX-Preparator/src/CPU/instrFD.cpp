@@ -217,20 +217,31 @@ int CP_pIY_D(void)
 }
 
 
-int XOR_pIY_D(void)
+int XOR_pIY_D_dec()
 {
-#ifdef LISTING
-
-    AddOpcode(RAM8(PC + 1));
-    AddAddress(PC + 1);
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "XOR [IY+%02X]", PCandInc());
     return -1;
+}
 
-#else
-
+int XOR_pIY_D_run()
+{
     return 0;
+}
 
-#endif
+
+int PUSH_IY_dec()
+{
+    AddAddress(rPC);
+    sprintf(MNEMONIC, "PUSH IY");
+    return -1;
+}
+
+
+int PUSH_IY_run()
+{
+    return 0;
 }
 
 

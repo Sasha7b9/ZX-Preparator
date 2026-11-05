@@ -1704,7 +1704,7 @@ int DecodeCommand(void)
 
     counter++;
 
-    if (counter == 0x351)
+    if (counter == 0x361)
     {
         counter = counter;
     }
