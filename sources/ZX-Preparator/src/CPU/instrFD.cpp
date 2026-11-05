@@ -165,20 +165,18 @@ int LD_pIY_D_N_run()
 }
 
 
-int SUB_pIY_D()
+int SUB_pIY_D_dec()
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddAddress(PC + 1);
+    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "SUB (IY+0x%02x)", PCandInc());
     return -1;
+}
 
-#else
 
+int SUB_pIY_D_run()
+{
     return 0;
-
-#endif
 }
 
 
