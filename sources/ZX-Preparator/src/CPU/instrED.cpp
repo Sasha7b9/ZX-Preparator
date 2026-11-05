@@ -493,20 +493,18 @@ int IND_run()
 }
 
 
-int INDR()
+int INDR_dec()
 {
-#ifdef LISTING
-
     strcpy(MNEMONIC, "INDR");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--; while B!=0");
     AddAddress(rPC);
     return 0;
+}
 
-#else
 
+int INDR_run()
+{
     return 0;
-
-#endif
 }
 
 
