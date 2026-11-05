@@ -15,9 +15,49 @@ using std::vector;
 using std::endl;
 
 
+StorageInstructions::StorageInstructions(int _addr_min, int _addr_max) :
+    addr_min(_addr_min), addr_max(_addr_max)
+{
+    AppendEntryPoint(0x0066);
+    AppendEntryPoint(0x03F8);
+    AppendEntryPoint(0x04C2);
+    AppendEntryPoint(0x053F);
+    AppendEntryPoint(0x0605);
+    AppendEntryPoint(0x0A23);
+    AppendEntryPoint(0x0A3D);
+    AppendEntryPoint(0x0A4F);
+    AppendEntryPoint(0x0A5F);
+    AppendEntryPoint(0x0A87);
+    AppendEntryPoint(0x0EAC);
+    AppendEntryPoint(0x0FA9);
+    AppendEntryPoint(0x0FF3);
+
+    AppendEntryPoint(0x1015);
+    AppendEntryPoint(0x1059);
+    AppendEntryPoint(0x1076);
+    AppendEntryPoint(0x107F);
+    AppendEntryPoint(0x10A8);
+    AppendEntryPoint(0x10B7);
+    AppendEntryPoint(0x11B7);
+    AppendEntryPoint(0x1555);
+    AppendEntryPoint(0x15C4);
+    AppendEntryPoint(0x1634);
+    AppendEntryPoint(0x164D);
+    AppendEntryPoint(0x16D4);
+    AppendEntryPoint(0x16E5);
+    AppendEntryPoint(0x171C);
+    AppendEntryPoint(0x1736);
+    AppendEntryPoint(0x17F5);
+
+    AppendEntryPoint(0x3214);
+    AppendEntryPoint(0x351B);
+    AppendEntryPoint(0x353B);
+    AppendEntryPoint(0x35C9);
+}
+
 int StorageInstructions::NextAddress()
 {
-    if(addressesForScan.size() > 0)
+    if (addressesForScan.size() > 0)
     {
         return addressesForScan[0];
     }
@@ -31,21 +71,21 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
     RemoveScanAddress(address);
 
     Instruction instruction;
-    
+
     instruction.address = address;
 
-    for(int i = 0; i < params->numOpCodes; i++)
+    for (int i = 0; i < params->numOpCodes; i++)
     {
         instruction.opCodes.push_back(params->GetOpcode(i));
     }
 
-    if(succsefull)
+    if (succsefull)
     {
         instruction.numTackts = params->tackts;
 
         instruction.mnemonic = params->GetMnemonic();
 
-        for(int i = 0; i < params->numAddresses; i++)
+        for (int i = 0; i < params->numAddresses; i++)
         {
             AppendEntryPoint((int)params->GetAddess(i));
         }
@@ -69,9 +109,9 @@ void StorageInstructions::AddNewData(bool succsefull, int address, InfoStruct *p
 
 void StorageInstructions::RemoveScanAddress(int address)
 {
-    for(int i = 0; i < (int)addressesForScan.size(); i++)
+    for (int i = 0; i < (int)addressesForScan.size(); i++)
     {
-        if(addressesForScan[(uint)i] == address)
+        if (addressesForScan[(uint)i] == address)
         {
             addressesForScan.erase(addressesForScan.begin() + i);
             return;
@@ -82,7 +122,7 @@ void StorageInstructions::RemoveScanAddress(int address)
 
 void StorageInstructions::AppendEntryPoint(int address)
 {
-    if(address >= 0 && address < addr_max && !AddressAlreadyScanOrFuture(address))
+    if (address >= 0 && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
         addressesForScan.push_back(address);
     }
@@ -91,9 +131,9 @@ void StorageInstructions::AppendEntryPoint(int address)
 
 bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 {
-    for each (auto &instruction in instructions)
+    for each(auto &instruction in instructions)
     {
-        if(instruction.address == address)
+        if (instruction.address == address)
         {
             return true;
         }
@@ -101,7 +141,7 @@ bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 
     for each(auto addr in addressesForScan)
     {
-        if(addr == address)
+        if (addr == address)
         {
             return true;
         }
@@ -115,7 +155,7 @@ void StorageInstructions::WriteBinaryByte(std::ofstream &file, int value)
 {
     vector<int> bits;
 
-    for(int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
     {
         bits.push_back(value % 2);
         value /= 2;
@@ -140,11 +180,11 @@ void StorageInstructions::WriteCommand(ofstream &file, Instruction &instruction)
 {
     file << std::right << std::hex << std::setw(4) << std::setfill('0') << instruction.address << " | ";
 
-   file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)instruction.opCodes[0] << " | ";
-   WriteBinaryByte(file, (int)instruction.opCodes[0]);
-   file << " | ";
+    file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)instruction.opCodes[0] << " | ";
+    WriteBinaryByte(file, (int)instruction.opCodes[0]);
+    file << " | ";
 
-    if(instruction.bad)
+    if (instruction.bad)
     {
         file << "ERROR!!! BAD COMMAND!!! ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     }
@@ -170,13 +210,13 @@ void StorageInstructions::WriteCommand(ofstream &file, Instruction &instruction)
         }
         file << std::dec << std::setw(2) << command.tackts << " | ";
         */
-        if(!instruction.comment.empty())
+        if (!instruction.comment.empty())
         {
             file << " | " << instruction.comment;
         }
     }
 
-    for(uint i = 1; i < instruction.opCodes.size(); i++)
+    for (uint i = 1; i < instruction.opCodes.size(); i++)
     {
         file << endl << "     | ";
         file << std::hex << std::setw(2) << std::setfill('0') << std::right << (int)instruction.opCodes[i] << " | ";
@@ -196,11 +236,11 @@ void StorageInstructions::CreateReport(pchar file_name)
 
     file.open(file_name);
 
-    for(size_t i = 0; i < instructions.size(); i++)
+    for (size_t i = 0; i < instructions.size(); i++)
     {
         WriteCommand(file, instructions[i]);
 
-        if(i < instructions.size() - 1)
+        if (i < instructions.size() - 1)
         {
             int addressNext = instructions[i + 1].address;
             if ((addressNext - instructions[i].address) > (int)instructions[i].opCodes.size())
@@ -212,9 +252,9 @@ void StorageInstructions::CreateReport(pchar file_name)
 
     file << endl << endl << " ***** BAD ADDRESSES *****" << endl;
 
-    for(size_t i = 0; i < instructions.size(); i++)
+    for (size_t i = 0; i < instructions.size(); i++)
     {
-        if(instructions[i].bad)
+        if (instructions[i].bad)
         {
             WriteCommand(file, instructions[i]);
         }

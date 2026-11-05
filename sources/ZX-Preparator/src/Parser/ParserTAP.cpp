@@ -595,18 +595,6 @@ bool BlockTAP_Code::ParseASM()
 
     storage.AppendEntryPoint(address_load);
 
-    {
-        storage.AppendEntryPoint(0x0066);
-        storage.AppendEntryPoint(0x03F8);
-        storage.AppendEntryPoint(0x04C2);
-        storage.AppendEntryPoint(0x053F);
-        storage.AppendEntryPoint(0x0605);
-        storage.AppendEntryPoint(0x3214);
-        storage.AppendEntryPoint(0x351B);
-        storage.AppendEntryPoint(0x353B);
-        storage.AppendEntryPoint(0x35C9);
-    }
-
     Emulator::Init(&params);
 
     int address = storage.NextAddress();

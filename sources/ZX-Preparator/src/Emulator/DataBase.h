@@ -8,7 +8,7 @@
 class StorageInstructions
 {
 public:
-    StorageInstructions(int _addr_min, int _addr_max) : addr_min(_addr_min), addr_max(_addr_max) { }
+    StorageInstructions(int _addr_min, int _addr_max);
 
     // Append new entry point
     void AppendEntryPoint(int address);
