@@ -131,10 +131,11 @@ int DEC_IX_run()
 
 int LD_IX_pNN_dec()
 {
-    AddAddress(rPC);
-
-    rIX = RAM16(PC16andInc());
-    return 20;
+    AddOpcode(RAM8(rPC));
+    AddOpcode(RAM8(rPC + 1));
+    AddAddress(rPC + 2);
+    sprintf(MNEMONIC, "LD IX,[%d]", PC16andInc());
+    return -1;
 }
 
 int LD_IX_pNN_run()
