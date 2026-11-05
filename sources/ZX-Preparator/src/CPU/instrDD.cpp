@@ -14,16 +14,28 @@ int CP_pIX_D_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
-    sprintf(MNEMONIC, "CP [IX+%02d]", PCandInc());
+    sprintf(MNEMONIC, "CP [IX+%02d]", (int)PCandInc());
     return -1;
 }
-
-
 int CP_pIX_D_run()
 {
     return 0;
 }
 
+
+int OR_pIX_D_dec()
+{
+    AddOpcode(RAM8(rPC));
+    AddAddress(rPC + 1);
+    int d = (int)PCandInc();
+    sprintf(MNEMONIC, "OR [IX+%02d]", d);
+    sprintf(TRANSCRIPT, "A<-A^[IX+%02d]", d);
+    return -1;
+}
+int OR_pIX_D_run()
+{
+    return 0;
+}
 
 int LD_R_pIX_D_dec()
 {
