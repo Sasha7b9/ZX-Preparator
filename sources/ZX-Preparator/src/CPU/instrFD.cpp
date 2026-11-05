@@ -196,37 +196,33 @@ int LD_R_pIY_D_run()
 }
 
 
-int ADD_A_pIY_D()
+int ADD_A_pIY_D_dec()
 {
-#ifdef LISTING
-
     AddOpcode(RAM8(rPC));
-    AddAddress(PC + 1);
+    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "ADD A,[IY+%02X]", prevPC);
     return -1;
-
-#else
-
-    return 0;
-
-#endif
 }
 
 
-int CP_pIY_D()
+int ADD_A_pIY_D_run()
 {
-#ifdef LISTING
+    return 0;
+}
 
-    AddAddress(PC + 1);
+
+int CP_pIY_D_dec()
+{
+    AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "CP [IY+%02X]", PCandInc());
     return -1;
+}
 
-#else
 
+int CP_pIY_D_run()
+{
     return 0;
-
-#endif
 }
 
 
