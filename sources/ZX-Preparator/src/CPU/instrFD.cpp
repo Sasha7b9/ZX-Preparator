@@ -100,6 +100,21 @@ int ADD_IY_SS_run()
 }
 
 
+int DEC_IY_dec()
+{
+    AddAddress(rPC);
+    strcpy(MNEMONIC, "DEC IY");
+    strcpy(TRANSCRIPT, "IY<-IY-1");
+    return -1;
+}
+
+
+int DEC_IY_run()
+{
+    return 0;
+}
+
+
 int DecodeCommandFDCB()
 {
     //return RunThridLevel(IR_IY);
