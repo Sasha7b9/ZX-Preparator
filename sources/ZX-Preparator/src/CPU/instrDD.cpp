@@ -9,15 +9,20 @@
 #include <cstdio>
 
 
-int LD_R_pIX_D_run(void)
-{
-    uint8 valueReg = prevPC;
 
-    R8_HI(valueReg) = RAM[rIX + PCandInc()];
-    
-    return 19;
+int CP_pIX_D_dec()
+{
+    AddOpcode(RAM8(rPC));
+    AddAddress(rPC + 1);
+    sprintf(MNEMONIC, "CP [IX+%02d]", PCandInc());
+    return -1;
 }
 
+
+int CP_pIX_D_run()
+{
+    return 0;
+}
 
 
 int LD_R_pIX_D_dec(void)
@@ -28,6 +33,15 @@ int LD_R_pIX_D_dec(void)
     sprintf(MNEMONIC, "LD %s,[IX+%02d]", R8_HI_Name(RAM8(rPC - 1)), RAM8(rPC));
 
     return -1;
+}
+
+int LD_R_pIX_D_run(void)
+{
+    uint8 valueReg = prevPC;
+
+    R8_HI(valueReg) = RAM[rIX + PCandInc()];
+
+    return 19;
 }
 
 
@@ -101,20 +115,17 @@ int LD_IX_NN_run(void)
 
 
 
-int DEC_IX_dec(void)
+int DEC_IX_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "DEC IX");
     return -1;
+}
 
-#else
-
+int DEC_IX_run()
+{
     rIX -= 1;
     return 10;
-
-#endif
 }
 
 
@@ -219,18 +230,6 @@ int JP_pIX(void)
     return 8;
 
 #endif
-}
-
-int CP_pIX_D_dec()
-{
-    AddAddress(rPC);
-    return 0;
-}
-
-
-int CP_pIX_D_run()
-{
-    return 0;
 }
 
 

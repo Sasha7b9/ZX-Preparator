@@ -167,20 +167,18 @@ int RR_R(void)
 }
 
 
-int SLA(void)
+int SLA_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "SLA %s", R8_LO_Name(prevPC));
 
     return -1;
+}
 
-#else
 
+int SLA_run()
+{
     return 0;
-
-#endif
 }
 
 
