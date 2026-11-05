@@ -25,7 +25,7 @@ int CP_pIX_D_run()
 }
 
 
-int LD_R_pIX_D_dec(void)
+int LD_R_pIX_D_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -35,7 +35,7 @@ int LD_R_pIX_D_dec(void)
     return -1;
 }
 
-int LD_R_pIX_D_run(void)
+int LD_R_pIX_D_run()
 {
     uint8 valueReg = prevPC;
 
@@ -45,7 +45,7 @@ int LD_R_pIX_D_run(void)
 }
 
 
-int LD_pIX_D_R_run(void)
+int LD_pIX_D_R_run()
 {
     uint8 valueReg = prevPC;
 
@@ -56,7 +56,7 @@ int LD_pIX_D_R_run(void)
 
 
 
-int LD_pIX_D_R_dec(void)
+int LD_pIX_D_R_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -65,7 +65,7 @@ int LD_pIX_D_R_dec(void)
 }
 
 
-int POP_IX_run(void)
+int POP_IX_run()
 {
     rIX = RAM16(rSP);
     rSP += 2;
@@ -74,7 +74,7 @@ int POP_IX_run(void)
 
 
 
-int POP_IX_dec(void)
+int POP_IX_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "POP IX");
@@ -82,7 +82,7 @@ int POP_IX_dec(void)
 }
 
 
-int LD_pIX_D_N_run(void)
+int LD_pIX_D_N_run()
 {
     volatile uint8 valD = PCandInc();
     volatile uint8 valN = PCandInc(); //-V656
@@ -92,13 +92,13 @@ int LD_pIX_D_N_run(void)
 
 
 
-int LD_pIX_D_N_dec(void)
+int LD_pIX_D_N_dec()
 {
     return 0;
 }
 
 
-int LD_IX_NN_dec(void)
+int LD_IX_NN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
@@ -107,7 +107,7 @@ int LD_IX_NN_dec(void)
     return -1;
 }
 
-int LD_IX_NN_run(void)
+int LD_IX_NN_run()
 {
     rIX = PC16andInc();
     return 14;
@@ -129,14 +129,14 @@ int DEC_IX_run()
 }
 
 
-int LD_IX_pNN(void)
+int LD_IX_pNN()
 {
     rIX = RAM16(PC16andInc());
     return 20;
 }
 
 
-int LD_pNN_IX_dec(void)
+int LD_pNN_IX_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
@@ -146,28 +146,28 @@ int LD_pNN_IX_dec(void)
 }
 
 
-int LD_pNN_IX_run(void)
+int LD_pNN_IX_run()
 {
     RAM16(PC16andInc()) = rIX;
     return 20;
 }
 
 
-int LD_SP_IX(void)
+int LD_SP_IX()
 {
     rSP = rIX;
     return 10;
 }
 
 
-int PUSH_IX_dec(void)
+int PUSH_IX_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "PUSH IX");
     return -1;
 }
 
-int PUSH_IX_run(void)
+int PUSH_IX_run()
 {
     RAM16(rSP - 2) = rIX;
     rSP -= 2;
@@ -175,43 +175,52 @@ int PUSH_IX_run(void)
 }
 
 
-int EX_pSP_IX(void)
+int EX_pSP_IX()
 {
     uint16 temp;
     EXCH(rIX, RAM16(rSP));
     return 23;
 }
 
+int ADD_A_pIX_D_dec()
+{
+    AddAddress(rPC);
+    uint8 d = PCandInc();
+    AddAddress(rPC);
+    AddOpcode(d);
+    sprintf(MNEMONIC, "ADD A, [IX + %d]", d);
+    return -1;
+}
 
-int ADD_A_pIX_D(void)
+int ADD_A_pIX_D_run()
 {
     rA += RAM8(rIX + PCandInc());
     return 19;
 }
 
 
-int INC_pIX_D(void)
+int INC_pIX_D()
 {
     RAM16(rIX + PCandInc()) += 1;
     return 23;
 }
 
 
-int ADD_IX_PP_dec(void)
+int ADD_IX_PP_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "ADD IX,%s", PP_45_Name(prevPC));
     return -1;
 }
 
-int ADD_IX_PP_run(void)
+int ADD_IX_PP_run()
 {
     rIX += PP_45(prevPC);
     return 15;
 }
 
 
-int INC_IX_run(void)
+int INC_IX_run()
 {
     rIX += 1;
     return 10;
@@ -219,7 +228,7 @@ int INC_IX_run(void)
 
 
 
-int INC_IX_dec(void)
+int INC_IX_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "INC IX");
@@ -227,7 +236,7 @@ int INC_IX_dec(void)
 }
 
 
-int JP_pIX(void)
+int JP_pIX()
 {
 #ifdef LISTING
     AddAddress(rPC);
@@ -243,7 +252,7 @@ int JP_pIX(void)
 }
 
 
-int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
+int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D()
 {
     return RunThridLevel(TypeIR::IX);
 
@@ -305,7 +314,7 @@ int RLC_pIX_D_and_BIT_B_pIX_D_and_SET_B_pIX_D_RES_B_pIX_D(void)
 #include "FuncSecondDD.h"
 
 
-int DecodeCommandDD(void)
+int DecodeCommandDD()
 {
     AddOpcode(RAM8(rPC));
 
@@ -320,7 +329,7 @@ int DecodeCommandDD(void)
 }
 
 
-int RunCommandDD(void)
+int RunCommandDD()
 {
     int index = PCandInc();
 
