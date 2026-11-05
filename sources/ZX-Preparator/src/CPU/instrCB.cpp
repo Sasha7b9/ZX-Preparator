@@ -179,35 +179,30 @@ int SLA_run()
 }
 
 
-int SRA()
+int SRA_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "SRA %s", R8_LO_Name(prevPC));
     return -1;
+}
 
-#else
-
+int SRA_run()
+{
     return 0;
-
-#endif
 }
 
 
-int RLC_pHL()
+int RLC_pHL_dec()
 {
-#ifdef LISTING
-
     AddAddress(rPC);
     sprintf(MNEMONIC, "RLC [HL]");
     return -1;
+}
 
-#else
 
+int RLC_pHL_run()
+{
     return RLC(Operand_pHL);
-
-#endif
 }
 
 
