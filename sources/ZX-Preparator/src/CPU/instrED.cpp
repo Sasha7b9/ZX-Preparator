@@ -11,44 +11,37 @@
 
 int LD_A_I()
 {
-    return 9;   // WARN
+    return 0;
 }
 
 
 int LD_I_A_dec()
 {
     TACKTS = 9;
-    AddAddress(rPC);
-
     strcpy(MNEMONIC, "LD I,A");
     strcpy(TRANSCRIPT, "I<-A");
     strcpy(COMMENT, "I - Interrupt Control Vector Register");
-
     return -1;
 }
-
-
 int LD_I_A_run()
 {
-    return 0;   // WARN
+    return 0;
 }
 
 
 int LD_A_R_dec()
 {
     TACKTS = 9;
-    AddAddress(rPC);
     strcpy(MNEMONIC, "LD A, R");
     strcpy(TRANSCRIPT, "A<-R");
     strcpy(COMMENT, "Load Refresh Register in accumulator");
     return -1;
 }
-
-
 int LD_A_R_run()
 {
     return 0;   // WARN
 }
+
 
 int LD_R_A()
 {
@@ -60,16 +53,10 @@ int LD_DD_pNN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
-
-    uint8 retValue = prevPC;
-
-    sprintf(MNEMONIC, "LD %s, [#%04X]", DD_45_Name(retValue), PC16andInc());
-
-    AddAddress(rPC);
-
+    uint8 value = prevPC;
+    sprintf(MNEMONIC, "LD %s, [#%04X]", DD_45_Name(value), PC16andInc());
     return -1;
 }
-
 int LD_DD_pNN_run()
 {
     uint8 valReg = prevPC;
@@ -81,19 +68,15 @@ int LD_DD_pNN_run()
 int LD_pNN_DD_dec()
 {
     TACKTS = 20;
-
     uint8 valDD = prevPC;
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
     uint16 address = PC16andInc();
-    AddAddress(rPC);
-
     sprintf(MNEMONIC, "LD [%4X],%s", address, DD_45_Name(valDD));
     sprintf(TRANSCRIPT, "[%4X]<-%s", address, DD_45_Name(prevPC));
 
     return -1;
 }
-
 int LD_pNN_DD_run()
 {
     uint valDD = prevPC;
@@ -114,12 +97,9 @@ int LDI()
 
 int LDIR_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "LDIR");
     return -1;
 }
-
-
 int LDIR_run()
 {
     int time = 0;
@@ -145,12 +125,9 @@ int LDD()
 
 int LDDR_dec()
 {
-    AddAddress(rPC);
     sprintf(MNEMONIC, "LDDR");
     return -1;
 }
-
-
 int LDDR_run()
 {
     int time = 0;
@@ -230,12 +207,9 @@ int CPDR()
 
 int NEG_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "NEG");
     return -1;
 }
-
-
 int NEG_run()
 {
     rA = (uint8)((~rA) + 1);
@@ -260,12 +234,9 @@ int IM0()
 
 int IM1_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "IM1");
     return -1;
 }
-
-
 int IM1_run()
 {
     return 0;   // WARN
@@ -274,12 +245,9 @@ int IM1_run()
 
 int IM2_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "IM2");
     return -1;
 }
-
-
 int IM2_run()
 {
     return 0;   // WARN
@@ -304,7 +272,6 @@ int ADC_HL_SS()
 int SBC_HL_SS_dec()
 {
     TACKTS = 15;
-    AddAddress(rPC);
     strcpy(FLAGS, "++XXXV1+");
     sprintf(MNEMONIC, "SBC HL,%s", SS_45_Name(prevPC));
     sprintf(TRANSCRIPT, "HL<-HL-%s-CY", SS_45_Name(prevPC));
@@ -385,7 +352,6 @@ int RETN_dec()
     strcpy(MNEMONIC, "RETN");
     return -1;
 }
-
 int RETN_run()
 {
     return 0;  // WARN
@@ -405,11 +371,8 @@ int IN_R_pC_dec()
         strcpy(MNEMONIC, "IN (rHL), (C); R == 110, set flags only");
     }
     strcpy(FLAGS, "+ + X + X P 0 .");
-    AddAddress(rPC);
-
     return -1;
 }
-
 int IN_R_pC_run()
 {
     if(((prevPC >> 3) & 7) == 6)
@@ -434,11 +397,9 @@ int IN_R_pC_run()
 
 int OUT_pC_A_dec()
 {
-    AddAddress(rPC);
     sprintf(MNEMONIC, "OUT (C), A");
     return -1;
 }
-
 int OUT_pC_A_run()
 {
     return 0;
@@ -451,11 +412,8 @@ int INI_dec()
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; if B-1==0, Z set, else reset");
     strcpy(FLAGS, "X + X X X X 1 X");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++");
-    AddAddress(rPC);
-    return 0;
+    return -1;
 }
-
-
 int INI_run()
 {
     return 0;
@@ -468,10 +426,8 @@ int INIR_dec()
     strcpy(COMMENT, "C - A0...A7, B - A8...A15; z set only after finishing instruction");
     strcpy(FLAGS, "X 1 X X X X X 1 ");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL++; while B!=0");
-    AddAddress(rPC);
-    return 0;
+    return -1;
 }
-
 int INIR_run()
 {
     return 0;
@@ -482,11 +438,8 @@ int IND_dec()
 {
     strcpy(MNEMONIC, "IND");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--");
-    AddAddress(rPC);
-    return 0;
+    return -1;
 }
-
-
 int IND_run()
 {
     return 0;
@@ -497,11 +450,8 @@ int INDR_dec()
 {
     strcpy(MNEMONIC, "INDR");
     strcpy(TRANSCRIPT, "(rHL)<-(C); B--; HL--; while B!=0");
-    AddAddress(rPC);
-    return 0;
+    return -1;
 }
-
-
 int INDR_run()
 {
     return 0;
@@ -514,8 +464,6 @@ int OUT_pC_R_dec()
     sprintf(TRANSCRIPT, "(C)<-%s", R8_HI_Name(prevPC));
     return 0;
 }
-
-
 int OUT_pC_R_run()
 {
     return 0;

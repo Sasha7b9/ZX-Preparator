@@ -1588,8 +1588,6 @@ static int XOR_N_dec()
     sprintf(MNEMONIC, "XOR %02X", PCandInc());
     return -1;
 }
-
-
 static int XOR_N_run()
 {
     rA ^= PCandInc();
@@ -1604,13 +1602,9 @@ static int DI_dec()
     strcpy(TRANSCRIPT, "IFF1<-0, IFF2<-0");
     strcpy(COMMENT, "reset the maskable interrupt");
     TACKTS = 4;
-
     AddAddress(rPC);
-
     return -1;
 }
-
-
 static int DI_run()
 {
     IFF1 = 0;
@@ -1627,8 +1621,6 @@ static int OR_N_dec()
     sprintf(MNEMONIC, "OR %02X", PCandInc());
     return -1;
 }
-
-
 static int OR_N_run()
 {
     rA |= PCandInc();
@@ -1643,8 +1635,6 @@ static int LD_SP_HL_dec()
     strcpy(MNEMONIC, "LD SP,HL");
     return -1;
 }
-
-
 static int LD_SP_HL_run()
 {
     rSP = rHL;
@@ -1659,8 +1649,6 @@ static int EI_dec()
     strcpy(MNEMONIC, "EI");
     return -1;
 }
-
-
 static int EI_run()
 {
     IFF1 = 1;
@@ -1679,8 +1667,6 @@ static int CP_N_dec()
     
     return -1;
 }
-
-
 static int CP_N_run()
 {
     return 7;
@@ -1698,18 +1684,22 @@ int RunCommand()
 
 int DecodeCommand()
 {
-    AddOpcode(RAM8(rPC));
-
     static int counter = 0;
 
     counter++;
 
-    if (counter == 0x11dd)
+    if (counter == 0x13ff)
     {
         counter = counter;
     }
 
-    int result = firstLevel[PCandInc()][0]();
+    uint8 code = PCandInc();
+
+    AddOpcode(code);
+
+    int result = firstLevel[code][0]();
+
+    AddAddress(rPC);
 
     if (result != -1)
     {

@@ -25,9 +25,9 @@ int Emulator::Decode(int address)
     out->numAddresses = 0;
     out->numOpCodes = 0;
     TRANSCRIPT[0] = 0;
-    out->flags[0] = 0;
-    out->tackts = 0;
-    out->comment[0] = 0;
+    FLAGS[0] = 0;
+    TACKTS = 0;
+    COMMENT[0] = 0;
 
     rPC = (uint16)address;
 

@@ -14,11 +14,8 @@ int INC_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "INC [IY+%02X]", PCandInc());
-    AddAddress(rPC);
     return -1;
 }
-
-
 int INC_pIY_D_run()
 {
     return 0;
@@ -29,11 +26,8 @@ int DEC_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "DEC (IY+%d)", PCandInc());
-    AddAddress(rPC);
     return -1;
 }
-
-
 int DEC_pIY_D_run()
 {
     return 0;
@@ -43,16 +37,10 @@ int DEC_pIY_D_run()
 int LD_pIY_D_R_dec()
 {
     AddOpcode(RAM8(rPC));
-
     char *reg = R8_LO_Name(prevPC);
     sprintf(MNEMONIC, "LD (IY+%d), %s", PCandInc(), reg);
-
-    AddAddress(rPC);
-
     return -1;
 }
-
-
 int LD_pIY_D_R_run()
 {
     return 0;
@@ -64,7 +52,6 @@ int LD_IY_NN_dec()
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
     uint16 NN = PC16andInc();
-    AddAddress(rPC);
     sprintf(MNEMONIC, "LD IY, %04x", NN);
     return -1;
 }
@@ -79,7 +66,6 @@ int LD_IY_pNN_dec()
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
     uint16 NN = PC16andInc();
-    AddAddress(rPC);
     sprintf(MNEMONIC, "LD IY, [%u]", NN);
     return -1;
 }
@@ -91,13 +77,10 @@ int LD_IY_pNN_run()
 
 int ADD_IY_SS_dec()
 {
-    AddAddress(rPC);
     sprintf(MNEMONIC, "ADD IX, %s", SS_45_Name(prevPC));
     sprintf(TRANSCRIPT, "IY<-IY+%s", SS_45_Name(prevPC));
     return -1;
 }
-
-
 int ADD_IY_SS_run()
 {
     return 0;
@@ -106,7 +89,6 @@ int ADD_IY_SS_run()
 
 int DEC_IY_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "DEC IY");
     strcpy(TRANSCRIPT, "IY<-IY-1");
     return -1;
@@ -119,7 +101,6 @@ int DEC_IY_run()
 
 int INC_IY_dec()
 {
-    AddAddress(rPC);
     strcpy(MNEMONIC, "INC IY");
     strcpy(TRANSCRIPT, "IY<-IY+1");
     return -1;
@@ -134,8 +115,6 @@ int DecodeCommandFDCB_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
-    AddAddress(rPC + 2);
-
     uint8 valD = PCandInc();
     uint8 valBit = PCandInc();
     uint8 bit = (valBit >> 3) & 7;
@@ -158,7 +137,6 @@ int DecodeCommandFDCB_dec()
 
     return 1;
 }
-
 int DecodeCommandFDCB_run()
 {
     return 0;
@@ -167,19 +145,13 @@ int DecodeCommandFDCB_run()
 
 int LD_pIY_D_N_dec()
 {
-    AddOpcode(RAM8(rPC));
-    AddOpcode(RAM8(rPC + 1));
-    AddAddress(rPC + 2);
-
     uint8 valD = PCandInc();
     uint8 valN = PCandInc();
-
+    AddOpcode(valD);
+    AddOpcode(valN);
     sprintf(MNEMONIC, "LD [IY + %02X], #%02X", valD, valN);
-
     return -1;
 }
-
-
 int LD_pIY_D_N_run()
 {
     return 0;
@@ -189,12 +161,9 @@ int LD_pIY_D_N_run()
 int SUB_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC));
-    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "SUB (IY+0x%02x)", PCandInc());
     return -1;
 }
-
-
 int SUB_pIY_D_run()
 {
     return 0;
@@ -205,12 +174,9 @@ int LD_R_pIY_D_dec()
 {
     uint8 valReg = prevPC;
     AddOpcode(RAM8(rPC));
-    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "LD %s, [IY + %02X]", R8_HI_Name(valReg), PCandInc());
     return -1;
 }
-
-
 int LD_R_pIY_D_run()
 {
     return 0;
@@ -220,12 +186,9 @@ int LD_R_pIY_D_run()
 int ADD_A_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC));
-    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "ADD A,[IY+%02X]", prevPC);
     return -1;
 }
-
-
 int ADD_A_pIY_D_run()
 {
     return 0;
@@ -234,13 +197,10 @@ int ADD_A_pIY_D_run()
 
 int CP_pIY_D_dec()
 {
-    AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
     sprintf(MNEMONIC, "CP [IY+%02X]", PCandInc());
     return -1;
 }
-
-
 int CP_pIY_D_run()
 {
     return 0;
@@ -250,11 +210,9 @@ int CP_pIY_D_run()
 int XOR_pIY_D_dec()
 {
     AddOpcode(RAM8(rPC + 1));
-    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "XOR [IY+%02X]", PCandInc());
     return -1;
 }
-
 int XOR_pIY_D_run()
 {
     return 0;
@@ -263,13 +221,21 @@ int XOR_pIY_D_run()
 
 int PUSH_IY_dec()
 {
-    AddAddress(rPC);
     sprintf(MNEMONIC, "PUSH IY");
     return -1;
 }
-
-
 int PUSH_IY_run()
+{
+    return 0;
+}
+
+
+int POP_IY_dec()
+{
+    sprintf(MNEMONIC, "POP IY");
+    return -1;
+}
+int POP_IY_run()
 {
     return 0;
 }
