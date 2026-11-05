@@ -180,21 +180,19 @@ int SUB_pIY_D_run()
 }
 
 
-int LD_R_pIY_D()
+int LD_R_pIY_D_dec()
 {
-#ifdef LISTING
-
     uint8 valReg = prevPC;
     AddOpcode(RAM8(rPC));
-    AddAddress(PC + 1);
+    AddAddress(rPC + 1);
     sprintf(MNEMONIC, "LD %s, [IY + %02X]", R8_HI_Name(valReg), PCandInc());
     return -1;
+}
 
-#else
 
+int LD_R_pIY_D_run()
+{
     return 0;
-
-#endif
 }
 
 
