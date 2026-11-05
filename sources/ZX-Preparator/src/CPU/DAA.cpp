@@ -9,7 +9,6 @@
 
 int Decode::DAA()
 {
-    AddAddress(rPC);
     out->SetMnemonic("DAA");
     return -1;
 }
