@@ -36,7 +36,7 @@ static void WriteE(char *name)
 namespace Decode
 {
     // 0 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static int NOP(void)
+    static int NOP()
     {
         AddAddress(rPC);
         TACKTS = 4;
@@ -45,7 +45,7 @@ namespace Decode
     }
 
     // 1 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    static int LD_DD_NN(void)
+    static int LD_DD_NN()
     {
         uint8 valDD = prevPC;
         AddOpcode(RAM8(rPC));
@@ -59,7 +59,7 @@ namespace Decode
     }
 
     // 2 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    static int LD_pBC_A(void)
+    static int LD_pBC_A()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD [BC],A");
@@ -67,7 +67,7 @@ namespace Decode
     }
 
     // 3 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int INC_SS_dec(void)
+    int INC_SS_dec()
     {
         TACKTS = 6;
         AddAddress(rPC);
@@ -77,7 +77,7 @@ namespace Decode
     }
 
     // 4 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int INC_R(void)
+    int INC_R()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "INC %s", R8_HI_Name(prevPC));
@@ -85,7 +85,7 @@ namespace Decode
     }
 
     // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int DEC_R(void)
+    int DEC_R()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "DEC %s", R8_HI_Name(prevPC));
@@ -93,7 +93,7 @@ namespace Decode
     }
 
     // 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int LD_R_N(void)
+    int LD_R_N()
     {
         AddAddress(rPC + 1);
         AddOpcode(RAM8(rPC));
@@ -108,21 +108,21 @@ namespace Decode
     }
 
     // 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int RLCA(void)
+    int RLCA()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "RLCA");
         return -1;
     }
 
-    int EX_AF_AFalt(void)
+    int EX_AF_AFalt()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "EX AF,AF\'");
         return -1;
     }
 
-    int ADD_HL_SS(void)
+    int ADD_HL_SS()
     {
         AddAddress(rPC);
         TACKTS = 11;
@@ -132,14 +132,14 @@ namespace Decode
         return -1;
     }
 
-    int LD_A_pBC(void)
+    int LD_A_pBC()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD A,[BC]");
         return -1;
     }
 
-    int DEC_SS(void)
+    int DEC_SS()
     {
         TACKTS = 6;
         AddAddress(rPC);
@@ -150,14 +150,14 @@ namespace Decode
         return -1;
     }
 
-    int RRCA(void)
+    int RRCA()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "RRCA");
         return -1;
     }
 
-    int DJNZ_E(void)
+    int DJNZ_E()
     {
         AddOpcode(RAM8(rPC));
         AddAddress(rPC + 1);
@@ -169,49 +169,49 @@ namespace Decode
         return -1;
     }
 
-    int LD_pDE_A(void)
+    int LD_pDE_A()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD [DE],A");
         return -1;
     }
 
-    int RLA(void)
+    int RLA()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "RLA");
         return -1;
     }
 
-    int JR_E(void)
+    int JR_E()
     {
         WriteE("");
 
         return -1;
     }
 
-    int LD_A_pDE(void)
+    int LD_A_pDE()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD A,[DE]");
         return -1;
     }
 
-    int RRA(void)
+    int RRA()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "RRA");
         return -1;
     }
 
-    int JR_NZ_E(void)
+    int JR_NZ_E()
     {
         WriteE("NZ,");
 
         return -1;
     }
 
-    int LD_pNN_HL(void)
+    int LD_pNN_HL()
     {
         TACKTS = 16;
 
@@ -227,14 +227,14 @@ namespace Decode
         return -1;
     }
 
-    static int JR_Z_E(void)
+    static int JR_Z_E()
     {
         WriteE("Z,");
 
         return -1;
     }
 
-    static int LD_HL_pNN(void)
+    static int LD_HL_pNN()
     {
         AddOpcode(RAM8(rPC));
         AddOpcode(RAM8(rPC + 1));
@@ -248,21 +248,21 @@ namespace Decode
         return -1;
     }
 
-    static int CPL(void)
+    static int CPL()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "CPL");
         return -1;
     }
 
-    static int JR_NC_E(void)
+    static int JR_NC_E()
     {
         WriteE("NC,");
 
         return -1;
     }
 
-    static int LD_pNN_A(void)
+    static int LD_pNN_A()
     {
         AddOpcode(RAM8(rPC));
         AddOpcode(RAM8(rPC + 1));
@@ -271,14 +271,14 @@ namespace Decode
         return -1;
     }
 
-    static int INC_pHL(void)
+    static int INC_pHL()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "INC [HL]");
         return -1;
     }
 
-    static int DEC_pHL(void)
+    static int DEC_pHL()
     {
         TACKTS = 11;
         AddAddress(rPC);
@@ -290,7 +290,7 @@ namespace Decode
         return -1;
     }
 
-    static int LD_pHL_N(void)
+    static int LD_pHL_N()
     {
         TACKTS = 10;
         AddOpcode(RAM8(rPC));
@@ -303,21 +303,21 @@ namespace Decode
         return -1;
     }
 
-    static int SCF(void)
+    static int SCF()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "SCF");
         return -1;
     }
 
-    static int JR_C_E(void)
+    static int JR_C_E()
     {
         WriteE("C,");
 
         return -1;
     }
 
-    static int LD_A_pNN(void)
+    static int LD_A_pNN()
     {
         AddOpcode(RAM8(rPC));
         AddOpcode(RAM8(rPC + 1));
@@ -328,14 +328,14 @@ namespace Decode
         return -1;
     }
 
-    static int CCF(void)
+    static int CCF()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "CCF");
         return -1;
     }
 
-    static int LD_R_R(void)
+    static int LD_R_R()
     {
         AddAddress(rPC);
         TACKTS = 4;
@@ -346,7 +346,7 @@ namespace Decode
         return -1;
     }
 
-    static int LD_R_pHL(void)
+    static int LD_R_pHL()
     {
         TACKTS = 7;
         AddAddress(rPC);
@@ -357,28 +357,28 @@ namespace Decode
         return -1;
     }
 
-    static int LD_pHL_R(void)
+    static int LD_pHL_R()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD [HL],%s", R8_LO_Name(prevPC));
         return -1;
     }
 
-    static int HALT(void)
+    static int HALT()
     {
         AddAddress(rPC);
         strcpy(MNEMONIC, "HALT");
         return -1;
     }
 
-    static int ADD_A_R(void)
+    static int ADD_A_R()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "LD A,%s", R8_LO_Name(prevPC));
         return -1;
     }
 
-    static int ADD_A_pHL(void)
+    static int ADD_A_pHL()
     {
         AddAddress(rPC);
         sprintf(MNEMONIC, "ADD A,[HL]");
@@ -389,13 +389,13 @@ namespace Decode
 namespace Run
 {
     // 0 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    static int NOP(void)
+    static int NOP()
     {
         return 4;
     }
 
     // 1 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    static int LD_DD_NN(void)
+    static int LD_DD_NN()
     {
         DD_45(prevPC) = PC16andInc();
 
@@ -403,7 +403,7 @@ namespace Run
     }
 
     // 2 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int LD_pBC_A(void)
+    int LD_pBC_A()
     {
         RAM[rBC] = rA;
 
@@ -418,7 +418,7 @@ namespace Run
     }
 
     // 4 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int INC_R(void)
+    int INC_R()
     {
         uint8 before = R8_HI(prevPC);
 
@@ -439,7 +439,7 @@ namespace Run
     }
 
     // 5 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int DEC_R(void)
+    int DEC_R()
     {
         uint8 before = R8_HI(prevPC);
 
@@ -460,7 +460,7 @@ namespace Run
     }
 
     // 6 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int LD_R_N(void)
+    int LD_R_N()
     {
         R8_HI(prevPC) = PCandInc();
 
@@ -468,12 +468,12 @@ namespace Run
     }
 
     // 7 ------------------------------------------------------------------------------------------------------------------------------------------------------
-    int RLCA(void)
+    int RLCA()
     {
         return RLC(Operand_A);
     }
 
-    int EX_AF_AFlat(void)
+    int EX_AF_AFlat()
     {
         uint8 temp;
 
@@ -484,7 +484,7 @@ namespace Run
 
     }
 
-    int ADD_HL_SS(void)
+    int ADD_HL_SS()
     {
         rHL += SS_45(prevPC);
 
@@ -497,21 +497,21 @@ namespace Run
         return 11;
     }
 
-    int LD_A_pBC(void)
+    int LD_A_pBC()
     {
         rA = RAM[rBC];
 
         return 7;
     }
 
-    int DEC_SS(void)
+    int DEC_SS()
     {
         SS_45(prevPC) -= 1;
 
         return 6;
     }
 
-    int RRCA(void)
+    int RRCA()
     {
         uint8 loBit = GET_nBIT(rA, 0);
 
@@ -526,7 +526,7 @@ namespace Run
         return 4;
     }
 
-    int DJNZ_E(void)
+    int DJNZ_E()
     {
         rB -= 1;
 
@@ -541,14 +541,14 @@ namespace Run
         return 8;
     }
 
-    int LD_pDE_A(void)
+    int LD_pDE_A()
     {
         RAM[rDE] = rA;
 
         return 7;
     }
 
-    int RLA(void)
+    int RLA()
     {
         uint8 hiBit = GET_nBIT(rA, 7);
         uint8 oldCY = CF;
@@ -564,21 +564,21 @@ namespace Run
         return 4;
     }
 
-    int JR_E(void)
+    int JR_E()
     {
         AddPC(PCandInc());
 
         return 12;
     }
 
-    int LD_A_pDE(void)
+    int LD_A_pDE()
     {
         rA = RAM[rDE];
 
         return 7;
     }
 
-    int RRA(void)
+    int RRA()
     {
         uint8 loBit = GET_nBIT(rA, 0);
         uint8 oldCY = CF;
@@ -594,7 +594,7 @@ namespace Run
         return 4;
     }
 
-    int JR_NZ_E(void)
+    int JR_NZ_E()
     {
         uint8 address = PCandInc();
         if (ZF == 0)
@@ -605,7 +605,7 @@ namespace Run
         return 7;
     }
 
-    int LD_pNN_HL(void)
+    int LD_pNN_HL()
     {
         uint16 address = PC16andInc();
 
@@ -615,7 +615,7 @@ namespace Run
         return 16;
     }
 
-    int JR_Z_E(void)
+    int JR_Z_E()
     {
         uint8 address = PCandInc();
         if (ZF)
@@ -627,14 +627,14 @@ namespace Run
         return 7;
     }
 
-    static int LD_HL_pNN(void)
+    static int LD_HL_pNN()
     {
         rHL = PC16andInc();
 
         return 16;
     }
 
-    static int CPL(void)
+    static int CPL()
     {
         rA = ~rA;
 
@@ -647,7 +647,7 @@ namespace Run
         return 4;
     }
 
-    static int JR_NC_E(void)
+    static int JR_NC_E()
     {
         uint8 address = PCandInc();
         if (CF == 0)
@@ -659,14 +659,14 @@ namespace Run
         return 7;
     }
 
-    static int LD_pNN_A(void)
+    static int LD_pNN_A()
     {
         RAM[PC16andInc()] = rA;
 
         return 13;
     }
 
-    static int INC_pHL(void)
+    static int INC_pHL()
     {
         pHL += 1;
 
@@ -680,7 +680,7 @@ namespace Run
         return 7;
     }
 
-    static int DEC_pHL(void)
+    static int DEC_pHL()
     {
         pHL += 1;
 
@@ -693,14 +693,14 @@ namespace Run
         return 7;
     }
 
-    static int LD_pHL_N(void)
+    static int LD_pHL_N()
     {
         pHL = PCandInc();
 
         return 10;
     }
 
-    static int SCF(void)
+    static int SCF()
     {
         SET_C;
 
@@ -712,7 +712,7 @@ namespace Run
         return 4;
     }
 
-    static int JR_C_E(void)
+    static int JR_C_E()
     {
         uint8 address = PCandInc();
         if (CF)
@@ -724,14 +724,14 @@ namespace Run
         return 7;
     }
 
-    static int LD_A_pNN(void)
+    static int LD_A_pNN()
     {
         rA = RAM[PC16andInc()];
 
         return 13;
     }
 
-    static int CCF(void)
+    static int CCF()
     {
         if (CF)
         {
@@ -749,40 +749,40 @@ namespace Run
         return 4;
     }
 
-    static int LD_R_R(void)
+    static int LD_R_R()
     {
         R8_HI(prevPC) = R8_LO(prevPC);
 
         return 4;
     }
 
-    static int LD_R_pHL(void)
+    static int LD_R_pHL()
     {
         R8_HI(prevPC) = pHL;
 
         return 7;
     }
 
-    static int LD_pHL_R(void)
+    static int LD_pHL_R()
     {
         pHL = R8_LO(prevPC);
 
         return 7;
     }
 
-    static int HALT(void)
+    static int HALT()
     {
         return 0;   // WARN There halt CPU
     }
 
-    static int ADD_A_R(void)
+    static int ADD_A_R()
     {
         rA += R8_LO(prevPC);
 
         return 4;
     }
 
-    static int ADD_A_pHL(void)
+    static int ADD_A_pHL()
     {
         rA += pHL;
 
@@ -791,7 +791,7 @@ namespace Run
 }
 
 
-static int ADC_A_S_dec(void)
+static int ADC_A_S_dec()
 {
     AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
@@ -800,7 +800,7 @@ static int ADC_A_S_dec(void)
 }
 
 
-static int ADC_A_pHL_dec(void)
+static int ADC_A_pHL_dec()
 {
     AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
@@ -809,7 +809,7 @@ static int ADC_A_pHL_dec(void)
 }
 
 
-static int ADC_A_S_run(void)
+static int ADC_A_S_run()
 {
     rA += R8_LO(prevPC) + CF;
 
@@ -817,7 +817,7 @@ static int ADC_A_S_run(void)
 }
 
 
-static int ADC_A_pHL_run(void)
+static int ADC_A_pHL_run()
 {
     rA += pHL + CF;
 
@@ -825,14 +825,14 @@ static int ADC_A_pHL_run(void)
 }
 
 
-static int SUB_S_dec(void)
+static int SUB_S_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SUB %s", R8_LO_Name(prevPC));
     return -1;
 }
 
-static int SUB_pHL_dec(void)
+static int SUB_pHL_dec()
 {
     AddAddress(rPC);
     std::strcpy(MNEMONIC, "SUB [HL]");
@@ -840,7 +840,7 @@ static int SUB_pHL_dec(void)
 }
 
 
-static int SUB_S_run(void)
+static int SUB_S_run()
 {
     rA -= R8_LO(prevPC);
 
@@ -848,7 +848,7 @@ static int SUB_S_run(void)
 }
 
 
-static int SUB_pHL_run(void)
+static int SUB_pHL_run()
 {
     rA -= pHL;
 
@@ -856,7 +856,7 @@ static int SUB_pHL_run(void)
 }
 
 
-static int SBC_A_S_dec(void)
+static int SBC_A_S_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SBC A,%s", R8_LO_Name(prevPC));
@@ -864,7 +864,7 @@ static int SBC_A_S_dec(void)
 }
 
 
-static int SBC_A_S_run(void)
+static int SBC_A_S_run()
 {
     rA -= R8_LO(prevPC) - CF;
 
@@ -872,7 +872,7 @@ static int SBC_A_S_run(void)
 }
 
 
-static int SBC_A_pHL_dec(void)
+static int SBC_A_pHL_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SBC A,[HL]");
@@ -880,7 +880,7 @@ static int SBC_A_pHL_dec(void)
 }
 
 
-static int SBC_A_pHL_run(void)
+static int SBC_A_pHL_run()
 {
     rA -= pHL - CF;
 
@@ -888,7 +888,7 @@ static int SBC_A_pHL_run(void)
 }
 
 
-static int AND_S_dec(void)
+static int AND_S_dec()
 {
     TACKTS = 4;
     AddAddress(rPC);
@@ -901,7 +901,7 @@ static int AND_S_dec(void)
 }
 
 
-static int AND_S_run(void)
+static int AND_S_run()
 {
     rA &= R8_LO(prevPC);
 
@@ -909,7 +909,7 @@ static int AND_S_run(void)
 }
 
 
-static int AND_pHL_dec(void)
+static int AND_pHL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "AND [HL]");
@@ -917,7 +917,7 @@ static int AND_pHL_dec(void)
 }
 
 
-static int AND_pHL_run(void)
+static int AND_pHL_run()
 {
     rA &= pHL;
 
@@ -925,7 +925,7 @@ static int AND_pHL_run(void)
 }
 
 
-static int XOR_S_dec(void)
+static int XOR_S_dec()
 {
     sprintf(MNEMONIC, "XOR %s", R8_LO_Name(prevPC));
     sprintf(TRANSCRIPT, "A<-A(+)%s", R8_LO_Name(prevPC));
@@ -936,7 +936,7 @@ static int XOR_S_dec(void)
 }
 
 
-static int XOR_S_run(void)
+static int XOR_S_run()
 {
     rA ^= R8_LO(prevPC);
 
@@ -944,7 +944,7 @@ static int XOR_S_run(void)
 }
 
 
-static int XOR_pHL_dec(void)
+static int XOR_pHL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "XOR [HL]");
@@ -952,7 +952,7 @@ static int XOR_pHL_dec(void)
 }
 
 
-static int XOR_pHL_run(void)
+static int XOR_pHL_run()
 {
     rA ^= pHL;
 
@@ -960,7 +960,7 @@ static int XOR_pHL_run(void)
 }
 
 
-static int OR_S_dec(void)
+static int OR_S_dec()
 {
     AddAddress(rPC);
 
@@ -970,7 +970,7 @@ static int OR_S_dec(void)
 }
 
 
-static int OR_S_run(void)
+static int OR_S_run()
 {
     rA |= R8_LO(prevPC);
 
@@ -978,7 +978,7 @@ static int OR_S_run(void)
 }
 
 
-static int OR_pHL_dec(void)
+static int OR_pHL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "OR [HL]");
@@ -986,7 +986,7 @@ static int OR_pHL_dec(void)
 }
 
 
-static int OR_pHL_run(void)
+static int OR_pHL_run()
 {
     rA |= pHL;
 
@@ -994,7 +994,7 @@ static int OR_pHL_run(void)
 }
 
 
-static int CP_S_dec(void)
+static int CP_S_dec()
 {
     AddAddress(rPC);
     TACKTS = 4;
@@ -1008,7 +1008,7 @@ static int CP_S_dec(void)
 }
 
 
-static int CP_S_run(void)
+static int CP_S_run()
 {
     uint8 value = R8_LO(prevPC);
 
@@ -1047,7 +1047,7 @@ static int CP_S_run(void)
 }
 
 
-static int CP_pHL_dec(void)
+static int CP_pHL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "CP [HL]");
@@ -1055,7 +1055,7 @@ static int CP_pHL_dec(void)
 }
 
 
-static int CP_pHL_run(void)
+static int CP_pHL_run()
 {
     return 7;
 }
@@ -1079,7 +1079,7 @@ static char* Cond_Name(uint8 value)
 }
 
 
-static int RET_CC_dec(void)
+static int RET_CC_dec()
 {
     AddAddress(rPC);
 
@@ -1089,49 +1089,49 @@ static int RET_CC_dec(void)
 }
 
 
-static bool Cond_NZ(void)
+static bool Cond_NZ()
 {
     return (ZF == 0);
 }
 
 
-static bool Cond_Z(void)
+static bool Cond_Z()
 {
     return (ZF == 1);
 }
 
 
-static bool Cond_NC(void)
+static bool Cond_NC()
 {
     return (CF == 0);
 }
 
 
-static bool Cond_C(void)
+static bool Cond_C()
 {
     return (CF == 1);
 }
 
 
-static bool Cond_PO(void)
+static bool Cond_PO()
 {
     return (PF == 0);
 }
 
 
-static bool Cond_PE(void)
+static bool Cond_PE()
 {
     return (PF == 1);
 }
 
 
-static bool Cond_P(void)
+static bool Cond_P()
 {
     return (SF == 0);
 }
 
 
-static bool Cond_M(void)
+static bool Cond_M()
 {
     return (SF == 1);
 }
@@ -1157,21 +1157,21 @@ static bool Cond(uint8 value)
 }
 
 
-static int RET_dec(void)
+static int RET_dec()
 {
     strcpy(MNEMONIC, "RET");
     return -1;
 }
 
 
-static int RET_run(void)
+static int RET_run()
 {
     rPC = RAM16(rSP);
     return 10;
 }
 
 
-static int RET_CC_run(void)
+static int RET_CC_run()
 {
     if(Cond(prevPC))
     {
@@ -1182,7 +1182,7 @@ static int RET_CC_run(void)
 }
 
 
-static int POP_QQ_dec(void)
+static int POP_QQ_dec()
 {
     AddAddress(rPC);
 
@@ -1192,7 +1192,7 @@ static int POP_QQ_dec(void)
 }
 
 
-static int POP_QQ_run(void)
+static int POP_QQ_run()
 {
     QQ_45(prevPC) = RAM[rSP] + RAM[rSP + 1] * 256;
     rSP += 2;
@@ -1201,7 +1201,7 @@ static int POP_QQ_run(void)
 }
 
 
-static int JP_CC_NN_dec(void)
+static int JP_CC_NN_dec()
 {
     char *nameCC = Cond_Name(prevPC);
 
@@ -1219,7 +1219,7 @@ static int JP_CC_NN_dec(void)
 }
 
 
-static int JP_CC_NN_run(void)
+static int JP_CC_NN_run()
 {
     bool cond = Cond(prevPC);
 
@@ -1234,7 +1234,7 @@ static int JP_CC_NN_run(void)
 }
 
 
-static int JP_NN_dec(void)
+static int JP_NN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
@@ -1252,7 +1252,7 @@ static int JP_NN_dec(void)
 }
 
 
-static int JP_NN_run(void)
+static int JP_NN_run()
 {
     rPC = PC16andInc();
 
@@ -1260,7 +1260,7 @@ static int JP_NN_run(void)
 }
 
 
-static int CALL_NN_dec(void)
+static int CALL_NN_dec()
 {
     TACKTS = 17;
     AddOpcode(RAM8(rPC));
@@ -1277,7 +1277,7 @@ static int CALL_NN_dec(void)
 }
 
 
-static int CALL_NN_run(void)
+static int CALL_NN_run()
 {
     uint16 valuePC = ValuePC();
 
@@ -1289,7 +1289,7 @@ static int CALL_NN_run(void)
 }
 
 
-static int CALL_CC_NN_dec(void)
+static int CALL_CC_NN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
@@ -1302,7 +1302,7 @@ static int CALL_CC_NN_dec(void)
 }
 
 
-static int CALL_CC_NN_run(void)
+static int CALL_CC_NN_run()
 {
     if(Cond(prevPC))
     {
@@ -1314,7 +1314,7 @@ static int CALL_CC_NN_run(void)
 }
 
 
-static int PUSH_QQ_dec(void)
+static int PUSH_QQ_dec()
 {
     TACKTS = 11;
     AddAddress(rPC);
@@ -1326,7 +1326,7 @@ static int PUSH_QQ_dec(void)
 }
 
 
-static int PUSH_QQ_run(void)
+static int PUSH_QQ_run()
 {
     RAM[rSP - 2] = (uint8)QQ_45(prevPC);
     RAM[rSP - 1] = (uint8)(QQ_45(prevPC) >> 8);
@@ -1336,7 +1336,7 @@ static int PUSH_QQ_run(void)
 }
 
 
-static int ADD_A_N_dec(void)
+static int ADD_A_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1345,7 +1345,7 @@ static int ADD_A_N_dec(void)
 }
 
 
-static int ADD_A_N_run(void)
+static int ADD_A_N_run()
 {
     rA += PCandInc();
 
@@ -1366,7 +1366,7 @@ const uint8 rstP[8] =
 };
 
 
-static int RST_P_dec(void)
+static int RST_P_dec()
 {
     int address = rstP[(prevPC >> 3) & 7];
     if(address != 0x28 && address != 0x08) // Для калькулятора после команды вызова хранятся какие-то данные, поэтому не добавляем в спискок нужных адресов
@@ -1380,7 +1380,7 @@ static int RST_P_dec(void)
 }
 
 
-static int RST_P_run(void)
+static int RST_P_run()
 {
     uint8 T = (prevPC >> 3) & 7;
 
@@ -1395,7 +1395,7 @@ static int RST_P_run(void)
 }
 
 
-static int ADC_A_N_dec(void)
+static int ADC_A_N_dec()
 {
     AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
@@ -1404,7 +1404,7 @@ static int ADC_A_N_dec(void)
 }
 
 
-static int ADC_A_N_run(void)
+static int ADC_A_N_run()
 {
     rA += PCandInc() + CF;
 
@@ -1412,7 +1412,7 @@ static int ADC_A_N_run(void)
 }
 
 
-static int OUT_pN_A_dec(void)
+static int OUT_pN_A_dec()
 {
     TACKTS = 11;
     AddAddress(rPC + 1);
@@ -1427,7 +1427,7 @@ static int OUT_pN_A_dec(void)
 }
 
 
-static int OUT_pN_A_run(void)
+static int OUT_pN_A_run()
 {
     WritePort(PCandInc(), rA);
 
@@ -1435,7 +1435,7 @@ static int OUT_pN_A_run(void)
 }
 
 
-static int SUB_N_dec(void)
+static int SUB_N_dec()
 {
     AddAddress(rPC + 1);
     AddOpcode(RAM8(rPC));
@@ -1444,7 +1444,7 @@ static int SUB_N_dec(void)
 }
 
 
-static int SUB_N_run(void)
+static int SUB_N_run()
 {
     rA -= PCandInc();
 
@@ -1452,7 +1452,7 @@ static int SUB_N_run(void)
 }
 
 
-static int EXX_dec(void)
+static int EXX_dec()
 {
     TACKTS = 4;
     AddAddress(rPC);
@@ -1463,7 +1463,7 @@ static int EXX_dec(void)
 }
 
 
-static int EXX_run(void)
+static int EXX_run()
 {
     uint8 temp;
 
@@ -1478,7 +1478,7 @@ static int EXX_run(void)
 }
 
 
-static int IN_A_pN_dec(void)
+static int IN_A_pN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1487,7 +1487,7 @@ static int IN_A_pN_dec(void)
 }
 
 
-static int IN_A_pN_run(void)
+static int IN_A_pN_run()
 {
     rA = ReadPort(PCandInc());
 
@@ -1495,7 +1495,7 @@ static int IN_A_pN_run(void)
 }
 
 
-static int SBC_A_N_dec(void)
+static int SBC_A_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1504,7 +1504,7 @@ static int SBC_A_N_dec(void)
 }
 
 
-static int SBC_A_N_run(void)
+static int SBC_A_N_run()
 {
     rA -= PCandInc() - CF;
 
@@ -1512,7 +1512,7 @@ static int SBC_A_N_run(void)
 }
 
 
-static int EX_pSP_HL_dec(void)
+static int EX_pSP_HL_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "EX [SP],HL");
@@ -1520,7 +1520,7 @@ static int EX_pSP_HL_dec(void)
 }
 
 
-static int EX_pSP_HL_run(void)
+static int EX_pSP_HL_run()
 {
     uint8 temp;
 
@@ -1531,7 +1531,7 @@ static int EX_pSP_HL_run(void)
 }
 
 
-static int AND_N_dec(void)
+static int AND_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1540,7 +1540,7 @@ static int AND_N_dec(void)
 }
 
 
-static int AND_N_run(void)
+static int AND_N_run()
 {
     rA &= PCandInc();
 
@@ -1548,14 +1548,14 @@ static int AND_N_run(void)
 }
 
 
-static int JP_pHL_dec(void)
+static int JP_pHL_dec()
 {
     strcpy(MNEMONIC, "JP [HL]");
     return -1;
 }
 
 
-static int JP_pHL_run(void)
+static int JP_pHL_run()
 {
     rPC = rHL;
 
@@ -1563,7 +1563,7 @@ static int JP_pHL_run(void)
 }
 
 
-static int EX_DE_HL_dec(void)
+static int EX_DE_HL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "EX DE,HL");
@@ -1571,7 +1571,7 @@ static int EX_DE_HL_dec(void)
 }
 
 
-static int EX_DE_HL_run(void)
+static int EX_DE_HL_run()
 {
     uint16 temp;
 
@@ -1581,7 +1581,7 @@ static int EX_DE_HL_run(void)
 }
 
 
-static int XOR_N_dec(void)
+static int XOR_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1590,7 +1590,7 @@ static int XOR_N_dec(void)
 }
 
 
-static int XOR_N_run(void)
+static int XOR_N_run()
 {
     rA ^= PCandInc();
 
@@ -1598,7 +1598,7 @@ static int XOR_N_run(void)
 }
 
 
-static int DI_dec(void)
+static int DI_dec()
 {
     strcpy(MNEMONIC, "DI");
     strcpy(TRANSCRIPT, "IFF1<-0, IFF2<-0");
@@ -1611,7 +1611,7 @@ static int DI_dec(void)
 }
 
 
-static int DI_run(void)
+static int DI_run()
 {
     IFF1 = 0;
     IFF2 = 0;
@@ -1620,7 +1620,7 @@ static int DI_run(void)
 }
 
 
-static int OR_N_dec(void)
+static int OR_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1629,7 +1629,7 @@ static int OR_N_dec(void)
 }
 
 
-static int OR_N_run(void)
+static int OR_N_run()
 {
     rA |= PCandInc();
 
@@ -1637,7 +1637,7 @@ static int OR_N_run(void)
 }
 
 
-static int LD_SP_HL_dec(void)
+static int LD_SP_HL_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "LD SP,HL");
@@ -1645,7 +1645,7 @@ static int LD_SP_HL_dec(void)
 }
 
 
-static int LD_SP_HL_run(void)
+static int LD_SP_HL_run()
 {
     rSP = rHL;
 
@@ -1653,7 +1653,7 @@ static int LD_SP_HL_run(void)
 }
 
 
-static int EI_dec(void)
+static int EI_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "EI");
@@ -1661,7 +1661,7 @@ static int EI_dec(void)
 }
 
 
-static int EI_run(void)
+static int EI_run()
 {
     IFF1 = 1;
     IFF2 = 1;
@@ -1670,7 +1670,7 @@ static int EI_run(void)
 }
 
 
-static int CP_N_dec(void)
+static int CP_N_dec()
 {
     AddOpcode(RAM8(rPC));
     AddAddress(rPC + 1);
@@ -1681,7 +1681,7 @@ static int CP_N_dec(void)
 }
 
 
-static int CP_N_run(void)
+static int CP_N_run()
 {
     return 7;
 }
@@ -1690,13 +1690,13 @@ static int CP_N_run(void)
 #include "FuncFirst.h"
 
 
-int RunCommand(void)
+int RunCommand()
 {
     return firstLevel[PCandInc()][1]();
 }
 
 
-int DecodeCommand(void)
+int DecodeCommand()
 {
     AddOpcode(RAM8(rPC));
 
@@ -1704,7 +1704,7 @@ int DecodeCommand(void)
 
     counter++;
 
-    if (counter == 0x668)
+    if (counter == 0x711)
     {
         counter = counter;
     }

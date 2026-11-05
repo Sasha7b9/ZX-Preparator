@@ -4,11 +4,11 @@
 
 namespace Decode
 {
-    int DAA(void);
+    int DAA();
 }
 
 
 namespace Run
 {
-    int DAA(void);
+    int DAA();
 }

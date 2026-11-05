@@ -29,9 +29,9 @@ enum REG_QQ
 
 // Return value from RAM, pointed to PC, and increment PC
 void AddPC(uint8 delta);
-uint8 PCandInc(void);
-uint16 PC16andInc(void);
-uint16 ValuePC(void);
+uint8 PCandInc();
+uint16 PC16andInc();
+uint16 ValuePC();
 
 
 extern uint8 prevPC;

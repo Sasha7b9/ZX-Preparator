@@ -3,6 +3,6 @@
 #include "defines.h"
 
 
-int RunCommand(void);
+int RunCommand();
 
-int DecodeCommand(void);
+int DecodeCommand();

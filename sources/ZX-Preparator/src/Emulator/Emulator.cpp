@@ -46,7 +46,7 @@ int Emulator::Run(int address)
 
 
 
-int Emulator::RunNext(void)
+int Emulator::RunNext()
 {
     return RunCommand();
 }

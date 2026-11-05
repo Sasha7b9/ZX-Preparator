@@ -11,7 +11,7 @@
 
 
 
-int BIT_B_R_dec(void)
+int BIT_B_R_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "BIT %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
@@ -19,7 +19,7 @@ int BIT_B_R_dec(void)
 }
 
 
-int BIT_B_R_run(void)
+int BIT_B_R_run()
 {
     return 0;
 }
@@ -82,7 +82,7 @@ int RRC_R_run()
 }
 
 
-int RES_B_M_dec(void)
+int RES_B_M_dec()
 {
     AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
@@ -91,13 +91,13 @@ int RES_B_M_dec(void)
 }
 
 
-int RES_B_M_run(void)
+int RES_B_M_run()
 {
     return 0;
 }
 
 
-int RES_B_pHL_dec(void)
+int RES_B_pHL_dec()
 {
     AddAddress(rPC);
     uint8 numBit = (prevPC >> 3) & 7;
@@ -105,33 +105,33 @@ int RES_B_pHL_dec(void)
     return -1;
 }
 
-int RES_B_pHL_run(void)
+int RES_B_pHL_run()
 {
     return 0;
 }
 
 
-int SET_B_R_dec(void)
+int SET_B_R_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,%s", (prevPC >> 3) & 7, R8_LO_Name(prevPC));
     return -1;
 }
 
-int SET_B_R_run(void)
+int SET_B_R_run()
 {
     return 0;
 }
 
 
-int SET_B_pHL_dec(void)
+int SET_B_pHL_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "SET %d,[HL]", (prevPC >> 3) & 7);
     return -1;
 }
 
-int SET_B_pHL_run(void)
+int SET_B_pHL_run()
 {
     return 0;
 }
@@ -179,7 +179,7 @@ int SLA_run()
 }
 
 
-int SRA(void)
+int SRA()
 {
 #ifdef LISTING
 
@@ -195,7 +195,7 @@ int SRA(void)
 }
 
 
-int RLC_pHL(void)
+int RLC_pHL()
 {
 #ifdef LISTING
 
@@ -214,7 +214,7 @@ int RLC_pHL(void)
 #include "FuncSecondCB.h"
 
 
-int RunCommandCB(void)
+int RunCommandCB()
 {
     AddOpcode(RAM8(rPC));
 
@@ -229,7 +229,7 @@ int RunCommandCB(void)
 }
 
 
-int DecodeCommandCB(void)
+int DecodeCommandCB()
 {
     AddOpcode(RAM8(rPC));
 

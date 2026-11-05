@@ -10,7 +10,7 @@
 
 
 
-int INC_pIY_D(void)
+int INC_pIY_D()
 {
 #ifdef LISTING
 
@@ -27,7 +27,7 @@ int INC_pIY_D(void)
 }
 
 
-int DEC_pIY_D(void)
+int DEC_pIY_D()
 {
 #ifdef LISTING
 
@@ -44,7 +44,7 @@ int DEC_pIY_D(void)
 }
 
 
-int LD_pIY_D_R(void)
+int LD_pIY_D_R()
 {
 #ifdef LISTING
 
@@ -65,7 +65,7 @@ int LD_pIY_D_R(void)
 }
 
 
-int LD_IY_NN_dec(void)
+int LD_IY_NN_dec()
 {
     AddOpcode(RAM8(rPC));
     AddOpcode(RAM8(rPC + 1));
@@ -79,7 +79,7 @@ int LD_IY_NN_dec(void)
     return -1;
 }
 
-int LD_IY_NN_run(void)
+int LD_IY_NN_run()
 {
     return 0;
 }
@@ -100,7 +100,7 @@ int ADD_IY_SS_run()
 }
 
 
-int DecodeCommandFDCB(void)
+int DecodeCommandFDCB()
 {
     //return RunThridLevel(IR_IY);
 
@@ -140,7 +140,7 @@ int DecodeCommandFDCB(void)
 }
 
 
-int LD_pIY_D_N(void)
+int LD_pIY_D_N()
 {
 #ifdef LISTING
 
@@ -163,7 +163,7 @@ int LD_pIY_D_N(void)
 }
 
 
-int SUB_pIY_D(void)
+int SUB_pIY_D()
 {
 #ifdef LISTING
 
@@ -180,7 +180,7 @@ int SUB_pIY_D(void)
 }
 
 
-int LD_R_pIY_D(void)
+int LD_R_pIY_D()
 {
 #ifdef LISTING
 
@@ -198,7 +198,7 @@ int LD_R_pIY_D(void)
 }
 
 
-int ADD_A_pIY_D(void)
+int ADD_A_pIY_D()
 {
 #ifdef LISTING
 
@@ -215,7 +215,7 @@ int ADD_A_pIY_D(void)
 }
 
 
-int CP_pIY_D(void)
+int CP_pIY_D()
 {
 #ifdef LISTING
 
@@ -263,7 +263,7 @@ int PUSH_IY_run()
 #include "FuncSecondFD.h"
 
 
-int RunCommandFD(void)
+int RunCommandFD()
 {
     AddOpcode(RAM8(rPC));
 
@@ -278,7 +278,7 @@ int RunCommandFD(void)
 }
 
 
-int DecodeCommandFD(void)
+int DecodeCommandFD()
 {
     AddOpcode(RAM8(rPC));
 

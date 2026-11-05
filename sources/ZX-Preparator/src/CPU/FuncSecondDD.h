@@ -46,7 +46,7 @@ const pFuncIV secondLevelDD[256][2] =
     /*   00 100 111         */    {0, 0},
     /*   00 101 000         */    {0, 0},
     /*   00 101 001         */    {ADD_IX_PP_dec, ADD_IX_PP_run},
-    /*   00 101 010         */    {LD_IX_pNN, 0},
+    /*   00 101 010         */    {LD_IX_pNN_dec, LD_IX_pNN_run},
     /*   00 101 011         */    {DEC_IX_dec, DEC_IX_run},
     /*   00 101 100         */    {0, 0},
     /*   00 101 101         */    {0, 0},

@@ -129,7 +129,15 @@ int DEC_IX_run()
 }
 
 
-int LD_IX_pNN()
+int LD_IX_pNN_dec()
+{
+    AddAddress(rPC);
+
+    rIX = RAM16(PC16andInc());
+    return 20;
+}
+
+int LD_IX_pNN_run()
 {
     rIX = RAM16(PC16andInc());
     return 20;

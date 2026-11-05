@@ -9,13 +9,13 @@
 
 
 
-int LD_A_I(void)
+int LD_A_I()
 {
     return 9;   // WARN
 }
 
 
-int LD_I_A_dec(void)
+int LD_I_A_dec()
 {
     TACKTS = 9;
     AddAddress(rPC);
@@ -28,13 +28,13 @@ int LD_I_A_dec(void)
 }
 
 
-int LD_I_A_run(void)
+int LD_I_A_run()
 {
     return 0;   // WARN
 }
 
 
-int LD_A_R_dec(void)
+int LD_A_R_dec()
 {
     TACKTS = 9;
     AddAddress(rPC);
@@ -45,12 +45,12 @@ int LD_A_R_dec(void)
 }
 
 
-int LD_A_R_run(void)
+int LD_A_R_run()
 {
     return 0;   // WARN
 }
 
-int LD_R_A(void)
+int LD_R_A()
 {
     return 0;   // WARN
 }
@@ -78,7 +78,7 @@ int LD_DD_pNN_run()
 }
 
 
-int LD_pNN_DD_dec(void)
+int LD_pNN_DD_dec()
 {
     TACKTS = 20;
 
@@ -94,7 +94,7 @@ int LD_pNN_DD_dec(void)
     return -1;
 }
 
-int LD_pNN_DD_run(void)
+int LD_pNN_DD_run()
 {
     uint valDD = prevPC;
     RAM16(PC16andInc()) = DD_45(valDD);
@@ -102,7 +102,7 @@ int LD_pNN_DD_run(void)
 }
 
 
-int LDI(void)
+int LDI()
 {
     RAM16(rDE) = RAM16(rHL);
     rDE += 1;
@@ -112,7 +112,7 @@ int LDI(void)
 }
 
 
-int LDIR_dec(void)
+int LDIR_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "LDIR");
@@ -120,7 +120,7 @@ int LDIR_dec(void)
 }
 
 
-int LDIR_run(void)
+int LDIR_run()
 {
     int time = 0;
     do
@@ -133,7 +133,7 @@ int LDIR_run(void)
 }
 
 
-int LDD(void)
+int LDD()
 {
     RAM16(rDE) = RAM16(rHL);
     rDE--;
@@ -143,7 +143,7 @@ int LDD(void)
 }
 
 
-int LDDR_dec(void)
+int LDDR_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "LDDR");
@@ -151,7 +151,7 @@ int LDDR_dec(void)
 }
 
 
-int LDDR_run(void)
+int LDDR_run()
 {
     int time = 0;
 
@@ -167,7 +167,7 @@ int LDDR_run(void)
 }
 
 
-int CPI(void)
+int CPI()
 {
     rHL++;
     rBC--;
@@ -184,7 +184,7 @@ int CPI(void)
 }
 
 
-int CPIR(void)
+int CPIR()
 {
     int time = 0;
 
@@ -198,7 +198,7 @@ int CPIR(void)
 }
 
 
-int CPD(void)
+int CPD()
 {
     rHL--;
     rBC--;
@@ -214,7 +214,7 @@ int CPD(void)
 }
 
 
-int CPDR(void)
+int CPDR()
 {
     int time = 0;
 
@@ -228,7 +228,7 @@ int CPDR(void)
 }
 
 
-int NEG_dec(void)
+int NEG_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "NEG");
@@ -236,7 +236,7 @@ int NEG_dec(void)
 }
 
 
-int NEG_run(void)
+int NEG_run()
 {
     rA = (uint8)((~rA) + 1);
 
@@ -252,13 +252,13 @@ int NEG_run(void)
 }
 
 
-int IM0(void)
+int IM0()
 {
     return 0;   // WARN
 }
 
 
-int IM1_dec(void)
+int IM1_dec()
 {
     AddAddress(rPC);
     strcpy(MNEMONIC, "IM1");
@@ -266,7 +266,7 @@ int IM1_dec(void)
 }
 
 
-int IM1_run(void)
+int IM1_run()
 {
     return 0;   // WARN
 }
@@ -280,13 +280,13 @@ int IM2_dec()
 }
 
 
-int IM2_run(void)
+int IM2_run()
 {
     return 0;   // WARN
 }
 
 
-int ADC_HL_SS(void)
+int ADC_HL_SS()
 {
     rHL += SS_45(prevPC) + CF;
 
@@ -301,7 +301,7 @@ int ADC_HL_SS(void)
 }
 
 
-int SBC_HL_SS_dec(void)
+int SBC_HL_SS_dec()
 {
     TACKTS = 15;
     AddAddress(rPC);
@@ -311,7 +311,7 @@ int SBC_HL_SS_dec(void)
     return -1;
 }
 
-int SBC_HL_SS_run(void)
+int SBC_HL_SS_run()
 {
     rHL -= SS_45(prevPC) - CF;
 
@@ -326,7 +326,7 @@ int SBC_HL_SS_run(void)
 }
 
 
-int RLD(void)
+int RLD()
 {
     uint8 val_pHL = RAM8(rHL);
     uint8 pHLlow = (uint8)(val_pHL & 0x0f);
@@ -353,7 +353,7 @@ int RLD(void)
 }
 
 
-int RRD(void)
+int RRD()
 {
     uint8 val_pHL = RAM8(rHL);
     uint8 pHLlow = (uint8)(val_pHL & 0x0f);
@@ -380,7 +380,7 @@ int RRD(void)
 }
 
 
-int RETN(void)
+int RETN()
 {
 #ifdef LISTING
 
@@ -395,7 +395,7 @@ int RETN(void)
 }
 
 
-int IN_R_pC_dec(void)
+int IN_R_pC_dec()
 {
     if (((prevPC >> 3) & 7) != 6)
     {
@@ -413,7 +413,7 @@ int IN_R_pC_dec(void)
     return -1;
 }
 
-int IN_R_pC_run(void)
+int IN_R_pC_run()
 {
     if(((prevPC >> 3) & 7) == 6)
     {
@@ -435,20 +435,20 @@ int IN_R_pC_run(void)
 }
 
 
-int OUT_pC_A_dec(void)
+int OUT_pC_A_dec()
 {
     AddAddress(rPC);
     sprintf(MNEMONIC, "OUT (C), A");
     return -1;
 }
 
-int OUT_pC_A_run(void)
+int OUT_pC_A_run()
 {
     return 0;
 }
 
 
-int INI(void)
+int INI()
 {
 #ifdef LISTING
 
@@ -467,7 +467,7 @@ int INI(void)
 }
 
 
-int INIR(void)
+int INIR()
 {
 #ifdef LISTING
 
@@ -486,7 +486,7 @@ int INIR(void)
 }
 
 
-int IND(void)
+int IND()
 {
 #ifdef LISTING
 
@@ -503,7 +503,7 @@ int IND(void)
 }
 
 
-int INDR(void)
+int INDR()
 {
 #ifdef LISTING
 
@@ -520,7 +520,7 @@ int INDR(void)
 }
 
 
-int OUT_pC_R_dec(void)
+int OUT_pC_R_dec()
 {
     sprintf(MNEMONIC, "OUT (C), %s", R8_HI_Name(prevPC));
     sprintf(TRANSCRIPT, "(C)<-%s", R8_HI_Name(prevPC));
@@ -528,7 +528,7 @@ int OUT_pC_R_dec(void)
 }
 
 
-int OUT_pC_R_run(void)
+int OUT_pC_R_run()
 {
     return 0;
 }
@@ -537,7 +537,7 @@ int OUT_pC_R_run(void)
 #include "FuncSecondED.h"
 
 
-int RunCommandED(void)
+int RunCommandED()
 {
     AddOpcode(RAM8(rPC));
 
@@ -552,7 +552,7 @@ int RunCommandED(void)
 }
 
 
-int DecodeCommandED(void)
+int DecodeCommandED()
 {
     AddOpcode(RAM8(rPC));
 

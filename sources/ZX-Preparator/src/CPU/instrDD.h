@@ -2,6 +2,6 @@
 #pragma once
 
 
-int RunCommandDD(void);
+int RunCommandDD();
 
-int DecodeCommandDD(void);
+int DecodeCommandDD();

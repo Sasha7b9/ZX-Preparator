@@ -136,7 +136,7 @@ namespace Emulator
     void Init(InfoStruct *out);
     int  Decode(int address);  // ret value : 0 - unknown instruction, else - successful
     int  Run(int address);     // ret value : 0 - unknown instruction, else - successful
-    int  RunNext(void);        // ret value : 0 - unknown instruction, else - successful
+    int  RunNext();        // ret value : 0 - unknown instruction, else - successful
 }
 
 

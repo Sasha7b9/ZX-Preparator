@@ -20,49 +20,49 @@ uint8 imfA = 0;
 uint8 imfB = 0;
 
 
-static uint8 *FuncRegA(void)
+static uint8 *FuncRegA()
 {
     return &regs.r8[7];
 }
 
 
-static uint8 *FuncRegB(void)
+static uint8 *FuncRegB()
 {
     return &regs.r8[1];
 }
 
 
-static uint8 *FuncRegC(void)
+static uint8 *FuncRegC()
 {
     return &regs.r8[0];
 }
 
 
-static uint8 *FuncRegD(void)
+static uint8 *FuncRegD()
 {
     return &regs.r8[3];
 }
 
 
-static uint8 *FuncRegE(void)
+static uint8 *FuncRegE()
 {
     return &regs.r8[2];
 }
 
 
-static uint8 *FuncRegH(void)
+static uint8 *FuncRegH()
 {
     return &regs.r8[5];
 }
 
 
-static uint8 *FuncRegL(void)
+static uint8 *FuncRegL()
 {
     return &regs.r8[4];
 }
 
 
-static uint8 *FuncRegpHL(void)
+static uint8 *FuncRegpHL()
 {
     return &RAM[regs.r16[2]];
 }
@@ -81,25 +81,25 @@ pFuncpU8V funcsReg8[8] =
 };
 
 
-static uint16 *FuncRegSP(void)
+static uint16 *FuncRegSP()
 {
     return &regs.r16[4];
 }
 
 
-static uint16 *FuncRegHL(void)
+static uint16 *FuncRegHL()
 {
     return &regs.r16[2];
 }
 
 
-static uint16 *FuncRegDE(void)
+static uint16 *FuncRegDE()
 {
     return &regs.r16[1];
 }
 
 
-static uint16 *FuncRegBC(void)
+static uint16 *FuncRegBC()
 {
     return &regs.r16[0];
 }
@@ -114,7 +114,7 @@ pFuncpU16V funcsRegDD[4] =
 };
 
 
-static uint16 *FuncRegIX(void)
+static uint16 *FuncRegIX()
 {
     return &regs.r16[5];
 }
@@ -136,7 +136,7 @@ void AddPC(uint8 delta)
 }
 
 
-uint8 PCandInc(void)
+uint8 PCandInc()
 {
     prevPC = RAM[rPC];
     rPC++;
@@ -144,7 +144,7 @@ uint8 PCandInc(void)
 }
 
 
-uint16 PC16andInc(void)
+uint16 PC16andInc()
 {
     uint8 low = RAM[rPC++];
     uint8 hi = RAM[rPC++];
@@ -153,7 +153,7 @@ uint16 PC16andInc(void)
 }
 
 
-uint16 ValuePC(void)
+uint16 ValuePC()
 {
     return rPC;
 }
