@@ -31,6 +31,8 @@ private:
     std::vector<Instruction> instructions;
     std::vector<int> addressesForScan;
 
+    bool def_bytes[65536];
+
     int addr_min = 0;
     int addr_max = 0;
 
@@ -38,4 +40,7 @@ private:
     bool AddressAlreadyScanOrFuture(int address);
     void WriteCommand(std::ofstream &file, Instruction &);
     void WriteBinaryByte(std::ofstream &file, int value);
+
+    // true, если адрес находится в области определяемых байт
+    bool AddressInDefBytes(int address);
 };

@@ -7,3 +7,9 @@ bool Instruction::operator<(const Instruction &first)
 {
     return (address < first.address);
 };
+
+
+bool Instruction::AddressInRange(int addr) const
+{
+    return addr >= address && addr < address + opCodes.size();
+}

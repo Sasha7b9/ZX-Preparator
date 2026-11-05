@@ -83,10 +83,21 @@ void StorageInstructions::RemoveScanAddress(int address)
 
 void StorageInstructions::AppendEntryPoint(int address)
 {
+    if (def_bytes[address])
+    {
+        return;
+    }
+
     if (address >= 0 && address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
         addressesForScan.push_back(address);
     }
+}
+
+
+bool StorageInstructions::AddressInDefBytes(int address)
+{
+    return def_bytes[address];
 }
 
 
@@ -96,14 +107,14 @@ void StorageInstructions::AppendDefBytes(int address, int num_bytes)
     instr.is_bytes = true;
     instr.bad = false;
     instr.address = address;
-
-    for (int i = 0; i < num_bytes; i++)
-    {
-        uint8 code = RAM8(address++);
-        instr.opCodes.push_back(code);
-    }
+    instr.opCodes.resize(num_bytes);
 
     instructions.push_back(instr);
+
+    for (; num_bytes-- > 0;)
+    {
+        def_bytes[address++] = true;
+    }
 }
 
 
@@ -275,6 +286,20 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
         {
             wxString text;
 
+            if (instruction.is_bytes)
+            {
+                text = wxString::Format("%05d/#%04X :    DEFB    :", (int)instruction.address, (int)instruction.address);
+
+                for (uint i = 0; i < instruction.opCodes.size(); i++)
+                {
+                    instruction.opCodes[i] = RAM8(instruction.address + i);
+
+                    text.Append(wxString::Format(" %02X", instruction.opCodes[i]));
+                }
+
+                file.AddLine(text);
+            }
+
             if (instruction.address > prev_instruction.address + (int)prev_instruction.opCodes.size())
             {
                 // Некоторые байты не декодированы. Выведем их
@@ -293,31 +318,34 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
                 file.AddLine(text);
             }
 
-            text = wxString::Format("%05d/#%04X : %s", instruction.address, instruction.address, instruction.mnemonic);
-
-            while (text.Length() < 60)
+            if (!instruction.is_bytes)
             {
-                text.Append(" ");
+                text = wxString::Format("%05d/#%04X : %s", instruction.address, instruction.address, instruction.mnemonic);
+
+                while (text.Length() < 60)
+                {
+                    text.Append(" ");
+                }
+
+                text.Append(";");
+
+                for (uint i = 0; i < instruction.opCodes.size(); i++)
+                {
+                    text.Append(wxString::Format(" %02X", instruction.opCodes[i]));
+                }
+
+                while (text.Length() < 80)
+                {
+                    text.Append(" ");
+                }
+
+                for (uint i = 0; i < instruction.opCodes.size(); i++)
+                {
+                    text.Append(wxString::Format(" %3d", instruction.opCodes[i]));
+                }
+
+                file.AddLine(text);
             }
-
-            text.Append(";");
-
-            for (uint i = 0; i < instruction.opCodes.size(); i++)
-            {
-                text.Append(wxString::Format(" %02X", instruction.opCodes[i]));
-            }
-
-            while (text.Length() < 80)
-            {
-                text.Append(" ");
-            }
-
-            for (uint i = 0; i < instruction.opCodes.size(); i++)
-            {
-                text.Append(wxString::Format(" %3d", instruction.opCodes[i]));
-            }
-
-            file.AddLine(text);
         }
 
         prev_instruction = instruction;
@@ -331,8 +359,32 @@ void StorageInstructions::CreateProgram(ProgramASM &program)
 StorageInstructions::StorageInstructions(int _addr_min, int _addr_max) :
     addr_min(_addr_min), addr_max(_addr_max)
 {
+    for (int i = 0; i < 65536; i++)
+    {
+        def_bytes[i] = false;
+    }
+
+
+    AppendDefBytes(0x0013, 5);
+    AppendDefBytes(0x0025, 3);
+    AppendDefBytes(0x002B, 5);
+    AppendDefBytes(0x005F, 7);
+    AppendDefBytes(0x0095, 368);
+    AppendDefBytes(0x0205, 39);
+    AppendDefBytes(0x022C, 26);
+    AppendDefBytes(0x0246, 28);
+    AppendDefBytes(0x0260, 10);
+    AppendDefBytes(0x026A, 26);
+    AppendDefBytes(0x0284, 10);
+    AppendDefBytes(0x0439, 2);
+    AppendDefBytes(0x043F, 4);
+    AppendDefBytes(0x044B, 16);
+
     AppendEntryPoint(0x0066);
     AppendEntryPoint(0x03F8);
+    AppendEntryPoint(0x043B);
+    AppendEntryPoint(0x0443);
+    AppendEntryPoint(0x045B);
     AppendEntryPoint(0x04C2);
     AppendEntryPoint(0x053F);
     AppendEntryPoint(0x0605);

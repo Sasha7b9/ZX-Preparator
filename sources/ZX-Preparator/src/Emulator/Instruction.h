@@ -21,4 +21,7 @@ struct Instruction
     int tackts = 0;                     // Tacts for execute instruction
 
     bool operator<(const Instruction &first);
+
+    // Адрес принадлежит инструкции
+    bool AddressInRange(int) const;
 };
