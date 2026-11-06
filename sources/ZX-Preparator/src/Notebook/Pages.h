@@ -19,6 +19,7 @@ struct TypePage
     {
         Info,
         HEX,
+        HeaderBASIC,
         BASIC,
         ArrayNumber,
         ArrayCharacter,

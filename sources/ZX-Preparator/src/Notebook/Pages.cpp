@@ -5,6 +5,7 @@
 #include "Notebook/PageASM.h"
 #include "Notebook/PageHEX.h"
 #include "Notebook/PageBASIC.h"
+#include "Notebook/PageHeaderTAP.h"
 #pragma warning(push, 0)
     #include <wx/dc.h>
     #include <wx/sizer.h>
@@ -64,12 +65,13 @@ Canvas *Canvas::Create(Page *page)
 {
     switch (page->GetType())
     {
-    case TypePage::Info:            return new CanvasInfo(page);    break;
-    case TypePage::HEX:             return new CanvasHEX(page);     break;
-    case TypePage::BASIC:           return new CanvasBASIC(page);   break;
+    case TypePage::Info:            return new CanvasInfo(page);        break;
+    case TypePage::HEX:             return new CanvasHEX(page);         break;
+    case TypePage::HeaderBASIC:     return new CanvasHeaderTAP(page);   break;
+    case TypePage::BASIC:           return new CanvasBASIC(page);       break;
     case TypePage::ArrayNumber:     break;
     case TypePage::ArrayCharacter:  break;
-    case TypePage::ASM:             return new CanvasASM(page);     break;
+    case TypePage::ASM:             return new CanvasASM(page);         break;
     case TypePage::PureBytes:       break;
     case TypePage::Count:           break;
     }

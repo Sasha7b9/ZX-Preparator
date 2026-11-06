@@ -11,5 +11,6 @@ bool Instruction::operator<(const Instruction &first)
 
 bool Instruction::AddressInRange(int addr) const
 {
-    return addr >= address && addr < address + opCodes.size();
+    return (addr >= address) && 
+        (addr < address + (int)opCodes.size());
 }
