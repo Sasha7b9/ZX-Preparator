@@ -8,6 +8,7 @@
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageArrayCharacter.h"
 #include "Notebook/PagePureBytes.h"
+#include "Notebook/PageHeaderTAP.h"
 #include "Parser/ParserTZX.h"
 #include "Parser/ParserHEX.h"
 #include "Parser/ParserZ80.h"
@@ -121,6 +122,7 @@ void Notebook::FillTAP(ParserTAP &parser)
     if (parser.file->is_valid)
     {
         int counter = 1;
+        int num_Header = 1;
         int num_BASIC = 1;
         int num_ArrayNumber = 1;
         int num_ArrayCharacter = 1;
@@ -133,9 +135,15 @@ void Notebook::FillTAP(ParserTAP &parser)
 
             if (block)
             {
-                if (block->ToBASIC())
+                if (block->ToHeader())
                 {
-                    PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter++, num_BASIC++));
+                    PageHeaderTAP *page = new PageHeaderTAP(this, wxString::Format("%d - Header %d", counter, num_Header++));
+
+                    AppendPage(page);
+                }
+                else if (block->ToBASIC())
+                {
+                    PageBASIC *page = new PageBASIC(this, wxString::Format("%d - BASIC %d", counter, num_BASIC++));
 
                     page->SetProgram(block->ToBASIC()->program);
 
@@ -143,15 +151,15 @@ void Notebook::FillTAP(ParserTAP &parser)
                 }
                 else if (block->ToArrayNumber())
                 {
-                    AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter++, num_ArrayNumber++)));
+                    AppendPage(new PageArrayNumber(this, wxString::Format("%d - Array Number %d", counter, num_ArrayNumber++)));
                 }
                 else if (block->ToArrayCharacter())
                 {
-                    AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter++, num_ArrayCharacter++)));
+                    AppendPage(new PageArrayCharacter(this, wxString::Format("%d - Array Character %d", counter, num_ArrayCharacter++)));
                 }
                 else if (block->ToCode())
                 {
-                    PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter++, num_ASM++));
+                    PageASM *page = new PageASM(this, wxString::Format("%d - ASM %d", counter, num_ASM++));
 
                     page->SetProgram(block->ToCode()->program);
 
@@ -159,14 +167,11 @@ void Notebook::FillTAP(ParserTAP &parser)
                 }
                 else if (block->ToPureBytes())
                 {
-                    AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter++, num_pure++)));
+                    AppendPage(new PagePureBytes(this, wxString::Format("%d - Pure %d", counter, num_pure++)));
                 }
             }
 
-            if (counter > 32)
-            {
-                break;
-            }
+            counter++;
         }
     }
 
