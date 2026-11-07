@@ -61,7 +61,6 @@ public:
 protected:
 
     Page *page = nullptr;             // parent
-    const int margin_x = 10;
-    const int margin_y = 10;
+    const int margin_x = 5;
 };
 

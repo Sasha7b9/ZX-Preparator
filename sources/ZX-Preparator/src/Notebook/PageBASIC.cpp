@@ -40,7 +40,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 
     wxSize size = GetSize();
 
-    int y = margin_y;
+    int y = 0;
 
     int y_min = 0;          // Redraw symbols on y from y_min
     int y_max = 10000;      // to y_max

@@ -40,7 +40,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
     PrepareDC(dc);
 
     int x = margin_x;
-    int y = margin_y;
+    int y = 0;
 
     uint16 address = 0;
 
@@ -70,7 +70,15 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
         y += dc.GetDY();
     }
 
-    SetScrollbars(dc.GetSB_PPU(), dc.GetSB_PPU(), 10, (y + dc.GetFont().GetPointSize()) / dc.GetSB_PPU(), 0, pos, true);
+    SetScrollbars(
+        dc.GetSB_PPU(),                                         // pixelsPerUnitX - шаг прокрутки в пикселях по горизонтали
+        dc.GetSB_PPU(),                                         // pixelsPerUnitY - шаг прокрутки в пикселях по вертикали
+        10,                                                     // noUnitsX - количество шагов прокрутки по горизонтали
+        (y + dc.GetFont().GetPointSize()) / dc.GetSB_PPU(),     // noUnitsY - количество шагов прокрутки по вертикли
+        0,                                                      // xPos - начальная позиция полосы прокрутки в шагах по горизонтали
+        pos,                                                    // yPos - начальная позиция полосы прокрутки в шагах по вертикали
+        true                                                    // noRefresh - если true, окно не будет автоматически перерисоываться после вызова SetScrollbars
+    );
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 
@@ -103,8 +111,7 @@ void CanvasHEX::WriteBytes(PaintDC &dc, uint16 address, std::span<const uint8> &
         hex += "   ";
     }
 
-    wxString text = wxString::Format("%04X %s", address, hex);
-    dc.DrawText(text, x, y);
+    dc.DrawText(wxString::Format("%04X %s", address, hex), x, y);
 }
 
 

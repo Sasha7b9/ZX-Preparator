@@ -26,7 +26,7 @@ void CanvasASM::OnEventPaint(wxPaintEvent &)
     PrepareDC(dc);
 
     int x = margin_x;
-    int y = margin_y;
+    int y = 0;
 
 //    int pos = GetScrollPos(wxVERTICAL);
 
