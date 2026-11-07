@@ -65,6 +65,8 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
         {
             WriteBytes(dc, &address, chunk, x, y);
         }
+
+        y += dc.GetDY();
     }
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
@@ -75,7 +77,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasHEX::WriteBytes(PaintDC &dc, uint16 *address, std::span<const uint8> &span, int x, int &y)
+void CanvasHEX::WriteBytes(PaintDC &dc, uint16 *address, std::span<const uint8> &span, int x, int y)
 {
     wxString hex;
     hex.reserve(span.size() * 3 + 1);
