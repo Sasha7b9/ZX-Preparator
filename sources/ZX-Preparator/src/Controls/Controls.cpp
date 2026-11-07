@@ -9,7 +9,7 @@ PaintDC::PaintDC(wxWindow *window) :
     font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
     font.SetWeight(wxFONTWEIGHT_BOLD);
 
-    SetFont(*wxSWISS_FONT);
+    SetFont(font);
     SetPen(*wxGREEN_PEN);
 
     SetFont(font);
@@ -17,4 +17,11 @@ PaintDC::PaintDC(wxWindow *window) :
     dY = font.GetPointSize() + 5;
 
     sbPPU = dY;
+}
+
+
+void PaintDC::SetFont(const wxFont &_font)
+{
+    font = _font;
+    wxPaintDC::SetFont(_font);
 }

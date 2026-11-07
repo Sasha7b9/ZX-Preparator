@@ -55,4 +55,7 @@ private:
     wxFont font;
     int dY = 0;
     int sbPPU = 0;      // Scrollbar pixels for unit
+
+    void SetFont(const wxFont &);
+    void SetPtn(const wxPen &);
 };
