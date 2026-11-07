@@ -2,11 +2,12 @@
 #pragma once
 #include "Notebook/Pages.h"
 #include "Parser/Parser.h"
+#include "Controls/Controls.h"
 
 
 struct Writer
 {
-    void Set(wxPaintDC *_dc, int _x, int _y, int _dY)
+    void Set(PaintDC *_dc, int _x, int _y, int _dY)
     {
         dc = _dc;
         x = _x;
@@ -18,7 +19,7 @@ struct Writer
 
 private:
 
-    wxPaintDC *dc;
+    PaintDC *dc;
     int x;
     int y;
     int dY;

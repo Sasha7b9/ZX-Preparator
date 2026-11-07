@@ -3,9 +3,7 @@
 #include "Notebook/PageHEX.h"
 #include "Utils/Timer.h"
 #include "Frame.h"
-#pragma warning(push, 0)
-    #include <wx/dc.h>
-#pragma warning(pop)
+#include "Controls/Controls.h"
 #include <algorithm>
 
 
@@ -38,7 +36,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 
     TimerMS timer;
 
-    wxPaintDC dc(this);
+    PaintDC dc(this);
     PrepareDC(dc);
 
     dc.SetFont(font);

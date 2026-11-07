@@ -3,9 +3,6 @@
 #include "Notebook/PageASM.h"
 #include "Frame.h"
 #include "Utils/Timer.h"
-#pragma warning(push, 0)
-    #include <wx/dc.h>
-#pragma warning(pop)
 
 
 CanvasASM::CanvasASM(Page *parent) : Canvas(parent)
@@ -25,7 +22,7 @@ void CanvasASM::OnEventPaint(wxPaintEvent &)
         return;
     }
 
-    wxPaintDC dc(this);
+    PaintDC dc(this);
     PrepareDC(dc);
 
     int x = margin_x;

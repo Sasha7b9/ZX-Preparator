@@ -4,7 +4,6 @@
 #pragma warning(push, 0)
     #include <wx/scrolwin.h>
     #include <wx/notebook.h>
-    #include <wx/dc.h>
     #include <wx/splitter.h>
     #include <wx/sizer.h>
 #pragma warning(pop)
@@ -61,7 +60,6 @@ public:
 protected:
 
     wxFont  font;
-//    wxDC *hdc = nullptr;
     Page *page = nullptr;             // parent
     const int margin_x = 10;
     const int margin_y = 10;

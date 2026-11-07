@@ -3,9 +3,6 @@
 #include "Notebook/PageBASIC.h"
 #include "Utils/Timer.h"
 #include "Frame.h"
-#pragma warning(push, 0)
-    #include <wx/dc.h>
-#pragma warning(pop)
 
 
 void PageBASIC::SetProgram(ProgramBASIC &program)
@@ -38,7 +35,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
         return;
     }
 
-    wxPaintDC dc(this);
+    PaintDC dc(this);
     PrepareDC(dc);
 
     dc.SetFont(*wxSWISS_FONT);

@@ -7,7 +7,6 @@
 #include "Notebook/PageBASIC.h"
 #include "Notebook/PageHeaderTAP.h"
 #pragma warning(push, 0)
-    #include <wx/dc.h>
     #include <wx/sizer.h>
 #pragma warning(pop)
 

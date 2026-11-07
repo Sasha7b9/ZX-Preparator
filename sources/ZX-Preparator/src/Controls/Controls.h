@@ -2,6 +2,7 @@
 #pragma once
 #pragma warning(push, 0)
     #include <wx/wfstream.h>
+    #include <wx/dc.h>
 #pragma warning(pop)
 
 
@@ -25,3 +26,10 @@ private:
     wxFileOffset pointer = 0;
 };
 
+
+
+class PaintDC : public wxPaintDC
+{
+public:
+    PaintDC (wxWindow *window) : wxPaintDC(window) { }
+};

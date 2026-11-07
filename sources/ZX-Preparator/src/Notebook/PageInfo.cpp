@@ -5,8 +5,6 @@
 #include "Parser/ParserHEX.h"
 #include "Parser/ParserTZX.h"
 #pragma warning(push, 0)
-    #include <wx/dc.h>
-    #include <wx/dcclient.h>
     #include <wx/button.h>
 #pragma warning(pop)
 
@@ -21,7 +19,7 @@ void PageInfo::SetFile(std::shared_ptr<File> _file)
 
 void CanvasInfo::OnEventPaint(wxPaintEvent &)
 {
-    wxPaintDC dc(this);
+    PaintDC dc(this);
     PrepareDC(dc);
 
     writer.Set(&dc, 10, 10, dY);
