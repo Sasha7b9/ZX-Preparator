@@ -18,8 +18,7 @@
 
 
 Notebook::Notebook(wxWindow *parent) :
-    wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP),
-    history(this)
+    wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBK_TOP)
 {
     pageInfo = new PageInfo(this);
 

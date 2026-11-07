@@ -2,7 +2,7 @@
 
 project (ZX-Preparator)
 
-set(CMAKE_UNITY_BUILD ON)
+set(CMAKE_UNITY_BUILD OFF)
 
 include_directories(
     src/
@@ -20,21 +20,16 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /STACK:10000000")
 
     add_compile_options(
-        /wd4355
         /wd4365
-        /wd4371     # 'wxObjectEventFunctor': layout of class may have changed from a previous version of the compiler due to better packing of member 'wxObjectEventFunctor::m_method'
         /wd4514
-        /wd4623
         /wd4625
         /wd4626
         /wd4820
         /wd4865     # the underlying type of '<unnamed-enum-DISPLAYCONFIG_OUTPUT_TECHNOLOGY_OTHER>' will change when '/Zc:enumTypes' is specified on the command line
-        /wd4996
         /wd5026
         /wd5027
         /wd5039
         /wd5045
-        /wd5267     # definition of implicit copy constructor for 'Block' is deprecated because it has a user-provided destructor
     )
 else()
 

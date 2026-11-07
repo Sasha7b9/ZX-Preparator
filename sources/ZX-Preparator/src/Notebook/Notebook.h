@@ -62,7 +62,7 @@ private:
 
     std::vector<Page *> pages;
 
-    NotebookHistory history;
+    NotebookHistory history{ this };
 
     void Clear();
 
