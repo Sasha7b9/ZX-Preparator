@@ -69,7 +69,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
         y += dc.GetDY();
     }
 
-//    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
+    SetScrollbars(dc.GetSB_PPU(), dc.GetSB_PPU(), 10, (y + dc.GetFont().GetPointSize()) / dc.GetSB_PPU(), 0, pos, true);
 
     Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
 
