@@ -15,7 +15,7 @@
 
 
 
-static void WriteE(char *name)
+static void WriteE(pchar name)
 {
     AddOpcode(RAM8(rPC));
     if (name[0])     // For JR E not write address

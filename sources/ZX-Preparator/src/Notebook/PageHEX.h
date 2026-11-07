@@ -2,6 +2,7 @@
 #pragma once
 #include "Notebook/Pages.h"
 #include "Parser/StructuresZX.h"
+#include <span>
 
 
 class PageHEX : public Page
@@ -25,7 +26,7 @@ public:
 
 private:
 
-    void WriteBytes(wxDC *hdc, uint16 *address, uint8 *data, int num, int x, int &y, bool draw);
+    void WriteBytes(wxDC *hdc, uint16 *address, std::span<const uint8> &, int x, int &y);
 };
 
 

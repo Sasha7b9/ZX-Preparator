@@ -4,8 +4,9 @@
 #include "Utils/Timer.h"
 #include "Frame.h"
 #pragma warning(push, 0)
-#include <wx/dc.h>
+    #include <wx/dc.h>
 #pragma warning(pop)
+#include <algorithm>
 
 
 void PageHEX::SetDump(DumpHEX &_dump)
@@ -58,16 +59,16 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
         y_max = y_min + prev_size.y + 8 * sbPPU;
     }
 
-    for (uint index = 0; index < dump.bytes.size(); index += 16)
+    const size_t CHUNK = 16;
+
+    for (size_t off = 0; off < dump.bytes.size(); off += CHUNK)
     {
-        int num = 16;
+        std::span<const uint8> chunk(dump.bytes.data() + off, std::min(CHUNK, dump.bytes.size() - off));
 
-        if (index + 16 > dump.bytes.size())
+        if (y > y_min && y < y_max)
         {
-            num = (int)(dump.bytes.size() - index);
+            WriteBytes(&dc, &address, chunk, x, y);
         }
-
-        WriteBytes(&dc, &address, &dump.bytes.data()[index], num, x, y, y > y_min && y < y_max);
     }
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
@@ -78,23 +79,35 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasHEX::WriteBytes(wxDC *hdc, uint16 *address, uint8 *data, int num, int x, int &y, bool draw)
+void CanvasHEX::WriteBytes(wxDC *hdc, uint16 *address, std::span<const uint8> &span, int x, int &y)
 {
-    if (num == 16)
-    {
-        if (draw)
-        {
-            wxString text = wxString::Format("%04X  %02X %02X %02X %02X %02X %02X %02X %02X  %02X %02X %02X %02X %02X %02X %02X %02X",
-                *address, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-                data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
+    wxString hex;
+    hex.reserve(span.size() * 3 + 1);
 
-            hdc->DrawText(text, x, y);
+    for (size_t i = 0; i < span.size(); i++)
+    {
+        if (i == 8)
+        {
+            hex += ' ';
         }
 
-        y += dY;
-
-        *address = *address + 16;
+        hex += wxString::Format("%02X ", span[i]);
     }
+
+    // Дополняем пробелами, если размер меньше 16
+    for (size_t i = span.size(); i < 16; i++)
+    {
+        if (i == 8)
+        {
+            hex += ' ';
+        }
+        hex += "   ";
+    }
+
+    wxString text = wxString::Format("%04X %s", *address, hex);
+    hdc->DrawText(text, x, y);
+
+    *address += (uint16)span.size();
 }
 
 

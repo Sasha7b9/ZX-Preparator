@@ -120,7 +120,7 @@ void StorageInstructions::AppendDefBytes(int address, int num_bytes)
 
 bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
 {
-    for each(auto &instruction in instructions)
+    for (const auto &instruction : instructions)
     {
         if (instruction.address == address)
         {
@@ -128,7 +128,7 @@ bool StorageInstructions::AddressAlreadyScanOrFuture(int address)
         }
     }
 
-    for each(auto addr in addressesForScan)
+    for (const auto &addr : addressesForScan)
     {
         if (addr == address)
         {

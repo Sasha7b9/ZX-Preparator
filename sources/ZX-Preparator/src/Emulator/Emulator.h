@@ -66,14 +66,7 @@ public:
 
     std::string GetMnemonic()
     {
-        std::string result(mnemonic);
-
-        if (result.size() >= 100)
-        {
-            result = result;
-        }
-
-        return result;
+        return std::string(mnemonic);
     }
 
     uint8 *GetMEMORY()
