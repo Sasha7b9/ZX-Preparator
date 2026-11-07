@@ -152,9 +152,10 @@ BlockTZX *BlockTZX::ReadBlock(wxDataInputStream &stream)
     }
 
     BlockTZX *result = (BlockTZX *)block->Read();
+
     if (result)
     {
-        block.release();  // владение передаётся вызывающему коду
+        (void)block.release();  // владение передаётся вызывающему коду
     }
 
     return result;

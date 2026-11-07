@@ -83,12 +83,17 @@ void StorageInstructions::RemoveScanAddress(int address)
 
 void StorageInstructions::AppendEntryPoint(int address)
 {
+    if (address < 0 || address > 65535)
+    {
+        return;
+    }
+
     if (def_bytes[address])
     {
         return;
     }
 
-    if (address >= 0 && address < addr_max && !AddressAlreadyScanOrFuture(address))
+    if (address < addr_max && !AddressAlreadyScanOrFuture(address))
     {
         addressesForScan.push_back(address);
     }

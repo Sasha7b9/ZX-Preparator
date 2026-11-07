@@ -1117,10 +1117,6 @@ static int JP_CC_NN_run()
 static int JP_NN_dec()
 {
     uint16 NN = PC16andInc();   
-    if (NN == 0x11CB)
-    {
-        NN = NN;
-    }
     AddOpcode((uint8)NN);
     AddOpcode((uint8)(NN >> 8));
     AddAddress(NN);
@@ -1510,21 +1506,8 @@ int DecodeCommand()
     static int counter = 0;
     counter++;
 
-    if (counter > 250)
-    {
-        counter = counter;
-    }
-
-    uint8 *memory = RAM + rPC;
-    memory = memory;
-
     need_append_address = true;
     int result = firstLevel[code][0]();
-
-    if (result != -1)
-    {
-        result = result;
-    }
 
     if (need_append_address)
     {

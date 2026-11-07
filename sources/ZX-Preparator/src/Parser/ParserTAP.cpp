@@ -569,11 +569,6 @@ bool BlockTAP_Code::ParseASM()
 
     counter++;
 
-    if (counter == 6)
-    {
-        counter = counter;
-    }
-
     program.Clear();
 
     InfoStruct params;
@@ -581,13 +576,6 @@ bool BlockTAP_Code::ParseASM()
     std::memcpy(params.GetMEMORY(), Memory::_48, 64 * 1024);
 
     int size = SizeCode();
-
-    int end_address = address_load + size;
-
-    if (end_address > 64 * 1024)
-    {
-        end_address = end_address;
-    }
 
     std::memcpy(params.GetMEMORY() + address_load, BeginCode(), size);
 
@@ -606,11 +594,6 @@ bool BlockTAP_Code::ParseASM()
         storage.AddNewData(res, address, &params);
 
         address = storage.NextAddress();
-    }
-
-    if (address < 0)
-    {
-        address = address;
     }
 
     storage.CreateProgram(program);

@@ -128,8 +128,10 @@ int LD_pIX_D_N_dec()
 int LD_pIX_D_N_run()
 {
     volatile uint8 valD = PCandInc();
-    volatile uint8 valN = PCandInc(); //-V656
-    RAM[rIX + valD] = valN;
+    volatile uint8 valN = PCandInc();
+    int RIX = rIX;
+    int address = RIX + valD;
+    RAM[address] = valN;
     return 19;
 }
 

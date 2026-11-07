@@ -31,7 +31,7 @@ private:
     std::vector<Instruction> instructions;
     std::vector<int> addressesForScan;
 
-    bool def_bytes[65536];
+    bool def_bytes[65536];                              // Если true, то данный байт не подлежит дизассемблированию - это данные
 
     int addr_min = 0;
     int addr_max = 0;
