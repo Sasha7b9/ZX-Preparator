@@ -6,15 +6,13 @@
 PaintDC::PaintDC(wxWindow *window) :
     wxPaintDC(window)
 {
-    font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
-    font.SetWeight(wxFONTWEIGHT_BOLD);
+    wxFont f = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
+    f.SetWeight(wxFONTWEIGHT_BOLD);
 
-    SetFont(font);
+    SetFont(f);
     SetPen(*wxGREEN_PEN);
 
-    SetFont(font);
-
-    dY = font.GetPointSize() + 5;
+    dY = GetFont().GetPointSize() + 5;
 
     sbPPU = dY;
 }
@@ -24,4 +22,18 @@ void PaintDC::SetFont(const wxFont &_font)
 {
     font = _font;
     wxPaintDC::SetFont(_font);
+}
+
+
+void PaintDC::SetPen(const wxPen &_pen)
+{
+    pen = _pen;
+    wxPaintDC::SetPen(_pen);
+}
+
+
+void PaintDC::SetBrush(const wxBrush &_brush)
+{
+    brush = _brush;
+    wxPaintDC::SetBrush(_brush);
 }

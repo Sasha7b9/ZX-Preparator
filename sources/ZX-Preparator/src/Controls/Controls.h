@@ -50,12 +50,15 @@ public:
         return sbPPU;
     }
 
+    void SetFont(const wxFont &);
+    void SetPen(const wxPen &);
+    void SetBrush(const wxBrush &);
+
 private:
 
     wxFont font;
+    wxPen pen;
+    wxBrush brush;
     int dY = 0;
     int sbPPU = 0;      // Scrollbar pixels for unit
-
-    void SetFont(const wxFont &);
-    void SetPtn(const wxPen &);
 };
