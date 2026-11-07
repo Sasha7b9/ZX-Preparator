@@ -27,7 +27,7 @@ public:
 
 private:
 
-    void WriteBytes(PaintDC &, uint16 *address, std::span<const uint8> &, int x, int y);
+    void WriteBytes(PaintDC &, uint16 address, std::span<const uint8> &, int x, int y);
 };
 
 

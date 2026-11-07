@@ -80,11 +80,6 @@ struct ProgramBASIC
 
 struct DumpHEX
 {
-    void Clear()
-    {
-        bytes.clear();
-    }
-
     void FillFrom(pchar name_file);
 
     std::vector<uint8> bytes;

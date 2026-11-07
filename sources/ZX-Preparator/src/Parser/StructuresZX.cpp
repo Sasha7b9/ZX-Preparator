@@ -7,6 +7,8 @@
 
 void DumpHEX::FillFrom(pchar name_file)
 {
+    bytes.clear();
+
     std::ifstream file(name_file, std::ifstream::in | std::ifstream::binary);
 
     file.seekg(0, std::ios::end);

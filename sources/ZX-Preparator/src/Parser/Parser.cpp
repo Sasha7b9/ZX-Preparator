@@ -13,7 +13,6 @@
 void File::Clear()
 {
     blocks.clear();
-    dump.Clear();
 };
 
 

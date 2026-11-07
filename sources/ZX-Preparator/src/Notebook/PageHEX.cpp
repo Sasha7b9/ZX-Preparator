@@ -63,9 +63,10 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 
         if (y > y_min && y < y_max)
         {
-            WriteBytes(dc, &address, chunk, x, y);
+            WriteBytes(dc, address, chunk, x, y);
         }
 
+        address += 16;
         y += dc.GetDY();
     }
 
@@ -77,7 +78,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasHEX::WriteBytes(PaintDC &dc, uint16 *address, std::span<const uint8> &span, int x, int y)
+void CanvasHEX::WriteBytes(PaintDC &dc, uint16 address, std::span<const uint8> &span, int x, int y)
 {
     wxString hex;
     hex.reserve(span.size() * 3 + 1);
@@ -102,10 +103,8 @@ void CanvasHEX::WriteBytes(PaintDC &dc, uint16 *address, std::span<const uint8> 
         hex += "   ";
     }
 
-    wxString text = wxString::Format("%04X %s", *address, hex);
+    wxString text = wxString::Format("%04X %s", address, hex);
     dc.DrawText(text, x, y);
-
-    *address += (uint16)span.size();
 }
 
 
