@@ -51,12 +51,6 @@ Canvas::Canvas(Page *parent) :
     page(parent)
 {
     wxWindowBase::SetBackgroundColour(*wxWHITE);
-
-    font = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_TELETYPE));
-    font.SetWeight(wxFONTWEIGHT_BOLD);
-
-    dY = font.GetPointSize() + 5;
-    sbPPU = dY;
 }
 
 

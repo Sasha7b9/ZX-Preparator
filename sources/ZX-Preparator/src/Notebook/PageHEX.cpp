@@ -39,8 +39,6 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
     PaintDC dc(this);
     PrepareDC(dc);
 
-    dc.SetFont(font);
-
     int x = margin_x;
     int y = margin_y;
 
@@ -53,8 +51,8 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 
     if (prev_size == GetSize())
     {
-        y_min = pos * sbPPU - sbPPU;
-        y_max = y_min + prev_size.y + 8 * sbPPU;
+        y_min = pos * dc.GetSB_PPU() - dc.GetSB_PPU();
+        y_max = y_min + prev_size.y + 8 * dc.GetSB_PPU();
     }
 
     const size_t CHUNK = 16;
@@ -65,7 +63,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 
         if (y > y_min && y < y_max)
         {
-            WriteBytes(&dc, &address, chunk, x, y);
+            WriteBytes(dc, &address, chunk, x, y);
         }
     }
 
@@ -77,7 +75,7 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasHEX::WriteBytes(wxDC *hdc, uint16 *address, std::span<const uint8> &span, int x, int &y)
+void CanvasHEX::WriteBytes(PaintDC &dc, uint16 *address, std::span<const uint8> &span, int x, int &y)
 {
     wxString hex;
     hex.reserve(span.size() * 3 + 1);
@@ -103,7 +101,7 @@ void CanvasHEX::WriteBytes(wxDC *hdc, uint16 *address, std::span<const uint8> &s
     }
 
     wxString text = wxString::Format("%04X %s", *address, hex);
-    hdc->DrawText(text, x, y);
+    dc.DrawText(text, x, y);
 
     *address += (uint16)span.size();
 }

@@ -2,6 +2,7 @@
 #pragma once
 #include "Notebook/Pages.h"
 #include "Parser/StructuresZX.h"
+#include "Controls/Controls.h"
 #include <span>
 
 
@@ -26,7 +27,7 @@ public:
 
 private:
 
-    void WriteBytes(wxDC *hdc, uint16 *address, std::span<const uint8> &, int x, int &y);
+    void WriteBytes(PaintDC &, uint16 *address, std::span<const uint8> &, int x, int &y);
 };
 
 

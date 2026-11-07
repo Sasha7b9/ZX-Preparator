@@ -51,6 +51,7 @@ protected:
 class Canvas : public wxScrolledWindow
 {
 public:
+
     Canvas(Page *);
 
     virtual void OnEventPaint(wxPaintEvent &) { };
@@ -59,11 +60,8 @@ public:
 
 protected:
 
-    wxFont  font;
     Page *page = nullptr;             // parent
     const int margin_x = 10;
     const int margin_y = 10;
-    int dY = 0;
-    int sbPPU = 0;                      // Scrollbar pixels for unit
 };
 

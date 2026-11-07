@@ -2,6 +2,7 @@
 #pragma once
 #include "Notebook/Pages.h"
 #include "Parser/StructuresZX.h"
+#include "Controls/Controls.h"
 
 
 class PageBASIC : public Page
@@ -28,7 +29,7 @@ private:
 
     const int width_line_field = 65;
 
-    void WriteText(wxDC *hdc, const wxString &, int &x, int &y, bool fill, bool draw);
+    void WriteText(PaintDC &, const wxString &, int &x, int &y, bool fill, bool draw);
 };
 
 

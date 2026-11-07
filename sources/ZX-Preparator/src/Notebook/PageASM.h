@@ -2,6 +2,7 @@
 #pragma once
 #include "Notebook/Pages.h"
 #include "Parser/StructuresZX.h"
+#include "Controls/Controls.h"
 
 
 class PageASM : public Page
@@ -26,12 +27,13 @@ public:
 
 private:
 
-    void DrawLine(wxDC *hdc, int x, int &y, const LineASM &);
+    void DrawLine(PaintDC &, int x, int &y, const LineASM &);
 };
 
 
 class ControlPanelASM : public ControlPanel
 {
 public:
+
     ControlPanelASM(wxWindow *);
 };

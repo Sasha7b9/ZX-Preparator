@@ -22,7 +22,7 @@ void CanvasInfo::OnEventPaint(wxPaintEvent &)
     PaintDC dc(this);
     PrepareDC(dc);
 
-    writer.Set(&dc, 10, 10, dY);
+    writer.Set(&dc, 10, 10, dc.GetDY());
 
     auto file = ((PageInfo *)page)->file;
 

@@ -38,11 +38,6 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
     PaintDC dc(this);
     PrepareDC(dc);
 
-    dc.SetFont(*wxSWISS_FONT);
-    dc.SetPen(*wxGREEN_PEN);
-
-    dc.SetFont(font);
-
     wxSize size = GetSize();
 
     int y = margin_y;
@@ -54,7 +49,7 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 
     if (prev_size == GetSize())
     {
-        y_min = pos * sbPPU;
+        y_min = pos * dc.GetSB_PPU();
         y_max = y_min + prev_size.y;
         y_min -= 500;
     }
@@ -77,10 +72,10 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
         {
             fill = !fill;
 
-            WriteText(&dc, symbol.string, x, y, fill, draw);
+            WriteText(dc, symbol.string, x, y, fill, draw);
         }
 
-        y += font.GetPixelSize().y + 10;
+        y += dc.GetFont().GetPixelSize().y + 10;
     }
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
@@ -91,14 +86,14 @@ void CanvasBASIC::OnEventPaint(wxPaintEvent &)
 }
 
 
-void CanvasBASIC::WriteText(wxDC *hdc, const wxString &text, int &x, int &y, bool fill, bool draw)
+void CanvasBASIC::WriteText(PaintDC &dc, const wxString &text, int &x, int &y, bool fill, bool draw)
 {
-    wxSize size = hdc->GetTextExtent(text);
+    wxSize size = dc.GetTextExtent(text);
 
     if (x + size.x > GetSize().x - 20)
     {
         x = margin_x + width_line_field;
-        y += dY;
+        y += dc.GetDY();
     }
 
     if (fill && draw)
@@ -107,14 +102,14 @@ void CanvasBASIC::WriteText(wxDC *hdc, const wxString &text, int &x, int &y, boo
         static wxBrush brush(colour, wxBRUSHSTYLE_SOLID);
         static wxPen pen(colour);
 
-        hdc->SetBrush(brush);
-        hdc->SetPen(pen);
-        hdc->DrawRectangle(x, y, size.x, size.y);
+        dc.SetBrush(brush);
+        dc.SetPen(pen);
+        dc.DrawRectangle(x, y, size.x, size.y);
     }
 
     if (draw)
     {
-        hdc->DrawText(text, x, y);
+        dc.DrawText(text, x, y);
     }
 
     x += size.x;

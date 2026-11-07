@@ -9,6 +9,7 @@
 class BufferedInputStream : public wxBufferedInputStream
 {
 public:
+
     BufferedInputStream(wxFileInputStream &s) : wxBufferedInputStream(s) { }
 
     void StorePointer()
@@ -31,5 +32,27 @@ private:
 class PaintDC : public wxPaintDC
 {
 public:
-    PaintDC (wxWindow *window) : wxPaintDC(window) { }
+
+    PaintDC(wxWindow *);
+
+    wxFont &GetFont()
+    {
+        return font;
+    }
+
+    int GetDY() const
+    {
+        return dY;
+    }
+
+    int GetSB_PPU() const
+    {
+        return sbPPU;
+    }
+
+private:
+
+    wxFont font;
+    int dY = 0;
+    int sbPPU = 0;      // Scrollbar pixels for unit
 };
