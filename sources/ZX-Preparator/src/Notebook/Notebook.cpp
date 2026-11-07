@@ -244,7 +244,7 @@ void NotebookHistory::RestoreState()
         {
             if (notebook->GetPageText(i) == name_page)
             {
-                notebook->SetSelection(static_cast<int>(i));
+                notebook->SetSelection((size_t)i);
 
                 break;
             }

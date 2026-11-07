@@ -112,7 +112,7 @@ void StorageInstructions::AppendDefBytes(int address, int num_bytes)
     instr.is_bytes = true;
     instr.bad = false;
     instr.address = address;
-    instr.opCodes.resize(num_bytes);
+    instr.opCodes.resize((uint64)num_bytes);
 
     instructions.push_back(instr);
 

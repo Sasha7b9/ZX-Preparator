@@ -20,11 +20,11 @@ static void WriteE(pchar name)
     AddOpcode(RAM8(rPC));
     if (name[0])     // For JR E not write address
     {
-        AddAddress(rPC + 1);
+        AddAddress(rPC + 1U);
     }
     uint8 value = PCandInc();
     int shift = ((int)((int8)value)) + 2;
-    uint newAddress = rPC + shift - 2;
+    uint newAddress = rPC + shift - 2U;
     out->SetMnemonic(wxString::Format("JR %s%d {#%04X}", name, shift, newAddress));
     AddAddress(newAddress);
 }
@@ -142,7 +142,7 @@ namespace Decode
         AddOpcode(RAM8(rPC));
         uint8 value = PCandInc();
         int shift = ((int)((int8)value)) + 2;
-        uint newAddress = rPC + shift - 2;
+        uint newAddress = rPC + shift - 2U;
         sprintf(MNEMONIC, "DJNZ %d {#%04X}", shift, newAddress);
         AddAddress(newAddress);
         return -1;
@@ -454,7 +454,7 @@ namespace Run
 
     int RRCA()
     {
-        uint8 loBit = GET_nBIT(rA, 0);
+        uint8 loBit = (uint8)GET_nBIT(rA, 0);
 
         rA >>= 1;
         LOAD_nBIT(rA, 7, loBit);
@@ -491,8 +491,8 @@ namespace Run
 
     int RLA()
     {
-        uint8 hiBit = GET_nBIT(rA, 7);
-        uint8 oldCY = CF;
+        uint8 hiBit = (uint8)GET_nBIT(rA, 7);
+        uint8 oldCY = (uint8)CF;
 
         rA <<= 1;
         LOAD_C(hiBit);
@@ -521,8 +521,8 @@ namespace Run
 
     int RRA()
     {
-        uint8 loBit = GET_nBIT(rA, 0);
-        uint8 oldCY = CF;
+        uint8 loBit = (uint8)GET_nBIT(rA, 0);
+        uint8 oldCY = (uint8)CF;
 
         rA >>= 1;
         LOAD_nBIT(rA, 7, oldCY);
@@ -577,7 +577,7 @@ namespace Run
 
     static int CPL()
     {
-        rA = ~rA;
+        rA = (uint8)(~rA);
 
         // . . x + x . 1 .
 
@@ -1082,11 +1082,9 @@ static int POP_QQ_dec()
     sprintf(MNEMONIC, "POP %s", QQ_45_Name(prevValue));
     return -1;
 }
-
-
 static int POP_QQ_run()
 {
-    QQ_45(prevValue) = RAM[rSP] + RAM[rSP + 1] * 256;
+    QQ_45(prevValue) = (uint16)(RAM[rSP] + RAM[rSP + 1] * 256);
     rSP += 2;
     return 10;
 }
@@ -1224,7 +1222,7 @@ const uint8 rstP[8] =
 
 static int RST_P_dec()
 {
-    int address = rstP[(prevValue >> 3) & 7];
+    uint address = rstP[(prevValue >> 3) & 7];
     if(address != 0x28 && address != 0x08) // Для калькулятора после команды вызова хранятся какие-то данные, поэтому не добавляем в спискок нужных адресов
     {
         AddAddress(rPC);
@@ -1238,7 +1236,7 @@ static int RST_P_dec()
 
 static int RST_P_run()
 {
-    uint8 T = (prevValue >> 3) & 7;
+    uint8 T = (uint8)((prevValue >> 3) & 7);
     uint16 valuePC = ValuePC();
     RAM[rSP - 2] = (uint8)valuePC;
     RAM[rSP - 1] = (uint8)(valuePC >> 8);

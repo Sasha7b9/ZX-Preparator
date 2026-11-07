@@ -117,7 +117,7 @@ int DecodeCommandFDCB_dec()
     AddOpcode(RAM8(rPC + 1));
     uint8 valD = PCandInc();
     uint8 valBit = PCandInc();
-    uint8 bit = (valBit >> 3) & 7;
+    uint8 bit = (uint8)((valBit >> 3) & 7);
 
     if ((valBit & 0xc7) == 0xc6)       // SET B, (IY + D)
     {

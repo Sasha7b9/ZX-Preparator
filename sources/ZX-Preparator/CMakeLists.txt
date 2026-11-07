@@ -20,7 +20,6 @@ if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /STACK:10000000")
 
     add_compile_options(
-        /wd4365
         /wd4514
         /wd4625
         /wd4626

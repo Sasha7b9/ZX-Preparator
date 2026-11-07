@@ -278,9 +278,9 @@ int Run::DAA()
 
 
 //    uint8 oldA = A;
-    uint16 value = rA + DAAadjust[(NF << 10) + (CF << 9) + (HF << 8) + rA];
+    uint16 value = (uint16)(rA + DAAadjust[(NF << 10) + (CF << 9) + (HF << 8) + rA]);
 
-    rA = value & 0xff;
+    rA = (uint8)(value & 0xff);
 
     // + + x + x p . +
 
@@ -291,7 +291,7 @@ int Run::DAA()
 
     SET_P;
 
-    uint16 newCF = (value >> 8) & 1;
+    uint16 newCF = (uint16)((value >> 8) & 1);
 
     if(GET_nBIT(newCF, 0))
     {

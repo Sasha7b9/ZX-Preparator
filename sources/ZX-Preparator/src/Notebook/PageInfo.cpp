@@ -77,7 +77,7 @@ void CanvasInfo::DrawTAP(std::shared_ptr<File> file)
 
     for (int i = 0; i < file->NumberBlocks(); i++)
     {
-        auto block = std::dynamic_pointer_cast<BlockTAP>(file->blocks[i]);
+        auto block = std::dynamic_pointer_cast<BlockTAP>(file->blocks[(uint64)i]);
 
         writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
 
@@ -113,7 +113,7 @@ void CanvasInfo::DrawTZX(std::shared_ptr<File> _file)
 
     for (int i = 0; i < file->NumberBlocks(); i++)
     {
-        auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[i]);
+        auto block = std::dynamic_pointer_cast<BlockTZX>(file->blocks[(uint64)i]);
 
         writer.DrawNextString(wxString::Format("Block %d:", i + 1), 1);
 

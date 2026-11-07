@@ -9,22 +9,22 @@
 
 static int RLC_RRC(TypeOperand type, uint8 byte)
 {
-#define RUN_RLC_RRC()                           \
-    if(byte == 0x06)                            \
-    {                                           \
-        uint8 hiBit = GET_nBIT(*pOperand, 7);   \
-        (*pOperand) <<= 1;                      \
-        LOAD_nBIT(*pOperand, 0, hiBit);         \
-        LOAD_C(hiBit);                          \
-    }                                           \
-    else                                        \
-    {                                           \
-        uint8 loBit = GET_nBIT(*pOperand, 0);   \
-        (*pOperand) >>= 1;                      \
-        LOAD_nBIT(*pOperand, 7, loBit);         \
-        LOAD_C(loBit);                          \
-    }                                           \
-    RES_H;                                      \
+#define RUN_RLC_RRC()                                   \
+    if(byte == 0x06)                                    \
+    {                                                   \
+        uint8 hiBit = (uint8)GET_nBIT(*pOperand, 7);    \
+        (*pOperand) <<= 1;                              \
+        LOAD_nBIT(*pOperand, 0, hiBit);                 \
+        LOAD_C(hiBit);                                  \
+    }                                                   \
+    else                                                \
+    {                                                   \
+        uint8 loBit = (uint8)GET_nBIT(*pOperand, 0);    \
+        (*pOperand) >>= 1;                              \
+        LOAD_nBIT(*pOperand, 7, loBit);                 \
+        LOAD_C(loBit);                                  \
+    }                                                   \
+    RES_H;                                              \
     RES_N;
 
     if (type == Operand_A)

@@ -125,7 +125,7 @@ extern uint8 imfB;
 #define PP_45(value)    (*funcsRegPP[((value) >> 4) & 3]())
 
 
-#define CC(value) (((value) >> 3) & 7)
+#define CC(value) ((uint8)(((value) >> 3) & 7))
 #define CC_NZ   0
 #define CC_Z    1
 #define CC_NC   2

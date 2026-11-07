@@ -25,8 +25,8 @@
 
 union REGS
 {
-    unsigned char r8[8];    // C B  E D  L H  F A
-    unsigned short r16[8];  // BC   DE   HL   AF    SP  IX  IY  PC
+    uint8 r8[8];    // C B  E D  L H  F A
+    uint16 r16[8];  // BC   DE   HL   AF    SP  IX  IY  PC
 };
 
 

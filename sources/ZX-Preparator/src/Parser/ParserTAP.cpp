@@ -252,7 +252,7 @@ BlockTAP_BASIC::BlockTAP_BASIC(wxDataInputStream &stream, BlockTAP_Header *heade
             number_line_start = header->param1;
             offset_variables = header->param2;
 
-            if (ParseBASIC(size - 2))           // 2 == 0xFF и контрольная сумма
+            if (ParseBASIC(size - 2U))           // 2 == 0xFF и контрольная сумма
             {
                 is_valid = VerifyCRC();
             }
@@ -316,7 +316,7 @@ LineBASIC BlockTAP_BASIC::ParseLineProgram(uint16 &num_bytes)
 
 bool BlockTAP::VerifyCRC() const
 {
-    const uint size = data.AllBytes();
+    const int size = data.AllBytes();
 
     if (size < 5 || data.BeginData() == nullptr)
     {
@@ -327,7 +327,7 @@ bool BlockTAP::VerifyCRC() const
 
     uint8 crc = 0;
 
-    for (uint i = 0; i < size - 3; ++i)
+    for (int i = 0; i < size - 3; ++i)
     {
         crc ^= *buf++;
     }
@@ -377,7 +377,7 @@ uint8 BlockTAP::Read8(int offset)
 
 uint16 BlockTAP::Read16()
 {
-    return Read8() + (Read8() << 8);
+    return (uint16)(Read8() + (Read8() << 8));
 }
 
 
@@ -386,7 +386,7 @@ uint16 BlockTAP::Read16Reverse()
     uint8 first = Read8();
     uint8 second = Read8();
 
-    return (first << 8) + second;
+    return (uint16)((first << 8) + second);
 }
 
 
@@ -492,7 +492,7 @@ void BlockTAP::Data::AppendBytes(wxDataInputStream &stream, int size)
 
     data.resize(data.size() + size);
 
-    stream.Read8(data.data() + offset, size);
+    stream.Read8(data.data() + offset, (size_t)size);
 
     pointer = 0;
 }
@@ -505,7 +505,7 @@ uint16 BlockTAP::Data::Read16Reverse()
         uint8 first = data.data()[pointer++];
         uint8 second = data.data()[pointer++];
 
-        return (first << 8) + second;
+        return (uint16)((first << 8) + second);
     }
 
     LOG_ERROR("Not enough elements in the array");
@@ -521,7 +521,7 @@ uint16 BlockTAP::Data::Read16()
         uint8 first = data.data()[pointer++];
         uint8 second = data.data()[pointer++];
 
-        return (first) + (second << 8);
+        return (uint16)((first) + (second << 8));
     }
 
     LOG_ERROR("Not enough elements in the array");
@@ -532,7 +532,7 @@ uint16 BlockTAP::Data::Read16()
 
 void BlockTAP::Data::ReadBytes(uint8 *buffer, int size)
 {
-    std::memcpy(buffer, data.data() + pointer, size);
+    std::memcpy(buffer, data.data() + pointer, (size_t)size);
 
     pointer += size;
 }
@@ -577,7 +577,7 @@ bool BlockTAP_Code::ParseASM()
 
     int size = SizeCode();
 
-    std::memcpy(params.GetMEMORY() + address_load, BeginCode(), size);
+    std::memcpy(params.GetMEMORY() + address_load, BeginCode(), (size_t)size);
 
     StorageInstructions storage(address_load, address_load + size);
 

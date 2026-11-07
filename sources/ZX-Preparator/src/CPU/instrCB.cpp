@@ -69,7 +69,7 @@ int RRC_R_run()
 
 int RES_B_M_dec()
 {
-    uint8 numBit = (prevValue >> 3) & 7;
+    uint8 numBit = (uint8)((prevValue >> 3) & 7);
     sprintf(MNEMONIC, "RES %d,%s", numBit, R8_LO_Name(prevValue));
     return -1;
 }
@@ -81,7 +81,7 @@ int RES_B_M_run()
 
 int RES_B_pHL_dec()
 {
-    uint8 numBit = (prevValue >> 3) & 7;
+    uint8 numBit = (uint8)((prevValue >> 3) & 7);
     sprintf(MNEMONIC, "RES %d,[HL]", numBit);
     return -1;
 }

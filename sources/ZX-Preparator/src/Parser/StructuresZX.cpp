@@ -17,5 +17,5 @@ void DumpHEX::FillFrom(pchar name_file)
 
     bytes.resize(size);
 
-    file.read((char *)bytes.data(), bytes.size());
+    file.read((char *)bytes.data(), (std::streamsize)bytes.size());
 }

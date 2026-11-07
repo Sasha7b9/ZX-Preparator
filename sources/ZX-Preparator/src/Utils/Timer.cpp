@@ -6,7 +6,7 @@
 
 void TimerMS::Reset()
 {
-    time_reset = std::clock();
+    time_reset = (uint)std::clock();
 }
 
 

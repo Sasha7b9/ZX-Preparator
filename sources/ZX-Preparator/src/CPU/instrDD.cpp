@@ -52,7 +52,7 @@ int OR_pIX_D_run()
 
 int LD_R_pIX_D_dec()
 {
-    int8 d = (int8)PCandInc();
+    uint8 d = (uint8)PCandInc();
     AddOpcode(d);
     if (d >= 0)
     {
@@ -74,7 +74,7 @@ int LD_R_pIX_D_run()
 
 int LD_pIX_D_R_dec()
 {
-    int8 d = (int8)PCandInc();
+    uint8 d = (uint8)PCandInc();
     AddOpcode(d);
     if (d >= 0)
     {
@@ -110,7 +110,7 @@ int POP_IX_dec()
 
 int LD_pIX_D_N_dec()
 {
-    int8 d = (int)PCandInc();
+    uint8 d = (uint8)PCandInc();
     uint8 n = PCandInc();
     AddOpcode(d);
     AddOpcode(n);
