@@ -9,7 +9,7 @@
 #include "Notebook/PageArrayNumber.h"
 #include "Notebook/PageHeaderTAP.h"
 #pragma warning(push, 0)
-#include <wx/button.h>
+    #include <wx/button.h>
 #pragma warning(pop)
 
 

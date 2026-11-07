@@ -1,7 +1,7 @@
 // 2022/05/26 11:37:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #pragma warning(push, 0)
-#include <wx/panel.h>
+    #include <wx/panel.h>
 #pragma warning(pop)
 
 

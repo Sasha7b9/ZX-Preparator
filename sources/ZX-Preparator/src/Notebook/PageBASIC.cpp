@@ -4,7 +4,7 @@
 #include "Utils/Timer.h"
 #include "Frame.h"
 #pragma warning(push, 0)
-#include <wx/dc.h>
+    #include <wx/dc.h>
 #pragma warning(pop)
 
 

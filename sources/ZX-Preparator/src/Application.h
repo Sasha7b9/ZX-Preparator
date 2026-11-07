@@ -3,7 +3,7 @@
 #include "defines.h"
 #define WIN32_LEAN_AND_MEAN
 #pragma warning (push, 0)
-#include <wx/wx.h>
+    #include <wx/wx.h>
 #pragma warning (pop)
 
 

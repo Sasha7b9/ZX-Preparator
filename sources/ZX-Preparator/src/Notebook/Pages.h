@@ -2,11 +2,11 @@
 #pragma once
 #include "Notebook/ControlPanel.h"
 #pragma warning(push, 0)
-#include <wx/scrolwin.h>
-#include <wx/notebook.h>
-#include <wx/dc.h>
-#include <wx/splitter.h>
-#include <wx/sizer.h>
+    #include <wx/scrolwin.h>
+    #include <wx/notebook.h>
+    #include <wx/dc.h>
+    #include <wx/splitter.h>
+    #include <wx/sizer.h>
 #pragma warning(pop)
 
 
