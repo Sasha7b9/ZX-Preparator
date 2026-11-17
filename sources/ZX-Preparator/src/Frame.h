@@ -1,4 +1,4 @@
-// 2022/04/29 13:56:55 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+п»ї// 2022/04/29 13:56:55 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 #include "Notebook/Notebook.h"
 #pragma warning(push, 0)
@@ -12,6 +12,7 @@ class Frame : public wxFrame
 {
 public:
     Frame(const wxString &title);
+    ~Frame();
 
     void OnQuit(wxCommandEvent &event);
     void OnAbout(wxCommandEvent &event);
@@ -35,8 +36,8 @@ private:
 
     void OnEventTreeItemActivated(wxTreeEvent &);
     void OnEventTreeItemKeyDown(wxTreeEvent &);
-    // Вызывается при выделении итема
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё РІС‹РґРµР»РµРЅРёРё РёС‚РµРјР°
     void OnEventTreeSelChanged(wxTreeEvent &);
-    // Вызывается после снятия выделения итема
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїРѕСЃР»Рµ СЃРЅСЏС‚РёСЏ РІС‹РґРµР»РµРЅРёСЏ РёС‚РµРјР°
     void OnEventTreeSelChanging(wxTreeEvent &);
 };

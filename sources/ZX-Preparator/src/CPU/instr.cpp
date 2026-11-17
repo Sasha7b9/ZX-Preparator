@@ -1,4 +1,4 @@
-// 2022/05/23 17:29:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+п»ї// 2022/05/23 17:29:35 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "CPU/registers.h"
 #include "defines.h"
 #include "CPU/instr.h"
@@ -1223,7 +1223,7 @@ const uint8 rstP[8] =
 static int RST_P_dec()
 {
     uint address = rstP[(prevValue >> 3) & 7];
-    if(address != 0x28 && address != 0x08) // Для калькулятора после команды вызова хранятся какие-то данные, поэтому не добавляем в спискок нужных адресов
+    if(address != 0x28 && address != 0x08) // Р”Р»СЏ РєР°Р»СЊРєСѓР»СЏС‚РѕСЂР° РїРѕСЃР»Рµ РєРѕРјР°РЅРґС‹ РІС‹Р·РѕРІР° С…СЂР°РЅСЏС‚СЃСЏ РєР°РєРёРµ-С‚Рѕ РґР°РЅРЅС‹Рµ, РїРѕСЌС‚РѕРјСѓ РЅРµ РґРѕР±Р°РІР»СЏРµРј РІ СЃРїРёСЃРєРѕРє РЅСѓР¶РЅС‹С… Р°РґСЂРµСЃРѕРІ
     {
         AddAddress(rPC);
     }

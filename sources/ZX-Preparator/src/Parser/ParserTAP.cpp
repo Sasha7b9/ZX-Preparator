@@ -571,7 +571,7 @@ bool BlockTAP_Code::ParseASM()
 
     program.Clear();
 
-    InfoStruct params;
+    static InfoStruct params;
 
     std::memcpy(params.GetMEMORY(), Memory::_48, 64 * 1024);
 

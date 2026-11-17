@@ -14,7 +14,7 @@ if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
 endif()
 
 if(WIN32)
-
+    add_compile_options(/utf-8)
 else()
     add_definitions(-m64 -fmax-errors=1 -Wall)
 endif()

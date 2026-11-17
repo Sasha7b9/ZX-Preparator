@@ -80,7 +80,15 @@ void CanvasHEX::OnEventPaint(wxPaintEvent &)
         true                                                    // noRefresh - если true, окно не будет автоматически перерисоываться после вызова SetScrollbars
     );
 
-    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
+    if (Frame *frame = Frame::Self())
+    {
+        wxString title = wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime());
+
+        if (title != frame->GetTitle())
+        {
+            frame->SetTitle(title);
+        }
+    }
 
     prev_size = GetSize();
 }

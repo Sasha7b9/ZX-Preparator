@@ -9,16 +9,7 @@ wxFileConfig *g_file_config = nullptr;
 
 void AddAddress(uint addr)
 {
-    if (addr == 6)
-    {
-        addr = addr;
-    }
-
-//    if (addr < 16384 ||
-//        addr > 16384 + 768 + 256 * 192 / 8)
-    {
-        out->AppendAddress(addr);
-    }
+    out->AppendAddress(addr);
 }
 
 

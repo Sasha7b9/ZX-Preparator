@@ -37,7 +37,15 @@ void CanvasASM::OnEventPaint(wxPaintEvent &)
 
 //    SetScrollbars(sbPPU, sbPPU, 10, (y + font.GetPointSize()) / sbPPU, 0, pos, true);
 
-    Frame::Self()->SetTitle(wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime()));
+    if (Frame *frame = Frame::Self())
+    {
+        wxString title = wxString::Format("ZX-Preparator %d ms", timer.ElapsedTime());
+
+        if (frame->GetTitle() != title)
+        {
+            frame->SetTitle(title);
+        }
+    }
 }
 
 

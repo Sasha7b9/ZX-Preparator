@@ -1,11 +1,11 @@
-// 2023/08/11 17:01:07 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+п»ї// 2023/08/11 17:01:07 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 
 
 namespace Config
 {
-    // Устанавливает файл с настройками.
-    // Если "", будет установлен глобальный файл
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„Р°Р№Р» СЃ РЅР°СЃС‚СЂРѕР№РєР°РјРё.
+    // Р•СЃР»Рё "", Р±СѓРґРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅ РіР»РѕР±Р°Р»СЊРЅС‹Р№ С„Р°Р№Р»
     void SetFile(const wxString &file_path);
 
     int ReadInt(pchar key, int def = 0);

@@ -1,4 +1,4 @@
-// 2022/04/29 14:52:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+п»ї// 2022/04/29 14:52:10 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #pragma once
 
 #pragma warning(push, 0)
@@ -51,7 +51,7 @@ extern wxFileConfig *g_file_config;
 
 void AddAddress(uint address);
 void AddOpcode(uint8 code);
-bool CalculateH(uint8 before, uint8 after); // Вычисление флага дополнительного переноса
+bool CalculateH(uint8 before, uint8 after); // Р’С‹С‡РёСЃР»РµРЅРёРµ С„Р»Р°РіР° РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРіРѕ РїРµСЂРµРЅРѕСЃР°
 
 
 #include "Utils/Log.h"

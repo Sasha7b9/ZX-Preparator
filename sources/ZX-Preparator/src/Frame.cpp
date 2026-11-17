@@ -1,4 +1,4 @@
-// 2022/04/29 13:56:48 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
+ï»¿// 2022/04/29 13:56:48 (c) Aleksandr Shevchenko e-mail : Sasha7b9@tut.by
 #include "defines.h"
 #include "Frame.h"
 #include "Parser/ParserTAP.h"
@@ -20,14 +20,14 @@ enum
     TOOL_UNDO,
     TOOL_REDO,
 
-    TOOL_VIEW_BRIEF,        // Ñîêðàù¸ííûé âèä îòîáðàæåíèÿ
-    TOOL_VIEW_FULL,         // Ïîëíûé âèä îòîáðàæåíèÿ
+    TOOL_VIEW_BRIEF,        // Ð¡Ð¾ÐºÑ€Ð°Ñ‰Ñ‘Ð½Ð½Ñ‹Ð¹ Ð²Ð¸Ð´ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
+    TOOL_VIEW_FULL,         // ÐŸÐ¾Ð»Ð½Ñ‹Ð¹ Ð²Ð¸Ð´ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 
-    MEAS_PRESSURE,          // Äàâëåíèå
-    MEAS_ILLUMINATION,      // Îñâåù¸ííîñòü
-    MEAS_HUMIDITY,          // Âëàæíîñòü
-    MEAS_VELOCITY,          // Ñêîðîñòü
-    MEAS_TEMPERATURE        // Òåìïåðàòóðà
+    MEAS_PRESSURE,          // Ð”Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ
+    MEAS_ILLUMINATION,      // ÐžÑÐ²ÐµÑ‰Ñ‘Ð½Ð½Ð¾ÑÑ‚ÑŒ
+    MEAS_HUMIDITY,          // Ð’Ð»Ð°Ð¶Ð½Ð¾ÑÑ‚ÑŒ
+    MEAS_VELOCITY,          // Ð¡ÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ
+    MEAS_TEMPERATURE        // Ð¢ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð°
 };
 
 
@@ -93,6 +93,15 @@ Frame::Frame(const wxString &title)
 }
 
 
+Frame::~Frame()
+{
+    if (self == this)
+    {
+        self = nullptr;
+    }
+}
+
+
 void Frame::CreateFrameToolBar()
 {
     toolBar = CreateToolBar();
@@ -123,7 +132,7 @@ void Frame::OnEventTreeSelChanged(wxTreeEvent& event)
 {
     wxString file = controlDir->GetPath(event.GetItem());
 
-    if (wxFile::Exists(file))               // Ïðîâåðêà íà òî, ÷òî ýòî ôàéë, à íå êàòàëîã
+    if (wxFile::Exists(file))               // ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ñ‚Ð¾, Ñ‡Ñ‚Ð¾ ÑÑ‚Ð¾ Ñ„Ð°Ð¹Ð», Ð° Ð½Ðµ ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³
     {
         Config::WriteString("path_tree", controlDir->GetPath());
 
