@@ -46,7 +46,7 @@ extern wxFileConfig *g_file_config;
 #define GET_nBIT(value, bit) (((value) & (1 << (bit))) >> (bit))
 #define SET_nBIT(value, bit) ((value) | (1 << (bit)))
 #define RES_nBIT(value, bit) ((value) & (~(1 << (bit))))
-#define LOAD_nBIT(value, bit, vBit) if(vBit) ((value) |= (1 << (bit))); else ((value) &= (~(1 << (bit))))
+#define LOAD_nBIT(value, bit, vBit) do { if(vBit) ((value) |= (1 << (bit))); else ((value) &= (~(1 << (bit)))); } while(0);
 
 
 void AddAddress(uint address);

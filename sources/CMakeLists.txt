@@ -9,7 +9,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
 
 set (TARGET_NAME ZX-Preparator)
 
-if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
 endif()
 
