@@ -19,8 +19,6 @@ public:
 
     static Frame *Self() { return self; }
 
-    void OnPaint(wxPaintEvent &);
-
     void OnCloseWindow(wxCloseEvent &);
 
     void OnOpen(wxCommandEvent &);

@@ -60,8 +60,6 @@ Frame::Frame(const wxString &title)
     Bind(wxEVT_MENU, &Frame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_CLOSE_WINDOW, &Frame::OnCloseWindow, this);
 
-    Bind(wxEVT_PAINT, &Frame::OnPaint, this);
-
     CreateFrameToolBar();
 
     wxSplitterWindow *splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE | wxSP_3DSASH);
@@ -204,10 +202,4 @@ void Frame::OnAbout(wxCommandEvent &WXUNUSED(event))
     topsizer->Fit(&dlg);
 
     dlg.ShowModal();
-}
-
-
-void Frame::OnPaint(wxPaintEvent &)
-{
-
 }
